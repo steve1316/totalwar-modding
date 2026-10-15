@@ -1,6 +1,6 @@
 // A searchable list of game models for the Look tab's pickers (a weapon, an outfit, a piece): every model by name with its thumbnail, narrowed by
-// the search words. Rows are built a chunk at a time as the list scrolls, under a spacer that keeps the list its full height, and a row the pointer
-// rests on is tried on through `onHover`.
+// the search words. Rows are built a chunk at a time as the list scrolls, under a spacer that keeps the list its full height, and the row under
+// the pointer is tried on through `onHover`.
 import { stem } from "./live_models.js";
 
 // Rows the list adds at a time: the first ones when it opens, then more as it scrolls near its end.
@@ -8,9 +8,6 @@ const LIST_CHUNK = 60;
 
 // Milliseconds a search waits for typing to pause, so thumbnails are only drawn for what is searched in the end.
 const TYPING_PAUSE = 300;
-
-// Milliseconds the pointer rests on a row before it is tried on, so passing over the list loads nothing.
-const HOVER_PAUSE = 500;
 
 // Each model list sorted by name, sorted once. Lists whose thumbnails are being drawn in the background.
 const sorted = new WeakMap(), warmed = new WeakSet();
@@ -25,9 +22,9 @@ export class ModelList {
   // `models` are the game paths to list, `placeholder` the search box's hint, `featured` an optional promise of {title, models} shown above the
   // search, `onPick(model)` a click and `onHover(model or null)` a resting pointer.
   constructor(thumbs, { models, placeholder, featured, onPick, onHover }) {
-    // `box` is the built picker, `searches` counts searches so an older one's first rows are dropped, `typing` and `resting` are the timers.
+    // `searches` counts searches so an older one's first rows are dropped, `typing` is the search's timer.
     this.thumbs = thumbs; this.placeholder = placeholder; this.featured = featured; this.onPick = onPick; this.onHover = onHover;
-    this.models = byName(models); this.box = null; this.searches = 0; this.typing = null; this.resting = null;
+    this.models = byName(models); this.searches = 0; this.typing = null;
   }
 
   // One model's row.
@@ -37,15 +34,9 @@ export class ModelList {
       <span><span>${esc(stem(p))}</span><span class="note">${esc(p.split("/").slice(2, -1).join("/"))}</span></span></button>`;
   }
 
-  // Tries a row on, or takes it off again (null), once the pointer rests. A picker closed meanwhile tries nothing on.
-  hover(model) {
-    clearTimeout(this.resting);
-    this.resting = setTimeout(() => { if (!model || this.box.isConnected) this.onHover(model); }, model ? HOVER_PAUSE : 0);
-  }
-
   // Builds the picker box.
   element() {
-    const box = this.box = document.createElement("div");
+    const box = document.createElement("div");
     box.className = "picker";
     box.innerHTML = `<div class="look-featured"></div><input class="attrSearch" placeholder="${window.UnitPanel.esc(this.placeholder)}">
       <div class="note look-count"></div><div class="hits look-hits"></div>`;
@@ -72,10 +63,10 @@ export class ModelList {
     const fillView = () => { while (shown < found.length && spacer.offsetTop - hits.scrollTop < hits.clientHeight + 400) more(); };
     const list = () => {
       // New rows replace the hovered one without a mouseleave.
-      this.hover(null);
+      this.onHover(null);
       const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
       found = this.models.filter(p => terms.every(w => p.includes(w))); shown = 0;
-      count.textContent = `${found.length} of ${this.models.length} models. Rest the pointer on one for a moment to try it on.`;
+      count.textContent = `${found.length} of ${this.models.length} models. Point at one to try it on.`;
       hits.innerHTML = found.length ? '<div class="look-spacer"></div>' : '<div class="note">No model matches.</div>';
       spacer = hits.querySelector(".look-spacer");
       hits.scrollTop = 0;
@@ -86,9 +77,10 @@ export class ModelList {
     hits.onscroll = () => { if (spacer) fillView(); };
     // One listener for every row, the featured ones and the ones added later included.
     const row = e => e.target.closest && e.target.closest("[data-model]");
-    box.onclick = e => { const b = row(e); if (b) { this.hover(null); this.onPick(b.dataset.model); } };
-    box.onmouseover = e => { const b = row(e); if (b && !b.contains(e.relatedTarget)) this.hover(b.dataset.model); };
-    box.onmouseout = e => { const b = row(e); if (b && !b.contains(e.relatedTarget)) this.hover(null); };
+    box.onclick = e => { const b = row(e); if (b) { this.onHover(null); this.onPick(b.dataset.model); } };
+    // The try-on stays while the pointer moves between rows, so the stage never flashes back to his own model, and goes when it leaves the picker.
+    box.onmouseover = e => { const b = row(e); if (b && !b.contains(e.relatedTarget)) this.onHover(b.dataset.model); };
+    box.onmouseleave = () => this.onHover(null);
     input.oninput = () => { clearTimeout(this.typing); this.typing = setTimeout(list, TYPING_PAUSE); };
     // Every model's picture is drawn and kept in the background, so the list shows them at once from then on.
     if (!warmed.has(this.models)) { warmed.add(this.models); this.thumbs.warm(this.models); }

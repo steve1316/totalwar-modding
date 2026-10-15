@@ -8,7 +8,7 @@ The page is `index.html` with its modules in `studio/`, served from this folder.
 - `GET thumbs/<file>` and `GET api/thumbs`: the cached model thumbnails and their index (model -> file). `POST thumb`: keeps one (`model`,
   `image` as a PNG data URL, `style` the page's drawing style).
 - `POST props`: exports models (`items`, each with `model`, `slot`, `attach` and `skeleton`) into the gallery for the live previews and
-  thumbnails, answering `urls` (null for a model not found).
+  thumbnails, answering `urls` (null for a model not found). `urgent` puts a try-on ahead of the thumbnails waiting.
 """
 
 import json
@@ -18,6 +18,7 @@ from typing import Dict, List, Tuple
 from workbench.plugins.viewer.previews import prop_previews
 from workbench.plugins.viewer.thumbs import save_thumb, thumb_index
 from workbench.projects import Project
+from workbench.server import IMMUTABLE
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +80,8 @@ class Viewer:
         if rest.startswith("data/"):
             handler.send_static(project.gallery, rest[len("data/"):])
         elif rest.startswith("thumbs/"):
-            handler.send_static(project.thumbs, rest[len("thumbs/"):])
+            # A picture's file name carries its model and drawing style, so it never changes.
+            handler.send_static(project.thumbs, rest[len("thumbs/"):], IMMUTABLE)
         elif rest == "api/thumbs":
             handler.send_json(200, thumb_index(project))
         elif rest == "api/tuning":
@@ -122,9 +124,11 @@ class Viewer:
                 handler.send_json(400, {"error": str(error)})
         elif rest == "api/props":
             try:
-                handler.send_json(200, {"urls": prop_previews(project, changes.get("items"))})
+                handler.send_json(200, {"urls": prop_previews(project, changes.get("items"), changes.get("urgent") is True)})
             except ValueError as error:
                 handler.send_json(400, {"error": str(error)})
+            except RuntimeError as error:
+                handler.send_json(500, {"error": str(error)})
         elif rest.startswith("api/run/") and rest[len("api/run/"):] in project.jobs:
             started = project.job.start(rest[len("api/run/"):])
             handler.send_json(200 if started else 409, project.job.state())

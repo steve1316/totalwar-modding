@@ -9,7 +9,7 @@ import { loadModel } from "../viewer_common.js";
 const SIZE = 160;
 
 // Models one export request asks for.
-const BATCH = 8;
+const BATCH = 4;
 
 // The drawing style. Kept pictures of an older style (file names end "_<style>.png") are drawn again. 2: weapons seen across the blade.
 const STYLE = 2;
@@ -95,7 +95,7 @@ export class Thumbnails {
       const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(2, 4, 3); scene.add(sun);
       this.stage = { renderer, scene, camera: new THREE.PerspectiveCamera(30, 1, 0.01, 100) };
     }
-    const { renderer, scene, camera } = this.stage, model = await loadModel(url);
+    const { renderer, scene, camera } = this.stage, model = await loadModel(url, { shared: false });
     await model.ready;
     scene.add(model.group); model.group.updateMatrixWorld(true);
     const box = new THREE.Box3();

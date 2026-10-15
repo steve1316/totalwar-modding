@@ -6,8 +6,12 @@ own models as `models/<stem>.json`. A model with an attach bone is held on it, o
 models as `model`, `slot`, `attach`, `skeleton` and `stem`. Prints a json map of stem -> the json's path inside the gallery (null when the model
 was not found).
 
+With `--serve` it stays running for the workbench instead: each line on stdin is a batch (a json list of models) and each answer is one json line on
+stdout, `{"urls": {...}}` or `{"error": "..."}`. The pack listings and skeletons are read once, so a batch only pays for its own models.
+
 Usage:
     python -m tools.anim_viewer.prop_preview --gallery _diag/anim_viewer --batch models.json [--folder <mod folder>]
+    python -m tools.anim_viewer.prop_preview --gallery _diag/anim_viewer --serve [--folder <mod folder>]
 """
 
 import argparse
@@ -16,6 +20,7 @@ import os
 import re
 import sys
 import tempfile
+import traceback
 from typing import Dict, List, Optional
 
 from core.asset_source import AssetSource, norm
@@ -66,40 +71,86 @@ def export_prop(gallery: str, item: Dict[str, str], source: AssetSource, bind_po
     return f"models/{item['stem']}.json" if summary["meshes"] else None
 
 
-def export_batch(gallery: str, items: List[Dict[str, str]], folders: List[str]) -> Dict[str, Optional[str]]:
-    """Exports several models, reading the pack listings and each skeleton once.
+class Exporter:
+    """Exports batches of models, keeping the pack listings and each skeleton's bind pose between batches."""
+
+    def __init__(self, gallery: str, folders: List[str]):
+        """Reads the pack listings.
+
+        Args:
+            gallery (str): The gallery folder.
+            folders (List[str]): Folders of a mod's own model files, read before the vanilla packs.
+        """
+        # The gallery folder.
+        self.gallery = gallery
+        # Where models are read from, and where the skeletons are.
+        self.source, self.skeletons = AssetSource(folders, []), AssetSource([], [], SKELETON_PACKS)
+        # Skeleton name -> its bind pose.
+        self.poses: Dict[str, Animation] = {}
+
+    def export(self, items: List[Dict[str, str]]) -> Dict[str, Optional[str]]:
+        """Exports several models. A model in no folder or pack has the mod folders listed again first, for a file a rebuild added.
+
+        Args:
+            items (List[Dict[str, str]]): The models, as `export_prop` takes them.
+
+        Returns:
+            Dict[str, Optional[str]]: Stem -> the model json's path inside the gallery, or None when it was not found or could not be read (its
+            error goes to stderr).
+        """
+        out = {}
+        if any(norm(item["model"]) not in self.source.index and norm(item["model"]) not in self.source.loose for item in items):
+            self.source.scan_folders()
+        for item in items:
+            if item["skeleton"] not in self.poses:
+                path = f"animations/skeletons/{item['skeleton']}.anim"
+                self.poses[item["skeleton"]] = read_anim(self.skeletons.fetch([path])[norm(path)])
+            try:
+                out[item["stem"]] = export_prop(self.gallery, item, self.source, self.poses[item["skeleton"]])
+            except Exception:
+                print(f"could not export {item['model']}", file=sys.stderr)
+                traceback.print_exc()
+                out[item["stem"]] = None
+        return out
+
+
+def serve(exporter: Exporter):
+    """Answers batches read from stdin until it closes.
 
     Args:
-        gallery (str): The gallery folder.
-        items (List[Dict[str, str]]): The models, as `export_prop` takes them.
-        folders (List[str]): Folders of a mod's own model files, read before the vanilla packs.
-
-    Returns:
-        Dict[str, Optional[str]]: Stem -> the model json's path inside the gallery, or None when it was not found.
+        exporter (Exporter): The exporter.
     """
-    source, skeletons, poses = AssetSource(folders, []), AssetSource([], [], SKELETON_PACKS), {}
-    out = {}
-    for item in items:
-        if item["skeleton"] not in poses:
-            path = f"animations/skeletons/{item['skeleton']}.anim"
-            poses[item["skeleton"]] = read_anim(skeletons.fetch([path])[norm(path)])
-        out[item["stem"]] = export_prop(gallery, item, source, poses[item["skeleton"]])
-    return out
+    answers = sys.stdout
+    # Anything the export prints goes to stderr, so stdout holds only answers.
+    sys.stdout = sys.stderr
+    for line in sys.stdin:
+        try:
+            answer = {"urls": exporter.export(json.loads(line))}
+        except Exception as error:
+            traceback.print_exc()
+            answer = {"error": f"{type(error).__name__}: {error}"}
+        answers.write(json.dumps(answer) + "\n")
+        answers.flush()
 
 
 def main() -> int:
-    """Exports the batch named on the command line.
+    """Exports the batch named on the command line, or serves batches.
 
     Returns:
         int: 0.
     """
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--gallery", required=True)
-    parser.add_argument("--batch", required=True, help="a json list of models to export")
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--batch", help="a json list of models to export")
+    mode.add_argument("--serve", action="store_true", help="answer batches read from stdin, one json line each")
     parser.add_argument("--folder", action="append", default=[], help="a folder of a mod's own model files, read before the vanilla packs")
     args = parser.parse_args()
-    items = json.load(open(args.batch, encoding="utf-8"))
-    print(json.dumps(export_batch(args.gallery, items, args.folder)))
+    exporter = Exporter(args.gallery, args.folder)
+    if args.serve:
+        serve(exporter)
+    else:
+        print(json.dumps(exporter.export(json.load(open(args.batch, encoding="utf-8")))))
     return 0
 
 

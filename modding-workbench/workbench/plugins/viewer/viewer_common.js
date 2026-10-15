@@ -25,12 +25,19 @@ export function animLoader(manifest, base = "") {
   };
 }
 
+// Textures by URL, shared by every model loaded with `shared` on, so a texture several models use is fetched, decoded and uploaded once. Each is
+// { texture, ready }.
+const sharedTextures = new Map();
+
 // Loads an exported model: skinned meshes on flat bones that take world transforms straight from an animation. Rigid props sit in the local
 // space of their attach bone, and are left out when `props` is false. Each mesh keeps its `slot`, `model` path and `attach` bone in `userData`.
+// With `shared` off the model gets textures of its own, for a caller that frees them (the thumbnails).
 // Returns { group, bones, inverses, meshes, missing, ready }, `ready` settling once every texture has loaded or failed.
-export async function loadModel(url, { props = true } = {}) {
-  const doc = await (await fetch(url)).json();
-  const buffer = await (await fetch(url.replace(/[^/]+$/, doc.bin))).arrayBuffer();
+export async function loadModel(url, { props = true, shared = true } = {}) {
+  // The vertex data is named after the model's json, so both are fetched at once.
+  const guess = url.replace(/\.json$/, ".bin"), binary = fetch(guess).then(r => r.ok ? r.arrayBuffer() : null);
+  const doc = await (await fetch(url)).json(), binUrl = url.replace(/[^/]+$/, doc.bin);
+  const buffer = (binUrl === guess && await binary) || await (await fetch(binUrl)).arrayBuffer();
   const bones = doc.bones.map(name => { const b = new THREE.Bone(); b.name = name; return b; });
   const inverses = doc.inverse_bind.map(m => new THREE.Matrix4().fromArray(m));
   // Start every bone at its bind pose.
@@ -38,7 +45,7 @@ export async function loadModel(url, { props = true } = {}) {
   const skeleton = new THREE.Skeleton(bones, inverses);
   const group = new THREE.Group();
   bones.forEach(b => group.add(b));
-  const loader = new THREE.TextureLoader(), textures = new Map(), meshes = [], loading = [];
+  const loader = new THREE.TextureLoader(), textures = shared ? sharedTextures : new Map(), meshes = [], loading = [];
   for (const m of doc.meshes) {
     if (!m.skinned && !props) continue;
     const g = new THREE.BufferGeometry();
@@ -48,12 +55,14 @@ export async function loadModel(url, { props = true } = {}) {
     g.setIndex(new THREE.BufferAttribute(new Uint16Array(buffer, m.index, m.index_count), 1));
     const mat = new THREE.MeshLambertMaterial({ color: m.texture ? 0xffffff : 0x9a9aa2, side: THREE.DoubleSide });
     if (m.texture) {
-      if (!textures.has(m.texture)) {
-        let t;
-        loading.push(new Promise(done => { t = loader.load(url.replace(/[^/]+$/, m.texture), done, undefined, done); }));
-        t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; textures.set(m.texture, t);
+      const textureUrl = url.replace(/[^/]+$/, m.texture);
+      if (!textures.has(textureUrl)) {
+        let texture;
+        const ready = new Promise(done => { texture = loader.load(textureUrl, done, undefined, done); });
+        texture.flipY = false; texture.colorSpace = THREE.SRGBColorSpace; textures.set(textureUrl, { texture, ready });
       }
-      mat.map = textures.get(m.texture);
+      loading.push(textures.get(textureUrl).ready);
+      mat.map = textures.get(textureUrl).texture;
       if (m.alpha) mat.alphaTest = 0.5;
     }
     let mesh;
