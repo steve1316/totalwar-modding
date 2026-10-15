@@ -114,6 +114,16 @@ function M.mark_open(faction_name, key)
     set_entry(M.open_by_faction, faction_name, key, true)
 end
 
+--- Notes any dilemma the game shows a human faction as open, from the game itself, another mod or LEAPOI, so the tower never starts a battle
+--- under one. Called from the game's `DilemmaIssuedEvent`.
+--- @param faction_name string The faction shown the dilemma.
+--- @param key string The dilemma key.
+function M.on_issued(faction_name, key)
+    if (M.open_by_faction[faction_name] or {})[key] then return end
+    M.mark_open(faction_name, key)
+    log("dilemmas: " .. faction_name .. " was shown " .. key .. ", counted as open until it is answered")
+end
+
 --- Shows a dilemma built in the DB (not by script) and notes it as open, see `M.mark_open`.
 --- @param faction_name string The faction key.
 --- @param key string The dilemma key.

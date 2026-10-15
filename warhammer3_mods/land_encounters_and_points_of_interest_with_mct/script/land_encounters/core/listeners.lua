@@ -52,6 +52,15 @@ function M.register()
         IS_PERSISTENT_LISTENER
     )
 
+    --- Every dilemma a human faction is shown counts as open until answered, including the game's own (the Nemesis Crown) and other mods'.
+    core:add_listener(
+        "land_enc_dilemma_issued",
+        "DilemmaIssuedEvent",
+        function(context) return context:faction():is_human() end,
+        function(context) dilemmas.on_issued(context:faction():name(), context:dilemma()) end,
+        IS_PERSISTENT_LISTENER
+    )
+
     boons.register()
 
     --- Once per round (on the first human turn), expire stale encounters, refill them, and update POI states. Every human turn, check that
