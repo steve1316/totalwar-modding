@@ -1,10 +1,10 @@
 // Live models: keeps the open form's stage model showing what the Look tab chose (weapons, outfit, head and extra pieces) before a rebuild bakes
 // them in. Each source is a function giving, for the open form, slot -> {model, attach, built} (attach empty for a model that bends with the body,
-// built when it is what the gallery built) or null for a slot that should be empty. A model the gallery does not have is exported on the spot
+// built when it is what the gallery built, plain when it is worn without its colours) or null for a slot that should be empty. A model the gallery does not have is exported on the spot
 // (`api/props`, the same export its thumbnail uses) and loaded once. The pieces the gallery built are kept aside, and a slot changed here goes
 // back to them once no source asks for anything else.
 import * as THREE from "three";
-import { loadModel } from "../viewer_common.js";
+import { loadModel, setPainted } from "../viewer_common.js";
 
 // A model path's file name without its extension.
 export const stem = p => (p || "").toLowerCase().split("/").pop().replace(/\.(wsmodel|rigid_model_v2|variantmeshdefinition)$/, "");
@@ -94,5 +94,6 @@ export class LiveModels {
       if (meshes) { this.place(model, slot, meshes, want.attach); model.changedSlots.add(slot); }
       this.changed();
     }
+    for (const m of model.meshes) setPainted(m, !(wanted[m.userData.slot] || {}).plain);
   }
 }

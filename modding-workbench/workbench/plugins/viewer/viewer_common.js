@@ -42,14 +42,19 @@ export function setFactionColours(hexes) { hexes.forEach((hex, i) => factionColo
 // Sets the heraldry column (from 0) of models with a heraldry palette.
 export function setHeraldry(column) { heraldry.value = column; }
 
+// Shows a mesh with or without the colours its mask paints (an outfit worn unpainted). A mesh with no mask is left alone.
+export function setPainted(mesh, on) { const paint = mesh.material && mesh.material.userData.paint; if (paint) paint.value = on ? 1 : 0; }
+
 // Tints a material's base colour where its mask marks it, as the game does: each of the mask's red, green and blue channels multiplies the
 // base colour by a colour. Those are the faction's three uniform colours, or with a heraldry `palette` (`columns` wide) the top and bottom colours
 // of the heraldry column, then the faction's third.
 function tint(material, mask, palette, columns) {
+  // 1 paints the colours, 0 leaves the base colour as it is (`setPainted`).
+  material.userData.paint = { value: 1 };
   material.onBeforeCompile = shader => {
-    shader.uniforms.tintMask = { value: mask };
+    Object.assign(shader.uniforms, { tintMask: { value: mask }, painted: material.userData.paint });
     factionColours.forEach((colour, i) => { shader.uniforms[`factionColour${i + 1}`] = colour; });
-    let header = "uniform sampler2D tintMask;\nuniform vec3 factionColour1, factionColour2, factionColour3;", colours = ["factionColour1", "factionColour2"];
+    let header = "uniform sampler2D tintMask;\nuniform float painted;\nuniform vec3 factionColour1, factionColour2, factionColour3;", colours = ["factionColour1", "factionColour2"];
     if (palette) {
       Object.assign(shader.uniforms, { tintPalette: { value: palette }, tintColumns: { value: columns }, heraldry });
       header += `\nuniform sampler2D tintPalette;\nuniform float tintColumns, heraldry;
@@ -59,7 +64,7 @@ function tint(material, mask, palette, columns) {
     shader.fragmentShader = shader.fragmentShader
       .replace("#include <common>", `#include <common>\n${header}`)
       .replace("#include <map_fragment>", `#include <map_fragment>
-        vec3 tintWeights = texture2D(tintMask, vMapUv).rgb;
+        vec3 tintWeights = texture2D(tintMask, vMapUv).rgb * painted;
         diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * ${colours[0]}, tintWeights.r);
         diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * ${colours[1]}, tintWeights.g);
         diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * factionColour3, tintWeights.b);`);
