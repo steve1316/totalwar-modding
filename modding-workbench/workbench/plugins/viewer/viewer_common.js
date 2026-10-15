@@ -29,11 +29,36 @@ export function animLoader(manifest, base = "") {
 // { texture, ready }.
 const sharedTextures = new Map();
 
+// The faction's three uniform colours, shared by every tinted material, so `setFactionColours` recolours every model at once. White leaves
+// the base colour as it is.
+const factionColours = [0, 1, 2].map(() => ({ value: new THREE.Color(1, 1, 1) }));
+
+// Sets the faction colours models are tinted with, as three "RRGGBB" hex strings (sRGB, as the game's `factions_tables` holds them).
+export function setFactionColours(hexes) { hexes.forEach((hex, i) => factionColours[i].value.set(`#${hex}`)); }
+
+// Tints a material's base colour where its mask marks it, as the game does: each of the mask's red, green and blue channels multiplies the
+// base colour by the faction's first, second and third uniform colour.
+function tint(material, mask) {
+  material.onBeforeCompile = shader => {
+    shader.uniforms.tintMask = { value: mask };
+    factionColours.forEach((colour, i) => { shader.uniforms[`factionColour${i + 1}`] = colour; });
+    shader.fragmentShader = shader.fragmentShader
+      .replace("#include <common>", "#include <common>\nuniform sampler2D tintMask;\nuniform vec3 factionColour1, factionColour2, factionColour3;")
+      .replace("#include <map_fragment>", `#include <map_fragment>
+        vec3 tintWeights = texture2D(tintMask, vMapUv).rgb;
+        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * factionColour1, tintWeights.r);
+        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * factionColour2, tintWeights.g);
+        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * factionColour3, tintWeights.b);`);
+  };
+  material.customProgramCacheKey = () => "faction_tint";
+}
+
 // Loads an exported model: skinned meshes on flat bones that take world transforms straight from an animation. Rigid props sit in the local
 // space of their attach bone, and are left out when `props` is false. Each mesh keeps its `slot`, `model` path and `attach` bone in `userData`.
-// With `shared` off the model gets textures of its own, for a caller that frees them (the thumbnails).
+// With `shared` off the model gets textures of its own, for a caller that frees them (the thumbnails). With `tint` on, meshes with a faction colour
+// mask take the colours of `setFactionColours`.
 // Returns { group, bones, inverses, meshes, missing, ready }, `ready` settling once every texture has loaded or failed.
-export async function loadModel(url, { props = true, shared = true } = {}) {
+export async function loadModel(url, { props = true, shared = true, tint: tinted = true } = {}) {
   // The vertex data is named after the model's json, so both are fetched at once.
   const guess = url.replace(/\.json$/, ".bin"), binary = fetch(guess).then(r => r.ok ? r.arrayBuffer() : null);
   const doc = await (await fetch(url)).json(), binUrl = url.replace(/[^/]+$/, doc.bin);
@@ -46,6 +71,17 @@ export async function loadModel(url, { props = true, shared = true } = {}) {
   const group = new THREE.Group();
   bones.forEach(b => group.add(b));
   const loader = new THREE.TextureLoader(), textures = shared ? sharedTextures : new Map(), meshes = [], loading = [];
+  // An image of the model's folder, loaded once per URL. A mask holds weights, not colours.
+  const image = (file, colorSpace) => {
+    const textureUrl = url.replace(/[^/]+$/, file);
+    if (!textures.has(textureUrl)) {
+      let texture;
+      const ready = new Promise(done => { texture = loader.load(textureUrl, done, undefined, done); });
+      texture.flipY = false; texture.colorSpace = colorSpace; textures.set(textureUrl, { texture, ready });
+    }
+    loading.push(textures.get(textureUrl).ready);
+    return textures.get(textureUrl).texture;
+  };
   for (const m of doc.meshes) {
     if (!m.skinned && !props) continue;
     const g = new THREE.BufferGeometry();
@@ -55,15 +91,9 @@ export async function loadModel(url, { props = true, shared = true } = {}) {
     g.setIndex(new THREE.BufferAttribute(new Uint16Array(buffer, m.index, m.index_count), 1));
     const mat = new THREE.MeshLambertMaterial({ color: m.texture ? 0xffffff : 0x9a9aa2, side: THREE.DoubleSide });
     if (m.texture) {
-      const textureUrl = url.replace(/[^/]+$/, m.texture);
-      if (!textures.has(textureUrl)) {
-        let texture;
-        const ready = new Promise(done => { texture = loader.load(textureUrl, done, undefined, done); });
-        texture.flipY = false; texture.colorSpace = THREE.SRGBColorSpace; textures.set(textureUrl, { texture, ready });
-      }
-      loading.push(textures.get(textureUrl).ready);
-      mat.map = textures.get(textureUrl).texture;
+      mat.map = image(m.texture, THREE.SRGBColorSpace);
       if (m.alpha) mat.alphaTest = 0.5;
+      if (m.mask && tinted) tint(mat, image(m.mask, THREE.NoColorSpace));
     }
     let mesh;
     if (m.skinned) {

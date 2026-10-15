@@ -1,6 +1,6 @@
 // The Workbench studio: forms and slots on the left, the stage in the middle (Battle or Portrait), the inspector tabs on the right (a bottom sheet
 // on a phone), and the playback and job bar at the bottom. A new inspector tab is a module with `render(container)` added to `TABS`.
-import { animLoader } from "../viewer_common.js";
+import { animLoader, setFactionColours } from "../viewer_common.js";
 import { BattleStage } from "./stage.js";
 import { Jobs } from "./jobs.js";
 import { LiveModels } from "./live_models.js";
@@ -14,6 +14,8 @@ const $ = id => document.getElementById(id);
 const { esc } = window.UnitPanel;
 // Phones get the pickers and the bottom sheet.
 const phone = window.matchMedia("(max-width: 899px)");
+// Where this browser remembers the faction whose colours the models wear.
+const FACTION_STORE = "workbench.faction";
 
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Project and studio state
@@ -54,6 +56,18 @@ const studio = {
   },
 };
 studio.stage = new BattleStage($("battle"), studio.getAnim, DATA);
+
+// The faction whose uniform colours tint the models, from the gallery's `editor.colours` (`default`, and `factions`: [key, name, three hex
+// colours] each). An unknown key falls back to the default.
+const colours = manifest.editor && manifest.editor.colours;
+let faction = null;
+function setFaction(key) {
+  const found = colours && (colours.factions.find(f => f[0] === key) || colours.factions.find(f => f[0] === colours.default));
+  if (!found) return;
+  faction = found[0]; setFactionColours(found[2]);
+  try { localStorage.setItem(FACTION_STORE, faction); } catch (e) { /* storage is blocked */ }
+}
+try { setFaction(localStorage.getItem(FACTION_STORE)); } catch (e) { setFaction(null); }
 const stage = studio.stage;
 const portrait = manifest.portrait ? new PortraitStage($("portraitStage"), studio) : null;
 
@@ -130,15 +144,17 @@ function renderToggles() {
       ${v.versus && vanillaSides.length ? `<span class="menu">${vanillaSides.map(chip).join("")}</span>` : ""}</span>` : "")
     + `<button data-v="models" class="${v.models ? "on" : ""}">Models</button><button data-v="bones" class="${v.bones ? "on" : ""}">Bones</button>`
     + `<button data-v="props" class="${v.props ? "on" : ""}">Props</button><button data-v="closeUp" class="${v.closeUp ? "on" : ""}">Close-up</button>`
-    + (stage.isCompare() ? `<select data-v="layout"><option value="side">Side by side</option><option value="overlay">Overlay</option></select>` : "");
+    + (stage.isCompare() ? `<select data-v="layout"><option value="side">Side by side</option><option value="overlay">Overlay</option></select>` : "")
+    + (colours ? `<select data-v="faction" title="The faction whose colours the models wear">${colours.factions.map(([key, name]) => `<option value="${esc(key)}">${esc(name)}</option>`).join("")}</select>` : "");
   $("toggles").querySelectorAll("button[data-v]").forEach(b => b.onclick = () => {
     v[b.dataset.v] = !v[b.dataset.v];
     if (b.dataset.v === "versus" || b.dataset.v === "closeUp") stage.frameCamera();
     if (b.dataset.v === "versus") stage.loadVersus();
     renderToggles(); writeHash();
   });
-  const layout = $("toggles").querySelector("select");
+  const layout = $("toggles").querySelector("select[data-v=layout]"), factions = $("toggles").querySelector("select[data-v=faction]");
   if (layout) { layout.value = v.layout; layout.onchange = () => { v.layout = layout.value; stage.resize(); stage.frameCamera(); }; }
+  if (factions) { factions.value = faction; factions.onchange = () => setFaction(factions.value); }
   const own = stage.listedSides().filter(s => s.group !== "vanilla");
   $("sides").innerHTML = own.length > 1 ? own.map(chip).join("") : "";
   $("battleTools").querySelectorAll("button[data-side]").forEach(b => b.onclick = () => {
