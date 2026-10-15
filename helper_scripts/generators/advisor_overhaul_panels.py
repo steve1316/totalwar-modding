@@ -40,6 +40,9 @@ LOC_PREFIXES = (LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, ATTRIBUTE_PREFIX, *TOOLTIP
 # The faction whose uniform colours the workbench shows first: Reikland, the Advisor's home.
 DEFAULT_FACTION = "wh_main_emp_empire"
 
+# Names of his ten skill tree rows, top to bottom, for the Skills tab.
+SKILL_ROWS = ["Weapons", "Mounts", "Arts", "Memory", "Winds", "Elsewhere", "Martial", "Civic", "Pact", "Spare"]
+
 # Columns of `factions_tables` holding a faction's three uniform colours (hex), in the order of the mask's red, green and blue channels.
 UNIFORM_COLUMNS = ("uniform_colour_primary", "uniform_colour_secondary", "uniform_colour_tertiary")
 
@@ -408,7 +411,7 @@ def build_panels(registry: Dict, out: str, sets: Dict[str, AnimSet]) -> Tuple[Di
     editor["look"] = {"bodies": {k: {slot: piece[0] for slot, piece in body.items()} for k, body in registry["model"]["bodies"].items()},
                       "head": {"hooded": head["hooded"][0], "hoodless": head.get("hoodless", [""])[0]},
                       "models": sorted(p for p in models if p.endswith(".wsmodel") and LOOK_FOLDER.search(p) and not PROP_FOLDER.search(p) and not LOOK_SKIPPED.search(p))}
-    editor["skills"] = {"catalog": catalog, "fixed": fixed, "rows": {"0": "Weapons", "1": "Mounts"}}
+    editor["skills"] = {"catalog": catalog, "fixed": fixed, "rows": dict(enumerate(SKILL_ROWS))}
     editor["new_form"] = builder.new_form_data(registry, sets)
     editor["colours"] = faction_colours(builder.loc)
     print(f"panels: {len(panels)} units, {builder.copy_art(out)} art files, {len(editor['attributes'])} attributes, {len(editor['abilities'])} abilities")

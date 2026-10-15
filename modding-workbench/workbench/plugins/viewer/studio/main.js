@@ -95,6 +95,8 @@ const tabs = { stats: new StatsTab(studio), look: new LookTab(studio), portrait:
                skills: new SkillsTab($("skillsStage"), studio) };
 // The New form dialog, which also lists the forms not in the gallery yet.
 const newForm = new NewForm(studio, () => renderForms());
+// The weapons with every pending edit, for the tabs that read them.
+studio.weapons = () => newForm.weapons();
 // Tab order and labels. Tabs without a module yet are shown greyed out. The Portrait tab has no button: the stage's Portrait button opens it.
 const TABS = [["stats", "Stats"], ["look", "Look"], ["skills", "Skills"]];
 let tab = "stats";

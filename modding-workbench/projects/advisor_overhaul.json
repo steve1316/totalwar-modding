@@ -46,7 +46,8 @@
   "model.bodies.*",
   "model.unpainted.*",
   "weapons.*.forms.*.props.*",
-  "skills.*"
+  "skills.*",
+  "weapons.*.arts.*"
  ],
  "readable": ["skills", "weapons", "model.unpainted"],
  "assets": ["../warhammer3_mods/!!advisor_overhaul"]
