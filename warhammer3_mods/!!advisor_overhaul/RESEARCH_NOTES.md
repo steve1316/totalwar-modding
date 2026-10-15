@@ -186,6 +186,26 @@ Also fine but not kept: Kislev Patriarch, Engineer, Paladin, Warrior Priest. `[d
   offset 0,20 showed ten rows. It replaced the panel for every character. The mod now uses two vanilla rows. `[game]`
 - **No vertical scrolling.** The `listview` runs the `HorizontalListView` code callback, which drives only the horizontal slider and drag. `[data]`
 
+### Script-added skills and hero actions (2026-10-15)
+
+Answered by the test build `generators/advisor_overhaul_spike.py` plus `script/campaign/mod/advisor_overhaul_spike.lua`.
+
+- **Hero actions come from a hidden pre-learned skill.** A wizard tree without `wh2_main_skill_all_dummy_agent_actions_emp_battle_wizard`
+  (indent 8, points on creation 1) shows only Embed Hero and Constant Local Effect on the unit card. `[game]`
+- **One node per slot.** Two nodes on the same indent and tier drop one of them. `cm:add_skill` on the dropped node's skill runs with no error
+  and `has_skill` stays false. `[game]`
+- **`cm:add_skill(char, key, true, true)` spends no skill point.** The node can be hidden. `[game]`
+- **A character effect bundle works for weapon gating.** One applied and removed by script gave a spell (`ability_enable`), a personal stat and
+  an army stat (`character_to_force_own`), and came off cleanly. `advancement_stage` must be `start_turn_completed`, or the game crashes on load
+  with "invalid database record". `[game]`
+- **A wizard can use any hero action through a copy.** Copy the `agent_actions` row with `agent` set to `wizard` (zeal becomes authority), give
+  it a new enable effect with an `active` bonus value junction, copy the action's other bonus value junctions, and enable it from a skill. The
+  copy needs its own `agent_actions_localised_action_name_<key>` and description text, or it shows with a blank name. `[game]`
+- **A REQUIRED link from a hidden node does not lock its child.** The visible child stayed learnable before the script added the hidden parent.
+  Pact rows need another lock. `[game]`
+- **Adding the Disc's unlock skill by script makes the Disc pickable,** and a `character_to_province_any` Tzeentch corruption effect in a bundle
+  on him spreads corruption. `[game]`
+
 ## Weapons and mounts
 
 - **The advisor fits only the `humanoid01` skeleton.** A weapon is part of the land unit's `man_animation`, so each (weapon, mount) pair is its own

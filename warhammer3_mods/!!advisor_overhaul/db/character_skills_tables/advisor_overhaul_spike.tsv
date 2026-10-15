@@ -1,0 +1,5 @@
+key	image_path	localised_description	localised_name	unlocked_at_rank	is_background_skill	is_female_only_background_skill	is_male_only_background_skill	background_weighting	influence_cost
+#character_skills_tables;5;db/character_skills_tables/advisor_overhaul_spike									
+advisor_overhaul_spike_actions	item_weapon.png			1	false	false	false	0.0000	0
+advisor_overhaul_spike_pact	item_weapon.png			1	false	false	false	0.0000	0
+advisor_overhaul_spike_gift	item_weapon.png			1	false	false	false	0.0000	0

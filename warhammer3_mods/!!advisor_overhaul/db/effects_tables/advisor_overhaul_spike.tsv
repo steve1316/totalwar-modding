@@ -1,0 +1,4 @@
+effect	icon	priority	icon_negative	category	is_positive_value_good
+#effects_tables;0;db/effects_tables/advisor_overhaul_spike					
+advisor_overhaul_spike_effect_enable_passive_stimulate_growth		0		campaign	true
+advisor_overhaul_spike_effect_enable_assist_army_scavenge		0		campaign	true

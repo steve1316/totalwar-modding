@@ -910,6 +910,7 @@ def build() -> None:
     missile_rows(registry, data, rows)
     melee_rows(registry, data, rows)
     check_duplicates(rows)
+    check_node_slots(rows["character_skill_nodes_tables"])
     check_loc(texts)
 
     for table, table_rows in rows.items():
@@ -941,6 +942,24 @@ def check_duplicates(rows: Dict[str, List[Dict[str, str]]]) -> None:
         keys = [r[column] for r in rows[table]]
         if len(keys) != len(set(keys)):
             raise SystemExit(f"duplicate keys in {table}: {sorted(k for k in set(keys) if keys.count(k) > 1)}")
+
+
+def check_node_slots(nodes: List[Dict[str, str]]) -> None:
+    """Stops the build on two of his skill nodes in one slot. The game keeps one and drops the other, and `cm:add_skill` on the dropped one's
+    skill then does nothing.
+
+    Args:
+        nodes (List[Dict[str, str]]): His skill node rows.
+
+    Raises:
+        SystemExit: When an indent and tier pair repeats.
+    """
+    slots: Dict[Tuple[str, str], str] = {}
+    for node in nodes:
+        slot = (node["indent"], node["tier"])
+        if slot in slots:
+            raise SystemExit(f"skill nodes {slots[slot]} and {node['key']} share indent {slot[0]} tier {slot[1]}")
+        slots[slot] = node["key"]
 
 
 def check_loc(texts: List[Tuple[str, str]]) -> None:
