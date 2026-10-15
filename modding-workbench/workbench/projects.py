@@ -373,7 +373,8 @@ class Project:
         return json.load(open(self.registry, encoding="utf-8"))
 
     def props(self, registry: Dict) -> List[str]:
-        """Every weapon model the registry puts on a prop slot, in registry order. Variant mesh references are left out.
+        """Every model the registry holds on a bone (a prop slot's [bone, model, ...]), in registry order. Variant mesh references and pieces that
+        bend with the body ([model, ...]) are left out.
 
         Args:
             registry (Dict): The registry.
@@ -385,7 +386,7 @@ class Project:
         for source in self.tuning.get("prop_sources", []):
             for slots in each_path(registry, source):
                 for prop in slots.values() if isinstance(slots, dict) else []:
-                    if isinstance(prop, list) and len(prop) > 1 and prop[1] not in paths and not prop[1].lower().endswith(".variantmeshdefinition"):
+                    if isinstance(prop, list) and len(prop) > 1 and prop[1] not in paths and prop[1].lower().endswith((".wsmodel", ".rigid_model_v2")):
                         paths.append(prop[1])
         return paths
 

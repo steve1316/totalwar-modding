@@ -79,7 +79,14 @@ export class LiveModels {
         if (shown.length !== built.length || !shown.every(m => built.includes(m))) { this.place(model, slot, built, built[0].userData.attach); this.changed(); }
         continue;
       }
-      if (shown.length && stem(shown[0].userData.model) === stem(want.model)) continue;
+      if (shown.length && stem(shown[0].userData.model) === stem(want.model)) {
+        // The same model on another bone (a prop piece moved from his back to his hip) is moved there. The built meshes stay as built.
+        if (want.attach && shown[0].userData.attach !== want.attach) {
+          const moved = shown.map(m => { const c = (model.built[slot] || []).includes(m) ? m.clone() : m; c.userData = { ...m.userData, attach: want.attach }; return c; });
+          this.place(model, slot, moved, want.attach); model.changedSlots.add(slot); this.changed();
+        }
+        continue;
+      }
       let meshes = model.built[slot];
       if (!meshes || stem(meshes[0].userData.model) !== stem(want.model)) {
         this.loading.add(slot); this.failed.delete(slot); this.changed();

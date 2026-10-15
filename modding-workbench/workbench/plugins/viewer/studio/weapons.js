@@ -190,7 +190,7 @@ export class WeaponCards {
   // The position, size and turn sliders of a weapon model, and a reset. A turn of 180 flips it, for a weapon that comes upside down.
   shapeRows(card, key) {
     const edits = this.studio.edits, changed = () => { this.applyLive(); this.studio.changed(); };
-    card.insertAdjacentHTML("beforeend", `<div class="note">In the weapon's own directions, around his hand, on every form holding this model. x runs along the grip.</div>`);
+    card.insertAdjacentHTML("beforeend", `<div class="note">In the model's own directions, around the bone holding it, on every form holding this model. x runs along a weapon's grip.</div>`);
     [["Move along x (cm)", 0], ["Move along y (cm)", 1], ["Move along z (cm)", 2]].forEach(([label, axis]) => this.sliderRow(card, label, this.propValue(key)[axis], 30, m => {
       edits.props[key] = this.propValue(key).slice(); edits.props[key][axis] = m; changed();
     }));

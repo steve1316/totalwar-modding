@@ -1,7 +1,8 @@
 // The Look inspector tab: the open form's weapons (`weapons.js`), then his outfit, his hood and extra pieces such as a hat, set per weapon and shared
 // by every mount of that weapon (`weapons.<weapon>.body`, `.hood` and `.pieces`), then his hands. An outfit can be worn without the faction colours
 // or heraldry the game paints on it (`model.unpainted.<outfit>`), on every form wearing it. Outfits come from the registry's `model.bodies`,
-// and any full body of the game (`api/bodies`) can be added as an outfit, any humanoid model as a piece. Every picker is a `ModelList` with thumbnails, and the model the
+// and any full body of the game (`api/bodies`) can be added as an outfit, any humanoid model or prop as a piece. A prop piece is held on a bone
+// ([bone, model]) and moves, turns and sizes like a weapon. A piece that bends with the body is [model]. Every picker is a `ModelList` with thumbnails, and the model the
 // pointer rests on is tried on. Every choice shows live on the stage through `studio.live`. The Jobs bar saves the edits.
 import { stem } from "./live_models.js";
 import { ModelList } from "./model_list.js";
@@ -10,6 +11,14 @@ import { WeaponCards } from "./weapons.js";
 
 // The slot a hovered piece is tried on in.
 const HOVER_SLOT = "piece_hover";
+
+// Bones a prop piece can be held on, with what the picker calls them. The first is where a new one goes.
+const PIECE_BONES = [["spine_2", "Back"], ["spine_0", "Waist"], ["root", "Hips"], ["head", "Head"], ["clav_left", "Left shoulder"],
+  ["clav_right", "Right shoulder"], ["upperleg_left", "Left thigh"], ["upperleg_right", "Right thigh"], ["hand_left", "Left hand"], ["hand_right", "Right hand"]];
+
+// Whether a piece is a prop held on a bone ([bone, model, ...]) rather than one that bends with the body ([model, ...]), and its model.
+const held = piece => !/\.(wsmodel|rigid_model_v2)$/i.test(piece[0]);
+const pieceModel = piece => held(piece) ? piece[1] : piece[0];
 
 // The metadata a new outfit's body slot carries, as on the vanilla outfits.
 const BODY_META = ["audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"];
@@ -23,6 +32,8 @@ export class LookTab {
     this.studio = studio; this.adding = null; this.hovering = null; this.queued = false;
     this.look = studio.manifest.editor && studio.manifest.editor.look;
     this.thumbs = new Thumbnails(studio);
+    // The props a piece may be, besides the humanoid models.
+    this.props = new Set((studio.manifest.editor && studio.manifest.editor.prop_models) || []);
     // The game's full bodies, the models "+ Another outfit" lists. Null until the server has answered.
     this.fullBodies = null;
     if (this.look) fetch(studio.api + "bodies").then(r => r.json()).then(list => { this.fullBodies = list; if (this.adding === "outfit") this.redraw(); })
@@ -64,10 +75,10 @@ export class LookTab {
     if (this.hoodless()) out.head = { model: hood ? this.look.head.hooded : this.look.head.hoodless, attach: "", built: hood === (f.look.hood !== false) };
     for (const slot of Object.keys(f.look.pieces)) out[slot] = null;
     for (const [slot, piece] of Object.entries(this.value(f, "pieces") || {})) {
-      out[slot] = { model: piece[0], attach: "", built: !!f.look.pieces[slot] && f.look.pieces[slot][0] === piece[0] };
+      out[slot] = { model: pieceModel(piece), attach: held(piece) ? piece[0] : "", built: JSON.stringify(f.look.pieces[slot]) === JSON.stringify(piece) };
     }
-    // A hovered model is tried on: a piece next to the rest, an outfit in place of his. A weapon is tried on by `WeaponCards`.
-    out[HOVER_SLOT] = this.hovering && this.adding === "piece" ? { model: this.hovering, attach: "" } : null;
+    // A hovered model is tried on: a piece next to the rest (a prop on his back), an outfit in place of his. A weapon is tried on by `WeaponCards`.
+    out[HOVER_SLOT] = this.hovering && this.adding === "piece" ? { model: this.hovering, attach: this.props.has(this.hovering) ? PIECE_BONES[0][0] : "" } : null;
     if (this.hovering && this.adding === "outfit") {
       for (const slot of Object.keys(body)) out[slot] = null;
       out.body = { model: this.hovering, attach: "" };
@@ -97,16 +108,16 @@ export class LookTab {
     return failed ? `<div class="note warn">No preview: ${esc(live.failed.get(failed))}. It still builds on Rebuild.</div>` : "";
   }
 
-  // The model list of "+ Another outfit" (the game's full bodies) or "+ Add a piece" (every humanoid model).
+  // The model list of "+ Another outfit" (the game's full bodies) or "+ Add a piece" (every humanoid model, then every prop).
   search(f) {
     const outfit = this.adding === "outfit";
     if (outfit && !this.fullBodies) return Object.assign(document.createElement("div"), { className: "note", textContent: "Finding the game's full bodies..." });
-    return new ModelList(this.thumbs, { models: outfit ? this.fullBodies : this.look.models,
-      placeholder: outfit ? "Search full bodies (wizard, knight, priest...)" : "Search models (hat, helmet, cape, wizard...)",
+    return new ModelList(this.thumbs, { models: outfit ? this.fullBodies : this.look.models.concat([...this.props]),
+      placeholder: outfit ? "Search full bodies (wizard, knight, priest...)" : "Search models and props (hat, cape, book, sword...)",
       onPick: model => this.pick(f, model), onHover: model => this.tryOn(model) }).element();
   }
 
-  // Adds the picked model as an outfit (and wears it) or as a piece.
+  // Adds the picked model as an outfit (and wears it) or as a piece, a prop held on his back.
   pick(f, model) {
     const base = `weapons.${f.weapon}.`, adding = this.adding;
     this.close();
@@ -117,7 +128,7 @@ export class LookTab {
       const pieces = { ...(this.value(f, "pieces") || {}) };
       let n = 1;
       while (`piece_${n}` in pieces) n++;
-      pieces[`piece_${n}`] = [model];
+      pieces[`piece_${n}`] = this.props.has(model) ? [PIECE_BONES[0][0], model] : [model];
       this.set({ [base + "pieces"]: pieces });
     }
   }
@@ -169,15 +180,36 @@ export class LookTab {
 
     const extra = document.createElement("div"); extra.className = "adj-card";
     extra.innerHTML = `<div class="adj-head"><b>Extra pieces</b><button class="mini" data-add="piece">${this.adding === "piece" ? "Close" : "+ Add a piece"}</button></div>
-      ${Object.keys(pieces).length ? "" : '<div class="note">None. Add a hat, a helmet, a cape and so on.</div>'}
-      ${Object.entries(pieces).map(([slot, piece]) => `<div class="look-piece"><img class="thumb" data-thumb="${esc(piece[0])}" alt=""><span class="adj-model">${esc(stem(piece[0]))}</span>
-        <button class="mini" data-drop="${esc(slot)}" aria-label="Remove">×</button></div>
-        ${this.state([slot])}`).join("")}`;
+      ${Object.keys(pieces).length ? "" : '<div class="note">None. Add a hat, a helmet, a cape, a book and so on.</div>'}`;
     container.append(extra);
+    for (const [slot, piece] of Object.entries(pieces)) {
+      extra.insertAdjacentHTML("beforeend", `<div class="look-piece"><img class="thumb" data-thumb="${esc(pieceModel(piece))}" alt=""><span class="adj-model">${esc(stem(pieceModel(piece)))}</span>
+        <button class="mini" data-drop="${esc(slot)}" aria-label="Remove">×</button></div>${this.state([slot])}`);
+      if (held(piece)) this.renderHeld(extra, base, pieces, slot, piece);
+    }
     if (this.adding === "piece") extra.append(this.search(f));
     extra.querySelectorAll("[data-drop]").forEach(b => b.onclick = () => {
       const rest = { ...pieces }; delete rest[b.dataset.drop];
       this.set({ [base + "pieces"]: Object.keys(rest).length ? rest : null });
     });
+  }
+
+  // A prop piece's bone, then its position, turn and size once saved. Those belong to the model, as a weapon's do.
+  renderHeld(card, base, pieces, slot, piece) {
+    const { esc } = window.UnitPanel, weapons = this.weapons, key = weapons.propKey(piece[1]), row = document.createElement("div");
+    row.className = "piece-bone";
+    row.innerHTML = `<span>Held on</span><select>${PIECE_BONES.map(([bone, name]) => `<option value="${bone}">${esc(name)}</option>`).join("")}</select>`;
+    const select = row.querySelector("select");
+    if (!PIECE_BONES.some(([bone]) => bone === piece[0])) select.add(new Option(piece[0], piece[0]));
+    select.value = piece[0];
+    select.onchange = () => this.set({ [base + "pieces"]: { ...pieces, [slot]: [select.value, ...piece.slice(1)] } });
+    card.append(row);
+    if (!key) { card.insertAdjacentHTML("beforeend", '<div class="note">Save to move, turn or size it.</div>'); return; }
+    const shaping = weapons.shaping.has(slot), more = document.createElement("button");
+    more.className = "mini adj-more"; more.textContent = shaping ? "Hide position, turn and size" : "Position, turn and size";
+    more.onclick = () => { shaping ? weapons.shaping.delete(slot) : weapons.shaping.add(slot); this.redraw(); };
+    if (!shaping) card.insertAdjacentHTML("beforeend", `<div class="note">${esc(weapons.shapeSummary(key))}</div>`);
+    card.append(more);
+    if (shaping) weapons.shapeRows(card, key);
   }
 }
