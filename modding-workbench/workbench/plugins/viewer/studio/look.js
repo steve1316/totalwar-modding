@@ -1,5 +1,6 @@
 // The Look inspector tab: the open form's weapons (`weapons.js`), then his outfit, his hood and extra pieces such as a hat, set per weapon and shared
-// by every mount of that weapon (`weapons.<weapon>.body`, `.hood` and `.pieces`), then his hands. Outfits come from the registry's `model.bodies`,
+// by every mount of that weapon (`weapons.<weapon>.body`, `.hood` and `.pieces`), then his hands. An outfit can be worn without the faction colours
+// or heraldry the game paints on it (`model.unpainted.<outfit>`), on every form wearing it. Outfits come from the registry's `model.bodies`,
 // and any full body of the game (`api/bodies`) can be added as an outfit, any humanoid model as a piece. Every picker is a `ModelList` with thumbnails, and the model the
 // pointer rests on is tried on. Every choice shows live on the stage through `studio.live`. The Jobs bar saves the edits.
 import { stem } from "./live_models.js";
@@ -47,6 +48,11 @@ export class LookTab {
     return all;
   }
   hoodless() { return !!this.look.head.hoodless; }
+  // Whether an outfit is worn without its colours, with the pending edits.
+  unpainted(key) {
+    const p = this.pending(), path = `model.unpainted.${key}`;
+    return !!(path in p ? p[path] : ((this.studio.tuning.registry || {})["model.unpainted"] || {})[key]);
+  }
 
   // The slots the stage should show for the form: its outfit's (every other outfit's slot empty), its head and its pieces (removed ones empty).
   // What has not changed since the gallery was built is marked built.
@@ -54,7 +60,7 @@ export class LookTab {
     if (!this.enabled()) return {};
     const bodies = this.bodies(), key = this.value(f, "body"), body = bodies[key] || {}, out = {}, hood = this.value(f, "hood") !== false;
     for (const outfit of Object.values(bodies)) for (const slot of Object.keys(outfit)) out[slot] = null;
-    for (const [slot, model] of Object.entries(body)) out[slot] = { model, attach: "", built: key === f.look.body };
+    for (const [slot, model] of Object.entries(body)) out[slot] = { model, attach: "", built: key === f.look.body, plain: this.unpainted(key) };
     if (this.hoodless()) out.head = { model: hood ? this.look.head.hooded : this.look.head.hoodless, attach: "", built: hood === (f.look.hood !== false) };
     for (const slot of Object.keys(f.look.pieces)) out[slot] = null;
     for (const [slot, piece] of Object.entries(this.value(f, "pieces") || {})) {
@@ -145,6 +151,13 @@ export class LookTab {
     container.append(outfit);
     if (this.adding === "outfit") outfit.append(this.search(f));
     outfit.querySelectorAll("[data-body]").forEach(b => b.onclick = () => this.set({ [base + "body"]: b.dataset.body }));
+
+    const plain = this.unpainted(current), colours = document.createElement("div"); colours.className = "adj-card";
+    colours.innerHTML = `<div class="adj-head"><b>Colours</b><span class="tools seg"><button data-paint="on" class="${plain ? "" : "on"}">Painted</button><button data-paint="off" class="${plain ? "on" : ""}">Unpainted</button></span></div>
+      <div class="note">${plain ? `${esc(words(current))} is worn without the faction colours or heraldry the game paints on it, on every form wearing it.`
+        : "The game paints the faction's colours (or a Bretonnian knight's heraldry) on it, as the stage's colour pickers show."}</div>`;
+    container.append(colours);
+    colours.querySelectorAll("[data-paint]").forEach(b => b.onclick = () => this.set({ [`model.unpainted.${current}`]: b.dataset.paint === "off" ? true : null }));
 
     if (this.hoodless()) {
       const card = document.createElement("div"); card.className = "adj-card";
