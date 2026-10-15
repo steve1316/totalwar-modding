@@ -21,8 +21,8 @@ from workbench.projects import Project
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Settings
 
-# A model's game path, or a variant definition's (a set such as a shield's).
-MODEL_PATH = re.compile(r"^[\w ./-]+\.(wsmodel|rigid_model_v2|variantmeshdefinition)$", re.IGNORECASE)
+# A model's game path, or a variant definition's (a set such as a shield's). No `..`, so it stays inside the game's folders.
+MODEL_PATH = re.compile(r"^(?!.*\.\.)[\w ./-]+\.(wsmodel|rigid_model_v2|variantmeshdefinition)$", re.IGNORECASE)
 
 # A slot, attach bone or skeleton name. A model with no attach bone bends with the skeleton.
 NAME = re.compile(r"^[a-z0-9_]*$")
@@ -67,7 +67,7 @@ class ExportWorker:
     @property
     def log_path(self) -> str:
         """The worker's log, next to the project's job log."""
-        return os.path.join(self.project.root, "_diag", f"workbench_{self.project.key}_exports.log")
+        return self.project.diag_path("exports.log")
 
     def start(self):
         """Starts the process, its errors going to `log_path`."""
@@ -153,7 +153,7 @@ def prop_previews(project: Project, items: List[Dict[str, str]], urgent: bool = 
     batch = []
     for item in items:
         model, slot, attach, skeleton = (str(item.get(k, d)) for k, d in (("model", ""), ("slot", ""), ("attach", ""), ("skeleton", "humanoid01")))
-        if not MODEL_PATH.match(model) or ".." in model or not all(NAME.match(v) for v in (slot, attach, skeleton)) or not slot or not skeleton:
+        if not MODEL_PATH.match(model) or not all(NAME.match(v) for v in (slot, attach, skeleton)) or not slot or not skeleton:
             raise ValueError("bad model, slot, attach bone or skeleton")
         stem = "preview_" + hashlib.sha1(f"{model.lower()}|{slot}|{attach}|{skeleton}|{EXPORT_VERSION}".encode()).hexdigest()[:12]
         batch.append({"model": model, "slot": slot, "attach": attach, "skeleton": skeleton, "stem": stem})

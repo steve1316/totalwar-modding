@@ -32,7 +32,7 @@ export class SkillsTab {
   // Saved skills with the pending edits laid over them (a null edit removes a skill).
   skills() {
     const saved = (this.studio.tuning && this.studio.tuning.registry && this.studio.tuning.registry.skills) || {}, all = { ...saved };
-    for (const [path, value] of Object.entries({ ...this.studio.savedRegistry, ...this.studio.edits.registry })) {
+    for (const [path, value] of Object.entries(this.studio.pending())) {
       if (!path.startsWith("skills.")) continue;
       const id = path.slice("skills.".length);
       if (value === null) delete all[id]; else all[id] = value;

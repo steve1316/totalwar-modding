@@ -24,9 +24,10 @@ export class Jobs {
 
   // Shows the unsaved state.
   refresh() {
-    this.q("save").disabled = this.q("undo").disabled = !this.dirty();
-    this.q("save").classList.toggle("on", this.dirty());
-    if (this.dirty()) this.note("Unsaved edits.");
+    const dirty = this.dirty();
+    this.q("save").disabled = this.q("undo").disabled = !dirty;
+    this.q("save").classList.toggle("on", dirty);
+    if (dirty) this.note("Unsaved edits.");
   }
 
   async save() {

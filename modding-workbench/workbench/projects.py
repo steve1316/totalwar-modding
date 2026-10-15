@@ -6,7 +6,6 @@ checkout itself is relative to the repo root (or absolute). `{python}` in a comm
 """
 
 import glob
-import hashlib
 import json
 import os
 import shutil
@@ -16,6 +15,7 @@ import threading
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
+from core.extract_cache import file_sha256
 from core.json_format import write_json
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ def edit_value(value: Any) -> Any:
     """
     if value is None or isinstance(value, bool) or (isinstance(value, str) and len(value) <= EDIT_TEXT_LIMIT):
         return value
-    if isinstance(value, (int, float)) and not isinstance(value, bool) and abs(value) <= EDIT_NUMBER_LIMIT:
+    if isinstance(value, (int, float)) and abs(value) <= EDIT_NUMBER_LIMIT:
         return int(value) if float(value).is_integer() else round(float(value), 4)
     if isinstance(value, list) and all(isinstance(v, str) and len(v) <= EDIT_TEXT_LIMIT for v in value):
         return value
@@ -171,9 +171,14 @@ def piece_shapes(value: Any) -> Dict[str, Dict[str, Any]]:
     """
     if not isinstance(value, dict) or not all(isinstance(s, dict) and set(s) <= {"offset", "turn", "size"} for s in value.values()):
         raise ValueError("expected piece slot -> offset, turn and size")
-    ranges = {field: PROP_MAPS[name][1:3] for field, name in (("offset", "prop_offsets"), ("turn", "prop_turns"), ("size", "prop_sizes"))}
-    return {slot: {"offset": numbers(shape.get("offset", [0.0] * 3), 3, *ranges["offset"]), "turn": numbers(shape.get("turn", [0.0] * 3), 3, *ranges["turn"]),
-                   "size": numbers([shape.get("size", 1.0)], 1, *ranges["size"])[0]} for slot, shape in value.items()}
+    shapes = {}
+    for slot, shape in value.items():
+        shapes[slot] = {}
+        for field, name in (("offset", "prop_offsets"), ("turn", "prop_turns"), ("size", "prop_sizes")):
+            count, low, high, unchanged = PROP_MAPS[name]
+            listed = numbers(shape[field] if count > 1 else [shape[field]], count, low, high) if field in shape else [unchanged] * count
+            shapes[slot][field] = listed if count > 1 else listed[0]
+    return shapes
 
 
 def numbers(value: Any, count: int, low: float, high: float) -> List[float]:
@@ -227,7 +232,7 @@ class Job:
     @property
     def log_path(self) -> str:
         """The job log, next to the project's other run logs."""
-        return os.path.join(self.project.root, "_diag", f"workbench_{self.project.key}_job.log")
+        return self.project.diag_path("job.log")
 
     def stamp_path(self, name: str) -> str:
         """The file holding the registry's hash when a job last ended well.
@@ -238,11 +243,11 @@ class Job:
         Returns:
             str: Its path, next to the job log.
         """
-        return os.path.join(self.project.root, "_diag", f"workbench_{self.project.key}_{name}.stamp")
+        return self.project.diag_path(f"{name}.stamp")
 
     def registry_hash(self) -> str:
         """The registry's content hash, or empty when there is no registry."""
-        return hashlib.sha1(open(self.project.registry, "rb").read()).hexdigest() if os.path.exists(self.project.registry) else ""
+        return file_sha256(self.project.registry) if os.path.exists(self.project.registry) else ""
 
     def stale(self, name: str) -> bool:
         """Whether the registry has changed since a job last ended well (or it never has).
@@ -287,7 +292,8 @@ class Job:
                 self.ran_first.append(need)
                 ok = self._steps(need, log)
             ok = ok and self._steps(name, log)
-            log.write("done\n" if ok else "")
+            if ok:
+                log.write("done\n")
         with self.lock:
             self.running, self.ok = False, ok
 
@@ -350,7 +356,7 @@ class Project:
     # The viewer gallery the Viewer tab draws, and the folder a rebuild exports the next one to.
     gallery: str
     gallery_next: str
-    # Job name -> {"commands": [[...], ...], "publish": bool}.
+    # Job name -> {"commands": [[...], ...], "publish": bool, "needs": another job's name}.
     jobs: Dict[str, Dict[str, Any]]
     # Tuning value -> its dotted path in the registry (`PROP_MAPS`, `hand_shift`, `camera_head`), plus `prop_sources`: dotted paths, `*` for
     # every value of a map, to the prop slot maps whose models may get an offset.
@@ -368,6 +374,17 @@ class Project:
 
     def __post_init__(self):
         self.job = Job(self)
+
+    def diag_path(self, name: str) -> str:
+        """A file of the project's in the checkout's `_diag` folder, next to its other run logs.
+
+        Args:
+            name (str): The file name after `workbench_<key>_`, e.g. `job.log`.
+
+        Returns:
+            str: Its path.
+        """
+        return os.path.join(self.root, "_diag", f"workbench_{self.key}_{name}")
 
     @classmethod
     def load(cls, path: str) -> "Project":

@@ -36,6 +36,10 @@ const studio = {
   manifest, data: DATA, api: API, tuning, getAnim: animLoader(manifest, DATA),
   panelArt: path => path ? DATA + "art/" + encodeURI(path) : "",
   edits: { ...blankEdits(), camera: null },
+  // Registry edits saved but not rebuilt yet: they keep previewing.
+  savedRegistry: {},
+  // Saved then unsaved registry edits, the later winning.
+  pending() { return { ...studio.savedRegistry, ...studio.edits.registry }; },
   // What the card compares the form with: null, "vanilla" or "foot" (the same weapon on foot). Off: each form is first seen on its own.
   compare: null,
   // Called after any edit.
@@ -44,24 +48,27 @@ const studio = {
   saved(answer) {
     studio.tuning = Object.assign(studio.tuning || {}, answer);
     tabs.stats.saved();
-    Object.assign(studio.edits, blankEdits());
-    if (manifest.portrait) portrait.resetToSaved();
-    tabs.look.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
+    resetEdits();
   },
   // Opens the Skills tab (a skill was picked on the tree).
   openSkills() { if (tab !== "skills") selectTab("skills", true); else if (phone.matches && sheet === "peek") setSheet("half"); },
   // Drops every unsaved edit.
-  undo() {
-    Object.assign(studio.edits, blankEdits());
-    if (manifest.portrait) portrait.resetToSaved();
-    tabs.look.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
-  },
+  undo() { resetEdits(); },
 };
+
+// Drops the unsaved edits (after a save they are the baseline) and redraws what shows them.
+function resetEdits() {
+  Object.assign(studio.edits, blankEdits());
+  if (manifest.portrait) portrait.resetToSaved();
+  tabs.look.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
+}
 studio.stage = new BattleStage($("battle"), studio.getAnim, DATA);
 
 // The faction whose uniform colours tint the models, from the gallery's `editor.colours` (`default`, and `factions`: [key, name, three hex
 // colours] each). An unknown key falls back to the default.
 const colours = manifest.editor && manifest.editor.colours;
+// The faction picker's options, built once: the toolbar is redrawn on every toggle.
+const factionOptions = colours ? colours.factions.map(([key, name]) => `<option value="${esc(key)}">${esc(name)}</option>`).join("") : "";
 let faction = null;
 function setFaction(key) {
   const found = colours && (colours.factions.find(f => f[0] === key) || colours.factions.find(f => f[0] === colours.default));
@@ -153,7 +160,7 @@ function renderToggles() {
     + `<button data-v="models" class="${v.models ? "on" : ""}">Models</button><button data-v="bones" class="${v.bones ? "on" : ""}">Bones</button>`
     + `<button data-v="props" class="${v.props ? "on" : ""}">Props</button><button data-v="closeUp" class="${v.closeUp ? "on" : ""}">Close-up</button>`
     + (stage.isCompare() ? `<select data-v="layout"><option value="side">Side by side</option><option value="overlay">Overlay</option></select>` : "")
-    + (colours ? `<select data-v="faction" title="The faction whose colours the models wear">${colours.factions.map(([key, name]) => `<option value="${esc(key)}">${esc(name)}</option>`).join("")}</select>` : "")
+    + (colours ? `<select data-v="faction" title="The faction whose colours the models wear">${factionOptions}</select>` : "")
     + `<select data-v="heraldry" title="The heraldry a Bretonnian knight's outfit wears (in game each knight gets one)">${Array.from({ length: HERALDRY_COLUMNS }, (_, i) => `<option value="${i}">Heraldry ${i + 1}</option>`).join("")}</select>`;
   $("toggles").querySelectorAll("button[data-v]").forEach(b => b.onclick = () => {
     v[b.dataset.v] = !v[b.dataset.v];

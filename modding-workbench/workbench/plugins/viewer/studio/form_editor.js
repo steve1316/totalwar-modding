@@ -22,34 +22,30 @@ export class FormEditor {
     this.scopes = { foot: "weapon", mount: "form" };
     this.studio = studio;
     this.editor = studio.manifest.editor || null;
-    // Registry edits saved but not rebuilt yet: they keep previewing.
-    studio.savedRegistry = {};
     studio.preview = key => this.preview(key);
   }
 
   enabled() { return !!this.editor && !!this.studio.tuning; }
   scope(f) { return this.scopes[f.mount === "foot" ? "foot" : "mount"]; }
   setScope(f, scope) { this.scopes[f.mount === "foot" ? "foot" : "mount"] = scope; }
-  // Saved then unsaved edits, the later winning.
-  pending() { return { ...this.studio.savedRegistry, ...this.studio.edits.registry }; }
   form(key) { return this.editor && this.editor.forms[key]; }
   // The weapon's form on foot, whose stats are the weapon's base.
   footForm(weapon) { return Object.values(this.editor.forms).find(f => f.weapon === weapon && f.mount === "foot"); }
 
   // A unit stat of a form with the pending edits: its own override, else the weapon's base plus what its mount adds.
   unitValue(f, field) {
-    const p = this.pending(), formPath = `weapons.${f.weapon}.forms.${f.mount}.${field}`, basePath = `weapons.${f.weapon}.stats.${field}`;
+    const p = this.studio.pending(), formPath = `weapons.${f.weapon}.forms.${f.mount}.${field}`, basePath = `weapons.${f.weapon}.stats.${field}`;
     const foot = this.footForm(f.weapon) || f, mountAdds = f.overrides.includes(field) ? 0 : f.stats[field] - foot.stats[field];
     if (formPath in p && p[formPath] !== null) return p[formPath];
     if (f.overrides.includes(field) && !(formPath in p)) return f.stats[field];
     return (basePath in p ? p[basePath] : foot.stats[field]) + mountAdds;
   }
-  meleeValue(f, field) { const p = this.pending(), path = `weapons.${f.weapon}.melee.${field}`; return path in p ? p[path] : f.melee[field]; }
+  meleeValue(f, field) { const p = this.studio.pending(), path = `weapons.${f.weapon}.melee.${field}`; return path in p ? p[path] : f.melee[field]; }
   missilePath(f, field) { return field === "ammo" ? `weapons.${f.weapon}.missile.ammo` : `weapons.${f.weapon}.missile.projectile.${field}`; }
-  missileValue(f, field) { const p = this.pending(), path = this.missilePath(f, field); return path in p ? p[path] : f.missile[field]; }
+  missileValue(f, field) { const p = this.studio.pending(), path = this.missilePath(f, field); return path in p ? p[path] : f.missile[field]; }
   // The weapon's added and removed lists of a kind ("attributes" or "abilities") with the pending edits.
   lists(f, kind) {
-    const p = this.pending(), path = `weapons.${f.weapon}.${kind}`;
+    const p = this.studio.pending(), path = `weapons.${f.weapon}.${kind}`;
     return { added: p[path] || f[kind] || [], removed: p[path + "_removed"] || f[kind + "_removed"] || [] };
   }
 
@@ -81,11 +77,11 @@ export class FormEditor {
     if (group === "unit") {
       if (this.scope(f) === "form") { this.set(`weapons.${f.weapon}.forms.${f.mount}.${field}`, value); return; }
       // The weapon's base moves by the change typed on this form, so every form without its own value moves the same way.
-      const foot = this.footForm(f.weapon) || f, basePath = `weapons.${f.weapon}.stats.${field}`, p = this.pending();
+      const foot = this.footForm(f.weapon) || f, basePath = `weapons.${f.weapon}.stats.${field}`, p = this.studio.pending();
       this.set(basePath, (basePath in p ? p[basePath] : foot.stats[field]) + value - this.unitValue(f, field));
     } else if (group === "melee") {
       // The first melee edit gives the weapon its own melee weapon, copied from the one it uses now.
-      if (!f.own_melee && !(`weapons.${f.weapon}.melee.template` in this.pending())) this.set(`weapons.${f.weapon}.melee.template`, f.melee_template);
+      if (!f.own_melee && !(`weapons.${f.weapon}.melee.template` in this.studio.pending())) this.set(`weapons.${f.weapon}.melee.template`, f.melee_template);
       this.set(`weapons.${f.weapon}.melee.${field}`, value);
     } else if (group === "missile") {
       this.set(this.missilePath(f, field), value);

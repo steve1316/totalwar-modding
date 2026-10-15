@@ -141,12 +141,11 @@ def _texture_image(data: bytes, exact: bool = False) -> Tuple[bytes, str, bool]:
     if max(image.size) > MAX_TEXTURE:
         scale = MAX_TEXTURE / max(image.size)
         image = image.resize((max(1, int(image.width * scale)), max(1, int(image.height * scale))), Image.LANCZOS)
-    has_alpha = not exact and image.mode in ("RGBA", "LA") and image.getchannel("A").getextrema()[0] < 250
     out = io.BytesIO()
     if exact:
         image.convert("RGB").save(out, "PNG")
         return out.getvalue(), "png", False
-    if has_alpha:
+    if image.mode in ("RGBA", "LA") and image.getchannel("A").getextrema()[0] < 250:
         image.convert("RGBA").save(out, "PNG")
         return out.getvalue(), "png", True
     image.convert("RGB").save(out, "JPEG", quality=88)
@@ -216,7 +215,11 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
             if not texture:
                 texture = mesh.textures.get(TEXTURE_BASE_COLOUR) or mesh.textures.get(TEXTURE_DIFFUSE)
             meshes.append((part, mesh, texture, tint, alpha_hint))
-    images = source.fetch(t for _, _, texture, (mask, palette, _), _ in meshes for t in (texture, mask, palette) if t)
+    # Images are named after their game path, so models sharing a texture share one file. Only the textures not converted yet are read.
+    image_stem = lambda key: "tex_" + hashlib.sha1(key.encode()).hexdigest()[:12]
+    used = {norm(t) for _, _, texture, (mask, palette, _), _ in meshes for t in (texture, mask, palette) if t}
+    converted = {key: ext for key in used for ext in ("png", "jpg") if os.path.exists(os.path.join(folder, f"{image_stem(key)}.{ext}"))}
+    images = source.fetch(key for key in used if key not in converted)
 
     # Stage 3: write the buffers, images and the json.
     names = [b.name for b in skeleton.bones]
@@ -232,22 +235,23 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
         return offset
 
     def image_file(texture: str, exact: bool) -> Tuple[str, bool]:
-        # Images are named after their game path, so models sharing a texture share one file. Empty when it could not be read.
-        if norm(texture) not in texture_files:
-            try:
-                stem = "tex_" + hashlib.sha1(norm(texture).encode()).hexdigest()[:12]
-                done = [e for e in ("jpg", "png") if os.path.exists(os.path.join(folder, f"{stem}.{e}"))]
-                if done:
-                    texture_files[norm(texture)] = (f"{stem}.{done[0]}", done[0] == "png" and not exact)
-                else:
-                    data, ext, alpha = _texture_image(images[norm(texture)], exact)
+        # A texture's image file and whether it has alpha, converted once. Empty when it could not be found or read.
+        key = norm(texture)
+        if key not in texture_files:
+            stem, texture_files[key] = image_stem(key), ("", False)
+            if key in converted:
+                texture_files[key] = (f"{stem}.{converted[key]}", converted[key] == "png" and not exact)
+            elif key not in images:
+                missing.append(texture)
+            else:
+                try:
+                    data, ext, alpha = _texture_image(images[key], exact)
                     with open(os.path.join(folder, f"{stem}.{ext}"), "wb") as f:
                         f.write(data)
-                    texture_files[norm(texture)] = (f"{stem}.{ext}", alpha)
-            except Exception as error:
-                missing.append(f"{texture} ({error})")
-                texture_files[norm(texture)] = ("", False)
-        return texture_files[norm(texture)]
+                    texture_files[key] = (f"{stem}.{ext}", alpha)
+                except Exception as error:
+                    missing.append(f"{texture} ({error})")
+        return texture_files[key]
 
     for part, mesh, texture, (mask, palette, columns), alpha_hint in meshes:
         skinned = part.attach is None and mesh.vertex_format != FORMAT_STATIC
@@ -267,15 +271,12 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
             entry["skin_index"] = put(bones.astype("<u2"))
             entry["skin_weight"] = put(weights.astype("<f4"))
         entry["index"] = put(mesh.indices.astype("<u2"))
-        if texture and norm(texture) in images:
-            name, alpha = image_file(texture, False)
-            if name:
-                entry["texture"] = name
-                entry["alpha"] = alpha or alpha_hint
-        elif texture:
-            missing.append(texture)
+        name, alpha = image_file(texture, False) if texture else ("", False)
+        if name:
+            entry["texture"] = name
+            entry["alpha"] = alpha or alpha_hint
         # A mask without its base colour has nothing to tint.
-        exact = [image_file(t, True)[0] if t and norm(t) in images else "" for t in (mask, palette)]
+        exact = [image_file(t, True)[0] if t else "" for t in (mask, palette)]
         if "texture" in entry and exact[0] and (exact[1] or not palette):
             entry["mask"] = exact[0]
             if palette:
