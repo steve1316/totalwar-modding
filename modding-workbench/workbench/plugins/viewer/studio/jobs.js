@@ -18,7 +18,7 @@ export class Jobs {
   }
 
   // Whether there is anything to save.
-  dirty() { const e = this.studio.edits; return Object.keys(e.props).length > 0 || !!e.hand || !!e.camera || Object.keys(e.registry).length > 0; }
+  dirty() { const e = this.studio.edits; return [e.props, e.turns, e.sizes, e.registry].some(map => Object.keys(map).length > 0) || !!e.hand || !!e.camera; }
 
   note(text) { this.q("note").textContent = text; }
 
@@ -31,7 +31,7 @@ export class Jobs {
 
   async save() {
     const e = this.studio.edits, body = {};
-    if (Object.keys(e.props).length) body.prop_offsets = e.props;
+    for (const [edit, name] of [["props", "prop_offsets"], ["turns", "prop_turns"], ["sizes", "prop_sizes"]]) if (Object.keys(e[edit]).length) body[name] = e[edit];
     if (e.hand) body.hand_shift = e.hand;
     if (Object.keys(e.registry).length) body.registry = e.registry;
     if (e.camera) body.camera_head = Object.fromEntries(Object.entries(e.camera).map(([k, v]) => [k, Math.round(v * 1000) / 1000]));

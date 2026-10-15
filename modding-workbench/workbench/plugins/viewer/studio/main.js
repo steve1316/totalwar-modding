@@ -18,6 +18,9 @@ const phone = window.matchMedia("(max-width: 899px)");
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Project and studio state
 
+// No unsaved edits: the per-weapon offsets, turns and sizes, the hand shift and the registry values. The portrait camera keeps its own.
+const blankEdits = () => ({ props: {}, turns: {}, sizes: {}, hand: null, registry: {} });
+
 const project = await window.workbenchProject;
 const DATA = `p/${project}/data/`, API = `p/${project}/api/`;
 const manifest = await (await fetch(DATA + "manifest.json")).json();
@@ -28,7 +31,7 @@ try { const r = await fetch(API + "tuning"); if (r.ok) tuning = await r.json(); 
 const studio = {
   manifest, data: DATA, api: API, tuning, getAnim: animLoader(manifest, DATA),
   panelArt: path => path ? DATA + "art/" + encodeURI(path) : "",
-  edits: { props: {}, hand: null, camera: null, registry: {} },
+  edits: { ...blankEdits(), camera: null },
   // What the card compares the form with: null, "vanilla" or "foot" (the same weapon on foot). Off: each form is first seen on its own.
   compare: null,
   // Called after any edit.
@@ -37,7 +40,7 @@ const studio = {
   saved(answer) {
     studio.tuning = Object.assign(studio.tuning || {}, answer);
     tabs.stats.saved();
-    studio.edits.props = {}; studio.edits.hand = null; studio.edits.registry = {};
+    Object.assign(studio.edits, blankEdits());
     if (manifest.portrait) portrait.resetToSaved();
     tabs.look.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
   },
@@ -45,7 +48,7 @@ const studio = {
   openSkills() { if (tab !== "skills") selectTab("skills", true); else if (phone.matches && sheet === "peek") setSheet("half"); },
   // Drops every unsaved edit.
   undo() {
-    studio.edits.props = {}; studio.edits.hand = null; studio.edits.registry = {};
+    Object.assign(studio.edits, blankEdits());
     if (manifest.portrait) portrait.resetToSaved();
     tabs.look.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
   },

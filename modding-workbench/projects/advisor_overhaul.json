@@ -19,6 +19,8 @@
  },
  "tuning": {
   "prop_offsets": "model.prop_offsets",
+  "prop_turns": "model.prop_turns",
+  "prop_sizes": "model.prop_sizes",
   "hand_shift": "model.hand_shift",
   "camera_head": "portrait.camera_head",
   "prop_sources": ["weapons.*.props", "mounts.*.variant_props", "weapons.*.forms.*.props"]

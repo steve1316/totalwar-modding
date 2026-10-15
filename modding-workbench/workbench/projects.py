@@ -33,8 +33,12 @@ PROJECTS_DIR = os.path.join(REPO_ROOT, "modding-workbench", "projects")
 # Lines of a job log returned to the page.
 LOG_TAIL = 12
 
-# Largest size accepted for a prop offset or hand shift number, in metres.
-LIMITS = {"prop_offsets": 0.3, "hand_shift": 0.05}
+# Largest size accepted for a hand shift number, in metres.
+HAND_SHIFT_LIMIT = 0.05
+
+# The per-weapon tuning maps (weapon model path -> value): how many numbers a value holds (1 for a single number), the range of each, and the
+# value meaning "unchanged", which removes the weapon's entry. Offsets are metres, turns degrees, sizes scales.
+PROP_MAPS = {"prop_offsets": (3, -0.3, 0.3, 0.0), "prop_turns": (3, -180.0, 180.0, 0.0), "prop_sizes": (1, 0.25, 3.0, 1.0)}
 
 # Largest number, longest text, and largest object (as JSON) an edit may be.
 EDIT_NUMBER_LIMIT = 1000000
@@ -152,22 +156,23 @@ def edit_value(value: Any) -> Any:
     raise ValueError(f"bad value {str(value)[:80]}")
 
 
-def numbers(value: Any, count: int, limit: float) -> List[float]:
+def numbers(value: Any, count: int, low: float, high: float) -> List[float]:
     """Checks a list of numbers.
 
     Args:
         value (Any): The value sent.
         count (int): How many numbers it must hold.
-        limit (float): Largest size of each.
+        low (float): Smallest value of each.
+        high (float): Largest value of each.
 
     Returns:
-        List[float]: The numbers, rounded to tenths of a millimetre.
+        List[float]: The numbers, rounded to 4 decimals (tenths of a millimetre for metres).
 
     Raises:
-        ValueError: When it is not `count` numbers within the limit.
+        ValueError: When it is not `count` numbers within the range.
     """
-    if not isinstance(value, list) or len(value) != count or not all(isinstance(v, (int, float)) and abs(v) <= limit for v in value):
-        raise ValueError(f"expected {count} numbers within {limit}")
+    if not isinstance(value, list) or len(value) != count or not all(isinstance(v, (int, float)) and low <= v <= high for v in value):
+        raise ValueError(f"expected {count} number{'s' if count > 1 else ''} from {low} to {high}")
     return [round(float(v), 4) for v in value]
 
 
@@ -275,7 +280,7 @@ class Project:
     gallery_next: str
     # Job name -> {"commands": [[...], ...], "publish": bool}.
     jobs: Dict[str, Dict[str, Any]]
-    # Tuning value -> its dotted path in the registry (`prop_offsets`, `hand_shift`, `camera_head`), plus `prop_sources`: dotted paths, `*` for
+    # Tuning value -> its dotted path in the registry (`PROP_MAPS`, `hand_shift`, `camera_head`), plus `prop_sources`: dotted paths, `*` for
     # every value of a map, to the prop slot maps whose models may get an offset.
     tuning: Dict[str, Any]
     # Dotted path patterns (`*` for any one key) of the registry values the Edit and Skills tabs may set.
@@ -338,11 +343,11 @@ class Project:
             registry (Optional[Dict]): The registry, read from disk when None.
 
         Returns:
-            Dict[str, Any]: `prop_offsets`, `hand_shift`, `camera_head` (each only when the config names it), `props`, and `registry`: each
+            Dict[str, Any]: `PROP_MAPS`, `hand_shift`, `camera_head` (each only when the config names it), `props`, and `registry`: each
             `readable` path -> its value (None when missing).
         """
         registry = registry if registry is not None else self.read_registry()
-        values = {name: get_path(registry, path) if name != "prop_offsets" else (each_path(registry, path) or [{}])[0]
+        values = {name: get_path(registry, path) if name not in PROP_MAPS else (each_path(registry, path) or [{}])[0]
                   for name, path in self.tuning.items() if name != "prop_sources"}
         values["props"] = self.props(registry)
         values["registry"] = {path: (each_path(registry, path) or [None])[0] for path in self.readable}
@@ -352,7 +357,8 @@ class Project:
         """Writes sent tuning values into the registry. A prop offset of all zeros removes that weapon's entry.
 
         Args:
-            changes (Dict[str, Any]): Any of `prop_offsets` (a partial map), `hand_shift`, `camera_head` (a partial map), and `registry`: dotted
+            changes (Dict[str, Any]): Any of `prop_offsets`, `prop_turns` and `prop_sizes` (partial maps, see `PROP_MAPS`), `hand_shift`,
+                `camera_head` (a partial map), and `registry`: dotted
                 path -> value from the Edit tab, each path fitting one of the config's `editable` patterns (None removes the value).
 
         Returns:
@@ -373,20 +379,20 @@ class Project:
                 delete_path(registry, path)
             else:
                 set_path(registry, path, value)
-        if "prop_offsets" in changes:
-            known = self.props(registry)
-            offsets = dict((each_path(registry, self.tuning["prop_offsets"]) or [{}])[0])
-            for path, value in changes["prop_offsets"].items():
+        for name in (n for n in PROP_MAPS if n in changes):
+            known, (count, low, high, unchanged) = self.props(registry), PROP_MAPS[name]
+            values = dict((each_path(registry, self.tuning[name]) or [{}])[0])
+            for path, value in changes[name].items():
                 if path not in known:
                     raise ValueError(f"{path} is not a weapon in the registry")
-                offset = numbers(value, 3, LIMITS["prop_offsets"])
-                if any(offset):
-                    offsets[path] = offset
+                listed = numbers(value if count > 1 else [value], count, low, high)
+                if any(v != unchanged for v in listed):
+                    values[path] = listed if count > 1 else listed[0]
                 else:
-                    offsets.pop(path, None)
-            set_path(registry, self.tuning["prop_offsets"], offsets)
+                    values.pop(path, None)
+            set_path(registry, self.tuning[name], values)
         if "hand_shift" in changes:
-            set_path(registry, self.tuning["hand_shift"], numbers(changes["hand_shift"], 3, LIMITS["hand_shift"]))
+            set_path(registry, self.tuning["hand_shift"], numbers(changes["hand_shift"], 3, -HAND_SHIFT_LIMIT, HAND_SHIFT_LIMIT))
         if "camera_head" in changes:
             camera = get_path(registry, self.tuning["camera_head"])
             for key, value in changes["camera_head"].items():
