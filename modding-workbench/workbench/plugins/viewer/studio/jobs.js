@@ -1,5 +1,5 @@
 // The Jobs bar: one Save for every tab's edits (weapon offsets, hand shift, portrait camera, the Edit tab's registry values), Undo, Rebuild (saves
-// first), Deploy and the job log.
+// first), Deploy (saves first, and the server rebuilds first when the registry changed since the last rebuild) and the job log.
 // It talks to the project's API (`/viewer/p/<project>/api/`).
 
 export class Jobs {
@@ -43,13 +43,13 @@ export class Jobs {
     return true;
   }
 
-  // Starts a server job (saving first for a rebuild) and shows its log until it ends.
+  // Starts a server job (saving first) and shows its log until it ends.
   async run(job) {
-    if (job === "rebuild" && this.dirty() && !(await this.save())) return;
+    if (this.dirty() && !(await this.save())) return;
     const r = await fetch(`${this.studio.api}run/${job}`, { method: "POST" });
     const state = await r.json();
     if (!r.ok) { this.note(`A ${state.name} job is still running.`); return; }
-    this.note(job === "rebuild" ? "Rebuilding the mod and the gallery..." : "Deploying the test pack...");
+    this.note(job === "rebuild" ? "Rebuilding the mod and the gallery..." : "Deploying the test pack, rebuilding first if the registry changed...");
     clearInterval(this.polling);
     this.polling = setInterval(async () => {
       const s = await (await fetch(this.studio.api + "job")).json();
@@ -57,7 +57,9 @@ export class Jobs {
       if (s.running) return;
       clearInterval(this.polling);
       if (!s.ok) { this.note(`The ${s.name} failed. Open Log.`); return; }
-      if (s.name === "rebuild") { this.note("Rebuilt."); this.addReload(); } else this.note("Deployed. Test it in game.");
+      const rebuilt = s.name === "rebuild" || s.ran_first.includes("rebuild");
+      if (rebuilt) this.addReload();
+      this.note(s.name === "rebuild" ? "Rebuilt." : rebuilt ? "Rebuilt, then deployed. Test it in game." : "Deployed. Test it in game.");
     }, 1000);
   }
 
