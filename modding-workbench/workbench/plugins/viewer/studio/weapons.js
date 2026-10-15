@@ -15,10 +15,13 @@ const KINDS = [["shield", "Shield"], ["staff", "Staff"], ["disc", "Disc"], ["gre
   ["sword", "Sword"], ["bow", "Bow"], ["arrow", "Arrows"], ["axe", "Axe"], ["hammer", "Hammer"], ["mace", "Mace"], ["spear", "Spear"], ["lance", "Lance"],
   ["halberd", "Halberd"], ["whip", "Whip"], ["dagger", "Dagger"], ["book", "Book"], ["banner", "Banner"], ["chalice", "Chalice"]];
 
-// A weapon's change on its bone as a matrix: sized and turned around the bone, then moved, as the rebuild bakes it. `turn` is degrees around
-// x, y and z, composed in XYZ order like the rebuild's `turn_matrix`.
-const shapeMatrix = (offset, turn, size) => new THREE.Matrix4().compose(new THREE.Vector3(...offset),
+// A model's change on its bone ({offset, turn, size}) as a matrix: sized and turned around the bone, then moved, as the rebuild bakes it. `turn`
+// is degrees around x, y and z, composed in XYZ order like the rebuild's `turn_matrix`.
+const shapeMatrix = ({ offset, turn, size }) => new THREE.Matrix4().compose(new THREE.Vector3(...offset),
   new THREE.Quaternion().setFromEuler(new THREE.Euler(...turn.map(THREE.MathUtils.degToRad), "XYZ")), new THREE.Vector3(size, size, size));
+
+// A model as the game has it.
+export const NO_SHAPE = { offset: [0, 0, 0], turn: [0, 0, 0], size: 1 };
 
 // What the card calls the weapon in a slot.
 const kindOf = model => (KINDS.find(([word]) => stem(model).includes(word)) || [null, "Weapon"])[1];
@@ -43,8 +46,9 @@ export class WeaponCards {
   propValue(key) { return this.studio.edits.props[key] || this.tuning.prop_offsets[key] || [0, 0, 0]; }
   turnValue(key) { return this.studio.edits.turns[key] || (this.tuning.prop_turns || {})[key] || [0, 0, 0]; }
   sizeValue(key) { return this.studio.edits.sizes[key] ?? (this.tuning.prop_sizes || {})[key] ?? 1; }
-  // The change the gallery's model of a weapon already carries.
-  bakedMatrix(key) { const b = this.baked; return shapeMatrix((b.prop_offsets || {})[key] || [0, 0, 0], (b.prop_turns || {})[key] || [0, 0, 0], (b.prop_sizes || {})[key] ?? 1); }
+  // A weapon model's wanted change, and the one the gallery's model of it already carries.
+  modelShape(key) { return { offset: this.propValue(key), turn: this.turnValue(key), size: this.sizeValue(key) }; }
+  bakedShape(key) { const b = this.baked; return { offset: (b.prop_offsets || {})[key] || [0, 0, 0], turn: (b.prop_turns || {})[key] || [0, 0, 0], size: (b.prop_sizes || {})[key] ?? 1 }; }
   handValue() { return this.studio.edits.hand || this.tuning.hand_shift; }
 
   // Moves his hand vertices by the hand shift's change, weighted by how much each vertex follows the hand and finger bones.
@@ -77,15 +81,15 @@ export class WeaponCards {
     this.placeLive();
   }
   placeLive() {
-    const model = this.studio.live.model();
+    const model = this.studio.live.model(), f = this.studio.live.form();
     if (!model) return;
     for (const mesh of model.meshes) {
       const u = mesh.userData;
       if (mesh.isSkinnedMesh && /advisor_overhaul_body/.test(u.model)) this.liveHands(model, mesh);
-      const key = u.attach && this.propKey(u.model);
+      // A prop piece has its own change, a weapon its model's.
+      const key = u.attach && this.propKey(u.model), shapes = (f && this.look.heldShape(f, u.slot)) || (key && { want: this.modelShape(key), baked: this.bakedShape(key) });
       // The wanted change, less the one the shown model already carries (none for a model exported on the spot).
-      if (key) shapeMatrix(this.propValue(key), this.turnValue(key), this.sizeValue(key)).multiply(u.preview ? new THREE.Matrix4() : this.bakedMatrix(key).invert())
-        .decompose(mesh.position, mesh.quaternion, mesh.scale);
+      if (shapes) shapeMatrix(shapes.want).multiply(u.preview ? new THREE.Matrix4() : shapeMatrix(shapes.baked).invert()).decompose(mesh.position, mesh.quaternion, mesh.scale);
     }
   }
 
@@ -173,32 +177,34 @@ export class WeaponCards {
       const shaping = this.shaping.has(slot), more = document.createElement("button");
       more.className = "mini adj-more"; more.textContent = shaping ? "Hide position, turn and size" : "Position, turn and size";
       more.onclick = () => { shaping ? this.shaping.delete(slot) : this.shaping.add(slot); this.look.redraw(); };
-      if (!shaping) card.insertAdjacentHTML("beforeend", `<div class="note">${esc(this.shapeSummary(key))}</div>`);
+      if (!shaping) card.insertAdjacentHTML("beforeend", `<div class="note">${esc(this.shapeSummary(this.modelShape(key)))}</div>`);
       card.append(more);
-      if (shaping) this.shapeRows(card, key);
+      const edits = this.studio.edits;
+      if (shaping) this.shapeRows(card, "In the weapon's own directions, around his hand, on every form holding this model. x runs along the grip.", this.modelShape(key),
+        shape => { edits.props[key] = shape.offset; edits.turns[key] = shape.turn; edits.sizes[key] = shape.size; });
     }
   }
 
-  // A weapon model's position, turn and size in words, or that it is as the game has it.
-  shapeSummary(key) {
-    const [x, y, z] = this.propValue(key), turn = this.turnValue(key), size = this.sizeValue(key), cm = v => (Math.round(v * 1000) / 10).toFixed(1);
+  // A model's position, turn and size in words, or that it is as the game has it.
+  shapeSummary({ offset: [x, y, z], turn, size }) {
+    const cm = v => (Math.round(v * 1000) / 10).toFixed(1);
     const parts = [x || y || z ? `moved ${cm(x)}, ${cm(y)}, ${cm(z)} cm` : "", turn.some(Boolean) ? `turned ${turn.join(", ")} degrees` : "", size !== 1 ? `${Math.round(size * 100)}% size` : ""];
     const said = parts.filter(Boolean).join(", ");
     return said ? said[0].toUpperCase() + said.slice(1) + "." : "As the game holds it.";
   }
 
-  // The position, size and turn sliders of a weapon model, and a reset. A turn of 180 flips it, for a weapon that comes upside down.
-  shapeRows(card, key) {
-    const edits = this.studio.edits, changed = () => { this.applyLive(); this.studio.changed(); };
-    card.insertAdjacentHTML("beforeend", `<div class="note">In the model's own directions, around the bone holding it, on every form holding this model. x runs along a weapon's grip.</div>`);
-    [["Move along x (cm)", 0], ["Move along y (cm)", 1], ["Move along z (cm)", 2]].forEach(([label, axis]) => this.sliderRow(card, label, this.propValue(key)[axis], 30, m => {
-      edits.props[key] = this.propValue(key).slice(); edits.props[key][axis] = m; changed();
-    }));
-    this.numberRow(card, "Size (%)", this.sizeValue(key) * 100, 25, 300, 1, percent => { edits.sizes[key] = percent / 100; changed(); });
-    [["Turn around x (degrees)", 0], ["Turn around y (degrees)", 1], ["Turn around z (degrees)", 2]].forEach(([label, axis]) =>
-      this.numberRow(card, label, this.turnValue(key)[axis], -180, 180, 1, degrees => { edits.turns[key] = this.turnValue(key).slice(); edits.turns[key][axis] = degrees; changed(); }));
+  // The position, size and turn sliders of a model, under a `note` saying what they change, and a reset. `change` takes each new shape
+  // ({offset, turn, size}). A turn of 180 flips it, for a model that comes upside down.
+  shapeRows(card, note, shape, change) {
+    let current = { offset: shape.offset.slice(), turn: shape.turn.slice(), size: shape.size };
+    const set = next => { current = next; change(next); this.applyLive(); this.studio.changed(); };
+    const axis = (field, i, v) => { const values = current[field].slice(); values[i] = v; set({ ...current, [field]: values }); };
+    card.insertAdjacentHTML("beforeend", `<div class="note">${note}</div>`);
+    ["x", "y", "z"].forEach((name, i) => this.sliderRow(card, `Move along ${name} (cm)`, current.offset[i], 30, m => axis("offset", i, m)));
+    this.numberRow(card, "Size (%)", current.size * 100, 25, 300, 1, percent => set({ ...current, size: percent / 100 }));
+    ["x", "y", "z"].forEach((name, i) => this.numberRow(card, `Turn around ${name} (degrees)`, current.turn[i], -180, 180, 1, degrees => axis("turn", i, degrees)));
     const reset = document.createElement("button"); reset.className = "mini adj-more"; reset.textContent = "Reset to the game's";
-    reset.onclick = () => { edits.props[key] = [0, 0, 0]; edits.turns[key] = [0, 0, 0]; edits.sizes[key] = 1; changed(); this.look.redraw(); };
+    reset.onclick = () => { set({ offset: [0, 0, 0], turn: [0, 0, 0], size: 1 }); this.look.redraw(); };
     card.append(reset);
   }
 

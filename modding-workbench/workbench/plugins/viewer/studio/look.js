@@ -2,12 +2,13 @@
 // by every mount of that weapon (`weapons.<weapon>.body`, `.hood` and `.pieces`), then his hands. An outfit can be worn without the faction colours
 // or heraldry the game paints on it (`model.unpainted.<outfit>`), on every form wearing it. Outfits come from the registry's `model.bodies`,
 // and any full body of the game (`api/bodies`) can be added as an outfit, any humanoid model or prop as a piece. A prop piece is held on a bone
-// ([bone, model]) and moves, turns and sizes like a weapon. A piece that bends with the body is [model]. Every picker is a `ModelList` with thumbnails, and the model the
+// ([bone, model]) and has its own position, turn and size (`weapons.<weapon>.piece_shapes.<slot>`), so two of the same model can point different
+// ways. A piece that bends with the body is [model]. Every picker is a `ModelList` with thumbnails, and the model the
 // pointer rests on is tried on. Every choice shows live on the stage through `studio.live`. The Jobs bar saves the edits.
 import { stem } from "./live_models.js";
 import { ModelList } from "./model_list.js";
 import { Thumbnails } from "./thumbs.js";
-import { WeaponCards } from "./weapons.js";
+import { NO_SHAPE, WeaponCards } from "./weapons.js";
 
 // The slot a hovered piece is tried on in.
 const HOVER_SLOT = "piece_hover";
@@ -48,8 +49,17 @@ export class LookTab {
   // Shows the chosen weapons and the grip and hand values on the stage.
   applyLive() { this.weapons.applyLive(); }
   pending() { return { ...this.studio.savedRegistry, ...this.studio.edits.registry }; }
-  // A look field of the form's weapon with the pending edits.
-  value(f, field) { const p = this.pending(), path = `weapons.${f.weapon}.${field}`; return path in p ? p[path] : f.look[field]; }
+  // A look field of the form's weapon: as edited or saved on this visit, else as saved earlier, else as the gallery built it.
+  value(f, field) {
+    const p = this.pending(), path = `weapons.${f.weapon}.${field}`, saved = ((this.studio.tuning.registry || {}).weapons || {})[f.weapon];
+    return path in p ? p[path] : saved && field in saved ? saved[field] : f.look[field];
+  }
+  // A prop piece's wanted position, turn and size, and the ones the gallery's model of it carries. Null for a slot that is no prop piece.
+  heldShape(f, slot) {
+    const piece = (this.value(f, "pieces") || {})[slot];
+    if (!piece || !held(piece)) return null;
+    return { want: (this.value(f, "piece_shapes") || {})[slot] || NO_SHAPE, baked: (f.look.piece_shapes || {})[slot] || NO_SHAPE };
+  }
   // Every outfit: the gallery's, then any added since (slot -> model).
   bodies() {
     const all = { ...this.look.bodies };
@@ -185,18 +195,19 @@ export class LookTab {
     for (const [slot, piece] of Object.entries(pieces)) {
       extra.insertAdjacentHTML("beforeend", `<div class="look-piece"><img class="thumb" data-thumb="${esc(pieceModel(piece))}" alt=""><span class="adj-model">${esc(stem(pieceModel(piece)))}</span>
         <button class="mini" data-drop="${esc(slot)}" aria-label="Remove">×</button></div>${this.state([slot])}`);
-      if (held(piece)) this.renderHeld(extra, base, pieces, slot, piece);
+      if (held(piece)) this.renderHeld(extra, f, pieces, slot, piece);
     }
     if (this.adding === "piece") extra.append(this.search(f));
     extra.querySelectorAll("[data-drop]").forEach(b => b.onclick = () => {
-      const rest = { ...pieces }; delete rest[b.dataset.drop];
-      this.set({ [base + "pieces"]: Object.keys(rest).length ? rest : null });
+      const rest = { ...pieces }, shapes = { ...(this.value(f, "piece_shapes") || {}) };
+      delete rest[b.dataset.drop]; delete shapes[b.dataset.drop];
+      this.set({ [base + "pieces"]: Object.keys(rest).length ? rest : null, [base + "piece_shapes"]: Object.keys(shapes).length ? shapes : null });
     });
   }
 
-  // A prop piece's bone, then its position, turn and size once saved. Those belong to the model, as a weapon's do.
-  renderHeld(card, base, pieces, slot, piece) {
-    const { esc } = window.UnitPanel, weapons = this.weapons, key = weapons.propKey(piece[1]), row = document.createElement("div");
+  // A prop piece's bone, then its own position, turn and size.
+  renderHeld(card, f, pieces, slot, piece) {
+    const { esc } = window.UnitPanel, weapons = this.weapons, base = `weapons.${f.weapon}.`, row = document.createElement("div");
     row.className = "piece-bone";
     row.innerHTML = `<span>Held on</span><select>${PIECE_BONES.map(([bone, name]) => `<option value="${bone}">${esc(name)}</option>`).join("")}</select>`;
     const select = row.querySelector("select");
@@ -204,12 +215,16 @@ export class LookTab {
     select.value = piece[0];
     select.onchange = () => this.set({ [base + "pieces"]: { ...pieces, [slot]: [select.value, ...piece.slice(1)] } });
     card.append(row);
-    if (!key) { card.insertAdjacentHTML("beforeend", '<div class="note">Save to move, turn or size it.</div>'); return; }
-    const shaping = weapons.shaping.has(slot), more = document.createElement("button");
+    const shaping = weapons.shaping.has(slot), more = document.createElement("button"), shape = this.heldShape(f, slot).want;
     more.className = "mini adj-more"; more.textContent = shaping ? "Hide position, turn and size" : "Position, turn and size";
     more.onclick = () => { shaping ? weapons.shaping.delete(slot) : weapons.shaping.add(slot); this.redraw(); };
-    if (!shaping) card.insertAdjacentHTML("beforeend", `<div class="note">${esc(weapons.shapeSummary(key))}</div>`);
+    if (!shaping) card.insertAdjacentHTML("beforeend", `<div class="note">${esc(weapons.shapeSummary(shape))}</div>`);
     card.append(more);
-    if (shaping) weapons.shapeRows(card, key);
+    // Edits go straight into the pending registry, without a redraw that would drop the slider being dragged.
+    if (shaping) weapons.shapeRows(card, "In the model's own directions, around the bone holding it. This piece only.", shape, next => {
+      const shapes = { ...(this.value(f, "piece_shapes") || {}) }, plain = JSON.stringify(next) === JSON.stringify(NO_SHAPE);
+      if (plain) delete shapes[slot]; else shapes[slot] = next;
+      this.studio.edits.registry[base + "piece_shapes"] = Object.keys(shapes).length ? shapes : null;
+    });
   }
 }
