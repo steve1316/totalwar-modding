@@ -140,6 +140,10 @@ local TEXT = {
 	weapon_blocked = { "advisor_overhaul_ui_weapon_blocked_tooltip", "The Advisor cannot use this weapon on his current mount. Pick another mount first." },
 	--- Tooltip of a mount with no unit for his current weapon.
 	mount_blocked = { "advisor_overhaul_ui_mount_blocked_tooltip", "The Advisor cannot ride this mount with his current weapon. Pick another weapon first." },
+	--- Start of a weapon option's list of the arts he owns for it, followed by their names.
+	arts = { "advisor_overhaul_ui_weapon_arts", "Arts:" },
+	--- A weapon option's art line when he owns none of its arts yet.
+	arts_none = { "advisor_overhaul_ui_weapon_arts_none", "Arts: none yet. Learn the art skills to unlock this weapon's arts." },
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -385,6 +389,48 @@ local function apply_art_set(character, weapon)
 	log("cqi " .. character:command_queue_index() .. " character panel model set to " .. art_set .. (ok and "" or (", error: " .. tostring(err))))
 end
 
+--- The arts of a weapon whose slot skill the Advisor owns.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @param weapon string The weapon key.
+--- @returns table The owned art rows of `ADVISOR_OVERHAUL_RIGS.arts` (`skill`, `bundle`, `name`).
+local function owned_arts(character, weapon)
+	local owned = {}
+	for _, art in ipairs((rig_data().arts or {})[weapon] or {}) do
+		if character:has_skill(art.skill) then
+			table.insert(owned, art)
+		end
+	end
+	return owned
+end
+
+--- Puts on the Advisor the art bundles of the weapon he holds, for each art slot skill he owns, and takes every other art bundle off. Runs each
+--- time his loadout is applied: a loadout change, a skill point, each load and each turn start.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @param weapon string The weapon he holds.
+local function sync_arts(character, weapon)
+	local wanted = {}
+	for _, art in ipairs(owned_arts(character, weapon)) do
+		wanted[art.bundle] = true
+	end
+	local added, removed = {}, {}
+	for _, arts in pairs(rig_data().arts or {}) do
+		for _, art in ipairs(arts) do
+			local has = character:has_effect_bundle(art.bundle)
+			if wanted[art.bundle] and not has then
+				cm:apply_effect_bundle_to_character(art.bundle, character, 0)
+				table.insert(added, art.bundle)
+			elseif has and not wanted[art.bundle] then
+				cm:remove_effect_bundle_from_character(art.bundle, character)
+				table.insert(removed, art.bundle)
+			end
+		end
+	end
+	if #added > 0 or #removed > 0 then
+		log("cqi " .. character:command_queue_index() .. " arts for " .. weapon .. ": added " .. table.concat(added, ", ") .. "; removed "
+			.. table.concat(removed, ", "))
+	end
+end
+
 --- Whether the once-per-turn rule blocks a change for this Advisor.
 --- @param cqi number The Advisor's command queue index.
 --- @returns boolean True when he already changed this turn and the rule is on.
@@ -518,6 +564,7 @@ local function apply_pair(character)
 	save_pair(cqi, weapon, mount, false)
 	local wanted = rig_data().ancillaries[weapon .. "|" .. mount]
 	apply_art_set(character, weapon)
+	sync_arts(character, weapon)
 	if not wanted then
 		log("cqi " .. cqi .. " has no unit for " .. weapon .. " on " .. mount .. ", nothing equipped")
 		return false
@@ -679,6 +726,22 @@ local function ui_text(id)
 		return entry[2]
 	end
 	return text
+end
+
+--- A weapon option's line of the arts the Advisor owns for it.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @param weapon string The weapon key.
+--- @returns string The line.
+local function arts_line(character, weapon)
+	local names = {}
+	for _, art in ipairs(owned_arts(character, weapon)) do
+		local text = common.get_localised_string("effect_bundles_localised_title_" .. art.bundle)
+		table.insert(names, (text and text ~= "") and text or art.name)
+	end
+	if #names == 0 then
+		return ui_text("arts_none")
+	end
+	return ui_text("arts") .. " " .. table.concat(names, ", ")
 end
 
 --- An item's display name, localised when its key resolves.
@@ -923,8 +986,9 @@ end
 --- @param item table The item row.
 --- @param name string The option's component name, from `option_name`.
 --- @param state string `current`, `pick` or `blocked`.
+--- @param extra string|nil A last tooltip line (a weapon's arts), or nil for none.
 --- @returns UIC|nil The option, or nil when it could not be made.
-local function add_option(kind, item, name, state)
+local function add_option(kind, item, name, state, extra)
 	log_call(name, "CreateComponent " .. BUTTON_TEMPLATE)
 	local option = create_own(name, BUTTON_TEMPLATE)
 	if not option then
@@ -939,6 +1003,9 @@ local function add_option(kind, item, name, state)
 		reason = ui_text("in_use")
 	elseif state == "blocked" then
 		reason = ui_text(kind .. "_blocked")
+	end
+	if extra then
+		reason = reason .. "\n" .. extra
 	end
 	local icon = item.icon or BUTTON_ICON
 	local ui_state = state == "current" and CURRENT_STATE or state == "blocked" and "inactive" or "active"
@@ -983,7 +1050,7 @@ local function open_picker(character)
 				local fits = kind == "weapon" and has_unit(item.key, mount) or kind == "mount" and has_unit(weapon, item.key)
 				local state = is_current and "current" or fits and "pick" or "blocked"
 				local name = option_name(kind, index)
-				local option = add_option(kind, item, name, state)
+				local option = add_option(kind, item, name, state, kind == "weapon" and arts_line(character, item.key) or nil)
 				if not option then
 					log("loadout picker not opened: option " .. kind .. " " .. item.key .. " could not be made")
 					close_picker("option " .. kind .. " " .. item.key .. " could not be made")
@@ -1770,6 +1837,14 @@ core:add_listener(
 		local skill = context:skill_point_spent_on()
 		local unlocked = skill_items()[skill]
 		if not unlocked then
+			-- An art slot skill puts on his held weapon's art at once.
+			local weapon = current_pair(character)
+			for _, art in ipairs((rig_data().arts or {})[weapon] or {}) do
+				if art.skill == skill then
+					log("cqi " .. character:command_queue_index() .. " learned art slot " .. skill .. ", holding " .. weapon)
+					sync_arts(character, weapon)
+				end
+			end
 			return
 		end
 		local cqi = character:command_queue_index()

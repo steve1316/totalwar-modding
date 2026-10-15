@@ -937,7 +937,7 @@ def bundle_rows(key: str, entry: Dict, rows: Dict[str, List[Dict[str, str]]], te
     texts.append((f"effect_bundles_localised_description_{key}", entry.get("description", "")))
 
 
-def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> Dict[str, List[Tuple[str, str]]]:
+def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> Dict[str, List[Tuple[str, str, str]]]:
     """Adds every weapon's arts, one effect bundle per art slot.
 
     Args:
@@ -946,13 +946,13 @@ def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts
         texts (List[Tuple[str, str]]): Loc rows, added to.
 
     Returns:
-        Dict[str, List[Tuple[str, str]]]: Weapon -> (slot skill key, bundle key) for each built art slot, for the loadout script.
+        Dict[str, List[Tuple[str, str, str]]]: Weapon -> (slot skill key, bundle key, art name) for each built art slot, for the loadout script.
 
     Raises:
         SystemExit: When a weapon leaves a built slot undefined.
     """
     slots = {skill["slot"]: planned_skill_key(skill_id) for skill_id, skill in registry.get("skills", {}).items() if skill.get("build") and skill.get("slot")}
-    arts: Dict[str, List[Tuple[str, str]]] = {}
+    arts: Dict[str, List[Tuple[str, str, str]]] = {}
     for weapon_key, weapon in registry["weapons"].items():
         missing = sorted(set(slots) - set(weapon.get("arts", {})))
         if missing:
@@ -961,7 +961,7 @@ def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts
             bundle = art_bundle_key(weapon_key, slot)
             bundle_rows(bundle, art, rows, texts)
             if slot in slots:
-                arts.setdefault(weapon_key, []).append((slots[slot], bundle))
+                arts.setdefault(weapon_key, []).append((slots[slot], bundle, art["name"]))
     return arts
 
 
@@ -1473,14 +1473,14 @@ def write_portrait_images(portrait: Dict) -> None:
         image.save(out, optimize=True)
 
 
-def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[str, List[Tuple[str, str]]], learned: List[str]) -> None:
+def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[str, List[Tuple[str, str, str]]], learned: List[str]) -> None:
     """Writes the Lua data table the campaign scripts read: his subtype, the weapons and mounts with their unlock skills, names and picker icons,
     the ancillary of every valid pair both ways, the skills he is made with and each weapon's arts.
 
     Args:
         registry (Dict): The registry.
         combos (List[Tuple[str, str, str]]): (weapon, mount, ancillary) per valid pair.
-        arts (Dict[str, List[Tuple[str, str]]]): Weapon -> (slot skill, art bundle) per built art slot.
+        arts (Dict[str, List[Tuple[str, str, str]]]): Weapon -> (slot skill, art bundle, art name) per built art slot.
         learned (List[str]): The skills he is made with.
     """
     folder = os.path.join(MOD, "script", "campaign", "mod")
@@ -1508,9 +1508,11 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[
     lines += ["\t},", "\t--- Forename loc key of his name.", f'\tname = "names_name_{name_id()}",']
     lines += ["\t--- Hidden skills he is made with. An Advisor from before they were added gets them from the spawn script.", "\tlearned_skills = {"]
     lines += [f'\t\t"{skill}",' for skill in learned]
-    lines += ["\t},", "\t--- Weapon -> its arts: the art slot skill he must own, and the effect bundle he wears for it while holding that weapon.", "\tarts = {"]
+    lines += ["\t},", "\t--- Weapon -> its arts: the art slot skill he must own, the effect bundle he wears for it while holding that weapon, and the art's",
+              "\t--- English name (its loc key is the bundle's title).", "\tarts = {"]
     for weapon, slots in arts.items():
-        lines += [f'\t\t["{weapon}"] = {{'] + [f'\t\t\t{{ skill = "{s}", bundle = "{b}" }},' for s, b in slots] + ["\t\t},"]
+        lines += [f'\t\t["{weapon}"] = {{'] + [f'\t\t\t{{ skill = "{s}", bundle = "{b}", name = "{n.replace(chr(34), chr(92) + chr(34))}" }},' for s, b, n in slots]
+        lines += ["\t\t},"]
     lines += ["\t},", "}"]
     with open(os.path.join(folder, f"{FILE}_rigs.lua"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
