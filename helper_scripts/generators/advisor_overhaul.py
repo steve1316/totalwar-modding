@@ -50,7 +50,6 @@ Build:
 import argparse
 import json
 import os
-import shutil
 import sys
 import zlib
 from typing import Any, Dict, List, Optional, Tuple
@@ -140,6 +139,10 @@ DEFAULT_MOUNT = "foot"
 # Skill tree rows of the weapon and the mount skills. Two of the six vanilla rows.
 WEAPON_ROW = 0
 MOUNT_ROW = 1
+
+# Hidden vanilla skills his tree holds, as the Amethyst Wizard's does: (skill, row, learned when he is made). The first turns on his hero actions
+# (scouting, wound, scout settlement, steal technology, boost income, assault units). The second raises their success chance with his rank.
+HIDDEN_SKILLS = [("wh2_main_skill_all_dummy_agent_actions_emp_battle_wizard", 8, True), ("wh3_main_skill_agent_action_success_scaling", 99, False)]
 
 # Names group of his name row. Frequency 0 keeps the name out of random name rolls.
 NAMES_GROUP = "names_emp_empire"
@@ -685,6 +688,12 @@ def skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: Lis
             "campaign_key": "", "faction_key": "", "level": "1", "skill_key": skill, "subculture_key": "", "image_path": "x",
             "unlocked_at_rank": str(item.get("unlock_rank", 1)),
         })
+    # The vanilla skills keep their own levels and effects, so only the nodes are his.
+    for skill, row, learned in HIDDEN_SKILLS:
+        node = f"{PREFIX}_hidden_node_{skill}"
+        rows["character_skill_nodes_tables"].append({"key": node, "character_skill_key": skill, "indent": str(row), "tier": "0",
+                                                     "points_on_creation": "1" if learned else "0", "required_num_parents": "0", "visible_in_ui": "false"})
+        rows["character_skill_node_set_items_tables"].append({"set": NODE_SET, "item": node, "mod_disabled": "false"})
 
 
 def planned_skill_key(skill_id: str) -> str:
@@ -955,7 +964,8 @@ def check_loc(texts: List[Tuple[str, str]]) -> None:
 
 
 def write(table: str, rows: List[Dict[str, str]], spec: Dict) -> None:
-    """Writes one table file of the mod. A table with no rows (a weapon stat nothing sets yet) is left out, and its old file removed.
+    """Writes one table file of the mod. A table with no rows (a weapon stat nothing sets yet) is left out, and its old file removed. Other files of
+    the table (such as test rows) are kept.
 
     Args:
         table (str): The table name.
@@ -964,7 +974,10 @@ def write(table: str, rows: List[Dict[str, str]], spec: Dict) -> None:
     """
     folder = os.path.join(MOD, "db", table)
     if not rows:
-        shutil.rmtree(folder, ignore_errors=True)
+        if os.path.exists(os.path.join(folder, f"{FILE}.tsv")):
+            os.remove(os.path.join(folder, f"{FILE}.tsv"))
+        if os.path.isdir(folder) and not os.listdir(folder):
+            os.rmdir(folder)
         return
     os.makedirs(folder, exist_ok=True)
     header = spec["header"]
@@ -1187,7 +1200,10 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]]) -> None:
     lines += [f'\t\t["{w}|{m}"] = "{a}",' for w, m, a in combos]
     lines += ["\t},", "\t--- Mount ancillary -> the weapon and mount of its pair.", "\trigs = {"]
     lines += [f'\t\t["{a}"] = {{ weapon = "{w}", mount = "{m}" }},' for w, m, a in combos]
-    lines += ["\t},", "\t--- Forename loc key of his name.", f'\tname = "names_name_{name_id()}",', "}"]
+    lines += ["\t},", "\t--- Forename loc key of his name.", f'\tname = "names_name_{name_id()}",']
+    lines += ["\t--- Hidden skills he is made with. An Advisor from before they were added gets them from the spawn script.", "\tlearned_skills = {"]
+    lines += [f'\t\t"{skill}",' for skill, _, learned in HIDDEN_SKILLS if learned]
+    lines += ["\t},", "}"]
     with open(os.path.join(folder, f"{FILE}_rigs.lua"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
 

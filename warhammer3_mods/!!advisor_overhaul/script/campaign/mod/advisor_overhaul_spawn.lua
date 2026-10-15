@@ -111,11 +111,32 @@ local function spawn_for(faction_key)
 		.. tostring(name))
 end
 
+--- Gives every Advisor of a faction the hidden skills he is made with (his hero actions), when he lacks them. An Advisor spawned before they were
+--- added to his tree never got them.
+--- @param faction FACTION_SCRIPT_INTERFACE The faction.
+local function add_learned_skills(faction)
+	for _, advisor in ipairs(ADVISOR_OVERHAUL.faction_advisors(faction)) do
+		for _, skill in ipairs(ADVISOR_OVERHAUL_RIGS.learned_skills or {}) do
+			if not advisor:has_skill(skill) then
+				cm:add_skill(advisor, skill, true, true)
+				log(faction:name() .. ": Advisor cqi " .. advisor:command_queue_index() .. " lacked " .. skill .. ", added it, has it now: "
+					.. tostring(advisor:has_skill(skill)))
+			end
+		end
+	end
+end
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Start
 
 cm:add_first_tick_callback(function()
+	for _, faction_key in ipairs(cm:get_human_factions()) do
+		local ok, err = pcall(add_learned_skills, cm:get_faction(faction_key))
+		if not ok then
+			log(faction_key .. ": adding learned skills failed with error " .. tostring(err))
+		end
+	end
 	if not cm:is_new_game() then
 		log("loaded game, nothing to spawn")
 		return

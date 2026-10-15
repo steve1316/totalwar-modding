@@ -6,3 +6,5 @@ advisor_overhaul_choose_weapon_node_sword_and_bow		advisor_overhaul_choose_weapo
 advisor_overhaul_choose_mount_node_warhorse		advisor_overhaul_choose_mount_warhorse		1	0		0	0	true
 advisor_overhaul_choose_mount_node_pegasus		advisor_overhaul_choose_mount_pegasus		1	1		0	0	true
 advisor_overhaul_choose_mount_node_disc		advisor_overhaul_choose_mount_disc		1	2		0	0	true
+advisor_overhaul_hidden_node_wh2_main_skill_all_dummy_agent_actions_emp_battle_wizard		wh2_main_skill_all_dummy_agent_actions_emp_battle_wizard		8	0		1	0	false
+advisor_overhaul_hidden_node_wh3_main_skill_agent_action_success_scaling		wh3_main_skill_agent_action_success_scaling		99	0		0	0	false

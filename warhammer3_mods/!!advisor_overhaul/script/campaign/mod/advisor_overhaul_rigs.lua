@@ -51,4 +51,8 @@ ADVISOR_OVERHAUL_RIGS = {
 	},
 	--- Forename loc key of his name.
 	name = "names_name_930556520",
+	--- Hidden skills he is made with. An Advisor from before they were added gets them from the spawn script.
+	learned_skills = {
+		"wh2_main_skill_all_dummy_agent_actions_emp_battle_wizard",
+	},
 }
