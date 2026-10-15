@@ -30,6 +30,9 @@ NAME = re.compile(r"^[a-z0-9_]*$")
 # Models one request may ask for at most.
 MAX_MODELS = 40
 
+# Version of the export, part of each file name, so a model exported before a change to the export (such as faction colour masks) is made again.
+EXPORT_VERSION = 2
+
 # Each project's export worker.
 _workers: Dict[str, "ExportWorker"] = {}
 _workers_lock = threading.Lock()
@@ -152,7 +155,7 @@ def prop_previews(project: Project, items: List[Dict[str, str]], urgent: bool = 
         model, slot, attach, skeleton = (str(item.get(k, d)) for k, d in (("model", ""), ("slot", ""), ("attach", ""), ("skeleton", "humanoid01")))
         if not MODEL_PATH.match(model) or ".." in model or not all(NAME.match(v) for v in (slot, attach, skeleton)) or not slot or not skeleton:
             raise ValueError("bad model, slot, attach bone or skeleton")
-        stem = "preview_" + hashlib.sha1(f"{model.lower()}|{slot}|{attach}|{skeleton}".encode()).hexdigest()[:12]
+        stem = "preview_" + hashlib.sha1(f"{model.lower()}|{slot}|{attach}|{skeleton}|{EXPORT_VERSION}".encode()).hexdigest()[:12]
         batch.append({"model": model, "slot": slot, "attach": attach, "skeleton": skeleton, "stem": stem})
     exists = lambda item: os.path.exists(os.path.join(project.gallery, f"models/{item['stem']}.json"))
     missing = [item for item in batch if not exists(item)]

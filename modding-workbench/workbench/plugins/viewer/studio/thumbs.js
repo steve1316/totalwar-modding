@@ -137,7 +137,7 @@ export class Thumbnails {
       const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(2, 4, 3); scene.add(sun);
       this.stage = { renderer, scene, camera: new THREE.PerspectiveCamera(30, 1, 0.01, 100) };
     }
-    const { renderer, scene, camera } = this.stage, model = await loadModel(url, { shared: false });
+    const { renderer, scene, camera } = this.stage, model = await loadModel(url, { shared: false, tint: false });
     await model.ready;
     scene.add(model.group); model.group.updateMatrixWorld(true);
     const box = new THREE.Box3();
