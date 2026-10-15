@@ -1,7 +1,8 @@
 """Export a unit's 3D model for the animation viewer.
 
 Resolves a `.variantmeshdefinition` to its meshes (first mesh of each slot), pulls the `.wsmodel`, `.rigid_model_v2`, material and texture files
-from loose folders, mod packs or the vanilla packs, and writes `models/<side>.json` plus `models/<side>.bin` (vertex buffers), base colour images and faction colour masks.
+from loose folders, mod packs or the vanilla packs, and writes `models/<side>.json` plus `models/<side>.bin` (vertex buffers), base colour images and the colour masks (and heraldry palettes)
+that tint them.
 Skinned meshes carry the skeleton's inverse bind matrices, built from the skeleton `.anim` bind pose. Meshes in a slot with an `attach_point` are
 drawn rigidly on that bone.
 """
@@ -41,6 +42,14 @@ BASE_COLOUR_SLOTS = ("t_xml_base_colour", "t_xml_diffuse")
 
 # Material XML texture slot of the faction colour mask: red, green and blue mark where the faction's first, second and third uniform colours go.
 MASK_SLOT = "t_xml_mask"
+
+# Material XML texture slots of a heraldry mask and its palette (Bretonnian knights): the palette holds `num_columns` columns of colours, one
+# column per soldier, and the mask's red and green mark where the column's top and bottom colours go.
+HERALDRY_MASK_SLOT = "t_xml_mask1"
+PALETTE_SLOT = "t_xml_colour_map"
+
+# A material's palette column count.
+PALETTE_COLUMNS = re.compile(r"<name>\s*num_columns\s*</name>.*?<value>\s*(\d+)", re.DOTALL)
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,12 +123,12 @@ def resolve_variant(variant: str, source: AssetSource) -> List[Part]:
 # Export
 
 
-def _texture_image(data: bytes, mask: bool = False) -> Tuple[bytes, str, bool]:
-    """Converts a DDS texture to a downscaled JPEG, or PNG when it has real alpha or is a mask (JPEG would bleed its channels into each other).
+def _texture_image(data: bytes, exact: bool = False) -> Tuple[bytes, str, bool]:
+    """Converts a DDS texture to a downscaled JPEG, or PNG when it has real alpha or must stay exact.
 
     Args:
         data (bytes): DDS bytes.
-        mask (bool): Whether it is a faction colour mask, kept as RGB without alpha.
+        exact (bool): Whether it is a mask or palette, kept as RGB PNG without alpha (JPEG would bleed its channels and narrow columns together).
 
     Returns:
         Tuple[bytes, str, bool]: Image bytes, file extension and whether alpha is used.
@@ -132,9 +141,9 @@ def _texture_image(data: bytes, mask: bool = False) -> Tuple[bytes, str, bool]:
     if max(image.size) > MAX_TEXTURE:
         scale = MAX_TEXTURE / max(image.size)
         image = image.resize((max(1, int(image.width * scale)), max(1, int(image.height * scale))), Image.LANCZOS)
-    has_alpha = not mask and image.mode in ("RGBA", "LA") and image.getchannel("A").getextrema()[0] < 250
+    has_alpha = not exact and image.mode in ("RGBA", "LA") and image.getchannel("A").getextrema()[0] < 250
     out = io.BytesIO()
-    if mask:
+    if exact:
         image.convert("RGB").save(out, "PNG")
         return out.getvalue(), "png", False
     if has_alpha:
@@ -180,7 +189,7 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
             geometry[path] = (path, {})
     files.update(source.fetch([g for g, _ in geometry.values()] + [m for _, mats in geometry.values() for (lod, _), m in mats.items() if lod == 0]))
 
-    # Stage 2: meshes, their base colour textures and their faction colour masks.
+    # Stage 2: meshes, their base colour textures and what tints them: a faction colour mask, or a heraldry mask and its palette.
     meshes = []
     for part in parts:
         path = norm(part.model)
@@ -192,17 +201,22 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
             continue
         model = read_rmv2(files[norm(rmv2_path)], max_lods=1)
         for index, mesh in enumerate(model.lods[0]):
-            texture, mask, alpha_hint = None, None, False
+            texture, tint, alpha_hint = None, (None, None, 0), False
             material_path = materials.get((0, index))
             if material_path and norm(material_path) in files:
-                slots = read_material_xml(files[norm(material_path)].decode("utf-8-sig", "replace"))
+                text = files[norm(material_path)].decode("utf-8-sig", "replace")
+                slots = read_material_xml(text)
                 texture = next((slots[s] for s in BASE_COLOUR_SLOTS if slots.get(s)), None)
-                mask = slots.get(MASK_SLOT)
+                columns = PALETTE_COLUMNS.search(text)
+                if slots.get(HERALDRY_MASK_SLOT) and slots.get(PALETTE_SLOT) and columns:
+                    tint = (slots[HERALDRY_MASK_SLOT], slots[PALETTE_SLOT], int(columns.group(1)))
+                elif slots.get(MASK_SLOT):
+                    tint = (slots[MASK_SLOT], None, 0)
                 alpha_hint = "alpha_on" in material_path.lower()
             if not texture:
                 texture = mesh.textures.get(TEXTURE_BASE_COLOUR) or mesh.textures.get(TEXTURE_DIFFUSE)
-            meshes.append((part, mesh, texture, mask, alpha_hint))
-    images = source.fetch(t for _, _, texture, mask, _ in meshes for t in (texture, mask) if t)
+            meshes.append((part, mesh, texture, tint, alpha_hint))
+    images = source.fetch(t for _, _, texture, (mask, palette, _), _ in meshes for t in (texture, mask, palette) if t)
 
     # Stage 3: write the buffers, images and the json.
     names = [b.name for b in skeleton.bones]
@@ -217,16 +231,16 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
         blob.extend(b"\0" * (-len(blob) % 4))
         return offset
 
-    def image_file(texture: str, mask: bool) -> Tuple[str, bool]:
+    def image_file(texture: str, exact: bool) -> Tuple[str, bool]:
         # Images are named after their game path, so models sharing a texture share one file. Empty when it could not be read.
         if norm(texture) not in texture_files:
             try:
                 stem = "tex_" + hashlib.sha1(norm(texture).encode()).hexdigest()[:12]
                 done = [e for e in ("jpg", "png") if os.path.exists(os.path.join(folder, f"{stem}.{e}"))]
                 if done:
-                    texture_files[norm(texture)] = (f"{stem}.{done[0]}", done[0] == "png" and not mask)
+                    texture_files[norm(texture)] = (f"{stem}.{done[0]}", done[0] == "png" and not exact)
                 else:
-                    data, ext, alpha = _texture_image(images[norm(texture)], mask)
+                    data, ext, alpha = _texture_image(images[norm(texture)], exact)
                     with open(os.path.join(folder, f"{stem}.{ext}"), "wb") as f:
                         f.write(data)
                     texture_files[norm(texture)] = (f"{stem}.{ext}", alpha)
@@ -235,7 +249,7 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
                 texture_files[norm(texture)] = ("", False)
         return texture_files[norm(texture)]
 
-    for part, mesh, texture, mask, alpha_hint in meshes:
+    for part, mesh, texture, (mask, palette, columns), alpha_hint in meshes:
         skinned = part.attach is None and mesh.vertex_format != FORMAT_STATIC
         entry = {"slot": part.slot, "model": part.model, "name": mesh.name, "attach": part.attach, "skinned": skinned, "count": len(mesh.positions), "index_count": len(mesh.indices)}
         # A rigid prop is moved by its pivot point first, then placed on its bone. Without it a sword sits centred on the hand, not by its grip.
@@ -261,8 +275,11 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
         elif texture:
             missing.append(texture)
         # A mask without its base colour has nothing to tint.
-        if mask and "texture" in entry and norm(mask) in images and image_file(mask, True)[0]:
-            entry["mask"] = image_file(mask, True)[0]
+        exact = [image_file(t, True)[0] if t and norm(t) in images else "" for t in (mask, palette)]
+        if "texture" in entry and exact[0] and (exact[1] or not palette):
+            entry["mask"] = exact[0]
+            if palette:
+                entry["palette"], entry["columns"] = exact[1], columns
         entries.append(entry)
 
     with open(os.path.join(folder, f"{side}.bin"), "wb") as f:

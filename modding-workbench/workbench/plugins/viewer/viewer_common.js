@@ -33,30 +33,44 @@ const sharedTextures = new Map();
 // the base colour as it is.
 const factionColours = [0, 1, 2].map(() => ({ value: new THREE.Color(1, 1, 1) }));
 
+// The heraldry column a model with a heraldry palette (Bretonnian knights) wears, shared like the faction colours. In game each soldier gets one.
+const heraldry = { value: 0 };
+
 // Sets the faction colours models are tinted with, as three "RRGGBB" hex strings (sRGB, as the game's `factions_tables` holds them).
 export function setFactionColours(hexes) { hexes.forEach((hex, i) => factionColours[i].value.set(`#${hex}`)); }
 
+// Sets the heraldry column (from 0) of models with a heraldry palette.
+export function setHeraldry(column) { heraldry.value = column; }
+
 // Tints a material's base colour where its mask marks it, as the game does: each of the mask's red, green and blue channels multiplies the
-// base colour by the faction's first, second and third uniform colour.
-function tint(material, mask) {
+// base colour by a colour. Those are the faction's three uniform colours, or with a heraldry `palette` (`columns` wide) the top and bottom colours
+// of the heraldry column, then the faction's third.
+function tint(material, mask, palette, columns) {
   material.onBeforeCompile = shader => {
     shader.uniforms.tintMask = { value: mask };
     factionColours.forEach((colour, i) => { shader.uniforms[`factionColour${i + 1}`] = colour; });
+    let header = "uniform sampler2D tintMask;\nuniform vec3 factionColour1, factionColour2, factionColour3;", colours = ["factionColour1", "factionColour2"];
+    if (palette) {
+      Object.assign(shader.uniforms, { tintPalette: { value: palette }, tintColumns: { value: columns }, heraldry });
+      header += `\nuniform sampler2D tintPalette;\nuniform float tintColumns, heraldry;
+        vec3 heraldryColour(float row) { return texture2D(tintPalette, vec2((mod(heraldry, tintColumns) + 0.5) / tintColumns, row)).rgb; }`;
+      colours = ["heraldryColour(0.25)", "heraldryColour(0.75)"];
+    }
     shader.fragmentShader = shader.fragmentShader
-      .replace("#include <common>", "#include <common>\nuniform sampler2D tintMask;\nuniform vec3 factionColour1, factionColour2, factionColour3;")
+      .replace("#include <common>", `#include <common>\n${header}`)
       .replace("#include <map_fragment>", `#include <map_fragment>
         vec3 tintWeights = texture2D(tintMask, vMapUv).rgb;
-        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * factionColour1, tintWeights.r);
-        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * factionColour2, tintWeights.g);
+        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * ${colours[0]}, tintWeights.r);
+        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * ${colours[1]}, tintWeights.g);
         diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * factionColour3, tintWeights.b);`);
   };
-  material.customProgramCacheKey = () => "faction_tint";
+  material.customProgramCacheKey = () => palette ? "heraldry_tint" : "faction_tint";
 }
 
 // Loads an exported model: skinned meshes on flat bones that take world transforms straight from an animation. Rigid props sit in the local
 // space of their attach bone, and are left out when `props` is false. Each mesh keeps its `slot`, `model` path and `attach` bone in `userData`.
-// With `shared` off the model gets textures of its own, for a caller that frees them (the thumbnails). With `tint` on, meshes with a faction colour
-// mask take the colours of `setFactionColours`.
+// With `shared` off the model gets textures of its own, for a caller that frees them (the thumbnails). With `tint` on, meshes with a colour mask
+// take the colours of `setFactionColours`, or of their heraldry palette's column (`setHeraldry`).
 // Returns { group, bones, inverses, meshes, missing, ready }, `ready` settling once every texture has loaded or failed.
 export async function loadModel(url, { props = true, shared = true, tint: tinted = true } = {}) {
   // The vertex data is named after the model's json, so both are fetched at once.
@@ -82,6 +96,8 @@ export async function loadModel(url, { props = true, shared = true, tint: tinted
     loading.push(textures.get(textureUrl).ready);
     return textures.get(textureUrl).texture;
   };
+  // A palette is read one column at a time, so its colours must not blur into each other.
+  const palette = texture => { texture.magFilter = texture.minFilter = THREE.NearestFilter; texture.generateMipmaps = false; return texture; };
   for (const m of doc.meshes) {
     if (!m.skinned && !props) continue;
     const g = new THREE.BufferGeometry();
@@ -93,7 +109,7 @@ export async function loadModel(url, { props = true, shared = true, tint: tinted
     if (m.texture) {
       mat.map = image(m.texture, THREE.SRGBColorSpace);
       if (m.alpha) mat.alphaTest = 0.5;
-      if (m.mask && tinted) tint(mat, image(m.mask, THREE.NoColorSpace));
+      if (m.mask && tinted) tint(mat, image(m.mask, THREE.NoColorSpace), m.palette && palette(image(m.palette, THREE.SRGBColorSpace)), m.columns);
     }
     let mesh;
     if (m.skinned) {
