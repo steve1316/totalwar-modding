@@ -31,7 +31,7 @@
   #left .p-head { margin: 6px 6px 2px; }
   #forms { overflow: auto; max-height: 45%; padding: 0 6px 6px; }
   #forms .grp { color: #d8a640; font-size: 12px; margin: 8px 4px 2px; }
-  #forms button, #slots button { display: flex; justify-content: space-between; width: 100%; text-align: left; background: none; border: 0; border-radius: 4px;
+  #forms button, #slots button { display: flex; justify-content: space-between; align-items: center; width: 100%; text-align: left; background: none; border: 0; border-radius: 4px;
                                  min-height: 32px; }
   #forms button.on, #slots button.on { background: #8a2a1f; }
   #search { margin: 2px 6px; min-height: 32px; padding: 0 8px; background: var(--bg); border: 1px solid var(--line); color: var(--text); border-radius: 4px; font: inherit; }
@@ -192,7 +192,7 @@
   .dropdown { position: relative; display: inline-flex; flex-direction: column; }
   .dropdown .menu { position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; display: flex; flex-direction: column; gap: 4px; z-index: 3; }
   .dropdown .menu button:not(.on) { opacity: .55; }
-  /* The Adjust tab (studio/adjust.js): a card per weapon, then the hands. */
+  /* The Look tab (studio/look.js, studio/weapons.js): sections of cards, each section saying which forms it changes. */
   .adj-intro { padding: 6px 8px; }
   .adj-card { margin: 6px; padding: 8px; border: 1px solid var(--line); border-radius: 6px; background: rgba(0,0,0,.2); display: flex; flex-direction: column; gap: 4px; }
   .adj-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -200,24 +200,25 @@
   .adj-model { font-family: var(--mono, monospace); font-size: 12px; word-break: break-all; }
   .adj-card .note.warn { color: #e0a040; }
   .adj-card .adj-more { align-self: flex-start; }
-  /* The Look tab (studio/look.js). */
+  .look-section { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 12px 8px 0; padding-bottom: 2px; border-bottom: 1px solid var(--line); }
+  .look-section b { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; }
   .look-bodies { display: flex; flex-wrap: wrap; gap: 4px; }
   .look-bodies button { min-height: 30px; font-size: 13px; }
   .look-piece { display: flex; align-items: center; gap: 8px; } .look-piece .adj-model { flex: 1; }
   /* Model thumbnails (studio/thumbs.js): a dark tile until the picture is drawn. */
   img.thumb, .hits button > img.thumb { width: 64px; height: 64px; flex: none; border-radius: 4px; border: 1px solid var(--line); background: radial-gradient(#2b2224, #120c0e); object-fit: contain; }
   img.thumb.missing { opacity: .3; }
-  .picker .hits button.look-hit { display: flex; justify-content: flex-start; align-items: center; gap: 10px; text-align: left; min-height: 72px; }
   .look-hit > span { display: flex; flex-direction: column; min-width: 0; word-break: break-all; }
   .picker .look-hits { position: relative; max-height: 55vh; overflow: auto; display: flex; flex-direction: column; gap: 4px; }
   .look-spacer { flex: none; }
-  .picker .look-hits button.look-hit { flex: none; }
   .look-count { padding: 0 4px 4px; }
+  .look-featured { display: flex; flex-direction: column; gap: 4px; padding: 0 4px 6px; } .look-featured:empty { display: none; }
   .picker { margin: 0 6px 8px; padding: 6px; border: 1px solid var(--line); border-radius: 4px; background: rgba(0,0,0,.25); }
   .adj-card .picker { margin: 0; }
   .picker .hits:empty { display: none; }
-  .picker .twin { padding: 4px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
   .picker .hits button { justify-content: space-between; }
+  /* After the generic row rule, which it overrides. */
+  .picker button.look-hit { flex: none; display: flex; justify-content: flex-start; align-items: center; gap: 10px; text-align: left; min-height: 72px; }
   .attrSearch { display: block; box-sizing: border-box; width: calc(100% - 8px); margin: 4px; min-height: 32px; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 0 8px; font: inherit; }
 
   /* Bottom: playback and jobs. */

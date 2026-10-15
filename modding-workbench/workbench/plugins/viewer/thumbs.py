@@ -6,18 +6,15 @@ import base64
 import hashlib
 import json
 import os
-import re
 import threading
 from typing import Dict
 
+from workbench.plugins.viewer.previews import MODEL_PATH
 from workbench.projects import Project
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Settings
-
-# A model's game path.
-MODEL_PATH = re.compile(r"^[\w ./-]+\.(wsmodel|rigid_model_v2)$", re.IGNORECASE)
 
 # The start of a picture the page sends.
 PNG_PREFIX = "data:image/png;base64,"

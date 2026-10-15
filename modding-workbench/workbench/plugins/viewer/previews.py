@@ -1,4 +1,4 @@
-"""Exports models for the live previews and thumbnails of the Adjust and Look tabs, so a newly picked weapon, body, head or piece shows on the
+"""Exports models for the live previews and thumbnails of the Look tab, so a newly picked weapon, body, head or piece shows on the
 stage before a rebuild bakes it into the gallery.
 
 The export runs `tools.anim_viewer.prop_preview` in the project's `helper_scripts`, where its jobs run and its pack tools are, reading the project's
@@ -21,8 +21,8 @@ from workbench.projects import Project
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Settings
 
-# A model's game path.
-MODEL_PATH = re.compile(r"^[\w ./-]+\.(wsmodel|rigid_model_v2)$", re.IGNORECASE)
+# A model's game path, or a variant definition's (a set such as a shield's).
+MODEL_PATH = re.compile(r"^[\w ./-]+\.(wsmodel|rigid_model_v2|variantmeshdefinition)$", re.IGNORECASE)
 
 # A slot, attach bone or skeleton name. A model with no attach bone bends with the skeleton.
 NAME = re.compile(r"^[a-z0-9_]*$")

@@ -40,9 +40,8 @@ export class Thumbnails {
 
   // The promised picture of a model, queued for drawing once. `img` is the image showing it, or none for a background one.
   request(model, img) {
-    const waiting = this.queue.find(q => q.model === model);
-    if (waiting) { if (img) waiting.imgs.push(img); }
-    else if (!this.images.has(model)) { this.images.set(model, new Promise(done => this.queue.push({ model, done, imgs: img ? [img] : [] }))); this.pump(); }
+    if (!this.images.has(model)) { this.images.set(model, new Promise(done => this.queue.push({ model, done, imgs: img ? [img] : [] }))); this.pump(); }
+    else if (img) { const waiting = this.queue.find(q => q.model === model); if (waiting) waiting.imgs.push(img); }
     return this.images.get(model);
   }
 

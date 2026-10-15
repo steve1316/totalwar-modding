@@ -30,7 +30,11 @@ from tools.anim_viewer.models import export_model
 SKELETON_PACKS = re.compile(r"^anim.*\.pack$")
 
 # The variant mesh definition a model is exported through.
-VARIANT = '<VARIANT_MESH><SLOT name="{slot}"{attach}><VARIANT_MESH model="{model}"/></SLOT></VARIANT_MESH>'
+VARIANT = '<VARIANT_MESH><SLOT name="{slot}"{attach}>{mesh}</SLOT></VARIANT_MESH>'
+
+# What the slot holds: a model, or a variant definition (a set such as a shield's), whose meshes keep their own slot names.
+MESH = '<VARIANT_MESH model="{model}"/>'
+REFERENCE = '<VARIANT_MESH_REFERENCE definition="{model}"/>'
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +60,8 @@ def export_prop(gallery: str, item: Dict[str, str], source: AssetSource, bind_po
     with tempfile.TemporaryDirectory() as folder:
         variant = os.path.join(folder, "preview.variantmeshdefinition")
         with open(variant, "w", encoding="utf-8") as f:
-            f.write(VARIANT.format(slot=item["slot"], attach=f' attach_point="{item["attach"]}"' if item["attach"] else "", model=item["model"]))
+            mesh = (REFERENCE if item["model"].lower().endswith(".variantmeshdefinition") else MESH).format(model=item["model"])
+            f.write(VARIANT.format(slot=item["slot"], attach=f' attach_point="{item["attach"]}"' if item["attach"] else "", mesh=mesh))
         summary = export_model(item["stem"], variant, item["skeleton"], bind_pose, source, gallery)
     return f"models/{item['stem']}.json" if summary["meshes"] else None
 

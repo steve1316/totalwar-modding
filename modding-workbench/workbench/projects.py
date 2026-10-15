@@ -332,7 +332,7 @@ class Project:
         return paths
 
     def tuning_values(self, registry: Optional[Dict] = None) -> Dict[str, Any]:
-        """The values the Adjust panel and the portrait page edit, and the weapon models that may get an offset.
+        """The values the Look tab and the portrait page edit, and the weapon models that may get an offset.
 
         Args:
             registry (Optional[Dict]): The registry, read from disk when None.
