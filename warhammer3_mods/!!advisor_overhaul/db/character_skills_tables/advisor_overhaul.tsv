@@ -42,6 +42,13 @@ advisor_overhaul_skill_martial_7	campaign_replenishment.png			3	false	false	fals
 advisor_overhaul_skill_martial_8	campaign_disaster.png			2	false	false	false	0.0000	0
 advisor_overhaul_skill_martial_9	campaign_disaster.png			4	false	false	false	0.0000	0
 advisor_overhaul_skill_martial_apex	character_attack.png			25	false	false	false	0.0000	0
+advisor_overhaul_skill_memory_calm_voice	character_defence.png			6	false	false	false	0.0000	0
+advisor_overhaul_skill_memory_every_mistake	spell_mastery.png			10	false	false	false	0.0000	0
+advisor_overhaul_skill_memory_long_patience	campaign_experience.png			45	false	false	false	0.0000	0
+advisor_overhaul_skill_memory_old_lessons	campaign_experience.png			4	false	false	false	0.0000	0
+advisor_overhaul_skill_memory_polymath	spell_mastery.png			30	false	false	false	0.0000	0
+advisor_overhaul_skill_memory_seen_the_end	campaign_ambush.png			3	false	false	false	0.0000	0
+advisor_overhaul_skill_memory_weight_of_years	character_armour.png			8	false	false	false	0.0000	0
 advisor_overhaul_lore_fire	wh_main_lore_passive_kindleflame.png			1	false	false	false	0.0000	0
 advisor_overhaul_lore_beasts	wh_dlc03_lore_passive_wild_heart.png			1	false	false	false	0.0000	0
 advisor_overhaul_lore_metal	wh_main_spell_metal_plague_of_rust.png			1	false	false	false	0.0000	0

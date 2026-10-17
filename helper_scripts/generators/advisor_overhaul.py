@@ -43,11 +43,11 @@ The rest of his kit, also in the registry:
 - `items`: id -> `name`, `description`, `type` (a vanilla ancillary type), `category`, `effects`. His quest items.
 - `lores`: vanilla lore key -> `name`, `icon`, `row`, `tier`, `rank`, `build`. One 3-level skill per lore, its spells read from vanilla at
   `--refresh`: level 1 the lore's passive and its `LORE_FIRST_SPELLS` cheapest spells, level 2 every spell, level 3 every spell and its overcast.
-- `zones`: groups of skills spanning two rows, each `title`, `description`, `rows` (top and bottom) and `skills` (ids in reading order, top to
-  bottom then left to right, placed in the two rows by turns). `script/campaign/mod/advisor_overhaul_zones.lua` heads each zone with a label
-  column and pads the rows so every zone lines up.
 
 Each tree row's cards take that row's colour from `ROW_COLOURS`, through a skill category for his subtype only.
+
+The Polymath (the skill with `role` "polymath") grows with every discipline of `DISCIPLINES` in which he has `POLYMATH_SKILLS` skills: the
+loadout script puts the bundle `bundles.polymath_<n>` on him for n such disciplines, so the registry needs one per discipline.
 
 Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_TEMPLATE`), mounted pairs start from a vanilla hero on the same
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
@@ -175,6 +175,10 @@ LORE_SKIPPED = {"wh2_dlc12_lore_lord_kroak", "wh_pro03_lore_kemmler", "wh3_main_
 
 # Card colour of each of his tree rows, top to bottom (a `character_skill_categories` row each, for his subtype only).
 ROW_COLOURS = ["F1413D", "3DA5F1", "F1C43D", "9B3DF1", "3DF17A", "F13DC4", "F1813D", "3DF1E8", "8A8A8A", "FFFFFF"]
+
+# The Polymath's disciplines: name -> the tree rows whose skills count for it. And how many skills of one discipline make it count.
+DISCIPLINES = {"arts": [2], "memory": [3], "magic": [4, 5], "hero_work": [6, 7]}
+POLYMATH_SKILLS = 3
 
 # Spells a lore skill's first level gives, the cheapest first, and how many levels a lore skill has.
 LORE_FIRST_SPELLS = 3
@@ -1152,32 +1156,33 @@ def category_rows(rows: Dict[str, List[Dict[str, str]]]) -> None:
                                                    "agent_subtype_override": SUBTYPE, "col_hex": colour} for row, colour in enumerate(ROW_COLOURS)]
 
 
-def zone_rows(registry: Dict, texts: List[Tuple[str, str]]) -> List[Dict]:
-    """Checks the registry's `zones` and adds their texts.
+def polymath_data(registry: Dict) -> Optional[Dict]:
+    """The Polymath's data for the loadout script: its skill, the skills of each discipline and its bundles.
 
     Args:
         registry (Dict): The registry.
-        texts (List[Tuple[str, str]]): Loc rows, added to.
 
     Returns:
-        List[Dict]: Per zone, its `title` and `description` loc keys with their English fallbacks, its `top` and `bottom` rows and its `cards`
-        (skill keys in reading order), for the zones script.
+        Optional[Dict]: `skill`, `needed`, `disciplines` (name -> skill keys, lores included) and `bundles` (one per number of disciplines), or None
+        when no Polymath is built.
 
     Raises:
-        SystemExit: When a zone names a skill that is not built and shown, or one outside its two rows.
+        SystemExit: When a Polymath bundle is missing from the registry's `bundles`.
     """
-    skills, zones = registry.get("skills", {}), []
-    for i, zone in enumerate(registry.get("zones", []), start=1):
-        top, bottom = zone["rows"]
-        for skill_id in zone["skills"]:
-            skill = skills.get(skill_id, {})
-            if not skill.get("build") or skill.get("hidden") or skill.get("row") not in (top, bottom):
-                raise SystemExit(f"zone {zone['title']}: skill {skill_id} is not built, is hidden or is not on row {top} or {bottom}")
-        title, description = f"{PREFIX}_ui_zone_{i}_title", f"{PREFIX}_ui_zone_{i}_description"
-        texts += [(title, zone["title"]), (description, zone.get("description", ""))]
-        zones.append({"title": title, "title_fallback": zone["title"], "description": description, "description_fallback": zone.get("description", ""),
-                      "top": top, "bottom": bottom, "cards": [planned_skill_key(s) for s in zone["skills"]]})
-    return zones
+    skills = registry.get("skills", {})
+    polymaths = [k for k, s in skills.items() if s.get("build") and s.get("role") == "polymath"]
+    if not polymaths:
+        return None
+    missing = [f"polymath_{n}" for n in range(1, len(DISCIPLINES) + 1) if f"polymath_{n}" not in registry.get("bundles", {})]
+    if missing:
+        raise SystemExit(f"the Polymath needs the bundles {', '.join(missing)}")
+    disciplines = {}
+    for name, rows in DISCIPLINES.items():
+        keys = [planned_skill_key(k) for k, s in skills.items() if s.get("build") and not s.get("hidden") and s.get("row") in rows and k not in polymaths]
+        keys += [lore_skill_key(lore) for lore, e in registry.get("lores", {}).items() if e.get("build") and e.get("row") in rows]
+        disciplines[name] = sorted(keys)
+    return {"skill": planned_skill_key(polymaths[0]), "needed": POLYMATH_SKILLS, "disciplines": disciplines,
+            "bundles": [bundle_key(f"polymath_{n}") for n in range(1, len(DISCIPLINES) + 1)]}
 
 
 def art_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:
@@ -1317,7 +1322,6 @@ def build() -> None:
     item_rows(registry, data, rows, texts)
     lore_rows(registry, data, rows, texts)
     category_rows(rows)
-    zones = zone_rows(registry, texts)
     art_rows(registry, data, rows)
     missile_rows(registry, data, rows)
     melee_rows(registry, data, rows)
@@ -1334,7 +1338,8 @@ def build() -> None:
     portrait_ids = [(weapon_art_set(w), foot_variant(w)) for w in registry["weapons"]] + [(foot_variant(w), foot_variant(w)) for w in registry["weapons"]]
     write_portraits(data["portraits"], registry["portrait"], portrait_ids)
     write_portrait_images(registry["portrait"])
-    write_script(registry, combos, arts, [n["character_skill_key"] for n in rows["character_skill_nodes_tables"] if n["points_on_creation"] == "1"], zones)
+    write_script(registry, combos, arts, [n["character_skill_key"] for n in rows["character_skill_nodes_tables"] if n["points_on_creation"] == "1"],
+                 polymath_data(registry))
     with open(os.path.join(MOD, "text", "db", f"{FILE}.loc.tsv"), "w", encoding="utf-8", newline="\n") as f:
         f.write(f"key\ttext\ttooltip\n#Loc;1;text/db/{FILE}.loc\t\t\n")
         f.write("".join(f"{key}\t{text}\ttrue\n" for key, text in texts))
@@ -1624,16 +1629,16 @@ def write_portrait_images(portrait: Dict) -> None:
         image.save(out, optimize=True)
 
 
-def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[str, List[Tuple[str, str, str]]], learned: List[str], zones: List[Dict]) -> None:
+def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[str, List[Tuple[str, str, str]]], learned: List[str], polymath: Optional[Dict]) -> None:
     """Writes the Lua data table the campaign scripts read: his subtype, the weapons and mounts with their unlock skills, names and picker icons,
-    the ancillary of every valid pair both ways, the skills he is made with, each weapon's arts and the skill tree's zones.
+    the ancillary of every valid pair both ways, the skills he is made with, each weapon's arts and the Polymath.
 
     Args:
         registry (Dict): The registry.
         combos (List[Tuple[str, str, str]]): (weapon, mount, ancillary) per valid pair.
         arts (Dict[str, List[Tuple[str, str, str]]]): Weapon -> (slot skill, art bundle, art name) per built art slot.
         learned (List[str]): The skills he is made with.
-        zones (List[Dict]): The zones, from `zone_rows`.
+        polymath (Optional[Dict]): The Polymath, from `polymath_data`, or None.
     """
     quote = lambda text: text.replace("\\", "\\\\").replace('"', '\\"')
     folder = os.path.join(MOD, "script", "campaign", "mod")
@@ -1666,13 +1671,13 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[
     for weapon, slots in arts.items():
         lines += [f'\t\t["{weapon}"] = {{'] + [f'\t\t\t{{ skill = "{s}", bundle = "{b}", name = "{n.replace(chr(34), chr(92) + chr(34))}" }},' for s, b, n in slots]
         lines += ["\t\t},"]
-    lines += ["\t},", "\t--- Skill tree zones, in order: title and description loc keys with English fallbacks, the top and bottom rows they span, and their",
-              "\t--- cards (skill keys) in reading order.", "\tzones = {"]
-    for zone in zones:
-        lines += [f'\t\t{{ title = "{zone["title"]}", title_fallback = "{quote(zone["title_fallback"])}", description = "{zone["description"]}",',
-                  f'\t\t\tdescription_fallback = "{quote(zone["description_fallback"])}", top = {zone["top"]}, bottom = {zone["bottom"]},',
-                  "\t\t\tcards = { " + ", ".join(f'"{c}"' for c in zone["cards"]) + " } },"]
-    lines += ["\t},", "}"]
+    lines += ["\t},"]
+    if polymath:
+        lines += ["\t--- The Polymath: its skill, how many skills of a discipline make it count, each discipline's skills, and the bundle for each number",
+                  "\t--- of disciplines that count.", "\tpolymath = {", f'\t\tskill = "{polymath["skill"]}",', f'\t\tneeded = {polymath["needed"]},', "\t\tdisciplines = {"]
+        lines += [f'\t\t\t{name} = {{ ' + ", ".join(f'"{k}"' for k in keys) + " }," for name, keys in polymath["disciplines"].items()]
+        lines += ["\t\t},", "\t\tbundles = { " + ", ".join(f'"{b}"' for b in polymath["bundles"]) + " },", "\t},"]
+    lines += ["}"]
     with open(os.path.join(folder, f"{FILE}_rigs.lua"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
 

@@ -431,6 +431,47 @@ local function sync_arts(character, weapon)
 	end
 end
 
+--- Puts on the Advisor the Polymath bundle for the number of disciplines in which he has enough skills, while he owns the Polymath, and takes every
+--- other Polymath bundle off. Runs with `sync_arts`, and on every skill point.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+local function sync_polymath(character)
+	local data = rig_data().polymath
+	if not data then
+		return
+	end
+	local counted = {}
+	if character:has_skill(data.skill) then
+		for name, keys in pairs(data.disciplines) do
+			local owned = 0
+			for _, key in ipairs(keys) do
+				if character:has_skill(key) then
+					owned = owned + 1
+				end
+			end
+			if owned >= data.needed then
+				table.insert(counted, name)
+			end
+		end
+	end
+	local wanted = data.bundles[#counted]
+	local changed = false
+	for _, bundle in ipairs(data.bundles) do
+		local has = character:has_effect_bundle(bundle)
+		if bundle == wanted and not has then
+			cm:apply_effect_bundle_to_character(bundle, character, 0)
+			changed = true
+		elseif has and bundle ~= wanted then
+			cm:remove_effect_bundle_from_character(bundle, character)
+			changed = true
+		end
+	end
+	if changed then
+		table.sort(counted)
+		log("cqi " .. character:command_queue_index() .. " Polymath counts " .. #counted .. " disciplines (" .. table.concat(counted, ", ") .. "), bundle "
+			.. tostring(wanted))
+	end
+end
+
 --- Whether the once-per-turn rule blocks a change for this Advisor.
 --- @param cqi number The Advisor's command queue index.
 --- @returns boolean True when he already changed this turn and the rule is on.
@@ -565,6 +606,7 @@ local function apply_pair(character)
 	local wanted = rig_data().ancillaries[weapon .. "|" .. mount]
 	apply_art_set(character, weapon)
 	sync_arts(character, weapon)
+	sync_polymath(character)
 	if not wanted then
 		log("cqi " .. cqi .. " has no unit for " .. weapon .. " on " .. mount .. ", nothing equipped")
 		return false
@@ -1836,6 +1878,8 @@ core:add_listener(
 		local character = context:character()
 		local skill = context:skill_point_spent_on()
 		local unlocked = skill_items()[skill]
+		-- Any skill may change how many disciplines the Polymath counts.
+		sync_polymath(character)
 		if not unlocked then
 			-- An art slot skill puts on his held weapon's art at once.
 			local weapon = current_pair(character)

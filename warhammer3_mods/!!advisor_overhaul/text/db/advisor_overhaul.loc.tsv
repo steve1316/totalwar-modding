@@ -130,6 +130,20 @@ character_skills_localised_name_advisor_overhaul_skill_martial_9	Assault Units	t
 character_skills_localised_description_advisor_overhaul_skill_martial_9	The whole camp, the same night.\\n\\nUnlocks the Assault Units hero action.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_apex	The Last Sword	true
 character_skills_localised_description_advisor_overhaul_skill_martial_apex	At the end of one world he was the last one standing. He intends to be again.\\n\\nThe Martial row's Apex. Takes the place of the other Apexes and the Polymath.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_calm_voice	Calm Voice	true
+character_skills_localised_description_advisor_overhaul_skill_memory_calm_voice	Men stand firm around someone who is not afraid. He stopped being afraid a long time ago.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_every_mistake	Every Mistake Already Made	true
+character_skills_localised_description_advisor_overhaul_skill_memory_every_mistake	There is no error left for him to make. He made them all in other lives.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_long_patience	The Long Patience	true
+character_skills_localised_description_advisor_overhaul_skill_memory_long_patience	He has all the time in the world. He has had it before.\\n\\nForty small levels for points nothing else wants: each adds 1 melee attack, 1 melee defence and 1 spell mastery.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_old_lessons	Old Lessons	true
+character_skills_localised_description_advisor_overhaul_skill_memory_old_lessons	Everything he teaches, he learned the hard way. Several times.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_polymath	Everything, Again	true
+character_skills_localised_description_advisor_overhaul_skill_memory_polymath	He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\n\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Takes the place of every Apex.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_seen_the_end	Seen the End	true
+character_skills_localised_description_advisor_overhaul_skill_memory_seen_the_end	He has watched this army walk into this ambush before. Not this time.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_weight_of_years	The Weight of Years	true
+character_skills_localised_description_advisor_overhaul_skill_memory_weight_of_years	He has died before. He did not care for it, and he takes more killing now.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_art_1	Spellguard	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_art_1	He parries with the staff and lets the wards take the rest.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_art_2	Bolt and Blade	true
@@ -194,6 +208,14 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_army_3	
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_army_3	He knows where the enemy will walk, because he has watched them walk there before.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_apex	Hail of Doom	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_apex	One arrow that splits into a storm.	true
+effect_bundles_localised_title_advisor_overhaul_bundle_polymath_1	Everything, Again (1 of 4)	true
+effect_bundles_localised_description_advisor_overhaul_bundle_polymath_1	He draws on 1 of his disciplines at once.	true
+effect_bundles_localised_title_advisor_overhaul_bundle_polymath_2	Everything, Again (2 of 4)	true
+effect_bundles_localised_description_advisor_overhaul_bundle_polymath_2	He draws on 2 of his disciplines at once.	true
+effect_bundles_localised_title_advisor_overhaul_bundle_polymath_3	Everything, Again (3 of 4)	true
+effect_bundles_localised_description_advisor_overhaul_bundle_polymath_3	He draws on 3 of his disciplines at once.	true
+effect_bundles_localised_title_advisor_overhaul_bundle_polymath_4	Everything, Again (4 of 4)	true
+effect_bundles_localised_description_advisor_overhaul_bundle_polymath_4	He draws on 4 of his disciplines at once.	true
 character_skills_localised_name_advisor_overhaul_lore_fire	Lore of Fire	true
 character_skills_localised_description_advisor_overhaul_lore_fire	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_beasts	Lore of Beasts	true
@@ -256,14 +278,6 @@ character_skills_localised_name_advisor_overhaul_lore_wild	Lore of the Wild	true
 character_skills_localised_description_advisor_overhaul_lore_wild	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_rune	Lore of Runes	true
 character_skills_localised_description_advisor_overhaul_lore_rune	A runesmith taught him three runes before the last hold fell. He worked out the rest.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
-advisor_overhaul_ui_zone_1_title	Heroes	true
-advisor_overhaul_ui_zone_1_description	Kill or wound rival heroes, and remove their generals.	true
-advisor_overhaul_ui_zone_2_title	Armies	true
-advisor_overhaul_ui_zone_2_description	Wreck enemy armies in the field, or march and train with your own.	true
-advisor_overhaul_ui_zone_3_title	Lands	true
-advisor_overhaul_ui_zone_3_description	Sabotage enemy settlements, or bring order, growth and wealth to yours.	true
-advisor_overhaul_ui_zone_4_title	Mastery	true
-advisor_overhaul_ui_zone_4_description	Cheaper hero actions, and the two Apexes of hero work.	true
 agent_actions_localised_action_name_advisor_overhaul_action_champion_assist_army_scavenge	{{tr:agent_action_name_scavenge}}	true
 agent_actions_localised_action_description_advisor_overhaul_action_champion_assist_army_scavenge	[[col:yellow]]Increases the {{tr:icon_income}}income of post-battle loot earned by the parent army by %n%.[[/col]]	true
 effects_description_advisor_overhaul_effect_enable_champion_assist_army_scavenge	Hero action: {{tr:agent_action_name_scavenge}}	true

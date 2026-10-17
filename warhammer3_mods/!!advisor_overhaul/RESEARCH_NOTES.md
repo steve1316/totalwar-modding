@@ -190,10 +190,10 @@ Also fine but not kept: Kislev Patriarch, Engineer, Paladin, Warrior Priest. `[d
   module, so modules in neighbouring 90 px rows overlap about 9 px and read as one box. With 70 px rows they clipped into each other. The 10-row
   panel now draws the frame 79 px tall from 12 px above (all four module states), keeping the 9 px overlap. Changing only that image size inside
   `chain0` did not freeze the game. `[game]`
-- **Zones: labels and blanks in a row.** A script can put its own components between a row's cards: `CreateComponent` on the row's `chain`
-  list, then `Divorce` and `Adopt(address, index)` move it to that index, and the row lays it out like a card. A component taller than its row draws
-  over the row below. A see-through blank (opacity 0) holds a card's place, since a hidden skill node takes no space. Each card is named after its
-  skill key. Lua has no font size control: sizes come from a layout file (`ui/templates/advisor_overhaul_zone_label`). `[game]`
+- **Zones: labels and blanks in a row crash the game.** A script can put its own components between a row's cards (`CreateComponent` on the
+  row's `chain` list, then `Divorce` and `Adopt(address, index)`), and they lay out and look right. But learning any skill then froze and crashed
+  the game, even when only the script's own parts were moved and the cards were left alone. Without the script it works. Do not add components to
+  the skill rows. `[game]`
 - **Row colours.** A `character_skill_categories` row with `agent_subtype_override` colours one row's cards for that subtype only. It shows no name
   anywhere. Lore cards keep their own lore colours. `[game]`
 - **No vertical scrolling.** The `listview` runs the `HorizontalListView` code callback, which drives only the horizontal slider and drag. `[data]`
@@ -609,3 +609,21 @@ Stat deltas from foot (Amethyst Wizard, vanilla):
     choice needs at least a TEXT_DISPLAY payload.
   - Fire it with `cm:trigger_dilemma_with_targets(...)` and read the answer with `DilemmaChoiceMadeEvent` + `context:choice_key()`.
   - Example: LEAPOI `land_enc_dilemma_skirmish_cth`. `[data]`
+
+## How vanilla builds skill trees (survey of all 594 node sets)
+
+- **Size and shape.** Lords average 65 nodes, heroes 40-46, almost all single-level. Each column (`indent`) is a theme chain (for Karl: his unique
+  line, personal defence, army buffs for his troop types, campaign). Heroes add an "innate" column of flavour traits that include drawbacks
+  (`-5` research, `-10` physical resistance, `-15` speed).
+- **Convergence nodes.** A `SUBSET_REQUIRED` node needs any one of 3-4 parents and holds an ability (Foe-Seeker, Rally, Evasion, Arcane Conduit,
+  Stand Your Ground). That is vanilla's reason to travel a branch. `REQUIRED` links are plain chains.
+- **Rank gates.** Strong nodes use `unlocked_at_rank` (Student of the White Tower rank 19, Excellent Efficiency rank 24, Immortality rank 19,
+  Mentor rank 29 with 3 levels).
+- **Pick-one identity.** High Elf lords' Dedication to a god locks the other gods (about 700 lock rows per tree). Each gives a themed troop bonus
+  plus a small personal one. Chaos marks, Lord of Change forms and Keeper aspects work the same way.
+- **Effects beyond numbers.** Ability enables (about 1000 keys), `attribute_enable_*` (82: unbreakable, perfect vigour, 360 missile block,
+  glorious charge, causes fear or terror, immune to psychology), `character_stat_enable_*` (15 attack riders: poison, flaming, magic, sundering,
+  rattled), mounts, hero caps and `agent_recruitment_xp`, `name_epithet_*` titles, `pooled_resource_*` faction mechanics, ancillary steal and drop
+  mods, `grant_immortality_*`, upkeep and tech effects.
+- **Surveys.** The scripts are `tree_research.py` and `dump_tree.py`, run from `helper_scripts` with `PYTHONPATH=.`.
+

@@ -99,20 +99,17 @@ ADVISOR_OVERHAUL_RIGS = {
 			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_sword_and_bow_apex", name = "Hail of Doom" },
 		},
 	},
-	--- Skill tree zones, in order: title and description loc keys with English fallbacks, the top and bottom rows they span, and their
-	--- cards (skill keys) in reading order.
-	zones = {
-		{ title = "advisor_overhaul_ui_zone_1_title", title_fallback = "Heroes", description = "advisor_overhaul_ui_zone_1_description",
-			description_fallback = "Kill or wound rival heroes, and remove their generals.", top = 6, bottom = 7,
-			cards = { "advisor_overhaul_skill_martial_0", "advisor_overhaul_skill_martial_1", "advisor_overhaul_skill_martial_2" } },
-		{ title = "advisor_overhaul_ui_zone_2_title", title_fallback = "Armies", description = "advisor_overhaul_ui_zone_2_description",
-			description_fallback = "Wreck enemy armies in the field, or march and train with your own.", top = 6, bottom = 7,
-			cards = { "advisor_overhaul_skill_martial_6", "advisor_overhaul_skill_martial_7", "advisor_overhaul_skill_martial_8", "advisor_overhaul_skill_martial_9", "advisor_overhaul_skill_civic_0", "advisor_overhaul_skill_civic_1", "advisor_overhaul_skill_civic_2", "advisor_overhaul_skill_civic_3", "advisor_overhaul_skill_civic_4" } },
-		{ title = "advisor_overhaul_ui_zone_3_title", title_fallback = "Lands", description = "advisor_overhaul_ui_zone_3_description",
-			description_fallback = "Sabotage enemy settlements, or bring order, growth and wealth to yours.", top = 6, bottom = 7,
-			cards = { "advisor_overhaul_skill_martial_3", "advisor_overhaul_skill_martial_4", "advisor_overhaul_skill_martial_5", "advisor_overhaul_skill_civic_10", "advisor_overhaul_skill_civic_5", "advisor_overhaul_skill_civic_6", "advisor_overhaul_skill_civic_7", "advisor_overhaul_skill_civic_8", "advisor_overhaul_skill_civic_9" } },
-		{ title = "advisor_overhaul_ui_zone_4_title", title_fallback = "Mastery", description = "advisor_overhaul_ui_zone_4_description",
-			description_fallback = "Cheaper hero actions, and the two Apexes of hero work.", top = 6, bottom = 7,
-			cards = { "advisor_overhaul_skill_martial_11", "advisor_overhaul_skill_martial_apex", "advisor_overhaul_skill_civic_apex" } },
+	--- The Polymath: its skill, how many skills of a discipline make it count, each discipline's skills, and the bundle for each number
+	--- of disciplines that count.
+	polymath = {
+		skill = "advisor_overhaul_skill_memory_polymath",
+		needed = 3,
+		disciplines = {
+			arts = { "advisor_overhaul_skill_arts_apex", "advisor_overhaul_skill_arts_army_1", "advisor_overhaul_skill_arts_army_2", "advisor_overhaul_skill_arts_army_3", "advisor_overhaul_skill_arts_art_1", "advisor_overhaul_skill_arts_art_2", "advisor_overhaul_skill_arts_art_3", "advisor_overhaul_skill_arts_art_4" },
+			memory = { "advisor_overhaul_skill_memory_calm_voice", "advisor_overhaul_skill_memory_every_mistake", "advisor_overhaul_skill_memory_long_patience", "advisor_overhaul_skill_memory_old_lessons", "advisor_overhaul_skill_memory_seen_the_end", "advisor_overhaul_skill_memory_weight_of_years" },
+			magic = { "advisor_overhaul_lore_beasts", "advisor_overhaul_lore_big_waaagh", "advisor_overhaul_lore_dark_magic", "advisor_overhaul_lore_death", "advisor_overhaul_lore_deep", "advisor_overhaul_lore_fire", "advisor_overhaul_lore_hag", "advisor_overhaul_lore_hashut", "advisor_overhaul_lore_heavens", "advisor_overhaul_lore_high_magic", "advisor_overhaul_lore_life", "advisor_overhaul_lore_light", "advisor_overhaul_lore_lil_waaagh", "advisor_overhaul_lore_metal", "advisor_overhaul_lore_mists", "advisor_overhaul_lore_nehekhara", "advisor_overhaul_lore_nurgle", "advisor_overhaul_lore_of_great_maw", "advisor_overhaul_lore_of_ice", "advisor_overhaul_lore_of_tempest", "advisor_overhaul_lore_of_yang", "advisor_overhaul_lore_of_yin", "advisor_overhaul_lore_plague", "advisor_overhaul_lore_ruin", "advisor_overhaul_lore_rune", "advisor_overhaul_lore_shadows", "advisor_overhaul_lore_slaanesh", "advisor_overhaul_lore_stealth", "advisor_overhaul_lore_undeath", "advisor_overhaul_lore_vampires", "advisor_overhaul_lore_wild", "advisor_overhaul_skill_magic_archmage", "advisor_overhaul_skill_magic_reserves", "advisor_overhaul_skill_magic_steady" },
+			hero_work = { "advisor_overhaul_skill_civic_0", "advisor_overhaul_skill_civic_1", "advisor_overhaul_skill_civic_10", "advisor_overhaul_skill_civic_2", "advisor_overhaul_skill_civic_3", "advisor_overhaul_skill_civic_4", "advisor_overhaul_skill_civic_5", "advisor_overhaul_skill_civic_6", "advisor_overhaul_skill_civic_7", "advisor_overhaul_skill_civic_8", "advisor_overhaul_skill_civic_9", "advisor_overhaul_skill_civic_apex", "advisor_overhaul_skill_martial_0", "advisor_overhaul_skill_martial_1", "advisor_overhaul_skill_martial_11", "advisor_overhaul_skill_martial_2", "advisor_overhaul_skill_martial_3", "advisor_overhaul_skill_martial_4", "advisor_overhaul_skill_martial_5", "advisor_overhaul_skill_martial_6", "advisor_overhaul_skill_martial_7", "advisor_overhaul_skill_martial_8", "advisor_overhaul_skill_martial_9", "advisor_overhaul_skill_martial_apex" },
+		},
+		bundles = { "advisor_overhaul_bundle_polymath_1", "advisor_overhaul_bundle_polymath_2", "advisor_overhaul_bundle_polymath_3", "advisor_overhaul_bundle_polymath_4" },
 	},
 }

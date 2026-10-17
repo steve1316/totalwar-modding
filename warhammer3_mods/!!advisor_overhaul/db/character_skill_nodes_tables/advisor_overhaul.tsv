@@ -43,6 +43,13 @@ advisor_overhaul_skill_node_martial_7		advisor_overhaul_skill_martial_7		7	1		0	
 advisor_overhaul_skill_node_martial_8		advisor_overhaul_skill_martial_8		6	3		0	0	true
 advisor_overhaul_skill_node_martial_9		advisor_overhaul_skill_martial_9		7	2		0	0	true
 advisor_overhaul_skill_node_martial_apex		advisor_overhaul_skill_martial_apex		7	9		0	0	true
+advisor_overhaul_skill_node_memory_calm_voice		advisor_overhaul_skill_memory_calm_voice		3	2		0	0	true
+advisor_overhaul_skill_node_memory_every_mistake		advisor_overhaul_skill_memory_every_mistake		3	4		0	0	true
+advisor_overhaul_skill_node_memory_long_patience		advisor_overhaul_skill_memory_long_patience		3	6		0	0	true
+advisor_overhaul_skill_node_memory_old_lessons		advisor_overhaul_skill_memory_old_lessons		3	1		0	0	true
+advisor_overhaul_skill_node_memory_polymath		advisor_overhaul_skill_memory_polymath		3	5		0	0	true
+advisor_overhaul_skill_node_memory_seen_the_end		advisor_overhaul_skill_memory_seen_the_end		3	0		0	0	true
+advisor_overhaul_skill_node_memory_weight_of_years		advisor_overhaul_skill_memory_weight_of_years		3	3		0	0	true
 advisor_overhaul_lore_node_fire		advisor_overhaul_lore_fire		4	0		0	0	true
 advisor_overhaul_lore_node_beasts		advisor_overhaul_lore_beasts		4	1		0	0	true
 advisor_overhaul_lore_node_metal		advisor_overhaul_lore_metal		4	2		0	0	true

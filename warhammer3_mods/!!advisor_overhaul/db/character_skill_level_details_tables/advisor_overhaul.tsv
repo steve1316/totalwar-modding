@@ -85,6 +85,62 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		2	advisor_overhaul_skill_martial_9		x	4
 		3	advisor_overhaul_skill_martial_9		x	4
 		1	advisor_overhaul_skill_martial_apex		x	25
+		1	advisor_overhaul_skill_memory_calm_voice		x	6
+		2	advisor_overhaul_skill_memory_calm_voice		x	6
+		3	advisor_overhaul_skill_memory_calm_voice		x	6
+		1	advisor_overhaul_skill_memory_every_mistake		x	10
+		2	advisor_overhaul_skill_memory_every_mistake		x	10
+		3	advisor_overhaul_skill_memory_every_mistake		x	10
+		1	advisor_overhaul_skill_memory_long_patience		x	45
+		2	advisor_overhaul_skill_memory_long_patience		x	45
+		3	advisor_overhaul_skill_memory_long_patience		x	45
+		4	advisor_overhaul_skill_memory_long_patience		x	45
+		5	advisor_overhaul_skill_memory_long_patience		x	45
+		6	advisor_overhaul_skill_memory_long_patience		x	45
+		7	advisor_overhaul_skill_memory_long_patience		x	45
+		8	advisor_overhaul_skill_memory_long_patience		x	45
+		9	advisor_overhaul_skill_memory_long_patience		x	45
+		10	advisor_overhaul_skill_memory_long_patience		x	45
+		11	advisor_overhaul_skill_memory_long_patience		x	45
+		12	advisor_overhaul_skill_memory_long_patience		x	45
+		13	advisor_overhaul_skill_memory_long_patience		x	45
+		14	advisor_overhaul_skill_memory_long_patience		x	45
+		15	advisor_overhaul_skill_memory_long_patience		x	45
+		16	advisor_overhaul_skill_memory_long_patience		x	45
+		17	advisor_overhaul_skill_memory_long_patience		x	45
+		18	advisor_overhaul_skill_memory_long_patience		x	45
+		19	advisor_overhaul_skill_memory_long_patience		x	45
+		20	advisor_overhaul_skill_memory_long_patience		x	45
+		21	advisor_overhaul_skill_memory_long_patience		x	45
+		22	advisor_overhaul_skill_memory_long_patience		x	45
+		23	advisor_overhaul_skill_memory_long_patience		x	45
+		24	advisor_overhaul_skill_memory_long_patience		x	45
+		25	advisor_overhaul_skill_memory_long_patience		x	45
+		26	advisor_overhaul_skill_memory_long_patience		x	45
+		27	advisor_overhaul_skill_memory_long_patience		x	45
+		28	advisor_overhaul_skill_memory_long_patience		x	45
+		29	advisor_overhaul_skill_memory_long_patience		x	45
+		30	advisor_overhaul_skill_memory_long_patience		x	45
+		31	advisor_overhaul_skill_memory_long_patience		x	45
+		32	advisor_overhaul_skill_memory_long_patience		x	45
+		33	advisor_overhaul_skill_memory_long_patience		x	45
+		34	advisor_overhaul_skill_memory_long_patience		x	45
+		35	advisor_overhaul_skill_memory_long_patience		x	45
+		36	advisor_overhaul_skill_memory_long_patience		x	45
+		37	advisor_overhaul_skill_memory_long_patience		x	45
+		38	advisor_overhaul_skill_memory_long_patience		x	45
+		39	advisor_overhaul_skill_memory_long_patience		x	45
+		40	advisor_overhaul_skill_memory_long_patience		x	45
+		1	advisor_overhaul_skill_memory_old_lessons		x	4
+		2	advisor_overhaul_skill_memory_old_lessons		x	4
+		3	advisor_overhaul_skill_memory_old_lessons		x	4
+		1	advisor_overhaul_skill_memory_polymath		x	30
+		1	advisor_overhaul_skill_memory_seen_the_end		x	3
+		2	advisor_overhaul_skill_memory_seen_the_end		x	3
+		3	advisor_overhaul_skill_memory_seen_the_end		x	3
+		1	advisor_overhaul_skill_memory_weight_of_years		x	8
+		2	advisor_overhaul_skill_memory_weight_of_years		x	8
+		3	advisor_overhaul_skill_memory_weight_of_years		x	8
 		1	advisor_overhaul_lore_fire		x	1
 		2	advisor_overhaul_lore_fire		x	1
 		3	advisor_overhaul_lore_fire		x	1

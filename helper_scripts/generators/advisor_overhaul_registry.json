@@ -1163,7 +1163,8 @@
    "exclusive": [
     "civic_apex",
     "magic_archmage",
-    "martial_apex"
+    "martial_apex",
+    "memory_polymath"
    ]
   },
   "magic_reserves": {
@@ -1261,7 +1262,8 @@
    "exclusive": [
     "arts_apex",
     "civic_apex",
-    "martial_apex"
+    "martial_apex",
+    "memory_polymath"
    ]
   },
   "martial_0": {
@@ -2403,7 +2405,8 @@
    "exclusive": [
     "arts_apex",
     "civic_apex",
-    "magic_archmage"
+    "magic_archmage",
+    "memory_polymath"
    ]
   },
   "civic_apex": {
@@ -2443,7 +2446,8 @@
    "exclusive": [
     "arts_apex",
     "magic_archmage",
-    "martial_apex"
+    "martial_apex",
+    "memory_polymath"
    ]
   },
   "actions_default": {
@@ -2483,6 +2487,964 @@
       "effect": "wh2_main_effect_agent_action_passive_boost_income_effect_positive",
       "scope": "character_to_region_own_provincewide",
       "value": 5
+     }
+    ]
+   ]
+  },
+  "memory_seen_the_end": {
+   "name": "Seen the End",
+   "icon": "campaign_ambush.png",
+   "row": 3,
+   "tier": 0,
+   "rank": 3,
+   "build": true,
+   "requires": [],
+   "description": "He has watched this army walk into this ambush before. Not this time.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_force_army_campaign_ambush_defence_success_chance",
+      "scope": "agent_to_parent_army_own",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_agent_field_line_of_sight_mod",
+      "scope": "character_to_character_own",
+      "value": 25
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_force_army_campaign_ambush_defence_success_chance",
+      "scope": "agent_to_parent_army_own",
+      "value": 30
+     },
+     {
+      "effect": "wh_main_effect_agent_field_line_of_sight_mod",
+      "scope": "character_to_character_own",
+      "value": 40
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_force_army_campaign_ambush_defence_success_chance",
+      "scope": "agent_to_parent_army_own",
+      "value": 45
+     },
+     {
+      "effect": "wh_main_effect_agent_field_line_of_sight_mod",
+      "scope": "character_to_character_own",
+      "value": 60
+     }
+    ]
+   ]
+  },
+  "memory_old_lessons": {
+   "name": "Old Lessons",
+   "icon": "campaign_experience.png",
+   "row": 3,
+   "tier": 1,
+   "rank": 4,
+   "build": true,
+   "requires": [],
+   "description": "Everything he teaches, he learned the hard way. Several times.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_main_effect_character_campaign_experience_mod",
+      "scope": "character_to_character_own",
+      "value": 15
+     },
+     {
+      "effect": "wh3_main_effect_character_xp_share_generic_herotext",
+      "scope": "character_to_character_own",
+      "value": 15
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_character_campaign_experience_mod",
+      "scope": "character_to_character_own",
+      "value": 30
+     },
+     {
+      "effect": "wh3_main_effect_character_xp_share_generic_herotext",
+      "scope": "character_to_character_own",
+      "value": 30
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_character_campaign_experience_mod",
+      "scope": "character_to_character_own",
+      "value": 50
+     },
+     {
+      "effect": "wh3_main_effect_character_xp_share_generic_herotext",
+      "scope": "character_to_character_own",
+      "value": 50
+     }
+    ]
+   ]
+  },
+  "memory_calm_voice": {
+   "name": "Calm Voice",
+   "icon": "character_defence.png",
+   "row": 3,
+   "tier": 2,
+   "rank": 6,
+   "build": true,
+   "requires": [],
+   "description": "Men stand firm around someone who is not afraid. He stopped being afraid a long time ago.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_character_stat_leadership_aura_size",
+      "scope": "character_to_character_own",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_character_stat_aura_leadership_effect",
+      "scope": "character_to_character_own",
+      "value": 2
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_leadership_aura_size",
+      "scope": "character_to_character_own",
+      "value": 30
+     },
+     {
+      "effect": "wh_main_effect_character_stat_aura_leadership_effect",
+      "scope": "character_to_character_own",
+      "value": 4
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_leadership_aura_size",
+      "scope": "character_to_character_own",
+      "value": 45
+     },
+     {
+      "effect": "wh_main_effect_character_stat_aura_leadership_effect",
+      "scope": "character_to_character_own",
+      "value": 6
+     }
+    ]
+   ]
+  },
+  "memory_weight_of_years": {
+   "name": "The Weight of Years",
+   "icon": "character_armour.png",
+   "row": 3,
+   "tier": 3,
+   "rank": 8,
+   "build": true,
+   "requires": [],
+   "description": "He has died before. He did not care for it, and he takes more killing now.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_character_stat_unit_health",
+      "scope": "character_to_character_own",
+      "value": 8
+     },
+     {
+      "effect": "wh_main_effect_character_stat_ward_save",
+      "scope": "character_to_character_own",
+      "value": 5
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_unit_health",
+      "scope": "character_to_character_own",
+      "value": 16
+     },
+     {
+      "effect": "wh_main_effect_character_stat_ward_save",
+      "scope": "character_to_character_own",
+      "value": 8
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_unit_health",
+      "scope": "character_to_character_own",
+      "value": 25
+     },
+     {
+      "effect": "wh_main_effect_character_stat_ward_save",
+      "scope": "character_to_character_own",
+      "value": 12
+     }
+    ]
+   ]
+  },
+  "memory_every_mistake": {
+   "name": "Every Mistake Already Made",
+   "icon": "spell_mastery.png",
+   "row": 3,
+   "tier": 4,
+   "rank": 10,
+   "build": true,
+   "requires": [],
+   "description": "There is no error left for him to make. He made them all in other lives.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_agent_action_success_chance",
+      "scope": "character_to_character_own",
+      "value": 3
+     },
+     {
+      "effect": "wh_main_effect_character_stat_miscast",
+      "scope": "character_to_character_own",
+      "value": -5
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_agent_action_success_chance",
+      "scope": "character_to_character_own",
+      "value": 6
+     },
+     {
+      "effect": "wh_main_effect_character_stat_miscast",
+      "scope": "character_to_character_own",
+      "value": -10
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_agent_action_success_chance",
+      "scope": "character_to_character_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_character_stat_miscast",
+      "scope": "character_to_character_own",
+      "value": -15
+     }
+    ]
+   ]
+  },
+  "memory_polymath": {
+   "name": "Everything, Again",
+   "icon": "spell_mastery.png",
+   "row": 3,
+   "tier": 5,
+   "rank": 30,
+   "build": true,
+   "role": "polymath",
+   "requires": [],
+   "description": "He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\\\n\\\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Takes the place of every Apex.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_character_stat_leadership",
+      "scope": "character_to_character_own",
+      "value": 5
+     }
+    ]
+   ],
+   "exclusive": [
+    "arts_apex",
+    "civic_apex",
+    "magic_archmage",
+    "martial_apex"
+   ]
+  },
+  "memory_long_patience": {
+   "name": "The Long Patience",
+   "icon": "campaign_experience.png",
+   "row": 3,
+   "tier": 6,
+   "rank": 45,
+   "build": true,
+   "requires": [],
+   "description": "He has all the time in the world. He has had it before.\\\\n\\\\nForty small levels for points nothing else wants: each adds 1 melee attack, 1 melee defence and 1 spell mastery.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 1
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 2
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 2
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 2
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 3
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 3
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 3
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 4
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 4
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 4
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 5
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 5
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 5
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 6
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 6
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 6
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 7
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 7
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 7
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 8
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 8
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 8
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 9
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 9
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 9
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 10
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 10
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 11
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 11
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 11
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 12
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 12
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 12
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 13
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 13
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 13
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 14
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 14
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 14
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 15
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 15
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 16
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 16
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 16
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 17
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 17
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 17
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 18
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 18
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 18
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 19
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 19
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 19
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 20
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 20
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 20
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 21
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 21
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 21
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 22
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 22
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 22
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 23
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 23
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 23
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 24
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 24
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 24
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 25
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 25
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 25
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 26
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 26
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 26
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 27
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 27
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 27
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 28
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 28
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 28
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 29
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 29
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 29
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 30
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 30
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 30
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 31
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 31
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 31
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 32
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 32
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 32
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 33
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 33
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 33
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 34
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 34
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 34
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 35
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 35
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 35
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 36
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 36
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 36
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 37
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 37
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 37
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 38
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 38
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 38
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 39
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 39
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 39
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 40
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 40
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 40
      }
     ]
    ]
@@ -2776,70 +3738,134 @@
   "wh2_main_agent_action_spy_assist_army_increase_mobility",
   "wh2_main_agent_action_spy_hinder_character_assassinate"
  ],
- "zones": [
-  {
-   "title": "Heroes",
-   "description": "Kill or wound rival heroes, and remove their generals.",
-   "rows": [
-    6,
-    7
-   ],
-   "skills": [
-    "martial_0",
-    "martial_1",
-    "martial_2"
+ "bundles": {
+  "polymath_1": {
+   "name": "Everything, Again (1 of 4)",
+   "icon": "public_order.png",
+   "description": "He draws on 1 of his disciplines at once.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_character_stat_melee_attack",
+     "scope": "character_to_character_own",
+     "value": 3
+    },
+    {
+     "effect": "wh_main_effect_character_stat_melee_defence",
+     "scope": "character_to_character_own",
+     "value": 3
+    },
+    {
+     "effect": "wh3_main_effect_spell_mastery",
+     "scope": "character_to_character_own",
+     "value": 4
+    },
+    {
+     "effect": "wh_main_effect_agent_action_success_chance",
+     "scope": "character_to_character_own",
+     "value": 2
+    },
+    {
+     "effect": "wh_main_effect_character_stat_leadership",
+     "scope": "character_to_character_own",
+     "value": 2
+    }
    ]
   },
-  {
-   "title": "Armies",
-   "description": "Wreck enemy armies in the field, or march and train with your own.",
-   "rows": [
-    6,
-    7
-   ],
-   "skills": [
-    "martial_6",
-    "martial_7",
-    "martial_8",
-    "martial_9",
-    "civic_0",
-    "civic_1",
-    "civic_2",
-    "civic_3",
-    "civic_4"
+  "polymath_2": {
+   "name": "Everything, Again (2 of 4)",
+   "icon": "public_order.png",
+   "description": "He draws on 2 of his disciplines at once.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_character_stat_melee_attack",
+     "scope": "character_to_character_own",
+     "value": 6
+    },
+    {
+     "effect": "wh_main_effect_character_stat_melee_defence",
+     "scope": "character_to_character_own",
+     "value": 6
+    },
+    {
+     "effect": "wh3_main_effect_spell_mastery",
+     "scope": "character_to_character_own",
+     "value": 8
+    },
+    {
+     "effect": "wh_main_effect_agent_action_success_chance",
+     "scope": "character_to_character_own",
+     "value": 4
+    },
+    {
+     "effect": "wh_main_effect_character_stat_leadership",
+     "scope": "character_to_character_own",
+     "value": 4
+    }
    ]
   },
-  {
-   "title": "Lands",
-   "description": "Sabotage enemy settlements, or bring order, growth and wealth to yours.",
-   "rows": [
-    6,
-    7
-   ],
-   "skills": [
-    "martial_3",
-    "martial_4",
-    "martial_5",
-    "civic_10",
-    "civic_5",
-    "civic_6",
-    "civic_7",
-    "civic_8",
-    "civic_9"
+  "polymath_3": {
+   "name": "Everything, Again (3 of 4)",
+   "icon": "public_order.png",
+   "description": "He draws on 3 of his disciplines at once.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_character_stat_melee_attack",
+     "scope": "character_to_character_own",
+     "value": 9
+    },
+    {
+     "effect": "wh_main_effect_character_stat_melee_defence",
+     "scope": "character_to_character_own",
+     "value": 9
+    },
+    {
+     "effect": "wh3_main_effect_spell_mastery",
+     "scope": "character_to_character_own",
+     "value": 12
+    },
+    {
+     "effect": "wh_main_effect_agent_action_success_chance",
+     "scope": "character_to_character_own",
+     "value": 6
+    },
+    {
+     "effect": "wh_main_effect_character_stat_leadership",
+     "scope": "character_to_character_own",
+     "value": 6
+    }
    ]
   },
-  {
-   "title": "Mastery",
-   "description": "Cheaper hero actions, and the two Apexes of hero work.",
-   "rows": [
-    6,
-    7
-   ],
-   "skills": [
-    "martial_11",
-    "martial_apex",
-    "civic_apex"
+  "polymath_4": {
+   "name": "Everything, Again (4 of 4)",
+   "icon": "public_order.png",
+   "description": "He draws on 4 of his disciplines at once.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_character_stat_melee_attack",
+     "scope": "character_to_character_own",
+     "value": 12
+    },
+    {
+     "effect": "wh_main_effect_character_stat_melee_defence",
+     "scope": "character_to_character_own",
+     "value": 12
+    },
+    {
+     "effect": "wh3_main_effect_spell_mastery",
+     "scope": "character_to_character_own",
+     "value": 16
+    },
+    {
+     "effect": "wh_main_effect_agent_action_success_chance",
+     "scope": "character_to_character_own",
+     "value": 8
+    },
+    {
+     "effect": "wh_main_effect_character_stat_leadership",
+     "scope": "character_to_character_own",
+     "value": 8
+    }
    ]
   }
- ]
+ }
 }
