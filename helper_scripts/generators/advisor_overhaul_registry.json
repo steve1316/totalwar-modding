@@ -1044,8 +1044,8 @@
    "name": "Art I: Stance",
    "description": "The first thing he learned with every weapon he ever held, in every world that ended.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
    "icon": "character_defence.png",
-   "row": 2,
-   "tier": 0,
+   "row": 1,
+   "tier": 6,
    "rank": 2,
    "levels": [
     []
@@ -1058,8 +1058,8 @@
    "name": "Art II: Edge",
    "description": "He has fought this fight before. His hands remember how it went.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
    "icon": "character_attack.png",
-   "row": 2,
-   "tier": 1,
+   "row": 1,
+   "tier": 7,
    "rank": 6,
    "levels": [
     []
@@ -1074,8 +1074,8 @@
    "name": "Art III: Flow",
    "description": "The weapon stops being a tool and starts being an argument.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
    "icon": "character_charge.png",
-   "row": 2,
-   "tier": 2,
+   "row": 1,
+   "tier": 8,
    "rank": 11,
    "levels": [
     []
@@ -1090,8 +1090,8 @@
    "name": "Art IV: Ending",
    "description": "How he finished it last time. And the time before that.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
    "icon": "character_armour.png",
-   "row": 2,
-   "tier": 3,
+   "row": 1,
+   "tier": 9,
    "rank": 16,
    "levels": [
     []
@@ -1106,8 +1106,8 @@
    "name": "Army I: Drill",
    "description": "Soldiers near him pick up his habits without knowing they have.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
    "icon": "character_army.png",
-   "row": 2,
-   "tier": 5,
+   "row": 1,
+   "tier": 0,
    "rank": 4,
    "levels": [
     []
@@ -1120,8 +1120,8 @@
    "name": "Army II: Formation",
    "description": "He places men where he once saw them live.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
    "icon": "campaign_army.png",
-   "row": 2,
-   "tier": 6,
+   "row": 1,
+   "tier": 1,
    "rank": 9,
    "levels": [
     []
@@ -1136,8 +1136,8 @@
    "name": "Army III: Last Stand",
    "description": "He has seen how armies break. He does not let this one.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
    "icon": "battle_defence.png",
-   "row": 2,
-   "tier": 7,
+   "row": 1,
+   "tier": 2,
    "rank": 14,
    "levels": [
     []
@@ -1152,8 +1152,8 @@
    "name": "Master of Arms",
    "description": "Every weapon he has ever held, in every ending, answers him at once. Takes this row's Apex, which locks the other Apexes.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
    "icon": "spell_mastery.png",
-   "row": 2,
-   "tier": 4,
+   "row": 0,
+   "tier": 6,
    "rank": 25,
    "levels": [
     []
@@ -1174,8 +1174,8 @@
   "magic_reserves": {
    "name": "Deep Reserves",
    "icon": "spell_mastery.png",
-   "row": 5,
-   "tier": 16,
+   "row": 3,
+   "tier": 1,
    "rank": 8,
    "build": true,
    "requires": [],
@@ -1210,8 +1210,8 @@
   "magic_steady": {
    "name": "Steady Hands",
    "icon": "character_defence.png",
-   "row": 5,
-   "tier": 17,
+   "row": 2,
+   "tier": 8,
    "rank": 12,
    "build": true,
    "requires": [],
@@ -1234,8 +1234,8 @@
   "magic_archmage": {
    "name": "Archmage",
    "icon": "spell_mastery.png",
-   "row": 5,
-   "tier": 18,
+   "row": 0,
+   "tier": 7,
    "rank": 25,
    "build": true,
    "role": "apex",
@@ -1273,8 +1273,8 @@
   "martial_0": {
    "name": "Assassinate",
    "icon": "campaign_subterfuge.png",
-   "row": 6,
-   "tier": 0,
+   "row": 8,
+   "tier": 1,
    "rank": 3,
    "build": true,
    "requires": [],
@@ -1321,7 +1321,7 @@
   "martial_1": {
    "name": "Wound",
    "icon": "campaign_wound_time.png",
-   "row": 7,
+   "row": 8,
    "tier": 0,
    "rank": 1,
    "build": true,
@@ -1369,8 +1369,8 @@
   "martial_2": {
    "name": "Assassinate Lord",
    "icon": "campaign_subterfuge.png",
-   "row": 6,
-   "tier": 1,
+   "row": 8,
+   "tier": 2,
    "rank": 10,
    "build": true,
    "requires": [],
@@ -1388,8 +1388,8 @@
   "martial_3": {
    "name": "Damage Walls",
    "icon": "campaign_siege_attack.png",
-   "row": 6,
-   "tier": 7,
+   "row": 8,
+   "tier": 6,
    "rank": 2,
    "build": true,
    "requires": [],
@@ -1436,8 +1436,8 @@
   "martial_4": {
    "name": "Assault Garrison",
    "icon": "campaign_siege_defence.png",
-   "row": 7,
-   "tier": 5,
+   "row": 8,
+   "tier": 8,
    "rank": 4,
    "build": true,
    "requires": [],
@@ -1484,8 +1484,8 @@
   "martial_5": {
    "name": "Damage Building",
    "icon": "campaign_siege_attack.png",
-   "row": 6,
-   "tier": 8,
+   "row": 8,
+   "tier": 7,
    "rank": 4,
    "build": true,
    "requires": [],
@@ -1532,8 +1532,8 @@
   "martial_6": {
    "name": "Block Army",
    "icon": "campaign_movement.png",
-   "row": 6,
-   "tier": 2,
+   "row": 8,
+   "tier": 4,
    "rank": 5,
    "build": true,
    "requires": [],
@@ -1580,8 +1580,8 @@
   "martial_7": {
    "name": "Hinder Replenishment",
    "icon": "campaign_replenishment.png",
-   "row": 7,
-   "tier": 1,
+   "row": 8,
+   "tier": 3,
    "rank": 3,
    "build": true,
    "requires": [],
@@ -1625,59 +1625,11 @@
     ]
    ]
   },
-  "martial_8": {
-   "name": "Assault Unit",
-   "icon": "campaign_disaster.png",
-   "row": 6,
-   "tier": 3,
-   "rank": 2,
-   "build": true,
-   "requires": [],
-   "description": "One regiment, at night, before they know he is there.\\\\n\\\\nUnlocks the Assault Unit hero action.",
-   "levels": [
-    [
-     {
-      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_assault_unit",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_agent_action_hinder_army_assault_unit_buff",
-      "scope": "character_to_character_own",
-      "value": 5.0
-     }
-    ],
-    [
-     {
-      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_assault_unit",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_agent_action_hinder_army_assault_unit_buff",
-      "scope": "character_to_character_own",
-      "value": 15.0
-     }
-    ],
-    [
-     {
-      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_assault_unit",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_agent_action_hinder_army_assault_unit_buff",
-      "scope": "character_to_character_own",
-      "value": 30.0
-     }
-    ]
-   ]
-  },
   "martial_9": {
    "name": "Assault Units",
    "icon": "campaign_disaster.png",
-   "row": 7,
-   "tier": 2,
+   "row": 8,
+   "tier": 9,
    "rank": 4,
    "build": true,
    "requires": [],
@@ -1721,59 +1673,11 @@
     ]
    ]
   },
-  "martial_11": {
-   "name": "Practised Hands",
-   "icon": "campaign_military_spending.png",
-   "row": 6,
-   "tier": 12,
-   "rank": 8,
-   "build": true,
-   "requires": [],
-   "description": "Hero work is still work. He is very good at work.",
-   "levels": [
-    [
-     {
-      "effect": "wh_main_effect_agent_action_cost_mod",
-      "scope": "character_to_character_own",
-      "value": -10.0
-     },
-     {
-      "effect": "wh_main_effect_agent_action_success_chance",
-      "scope": "character_to_character_own",
-      "value": 1.0
-     }
-    ],
-    [
-     {
-      "effect": "wh_main_effect_agent_action_cost_mod",
-      "scope": "character_to_character_own",
-      "value": -20.0
-     },
-     {
-      "effect": "wh_main_effect_agent_action_success_chance",
-      "scope": "character_to_character_own",
-      "value": 3.0
-     }
-    ],
-    [
-     {
-      "effect": "wh_main_effect_agent_action_cost_mod",
-      "scope": "character_to_character_own",
-      "value": -40.0
-     },
-     {
-      "effect": "wh_main_effect_agent_action_success_chance",
-      "scope": "character_to_character_own",
-      "value": 6.0
-     }
-    ]
-   ]
-  },
   "civic_0": {
    "name": "Scouting",
    "icon": "campaign_item.png",
-   "row": 6,
-   "tier": 4,
+   "row": 8,
+   "tier": 22,
    "rank": 1,
    "build": true,
    "requires": [],
@@ -1805,8 +1709,8 @@
   "civic_1": {
    "name": "Training",
    "icon": "campaign_experience.png",
-   "row": 7,
-   "tier": 3,
+   "row": 8,
+   "tier": 12,
    "rank": 2,
    "build": true,
    "requires": [],
@@ -1853,8 +1757,8 @@
   "civic_2": {
    "name": "Replenish Troops",
    "icon": "campaign_replenishment.png",
-   "row": 6,
-   "tier": 5,
+   "row": 8,
+   "tier": 13,
    "rank": 2,
    "build": true,
    "requires": [],
@@ -1901,8 +1805,8 @@
   "civic_3": {
    "name": "Increase Mobility",
    "icon": "campaign_movement.png",
-   "row": 7,
-   "tier": 4,
+   "row": 8,
+   "tier": 24,
    "rank": 4,
    "build": true,
    "requires": [],
@@ -1949,8 +1853,8 @@
   "civic_4": {
    "name": "Scavenge",
    "icon": "campaign_military_spending.png",
-   "row": 6,
-   "tier": 6,
+   "row": 8,
+   "tier": 23,
    "rank": 3,
    "build": true,
    "requires": [],
@@ -1997,8 +1901,8 @@
   "civic_5": {
    "name": "Spread Public Order",
    "icon": "campaign_public_order.png",
-   "row": 6,
-   "tier": 9,
+   "row": 8,
+   "tier": 16,
    "rank": 2,
    "build": true,
    "requires": [],
@@ -2075,8 +1979,8 @@
   "civic_6": {
    "name": "Cleanse Corruption",
    "icon": "campaign_untainted.png",
-   "row": 7,
-   "tier": 7,
+   "row": 8,
+   "tier": 18,
    "rank": 4,
    "build": true,
    "requires": [],
@@ -2138,8 +2042,8 @@
   "civic_7": {
    "name": "Stimulate Growth",
    "icon": "campaign_growth.png",
-   "row": 6,
-   "tier": 10,
+   "row": 8,
+   "tier": 17,
    "rank": 3,
    "build": true,
    "requires": [],
@@ -2216,8 +2120,8 @@
   "civic_8": {
    "name": "Increase Trade",
    "icon": "campaign_trade.png",
-   "row": 7,
-   "tier": 8,
+   "row": 8,
+   "tier": 15,
    "rank": 5,
    "build": true,
    "requires": [],
@@ -2264,8 +2168,8 @@
   "civic_9": {
    "name": "Boost Income",
    "icon": "campaign_military_spending.png",
-   "row": 6,
-   "tier": 11,
+   "row": 8,
+   "tier": 14,
    "rank": 1,
    "build": true,
    "requires": [],
@@ -2327,8 +2231,8 @@
   "civic_10": {
    "name": "Steal Technology",
    "icon": "campaign_technology.png",
-   "row": 7,
-   "tier": 6,
+   "row": 8,
+   "tier": 5,
    "rank": 6,
    "build": true,
    "requires": [],
@@ -2375,8 +2279,8 @@
   "martial_apex": {
    "name": "The Last Sword",
    "icon": "character_attack.png",
-   "row": 7,
-   "tier": 9,
+   "row": 0,
+   "tier": 8,
    "rank": 25,
    "build": true,
    "role": "apex",
@@ -2416,8 +2320,8 @@
   "civic_apex": {
    "name": "Power Behind Thrones",
    "icon": "campaign_army.png",
-   "row": 6,
-   "tier": 13,
+   "row": 0,
+   "tier": 9,
    "rank": 25,
    "build": true,
    "role": "apex",
@@ -2498,8 +2402,8 @@
   "memory_seen_the_end": {
    "name": "Seen the End",
    "icon": "campaign_ambush.png",
-   "row": 3,
-   "tier": 0,
+   "row": 4,
+   "tier": 1,
    "rank": 3,
    "build": true,
    "requires": [],
@@ -2546,8 +2450,8 @@
   "memory_old_lessons": {
    "name": "Old Lessons",
    "icon": "campaign_experience.png",
-   "row": 3,
-   "tier": 1,
+   "row": 4,
+   "tier": 4,
    "rank": 4,
    "build": true,
    "requires": [],
@@ -2594,7 +2498,7 @@
   "memory_calm_voice": {
    "name": "Calm Voice",
    "icon": "character_defence.png",
-   "row": 3,
+   "row": 4,
    "tier": 2,
    "rank": 6,
    "build": true,
@@ -2642,8 +2546,8 @@
   "memory_weight_of_years": {
    "name": "The Weight of Years",
    "icon": "character_armour.png",
-   "row": 3,
-   "tier": 3,
+   "row": 4,
+   "tier": 0,
    "rank": 8,
    "build": true,
    "requires": [],
@@ -2690,8 +2594,8 @@
   "memory_every_mistake": {
    "name": "Every Mistake Already Made",
    "icon": "spell_mastery.png",
-   "row": 3,
-   "tier": 4,
+   "row": 4,
+   "tier": 3,
    "rank": 10,
    "build": true,
    "requires": [],
@@ -2738,8 +2642,8 @@
   "memory_polymath": {
    "name": "Everything, Again",
    "icon": "spell_mastery.png",
-   "row": 3,
-   "tier": 5,
+   "row": 0,
+   "tier": 10,
    "rank": 30,
    "build": true,
    "role": "polymath",
@@ -2764,8 +2668,8 @@
   "memory_long_patience": {
    "name": "The Long Patience",
    "icon": "campaign_experience.png",
-   "row": 3,
-   "tier": 6,
+   "row": 0,
+   "tier": 11,
    "rank": 45,
    "build": true,
    "requires": [],
@@ -3459,280 +3363,218 @@
    "name": "Lore of Fire",
    "description": "Aqshy, the first Wind he ever felt. It burned his hands then too.",
    "icon": "wh_main_lore_passive_kindleflame.png",
-   "row": 4,
-   "tier": 0,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 0
   },
   "wh_dlc03_lore_beasts": {
    "name": "Lore of Beasts",
    "description": "Ghur, learned from a beastmaster in a world where men had lost.",
    "icon": "wh_dlc03_lore_passive_wild_heart.png",
-   "row": 4,
-   "tier": 1,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 1
   },
   "wh_main_lore_metal": {
    "name": "Lore of Metal",
    "description": "Chamon, the patient lore of things that last. Nothing lasted.",
    "icon": "wh_main_spell_metal_plague_of_rust.png",
-   "row": 4,
-   "tier": 2,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 2
   },
   "wh_main_lore_heavens": {
    "name": "Lore of the Heavens",
    "description": "Azyr. He read the stars that fell on the last night.",
    "icon": "wh_main_lore_passive_roiling_skies.png",
-   "row": 4,
-   "tier": 3,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 3
   },
   "wh_main_lore_light": {
    "name": "Lore of Light",
    "description": "Hysh, kept burning in a temple after every other light went out.",
    "icon": "wh_main_lore_passive_exorcism.png",
-   "row": 4,
-   "tier": 4,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 4
   },
   "wh_dlc05_lore_life": {
    "name": "Lore of Life",
    "description": "Ghyran. He grew a garden on a dead world, just to see if he could.",
    "icon": "wh_dlc05_spell_life_awakening_of_the_wood.png",
-   "row": 4,
-   "tier": 5,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 5
   },
   "wh_dlc05_lore_shadows": {
    "name": "Lore of Shadows",
    "description": "Ulgu, the lore of not being where the end is looking.",
    "icon": "wh_dlc05_lore_passive_smoke_and_mirrors.png",
-   "row": 4,
-   "tier": 6,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 6
   },
   "wh_main_lore_death": {
    "name": "Lore of Death",
    "description": "Shyish. He has more right to this lore than any Amethyst magister alive.",
    "icon": "wh_main_lore_passive_life_leeching.png",
-   "row": 4,
-   "tier": 7,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 7
   },
   "wh2_main_lore_high_magic": {
    "name": "High Magic",
    "description": "Qhaysh, taught by an elf who outlived her island by a hundred years.",
    "icon": "wh2_main_lore_passive_shield_of_saphery.png",
-   "row": 4,
-   "tier": 8,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 8
   },
   "wh3_main_lore_of_ice": {
    "name": "Lore of Ice",
    "description": "The cold that came after the fires, in a world that ended slowly.",
    "icon": "wh3_main_lore_passive_frost_shield.png",
-   "row": 4,
-   "tier": 9,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 9
   },
   "wh3_main_lore_of_tempest": {
    "name": "Lore of Tempest",
    "description": "Storms he walked through for a century to reach the next ending.",
    "icon": "wh3_main_spell_tempest_hailstorm.png",
-   "row": 4,
-   "tier": 10,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 10
   },
   "wh3_main_lore_of_yang": {
    "name": "Lore of Yang",
    "description": "Half a truth from Cathay. The other half is the next skill.",
    "icon": "wh3_main_lore_passive_strength_of_yang.png",
-   "row": 4,
-   "tier": 11,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 11
   },
   "wh3_main_lore_of_yin": {
    "name": "Lore of Yin",
    "description": "The other half. He has never managed to hold both at once. Yet.",
    "icon": "wh3_main_lore_passive_power_of_yin.png",
-   "row": 4,
-   "tier": 12,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 12
   },
   "wh3_dlc27_lore_mists": {
    "name": "Lore of Mists",
    "description": "Sea-fog spells from a coast that sank.",
    "icon": "wh3_dlc27_spell_mists_flensing_haar.png",
-   "row": 4,
-   "tier": 13,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 13
   },
   "wh3_dlc24_lore_hag": {
    "name": "Lore of the Hag",
    "description": "Old witch-craft from the far north, bought at a price he still pays.",
    "icon": "wh3_dlc24_lore_passive_fate_of_interlopers.png",
-   "row": 4,
-   "tier": 14,
-   "rank": 1,
-   "build": true
+   "build": true,
+   "tier": 14
   },
   "wh2_main_lore_dark_magic": {
    "name": "Dark Magic",
    "description": "Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.",
    "icon": "wh2_main_lore_passive_spiteful_conjuration.png",
-   "row": 5,
-   "tier": 0,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 15
   },
   "wh_main_lore_vampires": {
    "name": "Lore of Vampires",
    "description": "Taught by a count who wanted a friend for the long dark.",
    "icon": "wh_main_lore_passive_the_curse_of_undeath.png",
-   "row": 5,
-   "tier": 1,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 16
   },
   "wh3_dlc29_lore_undeath": {
    "name": "Lore of Undeath",
    "description": "The Great Necromancer's own words, from a world where he won.",
    "icon": "wh3_dlc29_lore_passive_raise_the_dead.png",
-   "row": 5,
-   "tier": 2,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 17
   },
   "wh2_dlc09_lore_nehekhara": {
    "name": "Lore of Nehekhara",
    "description": "Incantations a liche priest taught him in exchange for a name.",
    "icon": "wh2_dlc09_spell_nehekhara_djafs_incantation_of_cursed_blades.png",
-   "row": 5,
-   "tier": 3,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 18
   },
   "wh2_dlc11_lore_deep": {
    "name": "Lore of the Deep",
    "description": "Drowned magic, from a fleet that sailed off the end of the world.",
    "icon": "wh2_dlc11_spell_deep_denizens_of_the_deep.png",
-   "row": 5,
-   "tier": 4,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 19
   },
   "wh_main_lore_big_waaagh": {
    "name": "Big Waaagh!",
    "description": "It should not work for a man. It works for him. He does not know why.",
    "icon": "wh_main_lore_passive_power_of_da_waaagh.png",
-   "row": 5,
-   "tier": 5,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 20
   },
   "wh_main_lore_lil_waaagh": {
    "name": "Little Waaagh!",
    "description": "Goblin magic, learned by losing a lot of card games.",
    "icon": "wh_main_lore_passive_sneaky_stealin.png",
-   "row": 5,
-   "tier": 6,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 21
   },
   "wh3_dlc23_lore_hashut": {
    "name": "Lore of Hashut",
    "description": "Fire and slavery, from the furnace-priests of a world they burned.",
    "icon": "wh3_dlc23_lore_passive_killing_fire.png",
-   "row": 5,
-   "tier": 7,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 22
   },
   "wh2_main_lore_ruin": {
    "name": "Lore of Ruin",
    "description": "Warp lightning. He has seen what is left when the Horned Rat wins.",
    "icon": "wh2_main_lore_passive_musk_of_fear.png",
-   "row": 5,
-   "tier": 8,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 23
   },
   "wh2_main_lore_plague": {
    "name": "Lore of Plague",
    "description": "He caught it once. He got better. Nobody else did.",
    "icon": "wh2_main_lore_passive_plague_rash.png",
-   "row": 5,
-   "tier": 9,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 24
   },
   "wh2_dlc14_lore_stealth": {
    "name": "Lore of Stealth",
    "description": "The Eshin sorcerers' tricks, learned by being their target for a decade.",
    "icon": "wh2_dlc14_skill_all_magic_stealth_05_veil_of_shadows.png",
-   "row": 5,
-   "tier": 10,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 25
   },
   "wh3_main_lore_nurgle": {
    "name": "Lore of Nurgle",
    "description": "Grandfather's kindness. He refused it, and kept the spells.",
    "icon": "wh3_main_lore_passive_children_of_nurgle.png",
-   "row": 5,
-   "tier": 11,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 26
   },
   "wh3_main_lore_slaanesh": {
    "name": "Lore of Slaanesh",
    "description": "He refused this one too. It was harder.",
    "icon": "wh3_main_lore_passive_blissful_rapture.png",
-   "row": 5,
-   "tier": 12,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 27
   },
   "wh3_main_lore_of_great_maw": {
    "name": "Lore of the Great Maw",
    "description": "Gut-magic from the Ogre camps, earned by eating what they ate.",
    "icon": "wh3_main_lore_passive_bloodgruel.png",
-   "row": 5,
-   "tier": 13,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 28
   },
   "wh_dlc03_lore_wild": {
    "name": "Lore of the Wild",
    "description": "The herdstone songs. He sang them at the end, when there was no one left to hear.",
    "icon": "wh_dlc03_spell_wild_mantle_of_ghorok.png",
-   "row": 5,
-   "tier": 14,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 29
   },
   "wh2_dlc17_lore_rune": {
    "name": "Lore of Runes",
    "description": "A runesmith taught him three runes before the last hold fell. He worked out the rest.",
    "icon": "wh2_dlc17_rune_abilities_rune_of_breaking.png",
-   "row": 5,
-   "tier": 15,
-   "rank": 5,
-   "build": true
+   "build": true,
+   "tier": 30
   }
  },
  "actions": [
@@ -3871,5 +3713,19 @@
     }
    ]
   }
- }
+ },
+ "lore_slots": [
+  {
+   "row": 5,
+   "rank": 1
+  },
+  {
+   "row": 6,
+   "rank": 9
+  },
+  {
+   "row": 7,
+   "rank": 19
+  }
+ ]
 }

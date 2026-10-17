@@ -13,7 +13,7 @@ from typing import Dict, List, Tuple
 from core.asset_source import AssetSource, norm
 from core.extract_cache import extracted_tree
 from core.utilities import extract_tsv_data, load_tsv_data
-from generators.advisor_overhaul import DATA, LORE_LEVELS, MOD, STAT_COLUMNS, fixed_skills, pairs, unit_key
+from generators.advisor_overhaul import DATA, LORE_LEVELS, MOD, ROW_COLOURS, STAT_COLUMNS, fixed_skills, pairs, unit_key
 from tools.glf_rebuild_animpack import AnimSet
 from tools.skill_catalog import CATALOG_LOC_PREFIXES, SKILL_CATALOG_TABLES, SKILL_ICON_FOLDER, catalog_art, skill_catalog
 from tools.ttc_review.catalog import ABILITY_FOLDER, ABILITY_NAME_PREFIX, SKIN_FILES
@@ -41,7 +41,7 @@ LOC_PREFIXES = (LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, ATTRIBUTE_PREFIX, *TOOLTIP
 DEFAULT_FACTION = "wh_main_emp_empire"
 
 # Names of his ten skill tree rows, top to bottom, for the Skills tab.
-SKILL_ROWS = ["Weapons", "Mounts", "Arts", "Memory", "Winds", "Elsewhere", "Martial", "Civic", "Pact", "Spare"]
+SKILL_ROWS = ["Top", "Arts", "Combat", "Casting", "Memory", "Lore 1", "Lore 2", "Lore 3", "Hero Actions", "Corruption"]
 
 # Columns of `factions_tables` holding a faction's three uniform colours (hex), in the order of the mask's red, green and blue channels.
 UNIFORM_COLUMNS = ("uniform_colour_primary", "uniform_colour_secondary", "uniform_colour_tertiary")
@@ -404,8 +404,8 @@ def build_panels(registry: Dict, out: str, sets: Dict[str, AnimSet]) -> Tuple[Di
     # Each fixed skill's points: one for a weapon or mount, one per level for a lore.
     fixed = [{"row": f["row"], "tier": f["tier"], "name": f["name"], "icon": builder.note_art(f"{SKILL_ICON_FOLDER}/{f['icon']}"), "kind": f["kind"], "cost": 1}
              for f in fixed_skills(registry) if not f["hidden"]]
-    fixed += [{"row": e["row"], "tier": e["tier"], "name": e["name"], "icon": builder.note_art(f"{SKILL_ICON_FOLDER}/{e['icon']}"), "kind": "lore", "cost": LORE_LEVELS}
-              for e in registry.get("lores", {}).values() if e.get("build")]
+    # The lores are registry values (one card per pick slot), so only their art and the points they can cost come from here.
+    lore_art = {k: builder.note_art(f"{SKILL_ICON_FOLDER}/{e['icon']}") for k, e in registry.get("lores", {}).items() if e.get("build")}
     # The weapon models a prop slot may switch to: every vanilla model in a props folder.
     models = AssetSource([], [], PROP_PACKS).index
     editor["prop_models"] = sorted(p for p in models if p.endswith(".wsmodel") and PROP_FOLDER.search(p))
@@ -414,7 +414,8 @@ def build_panels(registry: Dict, out: str, sets: Dict[str, AnimSet]) -> Tuple[Di
     editor["look"] = {"bodies": {k: {slot: piece[0] for slot, piece in body.items()} for k, body in registry["model"]["bodies"].items()},
                       "head": {"hooded": head["hooded"][0], "hoodless": head.get("hoodless", [""])[0]},
                       "models": sorted(p for p in models if p.endswith(".wsmodel") and LOOK_FOLDER.search(p) and not PROP_FOLDER.search(p) and not LOOK_SKIPPED.search(p))}
-    editor["skills"] = {"catalog": catalog, "fixed": fixed, "rows": dict(enumerate(SKILL_ROWS))}
+    editor["skills"] = {"catalog": catalog, "fixed": fixed, "rows": dict(enumerate(SKILL_ROWS)), "lore_art": lore_art, "row_colours": ROW_COLOURS,
+                        "lore_cost": len(registry.get("lore_slots", [])) * LORE_LEVELS}
     editor["new_form"] = builder.new_form_data(registry, sets)
     editor["colours"] = faction_colours(builder.loc)
     print(f"panels: {len(panels)} units, {builder.copy_art(out)} art files, {len(editor['attributes'])} attributes, {len(editor['abilities'])} abilities")

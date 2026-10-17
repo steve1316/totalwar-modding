@@ -42,8 +42,10 @@ The rest of his kit, also in the registry:
 - `actions`: vanilla hero action keys copied for him, a wizard. Each copy gets its own enable effect (`action_effect_key`) that a skill level
   gives, and the vanilla action's name and description.
 - `items`: id -> `name`, `description`, `type` (a vanilla ancillary type), `category`, `effects`. His quest items.
-- `lores`: vanilla lore key -> `name`, `icon`, `row`, `tier`, `rank`, `build`. One 3-level skill per lore, its spells read from vanilla at
-  `--refresh`: level 1 the lore's passive and its `LORE_FIRST_SPELLS` cheapest spells, level 2 every spell, level 3 every spell and its overcast.
+- `lore_slots`: a list of `row` and `rank`. Each slot is a row holding a copy of every lore, so he picks one lore per slot (at most one lore per slot,
+  and never the same lore twice).
+- `lores`: vanilla lore key -> `name`, `icon`, `tier`, `build`. One 3-level skill per lore and slot, its spells read from vanilla at
+  `--refresh`: level 1 its `LORE_FIRST_SPELLS` cheapest spells, level 2 every spell, level 3 every spell and its overcast.
 
 Each tree row's cards take that row's colour from `ROW_COLOURS`, through a skill category for his subtype only.
 
@@ -156,13 +158,13 @@ DEFAULT_MOUNT = "foot"
 
 # Skill tree rows of the weapon and the mount skills. Two of the six vanilla rows.
 WEAPON_ROW = 0
-MOUNT_ROW = 1
+MOUNT_ROW = 0
 
 # Row of every hidden skill node, one tier each in the order they are added. Two nodes in one slot drop one of them.
 HIDDEN_ROW = 99
 
 # Hidden vanilla skills his tree holds: (skill, learned when he is made). It raises his hero actions' success chance with his rank. He has no
-# hidden skill that turns on hero actions, as the Amethyst Wizard has: each action is unlocked by a point in its own node (rows 6 and 7).
+# hidden skill that turns on hero actions, as the Amethyst Wizard has: each action is unlocked by a point in its own node (row 9).
 HIDDEN_SKILLS = [("wh3_main_skill_agent_action_success_scaling", False)]
 
 # Effect bundle values for a bundle on him. `advancement_stage` must be `start_turn_completed`, or the game crashes on load.
@@ -178,12 +180,14 @@ LORE_SKIPPED = {"wh2_dlc12_lore_lord_kroak", "wh_pro03_lore_kemmler", "wh3_main_
 ROW_COLOURS = ["F1413D", "3DA5F1", "F1C43D", "9B3DF1", "3DF17A", "F13DC4", "F1813D", "3DF1E8", "8A8A8A", "FFFFFF"]
 
 # The Polymath's disciplines: name -> the tree rows whose skills count for it. And how many skills of one discipline make it count.
-DISCIPLINES = {"arts": [2], "memory": [3], "magic": [4, 5], "hero_work": [6, 7]}
+DISCIPLINES = {"arts": [2, 1], "memory": [4], "magic": [3, 5, 6, 7], "hero_work": [8, 9]}
 POLYMATH_SKILLS = 3
 
 # Spells a lore skill's first level gives, the cheapest first, and how many levels a lore skill has.
 LORE_FIRST_SPELLS = 3
 LORE_LEVELS = 3
+# The name each pick slot gives its copy of a lore: `First Tome: Lore of Fire`.
+TOME_ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth"]
 
 # Names group of his name row. Frequency 0 keeps the name out of random name rolls.
 NAMES_GROUP = "names_emp_empire"
@@ -533,16 +537,17 @@ def action_effect_key(action: str) -> str:
     return f"{PREFIX}_effect_enable_{action_short(action)}"
 
 
-def lore_skill_key(lore: str) -> str:
-    """The skill of one lore of magic.
+def lore_skill_key(lore: str, slot: int = 0) -> str:
+    """The skill of one lore of magic in one pick slot.
 
     Args:
         lore (str): The vanilla lore key, such as `wh_main_lore_death`.
+        slot (int): The pick slot, 0 for the first.
 
     Returns:
-        str: The skill key, such as `advisor_overhaul_lore_death`.
+        str: The skill key, such as `advisor_overhaul_lore_death`, with `_2` for the second slot and so on.
     """
-    return f"{PREFIX}_lore_{lore.split('_lore_', 1)[-1]}"
+    return f"{PREFIX}_lore_{lore.split('_lore_', 1)[-1]}" + (f"_{slot + 1}" if slot else "")
 
 
 def item_key(item_id: str) -> str:
@@ -814,7 +819,7 @@ def agent_rows(data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tu
 
 
 def fixed_skills(registry: Dict) -> List[Dict]:
-    """The weapon and mount skills, where they sit in the tree: every weapon and mount but the defaults, one row each.
+    """The weapon and mount skills, where they sit in the tree: every mount and then every weapon but the defaults, side by side in the top row.
 
     Args:
         registry (Dict): The registry.
@@ -824,8 +829,8 @@ def fixed_skills(registry: Dict) -> List[Dict]:
         hidden one (`unlock` "script") takes no tier, since `add_node` puts it on `HIDDEN_ROW`.
     """
     skills = []
-    for row, kind, items, default in ((WEAPON_ROW, "weapon", registry["weapons"], DEFAULT_WEAPON), (MOUNT_ROW, "mount", registry["mounts"], DEFAULT_MOUNT)):
-        tier = 0
+    tier = 0
+    for row, kind, items, default in ((MOUNT_ROW, "mount", registry["mounts"], DEFAULT_MOUNT), (WEAPON_ROW, "weapon", registry["weapons"], DEFAULT_WEAPON)):
         for key, item in items.items():
             if key == default:
                 continue
@@ -972,7 +977,7 @@ def planned_skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], te
         needs = skill.get("needs")
         some = isinstance(needs, int) and 0 < needs < len(requires)
         hidden = bool(skill.get("hidden"))
-        add_node(rows, node, key, skill.get("row", 2), skill.get("tier", 0), hidden, hidden and bool(skill.get("learned")), needs if some else 0)
+        add_node(rows, node, key, skill.get("row", 1), skill.get("tier", 0), hidden, hidden and bool(skill.get("learned")), needs if some else 0)
         for other in skill.get("exclusive", []):
             if other in built:
                 rows["character_skill_nodes_skill_locks_tables"].append({"character_skill": key, "character_skill_node": f"{PREFIX}_skill_node_{other}", "level": "1"})
@@ -1109,9 +1114,34 @@ def item_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
         texts.append((f"ancillaries_colour_text_{key}", item.get("description", "")))
 
 
+def lore_slots(registry: Dict) -> List[Tuple[int, int]]:
+    """The lore pick slots of the registry.
+
+    Args:
+        registry (Dict): The registry.
+
+    Returns:
+        List[Tuple[int, int]]: The `(row, rank)` of each slot, in order.
+    """
+    return [(s["row"], s["rank"]) for s in registry.get("lore_slots", [])]
+
+
+def lore_node_key(lore: str, slot: int) -> str:
+    """The skill node of one lore in one pick slot.
+
+    Args:
+        lore (str): The vanilla lore key.
+        slot (int): The pick slot, 0 for the first.
+
+    Returns:
+        str: The node key.
+    """
+    return f"{PREFIX}_lore_node_{lore.split('_lore_', 1)[-1]}" + (f"_{slot + 1}" if slot else "")
+
+
 def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
     """Adds one 3-level skill per built lore of the registry's `lores`. Each level lists its full effects, since levels do not stack: level 1 the
-    passive and the cheapest spells, level 2 every spell, level 3 every spell and its overcast.
+    cheapest spells, level 2 every spell, level 3 every spell and its overcast.
 
     Args:
         registry (Dict): The registry.
@@ -1123,31 +1153,36 @@ def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
         SystemExit: When a lore is not in the kept rows (run `--refresh`).
     """
     me = "character_to_character_own"
+    built = [lore for lore, entry in registry.get("lores", {}).items() if entry.get("build")]
     for lore, entry in registry.get("lores", {}).items():
         if not entry.get("build"):
             continue
         if lore not in data.get("lores", {}):
             raise SystemExit(f"lore {lore} is not kept, run with --refresh")
-        kept, key = data["lores"][lore], lore_skill_key(lore)
-        passives, spells = kept["passives"], kept["spells"]
+        kept = data["lores"][lore]
+        spells = kept["spells"]
         overcasts = [s["overcast"] for s in spells if s["overcast"]]
-        levels = [passives + [s["enable"] for s in spells[:LORE_FIRST_SPELLS]], passives + [s["enable"] for s in spells],
-                  passives + [s["enable"] for s in spells] + overcasts]
-        rank = str(entry.get("rank", 1))
-        rows["character_skills_tables"].append({
-            "key": key, "image_path": entry.get("icon", ""), "unlocked_at_rank": rank, "is_background_skill": "false", "is_female_only_background_skill": "false",
-            "is_male_only_background_skill": "false", "background_weighting": "0.0000", "influence_cost": "0",
-        })
-        add_node(rows, f"{PREFIX}_lore_node_{lore.split('_lore_', 1)[-1]}", key, entry["row"], entry["tier"])
-        for level, effects in enumerate(levels, start=1):
-            rows["character_skill_level_details_tables"].append({"campaign_key": "", "faction_key": "", "level": str(level), "skill_key": key,
-                                                                 "subculture_key": "", "image_path": "x", "unlocked_at_rank": rank})
-            rows["character_skill_level_to_effects_junctions_tables"] += [{"character_skill_key": key, "effect_key": e, "level": str(level),
-                                                                           "effect_scope": me, "value": "1.0000"} for e in effects]
+        levels = [[s["enable"] for s in spells[:LORE_FIRST_SPELLS]], [s["enable"] for s in spells], [s["enable"] for s in spells] + overcasts]
         first = min(LORE_FIRST_SPELLS, len(spells))
-        texts.append((f"character_skills_localised_name_{key}", entry["name"]))
-        texts.append((f"character_skills_localised_description_{key}", entry.get("description", "He learned this lore in a world that no longer exists.")
-                      + f"\\\\n\\\\nLevel 1: the lore's passive and {first} of its {len(spells)} spells. Level 2: every spell. Level 3: every spell can be overcast."))
+        for slot, (slot_row, slot_rank) in enumerate(lore_slots(registry)):
+            key, rank = lore_skill_key(lore, slot), str(slot_rank)
+            rows["character_skills_tables"].append({
+                "key": key, "image_path": entry.get("icon", ""), "unlocked_at_rank": rank, "is_background_skill": "false",
+                "is_female_only_background_skill": "false", "is_male_only_background_skill": "false", "background_weighting": "0.0000", "influence_cost": "0",
+            })
+            add_node(rows, lore_node_key(lore, slot), key, slot_row, entry["tier"])
+            for level, effects in enumerate(levels, start=1):
+                rows["character_skill_level_details_tables"].append({"campaign_key": "", "faction_key": "", "level": str(level), "skill_key": key,
+                                                                     "subculture_key": "", "image_path": "x", "unlocked_at_rank": rank})
+                rows["character_skill_level_to_effects_junctions_tables"] += [{"character_skill_key": key, "effect_key": e, "level": str(level),
+                                                                               "effect_scope": me, "value": "1.0000"} for e in effects]
+            texts.append((f"character_skills_localised_name_{key}", f"{TOME_ORDINALS[slot]} Tome: {entry['name']}"))
+            texts.append((f"character_skills_localised_description_{key}", entry.get("description", "He learned this lore in a world that no longer exists.")
+                          + f"\\\\n\\\\nLevel 1: {first} of its {len(spells)} spells. Level 2: every spell. Level 3: every spell can be overcast."
+                          + f"\\\\n\\\\nOne lore per pick. This pick opens at rank {slot_rank + 1} and locks the other lores, here and in the other picks."))
+            rows["character_skill_nodes_skill_locks_tables"] += [
+                {"character_skill": key, "character_skill_node": lore_node_key(other, other_slot), "level": "1"}
+                for other in built for other_slot in range(len(lore_slots(registry))) if (other, other_slot) != (lore, slot) and (other_slot == slot or other == lore)]
 
 
 def category_rows(rows: Dict[str, List[Dict[str, str]]]) -> None:
@@ -1183,7 +1218,8 @@ def polymath_data(registry: Dict) -> Optional[Dict]:
     disciplines = {}
     for name, rows in DISCIPLINES.items():
         keys = [planned_skill_key(k) for k, s in skills.items() if s.get("build") and not s.get("hidden") and s.get("row") in rows and k not in polymaths]
-        keys += [lore_skill_key(lore) for lore, e in registry.get("lores", {}).items() if e.get("build") and e.get("row") in rows]
+        keys += [lore_skill_key(lore, slot) for lore, e in registry.get("lores", {}).items() if e.get("build")
+                 for slot, (slot_row, _) in enumerate(lore_slots(registry)) if slot_row in rows]
         disciplines[name] = sorted(keys)
     return {"skill": planned_skill_key(polymaths[0]), "needed": POLYMATH_SKILLS, "disciplines": disciplines,
             "bundles": [bundle_key(f"polymath_{n}") for n in range(1, len(DISCIPLINES) + 1)]}

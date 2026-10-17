@@ -1,11 +1,11 @@
 campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_rank
 #character_skill_level_details_tables;1;db/character_skill_level_details_tables/advisor_overhaul						
-		1	advisor_overhaul_choose_weapon_sword_and_shield		x	1
-		1	advisor_overhaul_choose_weapon_greatsword		x	1
-		1	advisor_overhaul_choose_weapon_sword_and_bow		x	1
 		1	advisor_overhaul_choose_mount_warhorse		x	3
 		1	advisor_overhaul_choose_mount_pegasus		x	11
 		1	advisor_overhaul_choose_mount_disc		x	1
+		1	advisor_overhaul_choose_weapon_sword_and_shield		x	1
+		1	advisor_overhaul_choose_weapon_greatsword		x	1
+		1	advisor_overhaul_choose_weapon_sword_and_bow		x	1
 		1	advisor_overhaul_skill_actions_default		x	1
 		1	advisor_overhaul_skill_arts_apex		x	25
 		1	advisor_overhaul_skill_arts_army_1		x	4
@@ -59,9 +59,6 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_martial_1		x	1
 		2	advisor_overhaul_skill_martial_1		x	1
 		3	advisor_overhaul_skill_martial_1		x	1
-		1	advisor_overhaul_skill_martial_11		x	8
-		2	advisor_overhaul_skill_martial_11		x	8
-		3	advisor_overhaul_skill_martial_11		x	8
 		1	advisor_overhaul_skill_martial_2		x	10
 		1	advisor_overhaul_skill_martial_3		x	2
 		2	advisor_overhaul_skill_martial_3		x	2
@@ -78,9 +75,6 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_martial_7		x	3
 		2	advisor_overhaul_skill_martial_7		x	3
 		3	advisor_overhaul_skill_martial_7		x	3
-		1	advisor_overhaul_skill_martial_8		x	2
-		2	advisor_overhaul_skill_martial_8		x	2
-		3	advisor_overhaul_skill_martial_8		x	2
 		1	advisor_overhaul_skill_martial_9		x	4
 		2	advisor_overhaul_skill_martial_9		x	4
 		3	advisor_overhaul_skill_martial_9		x	4
@@ -144,93 +138,279 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_lore_fire		x	1
 		2	advisor_overhaul_lore_fire		x	1
 		3	advisor_overhaul_lore_fire		x	1
+		1	advisor_overhaul_lore_fire_2		x	9
+		2	advisor_overhaul_lore_fire_2		x	9
+		3	advisor_overhaul_lore_fire_2		x	9
+		1	advisor_overhaul_lore_fire_3		x	19
+		2	advisor_overhaul_lore_fire_3		x	19
+		3	advisor_overhaul_lore_fire_3		x	19
 		1	advisor_overhaul_lore_beasts		x	1
 		2	advisor_overhaul_lore_beasts		x	1
 		3	advisor_overhaul_lore_beasts		x	1
+		1	advisor_overhaul_lore_beasts_2		x	9
+		2	advisor_overhaul_lore_beasts_2		x	9
+		3	advisor_overhaul_lore_beasts_2		x	9
+		1	advisor_overhaul_lore_beasts_3		x	19
+		2	advisor_overhaul_lore_beasts_3		x	19
+		3	advisor_overhaul_lore_beasts_3		x	19
 		1	advisor_overhaul_lore_metal		x	1
 		2	advisor_overhaul_lore_metal		x	1
 		3	advisor_overhaul_lore_metal		x	1
+		1	advisor_overhaul_lore_metal_2		x	9
+		2	advisor_overhaul_lore_metal_2		x	9
+		3	advisor_overhaul_lore_metal_2		x	9
+		1	advisor_overhaul_lore_metal_3		x	19
+		2	advisor_overhaul_lore_metal_3		x	19
+		3	advisor_overhaul_lore_metal_3		x	19
 		1	advisor_overhaul_lore_heavens		x	1
 		2	advisor_overhaul_lore_heavens		x	1
 		3	advisor_overhaul_lore_heavens		x	1
+		1	advisor_overhaul_lore_heavens_2		x	9
+		2	advisor_overhaul_lore_heavens_2		x	9
+		3	advisor_overhaul_lore_heavens_2		x	9
+		1	advisor_overhaul_lore_heavens_3		x	19
+		2	advisor_overhaul_lore_heavens_3		x	19
+		3	advisor_overhaul_lore_heavens_3		x	19
 		1	advisor_overhaul_lore_light		x	1
 		2	advisor_overhaul_lore_light		x	1
 		3	advisor_overhaul_lore_light		x	1
+		1	advisor_overhaul_lore_light_2		x	9
+		2	advisor_overhaul_lore_light_2		x	9
+		3	advisor_overhaul_lore_light_2		x	9
+		1	advisor_overhaul_lore_light_3		x	19
+		2	advisor_overhaul_lore_light_3		x	19
+		3	advisor_overhaul_lore_light_3		x	19
 		1	advisor_overhaul_lore_life		x	1
 		2	advisor_overhaul_lore_life		x	1
 		3	advisor_overhaul_lore_life		x	1
+		1	advisor_overhaul_lore_life_2		x	9
+		2	advisor_overhaul_lore_life_2		x	9
+		3	advisor_overhaul_lore_life_2		x	9
+		1	advisor_overhaul_lore_life_3		x	19
+		2	advisor_overhaul_lore_life_3		x	19
+		3	advisor_overhaul_lore_life_3		x	19
 		1	advisor_overhaul_lore_shadows		x	1
 		2	advisor_overhaul_lore_shadows		x	1
 		3	advisor_overhaul_lore_shadows		x	1
+		1	advisor_overhaul_lore_shadows_2		x	9
+		2	advisor_overhaul_lore_shadows_2		x	9
+		3	advisor_overhaul_lore_shadows_2		x	9
+		1	advisor_overhaul_lore_shadows_3		x	19
+		2	advisor_overhaul_lore_shadows_3		x	19
+		3	advisor_overhaul_lore_shadows_3		x	19
 		1	advisor_overhaul_lore_death		x	1
 		2	advisor_overhaul_lore_death		x	1
 		3	advisor_overhaul_lore_death		x	1
+		1	advisor_overhaul_lore_death_2		x	9
+		2	advisor_overhaul_lore_death_2		x	9
+		3	advisor_overhaul_lore_death_2		x	9
+		1	advisor_overhaul_lore_death_3		x	19
+		2	advisor_overhaul_lore_death_3		x	19
+		3	advisor_overhaul_lore_death_3		x	19
 		1	advisor_overhaul_lore_high_magic		x	1
 		2	advisor_overhaul_lore_high_magic		x	1
 		3	advisor_overhaul_lore_high_magic		x	1
+		1	advisor_overhaul_lore_high_magic_2		x	9
+		2	advisor_overhaul_lore_high_magic_2		x	9
+		3	advisor_overhaul_lore_high_magic_2		x	9
+		1	advisor_overhaul_lore_high_magic_3		x	19
+		2	advisor_overhaul_lore_high_magic_3		x	19
+		3	advisor_overhaul_lore_high_magic_3		x	19
 		1	advisor_overhaul_lore_of_ice		x	1
 		2	advisor_overhaul_lore_of_ice		x	1
 		3	advisor_overhaul_lore_of_ice		x	1
+		1	advisor_overhaul_lore_of_ice_2		x	9
+		2	advisor_overhaul_lore_of_ice_2		x	9
+		3	advisor_overhaul_lore_of_ice_2		x	9
+		1	advisor_overhaul_lore_of_ice_3		x	19
+		2	advisor_overhaul_lore_of_ice_3		x	19
+		3	advisor_overhaul_lore_of_ice_3		x	19
 		1	advisor_overhaul_lore_of_tempest		x	1
 		2	advisor_overhaul_lore_of_tempest		x	1
 		3	advisor_overhaul_lore_of_tempest		x	1
+		1	advisor_overhaul_lore_of_tempest_2		x	9
+		2	advisor_overhaul_lore_of_tempest_2		x	9
+		3	advisor_overhaul_lore_of_tempest_2		x	9
+		1	advisor_overhaul_lore_of_tempest_3		x	19
+		2	advisor_overhaul_lore_of_tempest_3		x	19
+		3	advisor_overhaul_lore_of_tempest_3		x	19
 		1	advisor_overhaul_lore_of_yang		x	1
 		2	advisor_overhaul_lore_of_yang		x	1
 		3	advisor_overhaul_lore_of_yang		x	1
+		1	advisor_overhaul_lore_of_yang_2		x	9
+		2	advisor_overhaul_lore_of_yang_2		x	9
+		3	advisor_overhaul_lore_of_yang_2		x	9
+		1	advisor_overhaul_lore_of_yang_3		x	19
+		2	advisor_overhaul_lore_of_yang_3		x	19
+		3	advisor_overhaul_lore_of_yang_3		x	19
 		1	advisor_overhaul_lore_of_yin		x	1
 		2	advisor_overhaul_lore_of_yin		x	1
 		3	advisor_overhaul_lore_of_yin		x	1
+		1	advisor_overhaul_lore_of_yin_2		x	9
+		2	advisor_overhaul_lore_of_yin_2		x	9
+		3	advisor_overhaul_lore_of_yin_2		x	9
+		1	advisor_overhaul_lore_of_yin_3		x	19
+		2	advisor_overhaul_lore_of_yin_3		x	19
+		3	advisor_overhaul_lore_of_yin_3		x	19
 		1	advisor_overhaul_lore_mists		x	1
 		2	advisor_overhaul_lore_mists		x	1
 		3	advisor_overhaul_lore_mists		x	1
+		1	advisor_overhaul_lore_mists_2		x	9
+		2	advisor_overhaul_lore_mists_2		x	9
+		3	advisor_overhaul_lore_mists_2		x	9
+		1	advisor_overhaul_lore_mists_3		x	19
+		2	advisor_overhaul_lore_mists_3		x	19
+		3	advisor_overhaul_lore_mists_3		x	19
 		1	advisor_overhaul_lore_hag		x	1
 		2	advisor_overhaul_lore_hag		x	1
 		3	advisor_overhaul_lore_hag		x	1
-		1	advisor_overhaul_lore_dark_magic		x	5
-		2	advisor_overhaul_lore_dark_magic		x	5
-		3	advisor_overhaul_lore_dark_magic		x	5
-		1	advisor_overhaul_lore_vampires		x	5
-		2	advisor_overhaul_lore_vampires		x	5
-		3	advisor_overhaul_lore_vampires		x	5
-		1	advisor_overhaul_lore_undeath		x	5
-		2	advisor_overhaul_lore_undeath		x	5
-		3	advisor_overhaul_lore_undeath		x	5
-		1	advisor_overhaul_lore_nehekhara		x	5
-		2	advisor_overhaul_lore_nehekhara		x	5
-		3	advisor_overhaul_lore_nehekhara		x	5
-		1	advisor_overhaul_lore_deep		x	5
-		2	advisor_overhaul_lore_deep		x	5
-		3	advisor_overhaul_lore_deep		x	5
-		1	advisor_overhaul_lore_big_waaagh		x	5
-		2	advisor_overhaul_lore_big_waaagh		x	5
-		3	advisor_overhaul_lore_big_waaagh		x	5
-		1	advisor_overhaul_lore_lil_waaagh		x	5
-		2	advisor_overhaul_lore_lil_waaagh		x	5
-		3	advisor_overhaul_lore_lil_waaagh		x	5
-		1	advisor_overhaul_lore_hashut		x	5
-		2	advisor_overhaul_lore_hashut		x	5
-		3	advisor_overhaul_lore_hashut		x	5
-		1	advisor_overhaul_lore_ruin		x	5
-		2	advisor_overhaul_lore_ruin		x	5
-		3	advisor_overhaul_lore_ruin		x	5
-		1	advisor_overhaul_lore_plague		x	5
-		2	advisor_overhaul_lore_plague		x	5
-		3	advisor_overhaul_lore_plague		x	5
-		1	advisor_overhaul_lore_stealth		x	5
-		2	advisor_overhaul_lore_stealth		x	5
-		3	advisor_overhaul_lore_stealth		x	5
-		1	advisor_overhaul_lore_nurgle		x	5
-		2	advisor_overhaul_lore_nurgle		x	5
-		3	advisor_overhaul_lore_nurgle		x	5
-		1	advisor_overhaul_lore_slaanesh		x	5
-		2	advisor_overhaul_lore_slaanesh		x	5
-		3	advisor_overhaul_lore_slaanesh		x	5
-		1	advisor_overhaul_lore_of_great_maw		x	5
-		2	advisor_overhaul_lore_of_great_maw		x	5
-		3	advisor_overhaul_lore_of_great_maw		x	5
-		1	advisor_overhaul_lore_wild		x	5
-		2	advisor_overhaul_lore_wild		x	5
-		3	advisor_overhaul_lore_wild		x	5
-		1	advisor_overhaul_lore_rune		x	5
-		2	advisor_overhaul_lore_rune		x	5
-		3	advisor_overhaul_lore_rune		x	5
+		1	advisor_overhaul_lore_hag_2		x	9
+		2	advisor_overhaul_lore_hag_2		x	9
+		3	advisor_overhaul_lore_hag_2		x	9
+		1	advisor_overhaul_lore_hag_3		x	19
+		2	advisor_overhaul_lore_hag_3		x	19
+		3	advisor_overhaul_lore_hag_3		x	19
+		1	advisor_overhaul_lore_dark_magic		x	1
+		2	advisor_overhaul_lore_dark_magic		x	1
+		3	advisor_overhaul_lore_dark_magic		x	1
+		1	advisor_overhaul_lore_dark_magic_2		x	9
+		2	advisor_overhaul_lore_dark_magic_2		x	9
+		3	advisor_overhaul_lore_dark_magic_2		x	9
+		1	advisor_overhaul_lore_dark_magic_3		x	19
+		2	advisor_overhaul_lore_dark_magic_3		x	19
+		3	advisor_overhaul_lore_dark_magic_3		x	19
+		1	advisor_overhaul_lore_vampires		x	1
+		2	advisor_overhaul_lore_vampires		x	1
+		3	advisor_overhaul_lore_vampires		x	1
+		1	advisor_overhaul_lore_vampires_2		x	9
+		2	advisor_overhaul_lore_vampires_2		x	9
+		3	advisor_overhaul_lore_vampires_2		x	9
+		1	advisor_overhaul_lore_vampires_3		x	19
+		2	advisor_overhaul_lore_vampires_3		x	19
+		3	advisor_overhaul_lore_vampires_3		x	19
+		1	advisor_overhaul_lore_undeath		x	1
+		2	advisor_overhaul_lore_undeath		x	1
+		3	advisor_overhaul_lore_undeath		x	1
+		1	advisor_overhaul_lore_undeath_2		x	9
+		2	advisor_overhaul_lore_undeath_2		x	9
+		3	advisor_overhaul_lore_undeath_2		x	9
+		1	advisor_overhaul_lore_undeath_3		x	19
+		2	advisor_overhaul_lore_undeath_3		x	19
+		3	advisor_overhaul_lore_undeath_3		x	19
+		1	advisor_overhaul_lore_nehekhara		x	1
+		2	advisor_overhaul_lore_nehekhara		x	1
+		3	advisor_overhaul_lore_nehekhara		x	1
+		1	advisor_overhaul_lore_nehekhara_2		x	9
+		2	advisor_overhaul_lore_nehekhara_2		x	9
+		3	advisor_overhaul_lore_nehekhara_2		x	9
+		1	advisor_overhaul_lore_nehekhara_3		x	19
+		2	advisor_overhaul_lore_nehekhara_3		x	19
+		3	advisor_overhaul_lore_nehekhara_3		x	19
+		1	advisor_overhaul_lore_deep		x	1
+		2	advisor_overhaul_lore_deep		x	1
+		3	advisor_overhaul_lore_deep		x	1
+		1	advisor_overhaul_lore_deep_2		x	9
+		2	advisor_overhaul_lore_deep_2		x	9
+		3	advisor_overhaul_lore_deep_2		x	9
+		1	advisor_overhaul_lore_deep_3		x	19
+		2	advisor_overhaul_lore_deep_3		x	19
+		3	advisor_overhaul_lore_deep_3		x	19
+		1	advisor_overhaul_lore_big_waaagh		x	1
+		2	advisor_overhaul_lore_big_waaagh		x	1
+		3	advisor_overhaul_lore_big_waaagh		x	1
+		1	advisor_overhaul_lore_big_waaagh_2		x	9
+		2	advisor_overhaul_lore_big_waaagh_2		x	9
+		3	advisor_overhaul_lore_big_waaagh_2		x	9
+		1	advisor_overhaul_lore_big_waaagh_3		x	19
+		2	advisor_overhaul_lore_big_waaagh_3		x	19
+		3	advisor_overhaul_lore_big_waaagh_3		x	19
+		1	advisor_overhaul_lore_lil_waaagh		x	1
+		2	advisor_overhaul_lore_lil_waaagh		x	1
+		3	advisor_overhaul_lore_lil_waaagh		x	1
+		1	advisor_overhaul_lore_lil_waaagh_2		x	9
+		2	advisor_overhaul_lore_lil_waaagh_2		x	9
+		3	advisor_overhaul_lore_lil_waaagh_2		x	9
+		1	advisor_overhaul_lore_lil_waaagh_3		x	19
+		2	advisor_overhaul_lore_lil_waaagh_3		x	19
+		3	advisor_overhaul_lore_lil_waaagh_3		x	19
+		1	advisor_overhaul_lore_hashut		x	1
+		2	advisor_overhaul_lore_hashut		x	1
+		3	advisor_overhaul_lore_hashut		x	1
+		1	advisor_overhaul_lore_hashut_2		x	9
+		2	advisor_overhaul_lore_hashut_2		x	9
+		3	advisor_overhaul_lore_hashut_2		x	9
+		1	advisor_overhaul_lore_hashut_3		x	19
+		2	advisor_overhaul_lore_hashut_3		x	19
+		3	advisor_overhaul_lore_hashut_3		x	19
+		1	advisor_overhaul_lore_ruin		x	1
+		2	advisor_overhaul_lore_ruin		x	1
+		3	advisor_overhaul_lore_ruin		x	1
+		1	advisor_overhaul_lore_ruin_2		x	9
+		2	advisor_overhaul_lore_ruin_2		x	9
+		3	advisor_overhaul_lore_ruin_2		x	9
+		1	advisor_overhaul_lore_ruin_3		x	19
+		2	advisor_overhaul_lore_ruin_3		x	19
+		3	advisor_overhaul_lore_ruin_3		x	19
+		1	advisor_overhaul_lore_plague		x	1
+		2	advisor_overhaul_lore_plague		x	1
+		3	advisor_overhaul_lore_plague		x	1
+		1	advisor_overhaul_lore_plague_2		x	9
+		2	advisor_overhaul_lore_plague_2		x	9
+		3	advisor_overhaul_lore_plague_2		x	9
+		1	advisor_overhaul_lore_plague_3		x	19
+		2	advisor_overhaul_lore_plague_3		x	19
+		3	advisor_overhaul_lore_plague_3		x	19
+		1	advisor_overhaul_lore_stealth		x	1
+		2	advisor_overhaul_lore_stealth		x	1
+		3	advisor_overhaul_lore_stealth		x	1
+		1	advisor_overhaul_lore_stealth_2		x	9
+		2	advisor_overhaul_lore_stealth_2		x	9
+		3	advisor_overhaul_lore_stealth_2		x	9
+		1	advisor_overhaul_lore_stealth_3		x	19
+		2	advisor_overhaul_lore_stealth_3		x	19
+		3	advisor_overhaul_lore_stealth_3		x	19
+		1	advisor_overhaul_lore_nurgle		x	1
+		2	advisor_overhaul_lore_nurgle		x	1
+		3	advisor_overhaul_lore_nurgle		x	1
+		1	advisor_overhaul_lore_nurgle_2		x	9
+		2	advisor_overhaul_lore_nurgle_2		x	9
+		3	advisor_overhaul_lore_nurgle_2		x	9
+		1	advisor_overhaul_lore_nurgle_3		x	19
+		2	advisor_overhaul_lore_nurgle_3		x	19
+		3	advisor_overhaul_lore_nurgle_3		x	19
+		1	advisor_overhaul_lore_slaanesh		x	1
+		2	advisor_overhaul_lore_slaanesh		x	1
+		3	advisor_overhaul_lore_slaanesh		x	1
+		1	advisor_overhaul_lore_slaanesh_2		x	9
+		2	advisor_overhaul_lore_slaanesh_2		x	9
+		3	advisor_overhaul_lore_slaanesh_2		x	9
+		1	advisor_overhaul_lore_slaanesh_3		x	19
+		2	advisor_overhaul_lore_slaanesh_3		x	19
+		3	advisor_overhaul_lore_slaanesh_3		x	19
+		1	advisor_overhaul_lore_of_great_maw		x	1
+		2	advisor_overhaul_lore_of_great_maw		x	1
+		3	advisor_overhaul_lore_of_great_maw		x	1
+		1	advisor_overhaul_lore_of_great_maw_2		x	9
+		2	advisor_overhaul_lore_of_great_maw_2		x	9
+		3	advisor_overhaul_lore_of_great_maw_2		x	9
+		1	advisor_overhaul_lore_of_great_maw_3		x	19
+		2	advisor_overhaul_lore_of_great_maw_3		x	19
+		3	advisor_overhaul_lore_of_great_maw_3		x	19
+		1	advisor_overhaul_lore_wild		x	1
+		2	advisor_overhaul_lore_wild		x	1
+		3	advisor_overhaul_lore_wild		x	1
+		1	advisor_overhaul_lore_wild_2		x	9
+		2	advisor_overhaul_lore_wild_2		x	9
+		3	advisor_overhaul_lore_wild_2		x	9
+		1	advisor_overhaul_lore_wild_3		x	19
+		2	advisor_overhaul_lore_wild_3		x	19
+		3	advisor_overhaul_lore_wild_3		x	19
+		1	advisor_overhaul_lore_rune		x	1
+		2	advisor_overhaul_lore_rune		x	1
+		3	advisor_overhaul_lore_rune		x	1
+		1	advisor_overhaul_lore_rune_2		x	9
+		2	advisor_overhaul_lore_rune_2		x	9
+		3	advisor_overhaul_lore_rune_2		x	9
+		1	advisor_overhaul_lore_rune_3		x	19
+		2	advisor_overhaul_lore_rune_3		x	19
+		3	advisor_overhaul_lore_rune_3		x	19
