@@ -102,13 +102,54 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_magic_archmage		x	25
 		1	advisor_overhaul_skill_magic_battle_caster		x	0
 		2	advisor_overhaul_skill_magic_battle_caster		x	0
-		1	advisor_overhaul_skill_magic_reserves		x	8
-		2	advisor_overhaul_skill_magic_reserves		x	8
+		1	advisor_overhaul_skill_magic_beyond_sight		x	14
+		1	advisor_overhaul_skill_magic_cadence		x	0
+		2	advisor_overhaul_skill_magic_cadence		x	0
+		3	advisor_overhaul_skill_magic_cadence		x	0
+		1	advisor_overhaul_skill_magic_channel		x	0
+		2	advisor_overhaul_skill_magic_channel		x	0
+		1	advisor_overhaul_skill_magic_conduit		x	14
+		1	advisor_overhaul_skill_magic_focus		x	0
+		2	advisor_overhaul_skill_magic_focus		x	0
+		1	advisor_overhaul_skill_magic_last_word		x	19
+		1	advisor_overhaul_skill_magic_overcast		x	0
+		2	advisor_overhaul_skill_magic_overcast		x	0
+		1	advisor_overhaul_skill_magic_quiet_mind		x	0
+		2	advisor_overhaul_skill_magic_quiet_mind		x	0
+		3	advisor_overhaul_skill_magic_quiet_mind		x	0
+		1	advisor_overhaul_skill_magic_recitation		x	0
+		2	advisor_overhaul_skill_magic_recitation		x	0
+		1	advisor_overhaul_skill_magic_reserves		x	0
+		2	advisor_overhaul_skill_magic_reserves		x	0
+		1	advisor_overhaul_skill_magic_ruinous		x	0
+		2	advisor_overhaul_skill_magic_ruinous		x	0
+		3	advisor_overhaul_skill_magic_ruinous		x	0
+		1	advisor_overhaul_skill_magic_second_wind		x	0
+		2	advisor_overhaul_skill_magic_second_wind		x	0
+		3	advisor_overhaul_skill_magic_second_wind		x	0
+		1	advisor_overhaul_skill_magic_sharper		x	0
+		2	advisor_overhaul_skill_magic_sharper		x	0
+		3	advisor_overhaul_skill_magic_sharper		x	0
+		1	advisor_overhaul_skill_magic_standing_conduit		x	19
+		2	advisor_overhaul_skill_magic_standing_conduit		x	19
 		1	advisor_overhaul_skill_magic_steady		x	0
 		2	advisor_overhaul_skill_magic_steady		x	0
 		1	advisor_overhaul_skill_magic_warded_mind		x	0
 		2	advisor_overhaul_skill_magic_warded_mind		x	0
 		3	advisor_overhaul_skill_magic_warded_mind		x	0
+		1	advisor_overhaul_skill_magic_well_remembers		x	14
+		1	advisor_overhaul_skill_magic_what_comes		x	19
+		2	advisor_overhaul_skill_magic_what_comes		x	24
+		3	advisor_overhaul_skill_magic_what_comes		x	29
+		1	advisor_overhaul_skill_magic_what_is_held		x	19
+		2	advisor_overhaul_skill_magic_what_is_held		x	24
+		3	advisor_overhaul_skill_magic_what_is_held		x	29
+		1	advisor_overhaul_skill_magic_what_was		x	19
+		2	advisor_overhaul_skill_magic_what_was		x	24
+		3	advisor_overhaul_skill_magic_what_was		x	29
+		1	advisor_overhaul_skill_magic_wider		x	0
+		2	advisor_overhaul_skill_magic_wider		x	0
+		3	advisor_overhaul_skill_magic_wider		x	0
 		1	advisor_overhaul_skill_martial_0		x	3
 		2	advisor_overhaul_skill_martial_0		x	3
 		3	advisor_overhaul_skill_martial_0		x	3

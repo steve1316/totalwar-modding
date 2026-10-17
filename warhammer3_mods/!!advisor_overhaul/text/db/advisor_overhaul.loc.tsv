@@ -145,15 +145,51 @@ character_skills_localised_description_advisor_overhaul_skill_combat_wards	A fli
 character_skills_localised_name_advisor_overhaul_skill_magic_arcane_ward	Arcane Ward	true
 character_skills_localised_description_advisor_overhaul_skill_magic_arcane_ward	A thin shimmer, taught to him by a mage whose name no one else recalls.\\n\\nA ward save.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_archmage	Archmage	true
-character_skills_localised_description_advisor_overhaul_skill_magic_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nThe magic rows' Apex. Takes the place of the other Apexes and the Polymath.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\n\\nThe magic rows' Apex. Takes the place of the other Apexes and the Polymath.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_battle_caster	Spell and Steel	true
 character_skills_localised_description_advisor_overhaul_skill_magic_battle_caster	He casts with one hand and cuts with the other, and has never found the two work apart.\\n\\nStronger blows and spells, whatever he carries.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_beyond_sight	Weave Beyond Sight	true
+character_skills_localised_description_advisor_overhaul_skill_magic_beyond_sight	There is a pattern behind the pattern. He has seen it from the far side.\\n\\nMuch stronger spells, fewer miscasts, and he sees farther.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_cadence	Steady Cadence	true
+character_skills_localised_description_advisor_overhaul_skill_magic_cadence	The same words, the same breath, every time. The Winds learn to expect it.\\n\\nStronger spells.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_channel	Open Channel	true
+character_skills_localised_description_advisor_overhaul_skill_magic_channel	The Winds find him now. They have learned where he stands.\\n\\nMore Winds of Magic each turn for his army.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_conduit	Conduit Unbound	true
+character_skills_localised_description_advisor_overhaul_skill_magic_conduit	He stopped asking the Winds for power. Now he simply lets them through.\\n\\nOvercast spells recharge much sooner and hit harder.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_focus	Spellweaver's Focus	true
+character_skills_localised_description_advisor_overhaul_skill_magic_focus	Every ending, the first thing he learned was to hold one thought steady while the world shook.\\n\\nMore spell intensity.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_last_word	The Last Word	true
+character_skills_localised_description_advisor_overhaul_skill_magic_last_word	He no longer waits for the Winds to cool. He cuts the pause out of every spell.\\n\\nSpells of every lore cost less and recharge much sooner, and he casts with greater mastery. Needs 3 points in this group.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_overcast	Overcast Discipline	true
+character_skills_localised_description_advisor_overhaul_skill_magic_overcast	Anyone can pour more power in. He knows when to stop.\\n\\nOvercast spells recharge sooner.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_quiet_mind	Quiet Mind	true
+character_skills_localised_description_advisor_overhaul_skill_magic_quiet_mind	The Winds come easier to a mind with no fear left in it.\\n\\nSpells recharge sooner.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_recitation	Quick Recitation	true
+character_skills_localised_description_advisor_overhaul_skill_magic_recitation	The words come faster each time. He has said them in every tongue that ever ended.\\n\\nSpells recharge sooner.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_reserves	Deep Reserves	true
 character_skills_localised_description_advisor_overhaul_skill_magic_reserves	He has learned to hold more of the Winds than a body should.\\n\\nMore Winds of Magic for his army in every battle.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_ruinous	Hex of Misfire	true
+character_skills_localised_description_advisor_overhaul_skill_magic_ruinous	He knows exactly how a spell goes wrong, because he has watched it go wrong.\\n\\nEnemy spellcasters near his army miscast more often, and their spells cost more.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_second_wind	Second Wind	true
+character_skills_localised_description_advisor_overhaul_skill_magic_second_wind	Just when the pool runs dry, he finds another cup behind it.\\n\\nA deeper Winds of Magic pool.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_sharper	Sharper Weave	true
+character_skills_localised_description_advisor_overhaul_skill_magic_sharper	And then to pull it tight, to a point.\\n\\nStronger spells, fewer miscasts.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_standing_conduit	Standing Conduit	true
+character_skills_localised_description_advisor_overhaul_skill_magic_standing_conduit	The Winds do not rush through him anymore. They wait in him, patient, like water in a cistern.\\n\\nUnlocks the Arcane Conduit ability. Level 2 replaces it with Greater Arcane Conduit.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_steady	Steady Hands	true
 character_skills_localised_description_advisor_overhaul_skill_magic_steady	He miscast once, at the worst possible moment, and the world ended a little early.\\n\\nFewer miscasts, stronger spells.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_warded_mind	Warded Mind	true
 character_skills_localised_description_advisor_overhaul_skill_magic_warded_mind	He has been unmade by sorcery before. He remembers the shape of the hole.\\n\\nMagic resistance.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_well_remembers	The Well Remembers	true
+character_skills_localised_description_advisor_overhaul_skill_magic_well_remembers	He has drunk from this well in lives that never were. The well recalls him kindly.\\n\\nMore Winds of Magic each turn, and spells that recharge sooner.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_what_comes	What Comes	true
+character_skills_localised_description_advisor_overhaul_skill_magic_what_comes	He has already seen how the next casting will end.\\n\\nHe keeps the passive powers of a third of the lores, and their spells cost less.\\nLevel 2 opens at rank 25, level 3 at rank 30.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_what_is_held	What Is Held	true
+character_skills_localised_description_advisor_overhaul_skill_magic_what_is_held	He does not reach for the old lores. They are simply there, held.\\n\\nHe keeps the passive powers of a third of the lores, and their spells cost less.\\nLevel 2 opens at rank 25, level 3 at rank 30.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_what_was	What Was Learned	true
+character_skills_localised_description_advisor_overhaul_skill_magic_what_was	Every lore he ever studied left a habit behind.\\n\\nHe keeps the passive powers of a third of the lores, and their spells cost less.\\nLevel 2 opens at rank 25, level 3 at rank 30.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_wider	Wider Weave	true
+character_skills_localised_description_advisor_overhaul_skill_magic_wider	He learned to let the thread spread before it settles.\\n\\nStronger spells.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_0	Assassinate	true
 character_skills_localised_description_advisor_overhaul_skill_martial_0	He knows which of them will matter later. He settles it now.\\n\\nUnlocks the Assassinate hero action.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_1	Wound	true
@@ -469,4 +505,7 @@ effects_description_advisor_overhaul_effect_enable_spy_assist_army_increase_mobi
 agent_actions_localised_action_name_advisor_overhaul_action_spy_hinder_character_assassinate	{{tr:agent_action_name_assassinate}}	true
 agent_actions_localised_action_description_advisor_overhaul_action_spy_hinder_character_assassinate	[[col:yellow]]Kills the target Character.[[/col]]\\n[[col:red]]This action will kill the Hand of the Shadow Crown![[/col]]	true
 effects_description_advisor_overhaul_effect_enable_spy_hinder_character_assassinate	Hero action: {{tr:agent_action_name_assassinate}}	true
+effects_description_advisor_overhaul_effect_wom_cost_what_was	Winds of Magic cost: %+n% for Fire, Beasts, Metal, the Heavens, Light, Life, Shadows, Death, High Magic and Ice spells	true
+effects_description_advisor_overhaul_effect_wom_cost_what_is_held	Winds of Magic cost: %+n% for Tempest, Yang, Yin, Mists, the Hag, Dark Magic, Vampires, Undeath, Nehekhara and the Deep spells	true
+effects_description_advisor_overhaul_effect_wom_cost_what_comes	Winds of Magic cost: %+n% for Big Waaagh!, Little Waaagh!, Hashut, Ruin, Plague, Stealth, Nurgle, Slaanesh, the Great Maw and the Wild spells	true
 effects_description_advisor_overhaul_effect_army_barrier	Barrier: %+n for all units in the army except characters	true

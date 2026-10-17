@@ -231,7 +231,7 @@ TABLES = [
     "character_skill_level_to_effects_junctions_tables", "character_skill_nodes_skill_locks_tables", "effects_tables", "effect_bundles_tables",
     "effect_bundles_to_effects_junctions_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables",
     "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables",
-    "effect_bonus_value_ids_unit_sets_tables", *UNIT_ROW_TABLES,
+    "effect_bonus_value_special_ability_group_junctions_tables", "effect_bonus_value_ids_unit_sets_tables", *UNIT_ROW_TABLES,
 ]
 
 # Land unit columns a weapon's `stats` and `forms` may set. `armour` is set too, as an armour value.
@@ -992,18 +992,20 @@ def planned_skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], te
                 "child_link_position": "1", "parent_link_position_offset": "0.0000", "child_link_position_offset": "0.0000",
                 "link_type": "SUBSET_REQUIRED" if some else "REQUIRED",
             })
+        # `level_ranks` holds the rank of each later level. A level past its end opens at the last rank given.
+        level_ranks = [skill.get("rank", 1), *skill.get("level_ranks", [])]
         for level, level_effects in enumerate(skill.get("levels") or [[]], start=1):
             rows["character_skill_level_details_tables"].append({
                 "campaign_key": "", "faction_key": "", "level": str(level), "skill_key": key, "subculture_key": "", "image_path": "x",
-                "unlocked_at_rank": str(skill.get("rank", 1)),
+                "unlocked_at_rank": str(level_ranks[min(level, len(level_ranks)) - 1]),
             })
             rows["character_skill_level_to_effects_junctions_tables"] += [{"character_skill_key": key, "effect_key": e["effect"], "level": str(level),
                                                                            "effect_scope": e["scope"], "value": effect_value(e)} for e in level_effects]
 
 
 def effect_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], vanilla_texts: List[Tuple[str, str]]) -> None:
-    """Adds his own effects, the registry's `effects`. One with `unit_sets` gives its `bonus` to every unit in those sets. Its `priority` sets its
-    place in a skill's tooltip, which lists effects lowest priority first.
+    """Adds his own effects, the registry's `effects`. One with `groups` changes the Winds of Magic cost of those lores' spells. One with `unit_sets`
+    gives its `bonus` to every unit in those sets. Its `priority` sets its place in a skill's tooltip, which lists effects lowest priority first.
 
     Args:
         registry (Dict): The registry.
@@ -1014,6 +1016,8 @@ def effect_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], vanilla_t
         icon = entry.get("icon", "magic_character.png")
         rows["effects_tables"].append({"effect": effect, "icon": icon, "priority": str(entry["priority"]), "icon_negative": icon, "category": "battle",
                                        "is_positive_value_good": "true" if entry.get("good") else "false"})
+        rows["effect_bonus_value_special_ability_group_junctions_tables"] += [{"bonus_value_id": "cost_percentage_mod", "effect": effect,
+                                                                              "special_ability_group": group} for group in entry.get("groups", [])]
         rows["effect_bonus_value_ids_unit_sets_tables"] += [{"bonus_value_id": entry["bonus"], "effect": effect, "unit_set": unit_set}
                                                             for unit_set in entry.get("unit_sets", [])]
         vanilla_texts.append((f"effects_description_{effect}", entry["text"]))
