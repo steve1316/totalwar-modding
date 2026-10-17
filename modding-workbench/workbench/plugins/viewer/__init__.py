@@ -1,5 +1,5 @@
 """The Workbench tab: a project's studio. Forms and slots, a Battle stage (3D models and animations, with each form's vanilla equivalent) and a
-Portrait stage (the porthole camera), inspector tabs (Stats, Look, Skills, and Portrait with its stage) and a bar to save, rebuild and deploy.
+Portrait stage (the porthole camera), inspector tabs (Stats, Look, and Portrait with its stage) and a bar to save, rebuild and deploy.
 
 The page is `index.html` with its modules in `studio/`, served from this folder. A project's gallery data (exported by `tools.anim_viewer.exporter`) is served under
 `/viewer/p/<project>/data/`, and its tuning and job routes under `/viewer/p/<project>/api/`:
