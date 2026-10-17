@@ -3,9 +3,10 @@ key	campaign_key	character_skill_key	faction_key	indent	tier	subculture	points_o
 advisor_overhaul_choose_mount_node_warhorse		advisor_overhaul_choose_mount_warhorse		0	0		0	0	true
 advisor_overhaul_choose_mount_node_pegasus		advisor_overhaul_choose_mount_pegasus		0	1		0	0	true
 advisor_overhaul_choose_mount_node_disc		advisor_overhaul_choose_mount_disc		99	0		0	0	false
-advisor_overhaul_choose_weapon_node_sword_and_shield		advisor_overhaul_choose_weapon_sword_and_shield		0	2		0	0	true
-advisor_overhaul_choose_weapon_node_greatsword		advisor_overhaul_choose_weapon_greatsword		0	3		0	0	true
-advisor_overhaul_choose_weapon_node_sword_and_bow		advisor_overhaul_choose_weapon_sword_and_bow		0	4		0	0	true
+advisor_overhaul_choose_weapon_node_staff_and_sword		advisor_overhaul_choose_weapon_staff_and_sword		0	2		0	0	true
+advisor_overhaul_choose_weapon_node_sword_and_shield		advisor_overhaul_choose_weapon_sword_and_shield		0	3		0	0	true
+advisor_overhaul_choose_weapon_node_greatsword		advisor_overhaul_choose_weapon_greatsword		0	4		0	0	true
+advisor_overhaul_choose_weapon_node_sword_and_bow		advisor_overhaul_choose_weapon_sword_and_bow		0	5		0	0	true
 advisor_overhaul_hidden_node_wh3_main_skill_agent_action_success_scaling		wh3_main_skill_agent_action_success_scaling		99	1		0	0	false
 advisor_overhaul_skill_node_actions_default		advisor_overhaul_skill_actions_default		99	2		1	0	false
 advisor_overhaul_skill_node_arts_apex		advisor_overhaul_skill_arts_apex		0	6		0	0	true

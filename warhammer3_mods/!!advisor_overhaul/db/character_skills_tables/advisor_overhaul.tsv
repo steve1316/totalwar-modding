@@ -3,6 +3,7 @@ key	image_path	localised_description	localised_name	unlocked_at_rank	is_backgrou
 advisor_overhaul_choose_mount_warhorse	mount_barded_warhorse.png			0	false	false	false	0.0000	0
 advisor_overhaul_choose_mount_pegasus	mount_imperial_pegasus.png			0	false	false	false	0.0000	0
 advisor_overhaul_choose_mount_disc	mount_disc_of_tzeentch.png			0	false	false	false	0.0000	0
+advisor_overhaul_choose_weapon_staff_and_sword	item_weapon.png			0	false	false	false	0.0000	0
 advisor_overhaul_choose_weapon_sword_and_shield	wh_dlc07_lord_abilities_lions_shield.png			0	false	false	false	0.0000	0
 advisor_overhaul_choose_weapon_greatsword	wh2_dlc11_strength_of_steel.png			0	false	false	false	0.0000	0
 advisor_overhaul_choose_weapon_sword_and_bow	wh_dlc05_weapon_abilities_the_bow_of_loren.png			0	false	false	false	0.0000	0

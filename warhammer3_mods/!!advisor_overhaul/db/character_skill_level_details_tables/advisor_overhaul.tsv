@@ -3,9 +3,9 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_choose_mount_warhorse		x	3
 		1	advisor_overhaul_choose_mount_pegasus		x	11
 		1	advisor_overhaul_choose_mount_disc		x	1
-		1	advisor_overhaul_choose_weapon_sword_and_shield		x	1
-		1	advisor_overhaul_choose_weapon_greatsword		x	1
-		1	advisor_overhaul_choose_weapon_sword_and_bow		x	1
+		1	advisor_overhaul_choose_weapon_sword_and_shield		x	3
+		1	advisor_overhaul_choose_weapon_greatsword		x	9
+		1	advisor_overhaul_choose_weapon_sword_and_bow		x	6
 		1	advisor_overhaul_skill_actions_default		x	1
 		1	advisor_overhaul_skill_arts_apex		x	25
 		1	advisor_overhaul_skill_arts_army_1		x	4

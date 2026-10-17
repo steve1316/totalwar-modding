@@ -11,9 +11,9 @@ ADVISOR_OVERHAUL_RIGS = {
 	--- Weapons also name the art set that shows them in the character panel.
 	weapons = {
 		{ key = "staff_and_sword", skill = "", name = "advisor_overhaul_ui_weapon_staff_and_sword", fallback = "Staff and Sword", icon = "ui/campaign ui/skills/item_weapon.png", art_set = "advisor_overhaul_art_staff_and_sword" },
-		{ key = "sword_and_shield", skill = "advisor_overhaul_choose_weapon_sword_and_shield", name = "advisor_overhaul_ui_weapon_sword_and_shield", fallback = "Sword and Shield", icon = "ui/campaign ui/skills/wh_dlc07_lord_abilities_lions_shield.png", art_set = "advisor_overhaul_art_sword_and_shield" },
-		{ key = "greatsword", skill = "advisor_overhaul_choose_weapon_greatsword", name = "advisor_overhaul_ui_weapon_greatsword", fallback = "Greatsword", icon = "ui/campaign ui/skills/wh2_dlc11_strength_of_steel.png", art_set = "advisor_overhaul_art_greatsword" },
-		{ key = "sword_and_bow", skill = "advisor_overhaul_choose_weapon_sword_and_bow", name = "advisor_overhaul_ui_weapon_sword_and_bow", fallback = "Sword and Bow", icon = "ui/campaign ui/skills/wh_dlc05_weapon_abilities_the_bow_of_loren.png", art_set = "advisor_overhaul_art_sword_and_bow" },
+		{ key = "sword_and_shield", skill = "advisor_overhaul_choose_weapon_sword_and_shield", name = "advisor_overhaul_ui_weapon_sword_and_shield", fallback = "Sword and Shield", icon = "ui/campaign ui/skills/wh_dlc07_lord_abilities_lions_shield.png", art_set = "advisor_overhaul_art_sword_and_shield", grant_rank = 4 },
+		{ key = "greatsword", skill = "advisor_overhaul_choose_weapon_greatsword", name = "advisor_overhaul_ui_weapon_greatsword", fallback = "Greatsword", icon = "ui/campaign ui/skills/wh2_dlc11_strength_of_steel.png", art_set = "advisor_overhaul_art_greatsword", grant_rank = 10 },
+		{ key = "sword_and_bow", skill = "advisor_overhaul_choose_weapon_sword_and_bow", name = "advisor_overhaul_ui_weapon_sword_and_bow", fallback = "Sword and Bow", icon = "ui/campaign ui/skills/wh_dlc05_weapon_abilities_the_bow_of_loren.png", art_set = "advisor_overhaul_art_sword_and_bow", grant_rank = 7 },
 	},
 	--- Mounts in skill tree order: key, unlock skill (empty for the default), name loc key, English fallback name and picker icon.
 	--- A `grant_rank` is the rank at which the script gives him that item's skill.

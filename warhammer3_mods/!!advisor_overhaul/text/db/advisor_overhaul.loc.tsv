@@ -52,6 +52,8 @@ character_skills_localised_name_advisor_overhaul_choose_mount_pegasus	Imperial P
 character_skills_localised_description_advisor_overhaul_choose_mount_pegasus	A winged Imperial steed that lifts him over the battle line.	true
 character_skills_localised_name_advisor_overhaul_choose_mount_disc	Disc of Tzeentch	true
 character_skills_localised_description_advisor_overhaul_choose_mount_disc	A floating daemon-disc, bound to him by a bargain he does not talk about.	true
+character_skills_localised_name_advisor_overhaul_choose_weapon_staff_and_sword	Staff and Sword	true
+character_skills_localised_description_advisor_overhaul_choose_weapon_staff_and_sword	A walking staff for his spells and a plain Imperial blade for anything that gets too close.\\n\\nHis default weapon, which he always has. Switch back to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_shield	Sword and Shield	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_shield	He leaves the staff behind and takes up a knight's shield.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_greatsword	Greatsword	true

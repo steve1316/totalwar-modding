@@ -504,7 +504,8 @@
       }
      ]
     }
-   }
+   },
+   "skill_icon": "item_weapon.png"
   },
   "sword_and_shield": {
    "name": "Sword and Shield",
@@ -680,7 +681,8 @@
       }
      ]
     }
-   }
+   },
+   "grant_rank": 4
   },
   "greatsword": {
    "name": "Greatsword",
@@ -882,7 +884,8 @@
       }
      ]
     }
-   }
+   },
+   "grant_rank": 10
   },
   "sword_and_bow": {
    "name": "Sword and Bow",
@@ -1063,7 +1066,8 @@
       }
      ]
     }
-   }
+   },
+   "grant_rank": 7
   }
  },
  "mounts": {

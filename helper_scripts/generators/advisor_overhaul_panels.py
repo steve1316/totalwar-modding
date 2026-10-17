@@ -401,8 +401,9 @@ def build_panels(registry: Dict, out: str, sets: Dict[str, AnimSet]) -> Tuple[Di
     catalog = skill_catalog({t: load_tsv_data(f"{extract_tsv_data(t)}/db/{t}/data__.tsv")[0] for t in SKILL_CATALOG_TABLES}, builder.loc)
     for path in catalog_art(catalog):
         builder.note_art(path)
-    # Each fixed skill's points: one for a weapon or mount, one per level for a lore.
-    fixed = [{"row": f["row"], "tier": f["tier"], "name": f["name"], "icon": builder.note_art(f"{SKILL_ICON_FOLDER}/{f['icon']}"), "kind": f["kind"], "cost": 1}
+    # Each fixed skill's points: one for a weapon or mount the player buys, none for the default or one only given, one per level for a lore.
+    fixed = [{"row": f["row"], "tier": f["tier"], "name": f["name"], "icon": builder.note_art(f"{SKILL_ICON_FOLDER}/{f['icon']}"), "kind": f["kind"],
+              "cost": 0 if f["free"] else 1}
              for f in fixed_skills(registry) if not f["hidden"]]
     # The lores are registry values (one card per pick slot), so only their art and the points they can cost come from here.
     lore_art = {k: builder.note_art(f"{SKILL_ICON_FOLDER}/{e['icon']}") for k, e in registry.get("lores", {}).items() if e.get("build")}

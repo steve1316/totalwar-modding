@@ -34,7 +34,7 @@ one way, such as a pact choice), `hidden` (no node shown, for skills a script gi
 (an art slot, whose effect is the held weapon's art for that slot), `grant_rank` (the rank at which the game gives it to him by itself) and
 `build`. Only skills with `build` (In game in the workbench) are written.
 Drafts stay in the workbench. A weapon or mount with `unlock` "script" gets a hidden skill too: only a script unlocks it (the Disc, from the pact). With `grant_rank` the loadout script gives
-it by itself once he reaches that rank (the Warhorse and the Pegasus).
+it by itself once he reaches that rank (the Warhorse, the Pegasus and every weapon). Without an `unlock_rank` it can never be bought first.
 
 The rest of his kit, also in the registry:
 - `weapons.<w>.arts`: slot -> `name`, `description`, `effects` (each `effect`, `scope`, `value`). Each is an effect bundle, which the loadout
@@ -822,25 +822,32 @@ def agent_rows(data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tu
 
 
 def fixed_skills(registry: Dict) -> List[Dict]:
-    """The weapon and mount skills, where they sit in the tree: every mount and then every weapon but the defaults, side by side in the top row.
+    """The weapon and mount skills, where they sit in the tree: every mount but the default and then every weapon, side by side in the top row.
+
+    The default weapon's node only shows that he always has it. A weapon with a `grant_rank` and no `unlock_rank` is only ever given, never bought.
 
     Args:
         registry (Dict): The registry.
 
     Returns:
-        List[Dict]: `kind`, `key` (item key), `item` (the registry item), `row`, `tier`, `hidden`, `skill` and `node` keys, `name` and `icon`. A
-        hidden one (`unlock` "script") takes no tier, since `add_node` puts it on `HIDDEN_ROW`.
+        List[Dict]: `kind`, `key` (item key), `item` (the registry item), `row`, `tier`, `hidden`, `default`, `buy_rank` (its node's `unlocked_at_rank`),
+        `free` (costs no point), `skill` and `node` keys, `name` and `icon`. A hidden one (`unlock` "script") takes no tier, since `add_node` puts it
+        on `HIDDEN_ROW`.
     """
     skills = []
     tier = 0
-    for row, kind, items, default in ((MOUNT_ROW, "mount", registry["mounts"], DEFAULT_MOUNT), (WEAPON_ROW, "weapon", registry["weapons"], DEFAULT_WEAPON)):
+    for row, kind, items in ((MOUNT_ROW, "mount", registry["mounts"]), (WEAPON_ROW, "weapon", registry["weapons"])):
         for key, item in items.items():
-            if key == default:
+            default = not unlock_skill(kind, key)
+            if default and kind == "mount":
                 continue
             hidden = item.get("unlock") == "script"
-            skills.append({"kind": kind, "key": key, "item": item, "row": row, "tier": None if hidden else tier, "hidden": hidden,
-                           "skill": choice_skill(kind, key), "node": f"{PREFIX}_choose_{kind}_node_{key}", "name": item["name"],
-                           "icon": item.get("skill_icon") or os.path.basename(item["icon"])})
+            # The tree shows `unlocked_at_rank` plus one, like the auto-grant table, so a grant-only item opens one under its `grant_rank`.
+            grant_only = bool(item.get("grant_rank") and not item.get("unlock_rank"))
+            buy_rank = item["grant_rank"] - 1 if grant_only else item.get("unlock_rank", 1)
+            skills.append({"kind": kind, "key": key, "item": item, "row": row, "tier": None if hidden else tier, "hidden": hidden, "default": default,
+                           "buy_rank": buy_rank, "free": default or grant_only, "skill": choice_skill(kind, key),
+                           "node": f"{PREFIX}_choose_{kind}_node_{key}", "name": item["name"], "icon": item.get("skill_icon") or os.path.basename(item["icon"])})
             tier += 0 if hidden else 1
     return skills
 
@@ -918,13 +925,19 @@ def skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: Lis
             "is_female_only_background_skill": "false", "is_male_only_background_skill": "false", "background_weighting": "0.0000", "influence_cost": "0",
         })
         texts.append((f"character_skills_localised_name_{skill}", item["name"]))
-        unlock = "" if kind == "mount" else "\\\\n\\\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel."
+        unlock = ""
+        if kind == "weapon":
+            opening = "His default weapon, which he always has. Switch back" if fixed["default"] else "Unlocks this weapon for the Advisor. Switch"
+            unlock = f"\\\\n\\\\n{opening} to it with the Change Loadout button in his character panel."
         texts.append((f"character_skills_localised_description_{skill}", f"{item['description']}{unlock}"))
         add_node(rows, fixed["node"], skill, fixed["row"], fixed["tier"], fixed["hidden"])
-        # Without a level row the skill has 0 levels: the tree draws it as learned while `has_skill` stays false.
+        # Without a level row the skill has 0 levels: the tree draws it as learned while `has_skill` stays false. The default weapon wants exactly that.
+        if fixed["default"]:
+            continue
+        # A grant-only weapon opens at its grant rank, the same rank-up that gives it to him, so there is never a turn to buy it.
         rows["character_skill_level_details_tables"].append({
             "campaign_key": "", "faction_key": "", "level": "1", "skill_key": skill, "subculture_key": "", "image_path": "x",
-            "unlocked_at_rank": str(item.get("unlock_rank", 1)),
+            "unlocked_at_rank": str(fixed["buy_rank"]),
         })
         # The game's own auto-grant: the node shows "Automatically granted at rank N" and the skill is given at that level.
         if item.get("grant_rank"):
