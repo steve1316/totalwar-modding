@@ -84,9 +84,14 @@ advisor_overhaul_skill_node_martial_7		advisor_overhaul_skill_martial_7		8	3		0	
 advisor_overhaul_skill_node_martial_9		advisor_overhaul_skill_martial_9		8	9		0	0	true
 advisor_overhaul_skill_node_martial_apex		advisor_overhaul_skill_martial_apex		0	8		0	0	true
 advisor_overhaul_skill_node_memory_calm_voice		advisor_overhaul_skill_memory_calm_voice		4	2		0	0	true
+advisor_overhaul_skill_node_memory_end_drowning		advisor_overhaul_skill_memory_end_drowning		4	8		0	0	true
+advisor_overhaul_skill_node_memory_end_fire		advisor_overhaul_skill_memory_end_fire		4	5		0	0	true
+advisor_overhaul_skill_node_memory_end_hunger		advisor_overhaul_skill_memory_end_hunger		4	9		0	0	true
+advisor_overhaul_skill_node_memory_end_plague		advisor_overhaul_skill_memory_end_plague		4	6		0	0	true
+advisor_overhaul_skill_node_memory_end_silence		advisor_overhaul_skill_memory_end_silence		4	7		0	0	true
 advisor_overhaul_skill_node_memory_every_mistake		advisor_overhaul_skill_memory_every_mistake		4	3		0	0	true
 advisor_overhaul_skill_node_memory_long_patience		advisor_overhaul_skill_memory_long_patience		0	11		0	0	true
-advisor_overhaul_skill_node_memory_old_lessons		advisor_overhaul_skill_memory_old_lessons		4	4		0	0	true
+advisor_overhaul_skill_node_memory_old_lessons		advisor_overhaul_skill_memory_old_lessons		4	4		0	5	true
 advisor_overhaul_skill_node_memory_polymath		advisor_overhaul_skill_memory_polymath		0	10		0	0	true
 advisor_overhaul_skill_node_memory_seen_the_end		advisor_overhaul_skill_memory_seen_the_end		4	1		0	0	true
 advisor_overhaul_skill_node_memory_weight_of_years		advisor_overhaul_skill_memory_weight_of_years		4	0		0	0	true

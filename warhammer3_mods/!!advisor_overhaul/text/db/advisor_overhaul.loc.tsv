@@ -212,10 +212,20 @@ character_skills_localised_name_advisor_overhaul_skill_martial_apex	The Last Swo
 character_skills_localised_description_advisor_overhaul_skill_martial_apex	At the end of one world he was the last one standing. He intends to be again.\\n\\nThe Martial row's Apex. Takes the place of the other Apexes and the Polymath.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_calm_voice	Calm Voice	true
 character_skills_localised_description_advisor_overhaul_skill_memory_calm_voice	Men stand firm around someone who is not afraid. He stopped being afraid a long time ago.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_end_drowning	The Ending of Drowning	true
+character_skills_localised_description_advisor_overhaul_skill_memory_end_drowning	The sea came in over the walls. He held a shield above his head for a long time.\\n\\nHis blows carry Dampening, Horrible and Charming at once.\\n\\nHe turns missiles aside and his army holds firm. Its charges bog down in the mud.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_end_fire	The Ending of Fire	true
+character_skills_localised_description_advisor_overhaul_skill_memory_end_fire	The sky burned for nine days and he watched it from the last tower. His blade remembers the heat.\\n\\nHis blows carry Flaming, Inflammable and Warpflame at once.\\n\\nHe hits harder and charges harder. The memory leaves him thin-skinned.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_end_hunger	The Ending of Hunger	true
+character_skills_localised_description_advisor_overhaul_skill_memory_end_hunger	The granaries were empty before the first battle. He remembers what was worth taking.\\n\\nHis blows carry Slow Death, Sundering and Anraheir's Curse at once.\\n\\nHis army fights like starving men, hard and without mercy. Its quivers run thin.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_end_plague	The Ending of Plague	true
+character_skills_localised_description_advisor_overhaul_skill_memory_end_plague	The cities emptied quietly. He learned what a slow death tastes like.\\n\\nHis blows carry Poison, Contaminated and Eroding Poison at once.\\n\\nHis blows bite through armour and cut down infantry. The fever makes his spells falter.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_end_silence	The Ending of Silence	true
+character_skills_localised_description_advisor_overhaul_skill_memory_end_silence	Nobody screamed. The army simply stopped arriving. He keeps his own march quiet now.\\n\\nHis blows carry Discouraging, Rattling and Disrupting at once.\\n\\nHe is harder to hit and deadly against large foes. The quiet leaves his wards thin.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_every_mistake	Every Mistake Already Made	true
 character_skills_localised_description_advisor_overhaul_skill_memory_every_mistake	There is no error left for him to make. He made them all in other lives.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_long_patience	The Long Patience	true
-character_skills_localised_description_advisor_overhaul_skill_memory_long_patience	He has all the time in the world. He has had it before.\\n\\nForty small levels for points nothing else wants: each adds 1 melee attack, 1 melee defence and 1 spell mastery.	true
+character_skills_localised_description_advisor_overhaul_skill_memory_long_patience	He has all the time in the world. He has had it before.\\n\\nA hundred small levels for points nothing else wants: each adds 1 percent spell intensity, 1 percent weapon strength and 1 percent missile strength.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_old_lessons	Old Lessons	true
 character_skills_localised_description_advisor_overhaul_skill_memory_old_lessons	Everything he teaches, he learned the hard way. Several times.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_polymath	Everything, Again	true
