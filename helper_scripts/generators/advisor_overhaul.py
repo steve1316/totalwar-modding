@@ -31,7 +31,8 @@ His planned skills are the registry's `skills` (written by the workbench's Skill
 `ui/campaign ui/skills`), `row` and `tier` in the tree, `rank` it unlocks at, `levels` (each a list of `effect`, `scope`, `value`), `requires` (ids
 of skills it needs: all of them, or any `needs` of them), `exclusive` (ids of skills it locks, both ways), `locked_by` (ids of skills that lock it
 one way, such as a pact choice), `hidden` (no node shown, for skills a script gives him, with `learned` giving it to him when he is made), `slot`
-(an art slot, whose effect is the held weapon's art for that slot) and `build`. Only skills with `build` (In game in the workbench) are written.
+(an art slot, whose effect is the held weapon's art for that slot), `grant_rank` (the rank at which the game gives it to him by itself) and
+`build`. Only skills with `build` (In game in the workbench) are written.
 Drafts stay in the workbench. A weapon or mount with `unlock` "script" gets a hidden skill too: only a script unlocks it (the Disc, from the pact). With `grant_rank` the loadout script gives
 it by itself once he reaches that rank (the Warhorse and the Pegasus).
 
@@ -917,8 +918,8 @@ def skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: Lis
             "is_female_only_background_skill": "false", "is_male_only_background_skill": "false", "background_weighting": "0.0000", "influence_cost": "0",
         })
         texts.append((f"character_skills_localised_name_{skill}", item["name"]))
-        texts.append((f"character_skills_localised_description_{skill}", f"{item['description']}\\\\n\\\\nUnlocks this {kind} for the Advisor. "
-                      "Switch to it with the Change Loadout button in his character panel."))
+        unlock = "" if kind == "mount" else "\\\\n\\\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel."
+        texts.append((f"character_skills_localised_description_{skill}", f"{item['description']}{unlock}"))
         add_node(rows, fixed["node"], skill, fixed["row"], fixed["tier"], fixed["hidden"])
         # Without a level row the skill has 0 levels: the tree draws it as learned while `has_skill` stays false.
         rows["character_skill_level_details_tables"].append({
@@ -993,6 +994,9 @@ def planned_skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], te
                 "child_link_position": "1", "parent_link_position_offset": "0.0000", "child_link_position_offset": "0.0000",
                 "link_type": "SUBSET_REQUIRED" if some else "REQUIRED",
             })
+        # The game's own auto-grant, as for mounts. `grant_rank` is the rank the player sees, so the table gets one less.
+        if skill.get("grant_rank"):
+            rows["character_skills_to_level_reached_criterias_tables"].append({"character_skill": key, "character_level": str(skill["grant_rank"] - 1), "upgrade_to_skill_level": "1"})
         # `level_ranks` holds the rank of each later level. A level past its end opens at the last rank given.
         level_ranks = [skill.get("rank", 1), *skill.get("level_ranks", [])]
         for level, level_effects in enumerate(skill.get("levels") or [[]], start=1):
@@ -1204,8 +1208,7 @@ def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
                                                                                "effect_scope": me, "value": "1.0000"} for e in effects]
             texts.append((f"character_skills_localised_name_{key}", f"{TOME_ORDINALS[slot]} Tome: {entry['name']}"))
             texts.append((f"character_skills_localised_description_{key}", entry.get("description", "He learned this lore in a world that no longer exists.")
-                          + f"\\\\n\\\\nLevel 1: {first} of its {len(spells)} spells. Level 2: every spell. Level 3: every spell can be overcast."
-                          + f"\\\\n\\\\nOne lore per pick. This pick opens at rank {slot_rank + 1} and locks the other lores, here and in the other picks."))
+                          + f"\\\\n\\\\nLevel 1: {first} of its {len(spells)} spells. Level 2: every spell. Level 3: every spell can be overcast."))
             rows["character_skill_nodes_skill_locks_tables"] += [
                 {"character_skill": key, "character_skill_node": lore_node_key(other, other_slot), "level": "1"}
                 for other in built for other_slot in range(len(lore_slots(registry))) if (other, other_slot) != (lore, slot) and (other_slot == slot or other == lore)]

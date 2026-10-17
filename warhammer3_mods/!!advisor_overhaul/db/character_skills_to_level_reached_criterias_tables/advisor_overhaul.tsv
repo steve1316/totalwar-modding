@@ -2,3 +2,5 @@ character_skill	character_level	upgrade_to_skill_level
 #character_skills_to_level_reached_criterias_tables;0;db/character_skills_to_level_reached_criterias_tables/advisor_overhaul		
 advisor_overhaul_choose_mount_warhorse	3	1
 advisor_overhaul_choose_mount_pegasus	11	1
+advisor_overhaul_skill_arts_army_gate	29	1
+advisor_overhaul_skill_arts_gate	29	1

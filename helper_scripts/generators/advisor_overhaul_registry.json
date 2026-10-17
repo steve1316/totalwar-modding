@@ -508,7 +508,7 @@
   },
   "sword_and_shield": {
    "name": "Sword and Shield",
-   "description": "He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand.",
+   "description": "He leaves the staff behind and takes up a knight's shield.",
    "campaign_set": "cam_hu1_empire_sword_and_shield",
    "campaign_rider_sets": {
     "warhorse": "cam_hu1_empire_hr1_warhorse_lance_sword_shield",
@@ -684,7 +684,7 @@
   },
   "greatsword": {
    "name": "Greatsword",
-   "description": "A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough, and the spells still come.",
+   "description": "A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough.",
    "campaign_set": "cam_hero_hu1_dlc29_walach_harkon_2handed_sword",
    "campaign_rider_sets": {
     "warhorse": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword"
@@ -1121,7 +1121,7 @@
  "skills": {
   "arts_art_1": {
    "name": "Art I: Stance",
-   "description": "The first thing he learned with every weapon he ever held, in every world that ended.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "description": "The first thing he learned with every weapon he ever held, in every world that ended.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_defence.png",
    "row": 1,
    "tier": 6,
@@ -1135,7 +1135,7 @@
   },
   "arts_art_2": {
    "name": "Art II: Edge",
-   "description": "He has fought this fight before. His hands remember how it went.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "description": "He has fought this fight before. His hands remember how it went.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_attack.png",
    "row": 1,
    "tier": 7,
@@ -1151,7 +1151,7 @@
   },
   "arts_art_3": {
    "name": "Art III: Flow",
-   "description": "The weapon stops being a tool and starts being an argument.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "description": "The weapon stops being a tool and starts being an argument.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_charge.png",
    "row": 1,
    "tier": 8,
@@ -1167,7 +1167,7 @@
   },
   "arts_art_4": {
    "name": "Art IV: Ending",
-   "description": "How he finished it last time. And the time before that.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "description": "How he finished it last time. And the time before that.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_armour.png",
    "row": 1,
    "tier": 9,
@@ -1183,7 +1183,7 @@
   },
   "arts_army_1": {
    "name": "Army I: Drill",
-   "description": "Soldiers near him pick up his habits without knowing they have.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "description": "Soldiers near him pick up his habits without knowing they have.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_army.png",
    "row": 1,
    "tier": 0,
@@ -1197,7 +1197,7 @@
   },
   "arts_army_2": {
    "name": "Army II: Formation",
-   "description": "He places men where he once saw them live.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "description": "He places men where he once saw them live.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "campaign_army.png",
    "row": 1,
    "tier": 1,
@@ -1213,7 +1213,7 @@
   },
   "arts_army_3": {
    "name": "Army III: Last Stand",
-   "description": "He has seen how armies break. He does not let this one.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "description": "He has seen how armies break. He does not let this one.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "battle_defence.png",
    "row": 1,
    "tier": 2,
@@ -1229,7 +1229,7 @@
   },
   "arts_apex": {
    "name": "Master of Arms",
-   "description": "Every weapon he has ever held, in every ending, answers him at once. Takes this row's Apex, which locks the other Apexes.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "description": "Every weapon he has ever held, in every ending, answers him at once.\\\\n\\\\nLocks the other Apexes and the Polymath.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "spell_mastery.png",
    "row": 0,
    "tier": 6,
@@ -1260,7 +1260,7 @@
    "requires": [
     "magic_channel"
    ],
-   "description": "He has learned to hold more of the Winds than a body should.\\\\n\\\\nMore Winds of Magic for his army in every battle.",
+   "description": "He has learned to hold more of the Winds than a body should.",
    "levels": [
     [
      {
@@ -1296,7 +1296,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "He miscast once, at the worst possible moment, and the world ended a little early.\\\\n\\\\nFewer miscasts, stronger spells.",
+   "description": "He miscast once, at the worst possible moment, and the world ended a little early.",
    "levels": [
     [
      {
@@ -1335,7 +1335,7 @@
    "requires": [
     "magic_beyond_sight"
    ],
-   "description": "Every lore he ever learned, in every world, answers him now.\\\\n\\\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\\\n\\\\nThe magic rows' Apex. Takes the place of the other Apexes and the Polymath.",
+   "description": "Every lore he ever learned, in every world, answers him now.\\\\n\\\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\\\n\\\\nLocks the other Apexes and the Polymath.",
    "levels": [
     [
      {
@@ -1377,7 +1377,7 @@
    "requires": [
     "martial_1"
    ],
-   "description": "He knows which of them will matter later. He settles it now.\\\\n\\\\nUnlocks the Assassinate hero action.",
+   "description": "He knows which of them will matter later. He settles it now.",
    "levels": [
     [
      {
@@ -1425,7 +1425,7 @@
    "rank": 1,
    "build": true,
    "requires": [],
-   "description": "Not a killing blow. A reminder.\\\\n\\\\nUnlocks the Wound hero action.",
+   "description": "Not a killing blow. A reminder.",
    "levels": [
     [
      {
@@ -1475,7 +1475,7 @@
    "requires": [
     "martial_1"
    ],
-   "description": "Generals die too. He has watched it happen in every ending.\\\\n\\\\nUnlocks the Assassinate Lord hero action. It has a slim 5 percent base chance to kill, raised by his hero success chance. A failed attempt costs him nothing but the try.",
+   "description": "Generals die too. He has watched it happen in every ending.",
    "levels": [
     [
      {
@@ -1496,7 +1496,7 @@
    "requires": [
     "martial_1"
    ],
-   "description": "Every wall falls eventually. He only hurries it along.\\\\n\\\\nUnlocks the Damage Walls hero action.",
+   "description": "Every wall falls eventually. He only hurries it along.",
    "levels": [
     [
      {
@@ -1546,7 +1546,7 @@
    "requires": [
     "martial_1"
    ],
-   "description": "He walks in through the gate they forgot to watch.\\\\n\\\\nUnlocks the Assault Garrison hero action.",
+   "description": "He walks in through the gate they forgot to watch.",
    "levels": [
     [
      {
@@ -1596,7 +1596,7 @@
    "requires": [
     "martial_1"
    ],
-   "description": "A fire in the right storehouse ends a siege early.\\\\n\\\\nUnlocks the Damage Building hero action.",
+   "description": "A fire in the right storehouse ends a siege early.",
    "levels": [
     [
      {
@@ -1646,7 +1646,7 @@
    "requires": [
     "martial_1"
    ],
-   "description": "A cut rope, a spooked horse, a missing quartermaster.\\\\n\\\\nUnlocks the Block Army hero action.",
+   "description": "A cut rope, a spooked horse, a missing quartermaster.",
    "levels": [
     [
      {
@@ -1696,7 +1696,7 @@
    "requires": [
     "martial_1"
    ],
-   "description": "Their wounded do not come back to the line.\\\\n\\\\nUnlocks the Hinder Replenishment hero action.",
+   "description": "Their wounded do not come back to the line.",
    "levels": [
     [
      {
@@ -1746,7 +1746,7 @@
    "requires": [
     "martial_1"
    ],
-   "description": "The whole camp, the same night.\\\\n\\\\nUnlocks the Assault Units hero action.",
+   "description": "The whole camp, the same night.",
    "levels": [
     [
      {
@@ -1794,7 +1794,7 @@
    "rank": 1,
    "build": true,
    "requires": [],
-   "description": "He knows where they are. He usually knows where they will be.\\\\n\\\\nImproves his Scouting hero action, which he always has.",
+   "description": "He knows where they are. He usually knows where they will be.",
    "levels": [
     [
      {
@@ -1827,7 +1827,7 @@
    "rank": 2,
    "build": true,
    "requires": [],
-   "description": "He trains them for the war after this one.\\\\n\\\\nUnlocks the Training hero action.",
+   "description": "He trains them for the war after this one.",
    "levels": [
     [
      {
@@ -1877,7 +1877,7 @@
    "requires": [
     "civic_1"
    ],
-   "description": "He finds men to fill the gaps. He knows where they hide.\\\\n\\\\nUnlocks the Replenish Troops hero action.",
+   "description": "He finds men to fill the gaps. He knows where they hide.",
    "levels": [
     [
      {
@@ -1927,7 +1927,7 @@
    "requires": [
     "civic_0"
    ],
-   "description": "He knows the shortcut. He has walked it in three other lives.\\\\n\\\\nUnlocks the Increase Mobility hero action.",
+   "description": "He knows the shortcut. He has walked it in three other lives.",
    "levels": [
     [
      {
@@ -1977,7 +1977,7 @@
    "requires": [
     "civic_0"
    ],
-   "description": "Nothing on a battlefield is wasted while he is there.\\\\n\\\\nUnlocks the Scavenge hero action.",
+   "description": "Nothing on a battlefield is wasted while he is there.",
    "levels": [
     [
      {
@@ -2027,7 +2027,7 @@
    "requires": [
     "civic_1"
    ],
-   "description": "He reminds the people what the alternative looks like.\\\\n\\\\nUnlocks the Spread Public Order hero action.",
+   "description": "He reminds the people what the alternative looks like.",
    "levels": [
     [
      {
@@ -2107,7 +2107,7 @@
    "requires": [
     "civic_1"
    ],
-   "description": "He has seen what the taint becomes. He burns it out early.\\\\n\\\\nUnlocks the Cleanse Corruption hero action.",
+   "description": "He has seen what the taint becomes. He burns it out early.",
    "levels": [
     [
      {
@@ -2172,7 +2172,7 @@
    "requires": [
     "civic_1"
    ],
-   "description": "He remembers which years the crops failed, and plants for them.\\\\n\\\\nUnlocks the Stimulate Growth hero action.",
+   "description": "He remembers which years the crops failed, and plants for them.",
    "levels": [
     [
      {
@@ -2252,7 +2252,7 @@
    "requires": [
     "civic_1"
    ],
-   "description": "He knows which roads will close, and which ships will sink.\\\\n\\\\nUnlocks the Increase Trade hero action.",
+   "description": "He knows which roads will close, and which ships will sink.",
    "levels": [
     [
      {
@@ -2302,7 +2302,7 @@
    "requires": [
     "civic_1"
    ],
-   "description": "Half the counting-houses in the Empire owe him money from a life they cannot remember.\\\\n\\\\nImproves his Boost Income hero action, which he always has.",
+   "description": "Half the counting-houses in the Empire owe him money from a life they cannot remember.",
    "levels": [
     [
      {
@@ -2367,7 +2367,7 @@
    "requires": [
     "martial_1"
    ],
-   "description": "He has read books that have not been written yet. Theirs are easier.\\\\n\\\\nUnlocks the Steal Technology hero action.",
+   "description": "He has read books that have not been written yet. Theirs are easier.",
    "levels": [
     [
      {
@@ -2418,7 +2418,7 @@
    "requires": [
     "combat_storm_needles"
    ],
-   "description": "At the end of one world he was the last one standing. He intends to be again.\\\\n\\\\nThe Martial row's Apex. Takes the place of the other Apexes and the Polymath.",
+   "description": "At the end of one world he was the last one standing. He intends to be again.\\\\n\\\\nLocks the other Apexes and the Polymath.",
    "levels": [
     [
      {
@@ -2461,7 +2461,7 @@
    "requires": [
     "hero_lamp"
    ],
-   "description": "Kings come and go. He has advised most of them, in one world or another.\\\\n\\\\nThe Civic row's Apex. Takes the place of the other Apexes and the Polymath.",
+   "description": "Kings come and go. He has advised most of them, in one world or another.\\\\n\\\\nLocks the other Apexes and the Polymath.",
    "levels": [
     [
      {
@@ -2503,7 +2503,7 @@
    "hidden": true,
    "learned": true,
    "requires": [],
-   "description": "The hero actions he always has: Scouting, which lets him join an army, Scout Settlement and Boost Income.",
+   "description": "The hero actions he always has: Scouting, Scout Settlement and Boost Income.",
    "levels": [
     [
      {
@@ -2770,7 +2770,7 @@
    "build": true,
    "role": "polymath",
    "requires": [],
-   "description": "He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\\\n\\\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Takes the place of every Apex.",
+   "description": "He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\\\n\\\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Locks every Apex.",
    "levels": [
     [
      {
@@ -2815,7 +2815,7 @@
    "rank": 30,
    "build": true,
    "requires": [],
-   "description": "He has all the time in the world. He has had it before.\\\\n\\\\nA hundred small levels for points nothing else wants: each adds 1 percent spell intensity, 1 percent weapon strength and 1 percent missile strength.",
+   "description": "He has all the time in the world. He has had it before.",
    "levels": [
     [
      {
@@ -4529,7 +4529,7 @@
    "requires": [
     "memory_old_lessons"
    ],
-   "description": "The sky burned for nine days and he watched it from the last tower. His blade remembers the heat.\\\\n\\\\nHis blows carry Flaming, Inflammable and Warpflame at once.\\\\n\\\\nHe hits harder and charges harder. The memory leaves him thin-skinned.",
+   "description": "The sky burned for nine days and he watched it from the last tower. His blade remembers the heat.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
      {
@@ -4645,7 +4645,7 @@
    "requires": [
     "memory_old_lessons"
    ],
-   "description": "The cities emptied quietly. He learned what a slow death tastes like.\\\\n\\\\nHis blows carry Poison, Contaminated and Eroding Poison at once.\\\\n\\\\nHis blows bite through armour and cut down infantry. The fever makes his spells falter.",
+   "description": "The cities emptied quietly. He learned what a slow death tastes like.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
      {
@@ -4761,7 +4761,7 @@
    "requires": [
     "memory_old_lessons"
    ],
-   "description": "Nobody screamed. The army simply stopped arriving. He keeps his own march quiet now.\\\\n\\\\nHis blows carry Discouraging, Rattling and Disrupting at once.\\\\n\\\\nHe is harder to hit and deadly against large foes. The quiet leaves his wards thin.",
+   "description": "Nobody screamed. The army simply stopped arriving. He keeps his own march quiet now.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
      {
@@ -4877,7 +4877,7 @@
    "requires": [
     "memory_old_lessons"
    ],
-   "description": "The sea came in over the walls. He held a shield above his head for a long time.\\\\n\\\\nHis blows carry Dampening, Horrible and Charming at once.\\\\n\\\\nHe turns missiles aside and his army holds firm. Its charges bog down in the mud.",
+   "description": "The sea came in over the walls. He held a shield above his head for a long time.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
      {
@@ -4993,7 +4993,7 @@
    "requires": [
     "memory_old_lessons"
    ],
-   "description": "The granaries were empty before the first battle. He remembers what was worth taking.\\\\n\\\\nHis blows carry Slow Death, Sundering and Anraheir's Curse at once.\\\\n\\\\nHis army fights like starving men, hard and without mercy. Its quivers run thin.",
+   "description": "The granaries were empty before the first battle. He remembers what was worth taking.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
      {
@@ -5107,7 +5107,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "Every ending, the first thing he learned was to hold one thought steady while the world shook.\\\\n\\\\nMore spell intensity.",
+   "description": "Every ending, the first thing he learned was to hold one thought steady while the world shook.",
    "levels": [
     [
      {
@@ -5133,7 +5133,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "The words come faster each time. He has said them in every tongue that ever ended.\\\\n\\\\nSpells recharge sooner.",
+   "description": "The words come faster each time. He has said them in every tongue that ever ended.",
    "levels": [
     [
      {
@@ -5161,7 +5161,7 @@
    "requires": [
     "magic_steady"
    ],
-   "description": "He has been unmade by sorcery before. He remembers the shape of the hole.\\\\n\\\\nMagic resistance.",
+   "description": "He has been unmade by sorcery before. He remembers the shape of the hole.",
    "levels": [
     [
      {
@@ -5194,7 +5194,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "The Winds find him now. They have learned where he stands.\\\\n\\\\nMore Winds of Magic each turn for his army.",
+   "description": "The Winds find him now. They have learned where he stands.",
    "levels": [
     [
      {
@@ -5222,7 +5222,7 @@
    "requires": [
     "magic_recitation"
    ],
-   "description": "Anyone can pour more power in. He knows when to stop.\\\\n\\\\nOvercast spells recharge sooner.",
+   "description": "Anyone can pour more power in. He knows when to stop.",
    "levels": [
     [
      {
@@ -5250,7 +5250,7 @@
    "requires": [
     "magic_steady"
    ],
-   "description": "A thin shimmer, taught to him by a mage whose name no one else recalls.\\\\n\\\\nA ward save.",
+   "description": "A thin shimmer, taught to him by a mage whose name no one else recalls.",
    "levels": [
     [
      {
@@ -5276,7 +5276,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "He casts with one hand and cuts with the other, and has never found the two work apart.\\\\n\\\\nStronger blows and spells, whatever he carries.",
+   "description": "He casts with one hand and cuts with the other, and has never found the two work apart.",
    "levels": [
     [
      {
@@ -5309,13 +5309,11 @@
    "icon": "character_attack.png",
    "row": 1,
    "tier": 10,
-   "rank": 14,
+   "rank": 29,
    "build": true,
-   "requires": [
-    "arts_art_4"
-   ],
+   "requires": [],
    "role": "gate",
-   "description": "Seven teachers, seven endings, and he took the best of each. What comes out is nobody's but his.\\\\n\\\\nHis charges hit like a hammer and his lines hold against cavalry.",
+   "description": "Seven teachers, seven endings, and he took the best of each. What comes out is nobody's but his.",
    "levels": [
     [
      {
@@ -5331,15 +5329,61 @@
      {
       "effect": "wh_main_effect_character_stat_melee_attack",
       "scope": "character_to_character_own",
-      "value": 8
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_character_stat_weapon_strength",
+      "scope": "character_to_character_own",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_character_stat_armour",
+      "scope": "character_to_character_own",
+      "value": 20
      },
      {
       "effect": "wh_main_effect_character_stat_charge_bonus_pct",
       "scope": "character_to_character_own",
+      "value": 25
+     },
+     {
+      "effect": "wh_main_effect_character_stat_speed",
+      "scope": "character_to_character_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_character_stat_missile_damage",
+      "scope": "character_to_character_own",
       "value": 15
+     },
+     {
+      "effect": "wh_main_effect_character_stat_ap_missile_damage",
+      "scope": "character_to_character_own",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_character_stat_reload_time_reduction",
+      "scope": "character_to_character_own",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_character_stat_range",
+      "scope": "character_to_character_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_character_stat_ammunition",
+      "scope": "character_to_character_own",
+      "value": 30
      }
     ]
-   ]
+   ],
+   "grant_rank": 30
   },
   "combat_sleeves": {
    "name": "Ironbound Sleeves",
@@ -5351,7 +5395,7 @@
    "requires": [
     "magic_battle_caster"
    ],
-   "description": "Leather, steel, and a lesson from a swordsman who did not live to see the sequel.\\\\n\\\\nStronger melee attack.",
+   "description": "Leather, steel, and a lesson from a swordsman who did not live to see the sequel.",
    "levels": [
     [
      {
@@ -5386,7 +5430,7 @@
    "requires": [
     "magic_battle_caster"
    ],
-   "description": "A flick of the wrist and the blade glances aside. He has practised it on worse than swords.\\\\n\\\\nA ward save.",
+   "description": "A flick of the wrist and the blade glances aside. He has practised it on worse than swords.",
    "levels": [
     [
      {
@@ -5421,7 +5465,7 @@
    "requires": [
     "magic_battle_caster"
    ],
-   "description": "Every cut carries a little of the spell that guided it.\\\\n\\\\nHarder-hitting melee blows.",
+   "description": "Every cut carries a little of the spell that guided it.",
    "levels": [
     [
      {
@@ -5460,7 +5504,7 @@
     "combat_momentum",
     "combat_long_breath"
    ],
-   "description": "At the end of one world the Winds themselves held his sword arm. He remembers the grip.\\\\n\\\\nHe fights as a decent magical duellist, and the army he marches with fights harder.",
+   "description": "At the end of one world the Winds themselves held his sword arm. He remembers the grip.",
    "levels": [
     [
      {
@@ -5503,7 +5547,7 @@
    "requires": [
     "magic_steady"
    ],
-   "description": "Scar over scar over scar. Little finds soft skin to bite.\\\\n\\\\nMore armour.",
+   "description": "Scar over scar over scar. Little finds soft skin to bite.",
    "levels": [
     [
      {
@@ -5545,7 +5589,7 @@
     "combat_mending",
     "combat_barrier_line"
    ],
-   "description": "He has been the last man standing. It taught him how to be the first one back up.\\\\n\\\\nHe is harder to break and harder to kill, and the army he marches with holds its ground behind a stronger shell.",
+   "description": "He has been the last man standing. It taught him how to be the first one back up.",
    "levels": [
     [
      {
@@ -5586,7 +5630,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "He has loosed arrows at the end of every kind of world. The hand knows where to go.\\\\n\\\\nStronger missile damage, faster reloads.",
+   "description": "He has loosed arrows at the end of every kind of world. The hand knows where to go.",
    "levels": [
     [
      {
@@ -5624,7 +5668,7 @@
    "requires": [
     "combat_aim"
    ],
-   "description": "Aim for the buckle. The buckle is where armour ends.\\\\n\\\\nMissile attacks pierce armour better.",
+   "description": "Aim for the buckle. The buckle is where armour ends.",
    "levels": [
     [
      {
@@ -5659,7 +5703,7 @@
    "requires": [
     "combat_aim"
    ],
-   "description": "A target seen sooner is a target already lost.\\\\n\\\\nLonger missile range.",
+   "description": "A target seen sooner is a target already lost.",
    "levels": [
     [
      {
@@ -5694,7 +5738,7 @@
    "requires": [
     "combat_aim"
    ],
-   "description": "The last arrow is always the one he saved for himself. He stopped saving it.\\\\n\\\\nMore ammunition.",
+   "description": "The last arrow is always the one he saved for himself. He stopped saving it.",
    "levels": [
     [
      {
@@ -5731,7 +5775,7 @@
     "combat_long_sight",
     "combat_deep_quiver"
    ],
-   "description": "One shot, then a hundred, then the sky goes dark with them.\\\\n\\\\nHis missile attacks hit harder and farther, and the army he marches with shoots faster.",
+   "description": "One shot, then a hundred, then the sky goes dark with them.",
    "levels": [
     [
      {
@@ -5774,7 +5818,7 @@
    "requires": [
     "magic_channel"
    ],
-   "description": "The Winds come easier to a mind with no fear left in it.\\\\n\\\\nSpells recharge sooner.",
+   "description": "The Winds come easier to a mind with no fear left in it.",
    "levels": [
     [
      {
@@ -5809,7 +5853,7 @@
    "requires": [
     "magic_channel"
    ],
-   "description": "Just when the pool runs dry, he finds another cup behind it.\\\\n\\\\nA deeper Winds of Magic pool.",
+   "description": "Just when the pool runs dry, he finds another cup behind it.",
    "levels": [
     [
      {
@@ -5846,7 +5890,7 @@
     "magic_quiet_mind",
     "magic_second_wind"
    ],
-   "description": "He has drunk from this well in lives that never were. The well recalls him kindly.\\\\n\\\\nMore Winds of Magic each turn, and spells that recharge sooner.",
+   "description": "He has drunk from this well in lives that never were. The well recalls him kindly.",
    "levels": [
     [
      {
@@ -5879,7 +5923,7 @@
    "requires": [
     "magic_recitation"
    ],
-   "description": "The same words, the same breath, every time. The Winds learn to expect it.\\\\n\\\\nStronger spells.",
+   "description": "The same words, the same breath, every time. The Winds learn to expect it.",
    "levels": [
     [
      {
@@ -5915,7 +5959,7 @@
     "magic_overcast",
     "magic_cadence"
    ],
-   "description": "He stopped asking the Winds for power. Now he simply lets them through.\\\\n\\\\nOvercast spells recharge much sooner and hit harder.",
+   "description": "He stopped asking the Winds for power. Now he simply lets them through.",
    "levels": [
     [
      {
@@ -5943,7 +5987,7 @@
    "requires": [
     "magic_focus"
    ],
-   "description": "He learned to let the thread spread before it settles.\\\\n\\\\nStronger spells.",
+   "description": "He learned to let the thread spread before it settles.",
    "levels": [
     [
      {
@@ -5978,7 +6022,7 @@
    "requires": [
     "magic_focus"
    ],
-   "description": "And then to pull it tight, to a point.\\\\n\\\\nStronger spells, fewer miscasts.",
+   "description": "And then to pull it tight, to a point.",
    "levels": [
     [
      {
@@ -6030,7 +6074,7 @@
     "magic_sharper",
     "magic_ruinous"
    ],
-   "description": "There is a pattern behind the pattern. He has seen it from the far side.\\\\n\\\\nMuch stronger spells, fewer miscasts, and he sees farther.",
+   "description": "There is a pattern behind the pattern. He has seen it from the far side.",
    "levels": [
     [
      {
@@ -6063,7 +6107,7 @@
    "requires": [
     "civic_0"
    ],
-   "description": "He has walked this road in four endings. It never got shorter by itself.\\\\n\\\\nHis army marches farther each turn.",
+   "description": "He has walked this road in four endings. It never got shorter by itself.",
    "levels": [
     [
      {
@@ -6098,7 +6142,7 @@
    "requires": [
     "civic_0"
    ],
-   "description": "Where others see scrub, he sees supper.\\\\n\\\\nMore loot after every battle.",
+   "description": "Where others see scrub, he sees supper.",
    "levels": [
     [
      {
@@ -6141,7 +6185,7 @@
     "martial_4",
     "martial_9"
    ],
-   "description": "Every door in the world has a friend on the inside, and he has met all of them.\\\\n\\\\nAll the faction's heroes act with more success, every army returns richer from battle, research speeds up, and his own army ambushes and moves better.",
+   "description": "Every door in the world has a friend on the inside, and he has met all of them.",
    "levels": [
     [
      {
@@ -6195,7 +6239,7 @@
     "civic_6",
     "hero_students"
    ],
-   "description": "A banner remembered is a banner that does not fall. Every army he has ever stood with fights harder for it.\\\\n\\\\nEvery army in the faction costs less to keep, recovers faster and holds firmer, and his own army costs less again.",
+   "description": "A banner remembered is a banner that does not fall. Every army he has ever stood with fights harder for it.",
    "levels": [
     [
      {
@@ -6246,7 +6290,7 @@
     "hero_pathfinder",
     "hero_forager"
    ],
-   "description": "Wherever he rests, someone leaves a light on. He has never asked them to.\\\\n\\\\nEvery province of the faction is calmer and richer, all armies learn faster and hold firmer, and his own army learns fastest of all. Lords and heroes join the faction with even more ranks.",
+   "description": "Wherever he rests, someone leaves a light on. He has never asked them to.",
    "levels": [
     [
      {
@@ -6299,7 +6343,7 @@
    "requires": [
     "magic_steady"
    ],
-   "description": "A thin shimmer of the Winds holds in front of him.\\\\n\\\\nHe gains barrier health.",
+   "description": "A thin shimmer of the Winds holds in front of him.",
    "levels": [
     [
      {
@@ -6334,7 +6378,7 @@
    "requires": [
     "magic_steady"
    ],
-   "description": "A broken shell is a lesson. He has learned to stitch it faster.\\\\n\\\\nBarriers return sooner and faster, for him and for his army.",
+   "description": "A broken shell is a lesson. He has learned to stitch it faster.",
    "levels": [
     [
      {
@@ -6399,7 +6443,7 @@
    "requires": [
     "magic_focus"
    ],
-   "description": "He knows exactly how a spell goes wrong, because he has watched it go wrong.\\\\n\\\\nEnemy spellcasters near his army miscast more often, and their spells cost more.",
+   "description": "He knows exactly how a spell goes wrong, because he has watched it go wrong.",
    "levels": [
     [
      {
@@ -6447,7 +6491,7 @@
    "rank": 19,
    "build": true,
    "requires": [],
-   "description": "The Winds do not rush through him anymore. They wait in him, patient, like water in a cistern.\\\\n\\\\nUnlocks the Arcane Conduit ability. Level 2 replaces it with Greater Arcane Conduit.",
+   "description": "The Winds do not rush through him anymore. They wait in him, patient, like water in a cistern.",
    "levels": [
     [
      {
@@ -6475,7 +6519,7 @@
    "requires": [
     "magic_standing_conduit"
    ],
-   "description": "Every lore he ever studied left a habit behind.\\\\n\\\\nHe keeps the passive powers of a third of the lores, and their spells cost less.\\\\nLevel 2 opens at rank 25, level 3 at rank 30.",
+   "description": "Every lore he ever studied left a habit behind.",
    "levels": [
     [
      {
@@ -6664,7 +6708,7 @@
    "requires": [
     "magic_standing_conduit"
    ],
-   "description": "He does not reach for the old lores. They are simply there, held.\\\\n\\\\nHe keeps the passive powers of a third of the lores, and their spells cost less.\\\\nLevel 2 opens at rank 25, level 3 at rank 30.",
+   "description": "He does not reach for the old lores. They are simply there, held.",
    "levels": [
     [
      {
@@ -6853,7 +6897,7 @@
    "requires": [
     "magic_standing_conduit"
    ],
-   "description": "He has already seen how the next casting will end.\\\\n\\\\nHe keeps the passive powers of a third of the lores, and their spells cost less.\\\\nLevel 2 opens at rank 25, level 3 at rank 30.",
+   "description": "He has already seen how the next casting will end.",
    "levels": [
     [
      {
@@ -7044,7 +7088,7 @@
     "magic_what_is_held",
     "magic_what_comes"
    ],
-   "description": "He no longer waits for the Winds to cool. He cuts the pause out of every spell.\\\\n\\\\nSpells of every lore cost less and recharge much sooner, and he casts with greater mastery. Needs 3 points in this group.",
+   "description": "He no longer waits for the Winds to cool. He cuts the pause out of every spell.",
    "levels": [
     [
      {
@@ -7077,7 +7121,7 @@
    "requires": [
     "magic_steady"
    ],
-   "description": "Where he stands, broken shells knit again. The men near him feel it before they understand it.\\\\n\\\\nUnlocks the Paragon of Change ability, which restores the barrier of nearby combatants, and deepens the Winds reserve.",
+   "description": "Where he stands, broken shells knit again. The men near him feel it before they understand it.",
    "levels": [
     [
      {
@@ -7103,7 +7147,7 @@
    "requires": [
     "corruption_lead"
    ],
-   "description": "He has watched Chaos corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Chaos Corruption hero action, and each level spreads it harder.",
+   "description": "He has watched Chaos corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
      {
@@ -7168,7 +7212,7 @@
    "requires": [
     "corruption_lead"
    ],
-   "description": "He has watched Khorne corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Khorne Corruption hero action, and each level spreads it harder.",
+   "description": "He has watched Khorne corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
      {
@@ -7233,7 +7277,7 @@
    "requires": [
     "corruption_lead"
    ],
-   "description": "He has watched Nurgle corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Nurgle Corruption hero action, and each level spreads it harder.",
+   "description": "He has watched Nurgle corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
      {
@@ -7298,7 +7342,7 @@
    "requires": [
     "corruption_lead"
    ],
-   "description": "He has watched Slaanesh corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Slaanesh Corruption hero action, and each level spreads it harder.",
+   "description": "He has watched Slaanesh corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
      {
@@ -7363,7 +7407,7 @@
    "requires": [
     "corruption_lead"
    ],
-   "description": "He has watched Tzeentch corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Tzeentch Corruption hero action, and each level spreads it harder.",
+   "description": "He has watched Tzeentch corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
      {
@@ -7428,7 +7472,7 @@
    "requires": [
     "corruption_lead"
    ],
-   "description": "He has watched Skaven corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Skaven Corruption hero action, and each level spreads it harder.",
+   "description": "He has watched Skaven corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
      {
@@ -7493,7 +7537,7 @@
    "requires": [
     "corruption_lead"
    ],
-   "description": "He has watched Vampiric corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Vampiric Corruption hero action, and each level spreads it harder.",
+   "description": "He has watched Vampiric corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
      {
@@ -7564,7 +7608,7 @@
     "corruption_skv",
     "corruption_vmp"
    ],
-   "description": "Every kind of corruption he has learned spreads far faster.\\\\n\\\\nNeeds 3 points in this row.",
+   "description": "Three kinds of rot are not enough.",
    "levels": [
     [
      {
@@ -7615,7 +7659,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "He has walked through every kind of ruin the Dark Gods make. He can still smell each one.\\\\n\\\\nEvery kind of corruption he spreads spreads a little faster.",
+   "description": "He has walked through every kind of ruin there is. He can still smell the corruption in each.",
    "levels": [
     [
      {
@@ -7666,7 +7710,7 @@
    "requires": [
     "magic_battle_caster"
    ],
-   "description": "He learned to charge from a knight who rode into the last sunset of a dying world.\\\\n\\\\nHe runs faster, hits harder on the charge and lands heavier.",
+   "description": "He learned to charge from a knight who rode into the last sunset of a dying world.",
    "levels": [
     [
      {
@@ -7731,7 +7775,7 @@
    "requires": [
     "magic_battle_caster"
    ],
-   "description": "He has fought for days at the end of the world. One afternoon does not tire him.\\\\n\\\\nHe and his army tire more slowly in battle.",
+   "description": "He has fought for days at the end of the world. One afternoon does not tire him.",
    "levels": [
     [
      {
@@ -7781,7 +7825,7 @@
    "requires": [
     "magic_steady"
    ],
-   "description": "His body has healed from worse, many times. It still knows how.\\\\n\\\\nHealing can restore more of his health and his army's in battle.",
+   "description": "His body has healed from worse, many times. It still knows how.",
    "levels": [
     [
      {
@@ -7831,7 +7875,7 @@
    "requires": [
     "civic_1"
    ],
-   "description": "Half the captains of the world once sat at his table and listened.\\\\n\\\\nLords and heroes join the faction with more ranks.",
+   "description": "Half the captains of the world once sat at his table and listened.",
    "levels": [
     [
      {
@@ -7866,7 +7910,7 @@
    "requires": [
     "magic_steady"
    ],
-   "description": "He has learned to stretch the shimmer thin, across every rank that stands with him.\\\\n\\\\nEvery unit in his army gains barrier health.",
+   "description": "He has learned to stretch the shimmer thin, across every rank that stands with him.",
    "levels": [
     [
      {
@@ -7902,44 +7946,88 @@
    ],
    "slot": "army_4",
    "build": true,
-   "description": "Every army he ever marched with left him one trick. He hands them all on.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts."
+   "description": "Every army he ever marched with left him one trick. He hands them all on.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects."
   },
   "arts_army_gate": {
    "name": "A Host of His Own",
    "icon": "campaign_army.png",
    "row": 1,
    "tier": 4,
-   "rank": 16,
+   "rank": 29,
    "build": true,
-   "requires": [
-    "arts_army_4"
-   ],
+   "requires": [],
    "role": "gate",
-   "description": "The men around him fight the way he taught them, whatever he holds.\\\\n\\\\nHis army hits harder, holds firmer, stands longer and tires more slowly.",
+   "description": "The men around him fight the way he taught them, whatever he holds.",
    "levels": [
     [
      {
-      "effect": "wh2_main_effect_force_stat_weapon_strength_base",
+      "effect": "wh_main_effect_force_stat_melee_attack",
       "scope": "agent_to_parent_army_own",
-      "value": 5
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_force_stat_weapon_strength",
+      "scope": "agent_to_parent_army_own",
+      "value": 10
      },
      {
       "effect": "wh_main_effect_force_stat_melee_defence",
+      "scope": "agent_to_parent_army_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_force_stat_armour",
+      "scope": "agent_to_parent_army_own",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_force_stat_ward_save",
       "scope": "agent_to_parent_army_own",
       "value": 5
      },
      {
       "effect": "wh_main_effect_force_stat_leadership",
       "scope": "agent_to_parent_army_own",
-      "value": 8
+      "value": 12
      },
      {
       "effect": "wh_main_effect_force_stat_vigour_loss_reduction",
       "scope": "agent_to_parent_army_own",
-      "value": -15
+      "value": -25
+     },
+     {
+      "effect": "wh_main_effect_force_stat_charge_bonus_pct",
+      "scope": "agent_to_parent_army_own",
+      "value": 20
+     },
+     {
+      "effect": "wh_main_effect_force_stat_speed",
+      "scope": "agent_to_parent_army_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_force_stat_missile_damage",
+      "scope": "agent_to_parent_army_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_force_stat_reload_time_reduction",
+      "scope": "agent_to_parent_army_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_force_stat_range",
+      "scope": "agent_to_parent_army_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_force_stat_ammunition",
+      "scope": "agent_to_parent_army_own",
+      "value": 20
      }
     ]
-   ]
+   ],
+   "grant_rank": 30
   }
  },
  "lores": {

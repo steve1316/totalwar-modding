@@ -19,19 +19,19 @@ ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_disc	Staff and Sw
 ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_disc	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_foot	The Advisor (Sword and Shield, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_foot	Sword and Shield, On Foot	true
-ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_foot	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand. He walks, as he always has.	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_foot	He leaves the staff behind and takes up a knight's shield. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_warhorse	The Advisor (Sword and Shield, Barded Warhorse)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_warhorse	Sword and Shield, Barded Warhorse	true
-ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_warhorse	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand. An armoured Imperial charger, steady under spellfire.	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_warhorse	He leaves the staff behind and takes up a knight's shield. An armoured Imperial charger, steady under spellfire.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_pegasus	The Advisor (Sword and Shield, Imperial Pegasus)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_pegasus	Sword and Shield, Imperial Pegasus	true
-ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_pegasus	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand. A winged Imperial steed that lifts him over the battle line.	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_pegasus	He leaves the staff behind and takes up a knight's shield. A winged Imperial steed that lifts him over the battle line.	true
 land_units_onscreen_name_advisor_overhaul_greatsword_foot	The Advisor (Greatsword, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_foot	Greatsword, On Foot	true
-ancillaries_colour_text_advisor_overhaul_rig_greatsword_foot	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough, and the spells still come. He walks, as he always has.	true
+ancillaries_colour_text_advisor_overhaul_rig_greatsword_foot	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_greatsword_warhorse	The Advisor (Greatsword, Barded Warhorse)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_warhorse	Greatsword, Barded Warhorse	true
-ancillaries_colour_text_advisor_overhaul_rig_greatsword_warhorse	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough, and the spells still come. An armoured Imperial charger, steady under spellfire.	true
+ancillaries_colour_text_advisor_overhaul_rig_greatsword_warhorse	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. An armoured Imperial charger, steady under spellfire.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_bow_foot	The Advisor (Sword and Bow, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_foot	Sword and Bow, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_foot	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. He walks, as he always has.	true
@@ -47,219 +47,219 @@ advisor_overhaul_ui_mount_warhorse	Barded Warhorse	true
 advisor_overhaul_ui_mount_pegasus	Imperial Pegasus	true
 advisor_overhaul_ui_mount_disc	Disc of Tzeentch	true
 character_skills_localised_name_advisor_overhaul_choose_mount_warhorse	Barded Warhorse	true
-character_skills_localised_description_advisor_overhaul_choose_mount_warhorse	An armoured Imperial charger, steady under spellfire.\\n\\nUnlocks this mount for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_description_advisor_overhaul_choose_mount_warhorse	An armoured Imperial charger, steady under spellfire.	true
 character_skills_localised_name_advisor_overhaul_choose_mount_pegasus	Imperial Pegasus	true
-character_skills_localised_description_advisor_overhaul_choose_mount_pegasus	A winged Imperial steed that lifts him over the battle line.\\n\\nUnlocks this mount for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_description_advisor_overhaul_choose_mount_pegasus	A winged Imperial steed that lifts him over the battle line.	true
 character_skills_localised_name_advisor_overhaul_choose_mount_disc	Disc of Tzeentch	true
-character_skills_localised_description_advisor_overhaul_choose_mount_disc	A floating daemon-disc, bound to him by a bargain he does not talk about.\\n\\nUnlocks this mount for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_description_advisor_overhaul_choose_mount_disc	A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_shield	Sword and Shield	true
-character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_shield	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_shield	He leaves the staff behind and takes up a knight's shield.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_greatsword	Greatsword	true
-character_skills_localised_description_advisor_overhaul_choose_weapon_greatsword	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough, and the spells still come.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_description_advisor_overhaul_choose_weapon_greatsword	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_bow	Sword and Bow	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_bow	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_skill_actions_default	Default Actions	true
-character_skills_localised_description_advisor_overhaul_skill_actions_default	The hero actions he always has: Scouting, which lets him join an army, Scout Settlement and Boost Income.	true
+character_skills_localised_description_advisor_overhaul_skill_actions_default	The hero actions he always has: Scouting, Scout Settlement and Boost Income.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_apex	Master of Arms	true
-character_skills_localised_description_advisor_overhaul_skill_arts_apex	Every weapon he has ever held, in every ending, answers him at once. Takes this row's Apex, which locks the other Apexes.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_apex	Every weapon he has ever held, in every ending, answers him at once.\\n\\nLocks the other Apexes and the Polymath.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_army_1	Army I: Drill	true
-character_skills_localised_description_advisor_overhaul_skill_arts_army_1	Soldiers near him pick up his habits without knowing they have.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_army_1	Soldiers near him pick up his habits without knowing they have.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_army_2	Army II: Formation	true
-character_skills_localised_description_advisor_overhaul_skill_arts_army_2	He places men where he once saw them live.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_army_2	He places men where he once saw them live.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_army_3	Army III: Last Stand	true
-character_skills_localised_description_advisor_overhaul_skill_arts_army_3	He has seen how armies break. He does not let this one.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_army_3	He has seen how armies break. He does not let this one.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_army_4	Army IV: Every Banner	true
-character_skills_localised_description_advisor_overhaul_skill_arts_army_4	Every army he ever marched with left him one trick. He hands them all on.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_army_4	Every army he ever marched with left him one trick. He hands them all on.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_army_gate	A Host of His Own	true
-character_skills_localised_description_advisor_overhaul_skill_arts_army_gate	The men around him fight the way he taught them, whatever he holds.\\n\\nHis army hits harder, holds firmer, stands longer and tires more slowly.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_army_gate	The men around him fight the way he taught them, whatever he holds.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_art_1	Art I: Stance	true
-character_skills_localised_description_advisor_overhaul_skill_arts_art_1	The first thing he learned with every weapon he ever held, in every world that ended.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_art_1	The first thing he learned with every weapon he ever held, in every world that ended.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_art_2	Art II: Edge	true
-character_skills_localised_description_advisor_overhaul_skill_arts_art_2	He has fought this fight before. His hands remember how it went.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_art_2	He has fought this fight before. His hands remember how it went.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_art_3	Art III: Flow	true
-character_skills_localised_description_advisor_overhaul_skill_arts_art_3	The weapon stops being a tool and starts being an argument.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_art_3	The weapon stops being a tool and starts being an argument.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_art_4	Art IV: Ending	true
-character_skills_localised_description_advisor_overhaul_skill_arts_art_4	How he finished it last time. And the time before that.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_art_4	How he finished it last time. And the time before that.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_gate	A Style of His Own	true
-character_skills_localised_description_advisor_overhaul_skill_arts_gate	Seven teachers, seven endings, and he took the best of each. What comes out is nobody's but his.\\n\\nHis charges hit like a hammer and his lines hold against cavalry.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_gate	Seven teachers, seven endings, and he took the best of each. What comes out is nobody's but his.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_0	Scouting	true
-character_skills_localised_description_advisor_overhaul_skill_civic_0	He knows where they are. He usually knows where they will be.\\n\\nImproves his Scouting hero action, which he always has.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_0	He knows where they are. He usually knows where they will be.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_1	Training	true
-character_skills_localised_description_advisor_overhaul_skill_civic_1	He trains them for the war after this one.\\n\\nUnlocks the Training hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_1	He trains them for the war after this one.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_10	Steal Technology	true
-character_skills_localised_description_advisor_overhaul_skill_civic_10	He has read books that have not been written yet. Theirs are easier.\\n\\nUnlocks the Steal Technology hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_10	He has read books that have not been written yet. Theirs are easier.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_2	Replenish Troops	true
-character_skills_localised_description_advisor_overhaul_skill_civic_2	He finds men to fill the gaps. He knows where they hide.\\n\\nUnlocks the Replenish Troops hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_2	He finds men to fill the gaps. He knows where they hide.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_3	Increase Mobility	true
-character_skills_localised_description_advisor_overhaul_skill_civic_3	He knows the shortcut. He has walked it in three other lives.\\n\\nUnlocks the Increase Mobility hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_3	He knows the shortcut. He has walked it in three other lives.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_4	Scavenge	true
-character_skills_localised_description_advisor_overhaul_skill_civic_4	Nothing on a battlefield is wasted while he is there.\\n\\nUnlocks the Scavenge hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_4	Nothing on a battlefield is wasted while he is there.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_5	Spread Public Order	true
-character_skills_localised_description_advisor_overhaul_skill_civic_5	He reminds the people what the alternative looks like.\\n\\nUnlocks the Spread Public Order hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_5	He reminds the people what the alternative looks like.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_6	Cleanse Corruption	true
-character_skills_localised_description_advisor_overhaul_skill_civic_6	He has seen what the taint becomes. He burns it out early.\\n\\nUnlocks the Cleanse Corruption hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_6	He has seen what the taint becomes. He burns it out early.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_7	Stimulate Growth	true
-character_skills_localised_description_advisor_overhaul_skill_civic_7	He remembers which years the crops failed, and plants for them.\\n\\nUnlocks the Stimulate Growth hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_7	He remembers which years the crops failed, and plants for them.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_8	Increase Trade	true
-character_skills_localised_description_advisor_overhaul_skill_civic_8	He knows which roads will close, and which ships will sink.\\n\\nUnlocks the Increase Trade hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_8	He knows which roads will close, and which ships will sink.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_9	Boost Income	true
-character_skills_localised_description_advisor_overhaul_skill_civic_9	Half the counting-houses in the Empire owe him money from a life they cannot remember.\\n\\nImproves his Boost Income hero action, which he always has.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_9	Half the counting-houses in the Empire owe him money from a life they cannot remember.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_apex	Power Behind Thrones	true
-character_skills_localised_description_advisor_overhaul_skill_civic_apex	Kings come and go. He has advised most of them, in one world or another.\\n\\nThe Civic row's Apex. Takes the place of the other Apexes and the Polymath.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_apex	Kings come and go. He has advised most of them, in one world or another.\\n\\nLocks the other Apexes and the Polymath.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_aim	Practised Aim	true
-character_skills_localised_description_advisor_overhaul_skill_combat_aim	He has loosed arrows at the end of every kind of world. The hand knows where to go.\\n\\nStronger missile damage, faster reloads.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_aim	He has loosed arrows at the end of every kind of world. The hand knows where to go.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_barrier	Shell of Light	true
-character_skills_localised_description_advisor_overhaul_skill_combat_barrier	A thin shimmer of the Winds holds in front of him.\\n\\nHe gains barrier health.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_barrier	A thin shimmer of the Winds holds in front of him.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_barrier_line	Light Along the Line	true
-character_skills_localised_description_advisor_overhaul_skill_combat_barrier_line	He has learned to stretch the shimmer thin, across every rank that stands with him.\\n\\nEvery unit in his army gains barrier health.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_barrier_line	He has learned to stretch the shimmer thin, across every rank that stands with him.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_barrier_mend	Mended Shell	true
-character_skills_localised_description_advisor_overhaul_skill_combat_barrier_mend	A broken shell is a lesson. He has learned to stitch it faster.\\n\\nBarriers return sooner and faster, for him and for his army.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_barrier_mend	A broken shell is a lesson. He has learned to stitch it faster.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_blade_winds	Blade of the Winds	true
-character_skills_localised_description_advisor_overhaul_skill_combat_blade_winds	At the end of one world the Winds themselves held his sword arm. He remembers the grip.\\n\\nHe fights as a decent magical duellist, and the army he marches with fights harder.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_blade_winds	At the end of one world the Winds themselves held his sword arm. He remembers the grip.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_deep_quiver	Deep Quiver	true
-character_skills_localised_description_advisor_overhaul_skill_combat_deep_quiver	The last arrow is always the one he saved for himself. He stopped saving it.\\n\\nMore ammunition.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_deep_quiver	The last arrow is always the one he saved for himself. He stopped saving it.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_long_breath	The Long Breath	true
-character_skills_localised_description_advisor_overhaul_skill_combat_long_breath	He has fought for days at the end of the world. One afternoon does not tire him.\\n\\nHe and his army tire more slowly in battle.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_long_breath	He has fought for days at the end of the world. One afternoon does not tire him.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_long_sight	Long Sight	true
-character_skills_localised_description_advisor_overhaul_skill_combat_long_sight	A target seen sooner is a target already lost.\\n\\nLonger missile range.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_long_sight	A target seen sooner is a target already lost.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_mending	Flesh Remembers	true
-character_skills_localised_description_advisor_overhaul_skill_combat_mending	His body has healed from worse, many times. It still knows how.\\n\\nHealing can restore more of his health and his army's in battle.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_mending	His body has healed from worse, many times. It still knows how.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_momentum	Weight of the Charge	true
-character_skills_localised_description_advisor_overhaul_skill_combat_momentum	He learned to charge from a knight who rode into the last sunset of a dying world.\\n\\nHe runs faster, hits harder on the charge and lands heavier.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_momentum	He learned to charge from a knight who rode into the last sunset of a dying world.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_piercing	Piercing Shot	true
-character_skills_localised_description_advisor_overhaul_skill_combat_piercing	Aim for the buckle. The buckle is where armour ends.\\n\\nMissile attacks pierce armour better.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_piercing	Aim for the buckle. The buckle is where armour ends.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_shell_aura	Warden of the Shell	true
-character_skills_localised_description_advisor_overhaul_skill_combat_shell_aura	Where he stands, broken shells knit again. The men near him feel it before they understand it.\\n\\nUnlocks the Paragon of Change ability, which restores the barrier of nearby combatants, and deepens the Winds reserve.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_shell_aura	Where he stands, broken shells knit again. The men near him feel it before they understand it.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_sleeves	Ironbound Sleeves	true
-character_skills_localised_description_advisor_overhaul_skill_combat_sleeves	Leather, steel, and a lesson from a swordsman who did not live to see the sequel.\\n\\nStronger melee attack.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_sleeves	Leather, steel, and a lesson from a swordsman who did not live to see the sequel.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_steel_weave	Steel in the Weave	true
-character_skills_localised_description_advisor_overhaul_skill_combat_steel_weave	Every cut carries a little of the spell that guided it.\\n\\nHarder-hitting melee blows.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_steel_weave	Every cut carries a little of the spell that guided it.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_storm_needles	Storm of Needles	true
-character_skills_localised_description_advisor_overhaul_skill_combat_storm_needles	One shot, then a hundred, then the sky goes dark with them.\\n\\nHis missile attacks hit harder and farther, and the army he marches with shoots faster.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_storm_needles	One shot, then a hundred, then the sky goes dark with them.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_unbroken	Unbroken	true
-character_skills_localised_description_advisor_overhaul_skill_combat_unbroken	He has been the last man standing. It taught him how to be the first one back up.\\n\\nHe is harder to break and harder to kill, and the army he marches with holds its ground behind a stronger shell.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_unbroken	He has been the last man standing. It taught him how to be the first one back up.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_veteran_hide	Veteran's Hide	true
-character_skills_localised_description_advisor_overhaul_skill_combat_veteran_hide	Scar over scar over scar. Little finds soft skin to bite.\\n\\nMore armour.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_veteran_hide	Scar over scar over scar. Little finds soft skin to bite.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_wards	Duelling Wards	true
-character_skills_localised_description_advisor_overhaul_skill_combat_wards	A flick of the wrist and the blade glances aside. He has practised it on worse than swords.\\n\\nA ward save.	true
+character_skills_localised_description_advisor_overhaul_skill_combat_wards	A flick of the wrist and the blade glances aside. He has practised it on worse than swords.	true
 character_skills_localised_name_advisor_overhaul_skill_corruption_chs	Spread Chaos Corruption	true
-character_skills_localised_description_advisor_overhaul_skill_corruption_chs	He has watched Chaos corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Chaos Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_chs	He has watched Chaos corruption eat a world. He knows exactly where to plant it.	true
 character_skills_localised_name_advisor_overhaul_skill_corruption_final	A Corrupting Presence	true
-character_skills_localised_description_advisor_overhaul_skill_corruption_final	Every kind of corruption he has learned spreads far faster.\\n\\nNeeds 3 points in this row.	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_final	Three kinds of rot are not enough.	true
 character_skills_localised_name_advisor_overhaul_skill_corruption_kho	Spread Khorne Corruption	true
-character_skills_localised_description_advisor_overhaul_skill_corruption_kho	He has watched Khorne corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Khorne Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_kho	He has watched Khorne corruption eat a world. He knows exactly where to plant it.	true
 character_skills_localised_name_advisor_overhaul_skill_corruption_lead	The Taint Remembered	true
-character_skills_localised_description_advisor_overhaul_skill_corruption_lead	He has walked through every kind of ruin the Dark Gods make. He can still smell each one.\\n\\nEvery kind of corruption he spreads spreads a little faster.	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_lead	He has walked through every kind of ruin there is. He can still smell the corruption in each.	true
 character_skills_localised_name_advisor_overhaul_skill_corruption_nur	Spread Nurgle Corruption	true
-character_skills_localised_description_advisor_overhaul_skill_corruption_nur	He has watched Nurgle corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Nurgle Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_nur	He has watched Nurgle corruption eat a world. He knows exactly where to plant it.	true
 character_skills_localised_name_advisor_overhaul_skill_corruption_skv	Spread Skaven Corruption	true
-character_skills_localised_description_advisor_overhaul_skill_corruption_skv	He has watched Skaven corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Skaven Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_skv	He has watched Skaven corruption eat a world. He knows exactly where to plant it.	true
 character_skills_localised_name_advisor_overhaul_skill_corruption_sla	Spread Slaanesh Corruption	true
-character_skills_localised_description_advisor_overhaul_skill_corruption_sla	He has watched Slaanesh corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Slaanesh Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_sla	He has watched Slaanesh corruption eat a world. He knows exactly where to plant it.	true
 character_skills_localised_name_advisor_overhaul_skill_corruption_tze	Spread Tzeentch Corruption	true
-character_skills_localised_description_advisor_overhaul_skill_corruption_tze	He has watched Tzeentch corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Tzeentch Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_tze	He has watched Tzeentch corruption eat a world. He knows exactly where to plant it.	true
 character_skills_localised_name_advisor_overhaul_skill_corruption_vmp	Spread Vampiric Corruption	true
-character_skills_localised_description_advisor_overhaul_skill_corruption_vmp	He has watched Vampiric corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Vampiric Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_vmp	He has watched Vampiric corruption eat a world. He knows exactly where to plant it.	true
 character_skills_localised_name_advisor_overhaul_skill_hero_banner	The Banner Remembered	true
-character_skills_localised_description_advisor_overhaul_skill_hero_banner	A banner remembered is a banner that does not fall. Every army he has ever stood with fights harder for it.\\n\\nEvery army in the faction costs less to keep, recovers faster and holds firmer, and his own army costs less again.	true
+character_skills_localised_description_advisor_overhaul_skill_hero_banner	A banner remembered is a banner that does not fall. Every army he has ever stood with fights harder for it.	true
 character_skills_localised_name_advisor_overhaul_skill_hero_forager	Forager's Eye	true
-character_skills_localised_description_advisor_overhaul_skill_hero_forager	Where others see scrub, he sees supper.\\n\\nMore loot after every battle.	true
+character_skills_localised_description_advisor_overhaul_skill_hero_forager	Where others see scrub, he sees supper.	true
 character_skills_localised_name_advisor_overhaul_skill_hero_hand_pocket	A Hand in Every Pocket	true
-character_skills_localised_description_advisor_overhaul_skill_hero_hand_pocket	Every door in the world has a friend on the inside, and he has met all of them.\\n\\nAll the faction's heroes act with more success, every army returns richer from battle, research speeds up, and his own army ambushes and moves better.	true
+character_skills_localised_description_advisor_overhaul_skill_hero_hand_pocket	Every door in the world has a friend on the inside, and he has met all of them.	true
 character_skills_localised_name_advisor_overhaul_skill_hero_lamp	The Lamp in the Window	true
-character_skills_localised_description_advisor_overhaul_skill_hero_lamp	Wherever he rests, someone leaves a light on. He has never asked them to.\\n\\nEvery province of the faction is calmer and richer, all armies learn faster and hold firmer, and his own army learns fastest of all. Lords and heroes join the faction with even more ranks.	true
+character_skills_localised_description_advisor_overhaul_skill_hero_lamp	Wherever he rests, someone leaves a light on. He has never asked them to.	true
 character_skills_localised_name_advisor_overhaul_skill_hero_pathfinder	Pathfinder	true
-character_skills_localised_description_advisor_overhaul_skill_hero_pathfinder	He has walked this road in four endings. It never got shorter by itself.\\n\\nHis army marches farther each turn.	true
+character_skills_localised_description_advisor_overhaul_skill_hero_pathfinder	He has walked this road in four endings. It never got shorter by itself.	true
 character_skills_localised_name_advisor_overhaul_skill_hero_students	Students in Every Court	true
-character_skills_localised_description_advisor_overhaul_skill_hero_students	Half the captains of the world once sat at his table and listened.\\n\\nLords and heroes join the faction with more ranks.	true
+character_skills_localised_description_advisor_overhaul_skill_hero_students	Half the captains of the world once sat at his table and listened.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_arcane_ward	Arcane Ward	true
-character_skills_localised_description_advisor_overhaul_skill_magic_arcane_ward	A thin shimmer, taught to him by a mage whose name no one else recalls.\\n\\nA ward save.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_arcane_ward	A thin shimmer, taught to him by a mage whose name no one else recalls.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_archmage	Archmage	true
-character_skills_localised_description_advisor_overhaul_skill_magic_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\n\\nThe magic rows' Apex. Takes the place of the other Apexes and the Polymath.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\n\\nLocks the other Apexes and the Polymath.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_battle_caster	Spell and Steel	true
-character_skills_localised_description_advisor_overhaul_skill_magic_battle_caster	He casts with one hand and cuts with the other, and has never found the two work apart.\\n\\nStronger blows and spells, whatever he carries.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_battle_caster	He casts with one hand and cuts with the other, and has never found the two work apart.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_beyond_sight	Weave Beyond Sight	true
-character_skills_localised_description_advisor_overhaul_skill_magic_beyond_sight	There is a pattern behind the pattern. He has seen it from the far side.\\n\\nMuch stronger spells, fewer miscasts, and he sees farther.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_beyond_sight	There is a pattern behind the pattern. He has seen it from the far side.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_cadence	Steady Cadence	true
-character_skills_localised_description_advisor_overhaul_skill_magic_cadence	The same words, the same breath, every time. The Winds learn to expect it.\\n\\nStronger spells.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_cadence	The same words, the same breath, every time. The Winds learn to expect it.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_channel	Open Channel	true
-character_skills_localised_description_advisor_overhaul_skill_magic_channel	The Winds find him now. They have learned where he stands.\\n\\nMore Winds of Magic each turn for his army.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_channel	The Winds find him now. They have learned where he stands.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_conduit	Conduit Unbound	true
-character_skills_localised_description_advisor_overhaul_skill_magic_conduit	He stopped asking the Winds for power. Now he simply lets them through.\\n\\nOvercast spells recharge much sooner and hit harder.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_conduit	He stopped asking the Winds for power. Now he simply lets them through.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_focus	Spellweaver's Focus	true
-character_skills_localised_description_advisor_overhaul_skill_magic_focus	Every ending, the first thing he learned was to hold one thought steady while the world shook.\\n\\nMore spell intensity.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_focus	Every ending, the first thing he learned was to hold one thought steady while the world shook.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_last_word	The Last Word	true
-character_skills_localised_description_advisor_overhaul_skill_magic_last_word	He no longer waits for the Winds to cool. He cuts the pause out of every spell.\\n\\nSpells of every lore cost less and recharge much sooner, and he casts with greater mastery. Needs 3 points in this group.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_last_word	He no longer waits for the Winds to cool. He cuts the pause out of every spell.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_overcast	Overcast Discipline	true
-character_skills_localised_description_advisor_overhaul_skill_magic_overcast	Anyone can pour more power in. He knows when to stop.\\n\\nOvercast spells recharge sooner.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_overcast	Anyone can pour more power in. He knows when to stop.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_quiet_mind	Quiet Mind	true
-character_skills_localised_description_advisor_overhaul_skill_magic_quiet_mind	The Winds come easier to a mind with no fear left in it.\\n\\nSpells recharge sooner.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_quiet_mind	The Winds come easier to a mind with no fear left in it.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_recitation	Quick Recitation	true
-character_skills_localised_description_advisor_overhaul_skill_magic_recitation	The words come faster each time. He has said them in every tongue that ever ended.\\n\\nSpells recharge sooner.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_recitation	The words come faster each time. He has said them in every tongue that ever ended.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_reserves	Deep Reserves	true
-character_skills_localised_description_advisor_overhaul_skill_magic_reserves	He has learned to hold more of the Winds than a body should.\\n\\nMore Winds of Magic for his army in every battle.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_reserves	He has learned to hold more of the Winds than a body should.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_ruinous	Hex of Misfire	true
-character_skills_localised_description_advisor_overhaul_skill_magic_ruinous	He knows exactly how a spell goes wrong, because he has watched it go wrong.\\n\\nEnemy spellcasters near his army miscast more often, and their spells cost more.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_ruinous	He knows exactly how a spell goes wrong, because he has watched it go wrong.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_second_wind	Second Wind	true
-character_skills_localised_description_advisor_overhaul_skill_magic_second_wind	Just when the pool runs dry, he finds another cup behind it.\\n\\nA deeper Winds of Magic pool.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_second_wind	Just when the pool runs dry, he finds another cup behind it.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_sharper	Sharper Weave	true
-character_skills_localised_description_advisor_overhaul_skill_magic_sharper	And then to pull it tight, to a point.\\n\\nStronger spells, fewer miscasts.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_sharper	And then to pull it tight, to a point.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_standing_conduit	Standing Conduit	true
-character_skills_localised_description_advisor_overhaul_skill_magic_standing_conduit	The Winds do not rush through him anymore. They wait in him, patient, like water in a cistern.\\n\\nUnlocks the Arcane Conduit ability. Level 2 replaces it with Greater Arcane Conduit.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_standing_conduit	The Winds do not rush through him anymore. They wait in him, patient, like water in a cistern.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_steady	Steady Hands	true
-character_skills_localised_description_advisor_overhaul_skill_magic_steady	He miscast once, at the worst possible moment, and the world ended a little early.\\n\\nFewer miscasts, stronger spells.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_steady	He miscast once, at the worst possible moment, and the world ended a little early.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_warded_mind	Warded Mind	true
-character_skills_localised_description_advisor_overhaul_skill_magic_warded_mind	He has been unmade by sorcery before. He remembers the shape of the hole.\\n\\nMagic resistance.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_warded_mind	He has been unmade by sorcery before. He remembers the shape of the hole.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_well_remembers	The Well Remembers	true
-character_skills_localised_description_advisor_overhaul_skill_magic_well_remembers	He has drunk from this well in lives that never were. The well recalls him kindly.\\n\\nMore Winds of Magic each turn, and spells that recharge sooner.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_well_remembers	He has drunk from this well in lives that never were. The well recalls him kindly.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_what_comes	What Comes	true
-character_skills_localised_description_advisor_overhaul_skill_magic_what_comes	He has already seen how the next casting will end.\\n\\nHe keeps the passive powers of a third of the lores, and their spells cost less.\\nLevel 2 opens at rank 25, level 3 at rank 30.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_what_comes	He has already seen how the next casting will end.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_what_is_held	What Is Held	true
-character_skills_localised_description_advisor_overhaul_skill_magic_what_is_held	He does not reach for the old lores. They are simply there, held.\\n\\nHe keeps the passive powers of a third of the lores, and their spells cost less.\\nLevel 2 opens at rank 25, level 3 at rank 30.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_what_is_held	He does not reach for the old lores. They are simply there, held.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_what_was	What Was Learned	true
-character_skills_localised_description_advisor_overhaul_skill_magic_what_was	Every lore he ever studied left a habit behind.\\n\\nHe keeps the passive powers of a third of the lores, and their spells cost less.\\nLevel 2 opens at rank 25, level 3 at rank 30.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_what_was	Every lore he ever studied left a habit behind.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_wider	Wider Weave	true
-character_skills_localised_description_advisor_overhaul_skill_magic_wider	He learned to let the thread spread before it settles.\\n\\nStronger spells.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_wider	He learned to let the thread spread before it settles.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_0	Assassinate	true
-character_skills_localised_description_advisor_overhaul_skill_martial_0	He knows which of them will matter later. He settles it now.\\n\\nUnlocks the Assassinate hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_0	He knows which of them will matter later. He settles it now.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_1	Wound	true
-character_skills_localised_description_advisor_overhaul_skill_martial_1	Not a killing blow. A reminder.\\n\\nUnlocks the Wound hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_1	Not a killing blow. A reminder.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_2	Assassinate Lord	true
-character_skills_localised_description_advisor_overhaul_skill_martial_2	Generals die too. He has watched it happen in every ending.\\n\\nUnlocks the Assassinate Lord hero action. It has a slim 5 percent base chance to kill, raised by his hero success chance. A failed attempt costs him nothing but the try.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_2	Generals die too. He has watched it happen in every ending.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_3	Damage Walls	true
-character_skills_localised_description_advisor_overhaul_skill_martial_3	Every wall falls eventually. He only hurries it along.\\n\\nUnlocks the Damage Walls hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_3	Every wall falls eventually. He only hurries it along.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_4	Assault Garrison	true
-character_skills_localised_description_advisor_overhaul_skill_martial_4	He walks in through the gate they forgot to watch.\\n\\nUnlocks the Assault Garrison hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_4	He walks in through the gate they forgot to watch.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_5	Damage Building	true
-character_skills_localised_description_advisor_overhaul_skill_martial_5	A fire in the right storehouse ends a siege early.\\n\\nUnlocks the Damage Building hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_5	A fire in the right storehouse ends a siege early.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_6	Block Army	true
-character_skills_localised_description_advisor_overhaul_skill_martial_6	A cut rope, a spooked horse, a missing quartermaster.\\n\\nUnlocks the Block Army hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_6	A cut rope, a spooked horse, a missing quartermaster.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_7	Hinder Replenishment	true
-character_skills_localised_description_advisor_overhaul_skill_martial_7	Their wounded do not come back to the line.\\n\\nUnlocks the Hinder Replenishment hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_7	Their wounded do not come back to the line.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_9	Assault Units	true
-character_skills_localised_description_advisor_overhaul_skill_martial_9	The whole camp, the same night.\\n\\nUnlocks the Assault Units hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_9	The whole camp, the same night.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_apex	The Last Sword	true
-character_skills_localised_description_advisor_overhaul_skill_martial_apex	At the end of one world he was the last one standing. He intends to be again.\\n\\nThe Martial row's Apex. Takes the place of the other Apexes and the Polymath.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_apex	At the end of one world he was the last one standing. He intends to be again.\\n\\nLocks the other Apexes and the Polymath.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_calm_voice	Calm Voice	true
 character_skills_localised_description_advisor_overhaul_skill_memory_calm_voice	Men stand firm around someone who is not afraid. He stopped being afraid a long time ago.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_end_drowning	The Ending of Drowning	true
-character_skills_localised_description_advisor_overhaul_skill_memory_end_drowning	The sea came in over the walls. He held a shield above his head for a long time.\\n\\nHis blows carry Dampening, Horrible and Charming at once.\\n\\nHe turns missiles aside and his army holds firm. Its charges bog down in the mud.	true
+character_skills_localised_description_advisor_overhaul_skill_memory_end_drowning	The sea came in over the walls. He held a shield above his head for a long time.\\n\\nLocks the other Endings.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_end_fire	The Ending of Fire	true
-character_skills_localised_description_advisor_overhaul_skill_memory_end_fire	The sky burned for nine days and he watched it from the last tower. His blade remembers the heat.\\n\\nHis blows carry Flaming, Inflammable and Warpflame at once.\\n\\nHe hits harder and charges harder. The memory leaves him thin-skinned.	true
+character_skills_localised_description_advisor_overhaul_skill_memory_end_fire	The sky burned for nine days and he watched it from the last tower. His blade remembers the heat.\\n\\nLocks the other Endings.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_end_hunger	The Ending of Hunger	true
-character_skills_localised_description_advisor_overhaul_skill_memory_end_hunger	The granaries were empty before the first battle. He remembers what was worth taking.\\n\\nHis blows carry Slow Death, Sundering and Anraheir's Curse at once.\\n\\nHis army fights like starving men, hard and without mercy. Its quivers run thin.	true
+character_skills_localised_description_advisor_overhaul_skill_memory_end_hunger	The granaries were empty before the first battle. He remembers what was worth taking.\\n\\nLocks the other Endings.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_end_plague	The Ending of Plague	true
-character_skills_localised_description_advisor_overhaul_skill_memory_end_plague	The cities emptied quietly. He learned what a slow death tastes like.\\n\\nHis blows carry Poison, Contaminated and Eroding Poison at once.\\n\\nHis blows bite through armour and cut down infantry. The fever makes his spells falter.	true
+character_skills_localised_description_advisor_overhaul_skill_memory_end_plague	The cities emptied quietly. He learned what a slow death tastes like.\\n\\nLocks the other Endings.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_end_silence	The Ending of Silence	true
-character_skills_localised_description_advisor_overhaul_skill_memory_end_silence	Nobody screamed. The army simply stopped arriving. He keeps his own march quiet now.\\n\\nHis blows carry Discouraging, Rattling and Disrupting at once.\\n\\nHe is harder to hit and deadly against large foes. The quiet leaves his wards thin.	true
+character_skills_localised_description_advisor_overhaul_skill_memory_end_silence	Nobody screamed. The army simply stopped arriving. He keeps his own march quiet now.\\n\\nLocks the other Endings.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_every_mistake	Every Mistake Already Made	true
 character_skills_localised_description_advisor_overhaul_skill_memory_every_mistake	There is no error left for him to make. He made them all in other lives.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_long_patience	The Long Patience	true
-character_skills_localised_description_advisor_overhaul_skill_memory_long_patience	He has all the time in the world. He has had it before.\\n\\nA hundred small levels for points nothing else wants: each adds 1 percent spell intensity, 1 percent weapon strength and 1 percent missile strength.	true
+character_skills_localised_description_advisor_overhaul_skill_memory_long_patience	He has all the time in the world. He has had it before.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_old_lessons	Old Lessons	true
 character_skills_localised_description_advisor_overhaul_skill_memory_old_lessons	Everything he teaches, he learned the hard way. Several times.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_polymath	Everything, Again	true
-character_skills_localised_description_advisor_overhaul_skill_memory_polymath	He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\n\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Takes the place of every Apex.	true
+character_skills_localised_description_advisor_overhaul_skill_memory_polymath	He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\n\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Locks every Apex.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_seen_the_end	Seen the End	true
 character_skills_localised_description_advisor_overhaul_skill_memory_seen_the_end	He has watched this army walk into this ambush before. Not this time.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_weight_of_years	The Weight of Years	true
@@ -345,191 +345,191 @@ effect_bundles_localised_description_advisor_overhaul_bundle_polymath_3	He draws
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_4	Everything, Again (4 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_4	He draws on 4 of his disciplines at once.	true
 character_skills_localised_name_advisor_overhaul_lore_fire	First Tome: Lore of Fire	true
-character_skills_localised_description_advisor_overhaul_lore_fire	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_fire	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_fire_2	Second Tome: Lore of Fire	true
-character_skills_localised_description_advisor_overhaul_lore_fire_2	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_fire_2	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_fire_3	Third Tome: Lore of Fire	true
-character_skills_localised_description_advisor_overhaul_lore_fire_3	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_fire_3	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_beasts	First Tome: Lore of Beasts	true
-character_skills_localised_description_advisor_overhaul_lore_beasts	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_beasts	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_beasts_2	Second Tome: Lore of Beasts	true
-character_skills_localised_description_advisor_overhaul_lore_beasts_2	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_beasts_2	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_beasts_3	Third Tome: Lore of Beasts	true
-character_skills_localised_description_advisor_overhaul_lore_beasts_3	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_beasts_3	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_metal	First Tome: Lore of Metal	true
-character_skills_localised_description_advisor_overhaul_lore_metal	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_metal	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_metal_2	Second Tome: Lore of Metal	true
-character_skills_localised_description_advisor_overhaul_lore_metal_2	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_metal_2	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_metal_3	Third Tome: Lore of Metal	true
-character_skills_localised_description_advisor_overhaul_lore_metal_3	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_metal_3	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_heavens	First Tome: Lore of the Heavens	true
-character_skills_localised_description_advisor_overhaul_lore_heavens	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_heavens	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_heavens_2	Second Tome: Lore of the Heavens	true
-character_skills_localised_description_advisor_overhaul_lore_heavens_2	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_heavens_2	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_heavens_3	Third Tome: Lore of the Heavens	true
-character_skills_localised_description_advisor_overhaul_lore_heavens_3	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_heavens_3	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_light	First Tome: Lore of Light	true
-character_skills_localised_description_advisor_overhaul_lore_light	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_light	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_light_2	Second Tome: Lore of Light	true
-character_skills_localised_description_advisor_overhaul_lore_light_2	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_light_2	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_light_3	Third Tome: Lore of Light	true
-character_skills_localised_description_advisor_overhaul_lore_light_3	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_light_3	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_life	First Tome: Lore of Life	true
-character_skills_localised_description_advisor_overhaul_lore_life	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_life	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_life_2	Second Tome: Lore of Life	true
-character_skills_localised_description_advisor_overhaul_lore_life_2	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_life_2	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_life_3	Third Tome: Lore of Life	true
-character_skills_localised_description_advisor_overhaul_lore_life_3	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_life_3	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_shadows	First Tome: Lore of Shadows	true
-character_skills_localised_description_advisor_overhaul_lore_shadows	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_shadows	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_shadows_2	Second Tome: Lore of Shadows	true
-character_skills_localised_description_advisor_overhaul_lore_shadows_2	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_shadows_2	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_shadows_3	Third Tome: Lore of Shadows	true
-character_skills_localised_description_advisor_overhaul_lore_shadows_3	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_shadows_3	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_death	First Tome: Lore of Death	true
-character_skills_localised_description_advisor_overhaul_lore_death	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_death	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_death_2	Second Tome: Lore of Death	true
-character_skills_localised_description_advisor_overhaul_lore_death_2	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_death_2	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_death_3	Third Tome: Lore of Death	true
-character_skills_localised_description_advisor_overhaul_lore_death_3	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_death_3	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_high_magic	First Tome: High Magic	true
-character_skills_localised_description_advisor_overhaul_lore_high_magic	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_high_magic	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_high_magic_2	Second Tome: High Magic	true
-character_skills_localised_description_advisor_overhaul_lore_high_magic_2	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_high_magic_2	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_high_magic_3	Third Tome: High Magic	true
-character_skills_localised_description_advisor_overhaul_lore_high_magic_3	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_high_magic_3	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_ice	First Tome: Lore of Ice	true
-character_skills_localised_description_advisor_overhaul_lore_of_ice	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_ice	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_ice_2	Second Tome: Lore of Ice	true
-character_skills_localised_description_advisor_overhaul_lore_of_ice_2	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_ice_2	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_ice_3	Third Tome: Lore of Ice	true
-character_skills_localised_description_advisor_overhaul_lore_of_ice_3	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_ice_3	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_tempest	First Tome: Lore of Tempest	true
-character_skills_localised_description_advisor_overhaul_lore_of_tempest	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_tempest	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_tempest_2	Second Tome: Lore of Tempest	true
-character_skills_localised_description_advisor_overhaul_lore_of_tempest_2	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_tempest_2	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_tempest_3	Third Tome: Lore of Tempest	true
-character_skills_localised_description_advisor_overhaul_lore_of_tempest_3	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_tempest_3	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yang	First Tome: Lore of Yang	true
-character_skills_localised_description_advisor_overhaul_lore_of_yang	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yang	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yang_2	Second Tome: Lore of Yang	true
-character_skills_localised_description_advisor_overhaul_lore_of_yang_2	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yang_2	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yang_3	Third Tome: Lore of Yang	true
-character_skills_localised_description_advisor_overhaul_lore_of_yang_3	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yang_3	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yin	First Tome: Lore of Yin	true
-character_skills_localised_description_advisor_overhaul_lore_of_yin	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yin	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yin_2	Second Tome: Lore of Yin	true
-character_skills_localised_description_advisor_overhaul_lore_of_yin_2	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yin_2	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yin_3	Third Tome: Lore of Yin	true
-character_skills_localised_description_advisor_overhaul_lore_of_yin_3	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yin_3	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_mists	First Tome: Lore of Mists	true
-character_skills_localised_description_advisor_overhaul_lore_mists	Sea-fog spells from a coast that sank.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_mists	Sea-fog spells from a coast that sank.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_mists_2	Second Tome: Lore of Mists	true
-character_skills_localised_description_advisor_overhaul_lore_mists_2	Sea-fog spells from a coast that sank.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_mists_2	Sea-fog spells from a coast that sank.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_mists_3	Third Tome: Lore of Mists	true
-character_skills_localised_description_advisor_overhaul_lore_mists_3	Sea-fog spells from a coast that sank.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_mists_3	Sea-fog spells from a coast that sank.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hag	First Tome: Lore of the Hag	true
-character_skills_localised_description_advisor_overhaul_lore_hag	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_hag	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hag_2	Second Tome: Lore of the Hag	true
-character_skills_localised_description_advisor_overhaul_lore_hag_2	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_hag_2	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hag_3	Third Tome: Lore of the Hag	true
-character_skills_localised_description_advisor_overhaul_lore_hag_3	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_hag_3	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_dark_magic	First Tome: Dark Magic	true
-character_skills_localised_description_advisor_overhaul_lore_dark_magic	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_dark_magic	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_dark_magic_2	Second Tome: Dark Magic	true
-character_skills_localised_description_advisor_overhaul_lore_dark_magic_2	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_dark_magic_2	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_dark_magic_3	Third Tome: Dark Magic	true
-character_skills_localised_description_advisor_overhaul_lore_dark_magic_3	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_dark_magic_3	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_vampires	First Tome: Lore of Vampires	true
-character_skills_localised_description_advisor_overhaul_lore_vampires	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_vampires	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_vampires_2	Second Tome: Lore of Vampires	true
-character_skills_localised_description_advisor_overhaul_lore_vampires_2	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_vampires_2	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_vampires_3	Third Tome: Lore of Vampires	true
-character_skills_localised_description_advisor_overhaul_lore_vampires_3	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_vampires_3	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_undeath	First Tome: Lore of Undeath	true
-character_skills_localised_description_advisor_overhaul_lore_undeath	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_undeath	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_undeath_2	Second Tome: Lore of Undeath	true
-character_skills_localised_description_advisor_overhaul_lore_undeath_2	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_undeath_2	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_undeath_3	Third Tome: Lore of Undeath	true
-character_skills_localised_description_advisor_overhaul_lore_undeath_3	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_undeath_3	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nehekhara	First Tome: Lore of Nehekhara	true
-character_skills_localised_description_advisor_overhaul_lore_nehekhara	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_nehekhara	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nehekhara_2	Second Tome: Lore of Nehekhara	true
-character_skills_localised_description_advisor_overhaul_lore_nehekhara_2	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_nehekhara_2	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nehekhara_3	Third Tome: Lore of Nehekhara	true
-character_skills_localised_description_advisor_overhaul_lore_nehekhara_3	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_nehekhara_3	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_deep	First Tome: Lore of the Deep	true
-character_skills_localised_description_advisor_overhaul_lore_deep	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_deep	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_deep_2	Second Tome: Lore of the Deep	true
-character_skills_localised_description_advisor_overhaul_lore_deep_2	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_deep_2	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_deep_3	Third Tome: Lore of the Deep	true
-character_skills_localised_description_advisor_overhaul_lore_deep_3	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_deep_3	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_big_waaagh	First Tome: Big Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_big_waaagh	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_big_waaagh	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_big_waaagh_2	Second Tome: Big Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_big_waaagh_2	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_big_waaagh_2	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_big_waaagh_3	Third Tome: Big Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_big_waaagh_3	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_big_waaagh_3	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_lil_waaagh	First Tome: Little Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_lil_waaagh	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_lil_waaagh	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_lil_waaagh_2	Second Tome: Little Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_lil_waaagh_2	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_lil_waaagh_2	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_lil_waaagh_3	Third Tome: Little Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_lil_waaagh_3	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_lil_waaagh_3	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hashut	First Tome: Lore of Hashut	true
-character_skills_localised_description_advisor_overhaul_lore_hashut	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_hashut	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hashut_2	Second Tome: Lore of Hashut	true
-character_skills_localised_description_advisor_overhaul_lore_hashut_2	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_hashut_2	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hashut_3	Third Tome: Lore of Hashut	true
-character_skills_localised_description_advisor_overhaul_lore_hashut_3	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_hashut_3	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_ruin	First Tome: Lore of Ruin	true
-character_skills_localised_description_advisor_overhaul_lore_ruin	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_ruin	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_ruin_2	Second Tome: Lore of Ruin	true
-character_skills_localised_description_advisor_overhaul_lore_ruin_2	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_ruin_2	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_ruin_3	Third Tome: Lore of Ruin	true
-character_skills_localised_description_advisor_overhaul_lore_ruin_3	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_ruin_3	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_plague	First Tome: Lore of Plague	true
-character_skills_localised_description_advisor_overhaul_lore_plague	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_plague	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_plague_2	Second Tome: Lore of Plague	true
-character_skills_localised_description_advisor_overhaul_lore_plague_2	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_plague_2	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_plague_3	Third Tome: Lore of Plague	true
-character_skills_localised_description_advisor_overhaul_lore_plague_3	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_plague_3	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_stealth	First Tome: Lore of Stealth	true
-character_skills_localised_description_advisor_overhaul_lore_stealth	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_stealth	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_stealth_2	Second Tome: Lore of Stealth	true
-character_skills_localised_description_advisor_overhaul_lore_stealth_2	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_stealth_2	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_stealth_3	Third Tome: Lore of Stealth	true
-character_skills_localised_description_advisor_overhaul_lore_stealth_3	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_stealth_3	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nurgle	First Tome: Lore of Nurgle	true
-character_skills_localised_description_advisor_overhaul_lore_nurgle	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_nurgle	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nurgle_2	Second Tome: Lore of Nurgle	true
-character_skills_localised_description_advisor_overhaul_lore_nurgle_2	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_nurgle_2	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nurgle_3	Third Tome: Lore of Nurgle	true
-character_skills_localised_description_advisor_overhaul_lore_nurgle_3	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_nurgle_3	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_slaanesh	First Tome: Lore of Slaanesh	true
-character_skills_localised_description_advisor_overhaul_lore_slaanesh	He refused this one too. It was harder.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_slaanesh	He refused this one too. It was harder.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_slaanesh_2	Second Tome: Lore of Slaanesh	true
-character_skills_localised_description_advisor_overhaul_lore_slaanesh_2	He refused this one too. It was harder.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_slaanesh_2	He refused this one too. It was harder.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_slaanesh_3	Third Tome: Lore of Slaanesh	true
-character_skills_localised_description_advisor_overhaul_lore_slaanesh_3	He refused this one too. It was harder.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_slaanesh_3	He refused this one too. It was harder.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_great_maw	First Tome: Lore of the Great Maw	true
-character_skills_localised_description_advisor_overhaul_lore_of_great_maw	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_great_maw	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_great_maw_2	Second Tome: Lore of the Great Maw	true
-character_skills_localised_description_advisor_overhaul_lore_of_great_maw_2	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_great_maw_2	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_great_maw_3	Third Tome: Lore of the Great Maw	true
-character_skills_localised_description_advisor_overhaul_lore_of_great_maw_3	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_of_great_maw_3	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_wild	First Tome: Lore of the Wild	true
-character_skills_localised_description_advisor_overhaul_lore_wild	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_wild	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_wild_2	Second Tome: Lore of the Wild	true
-character_skills_localised_description_advisor_overhaul_lore_wild_2	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_wild_2	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_wild_3	Third Tome: Lore of the Wild	true
-character_skills_localised_description_advisor_overhaul_lore_wild_3	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_wild_3	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_rune	First Tome: Lore of Runes	true
-character_skills_localised_description_advisor_overhaul_lore_rune	A runesmith taught him three runes before the last hold fell. He worked out the rest.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 2 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_rune	A runesmith taught him three runes before the last hold fell. He worked out the rest.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_rune_2	Second Tome: Lore of Runes	true
-character_skills_localised_description_advisor_overhaul_lore_rune_2	A runesmith taught him three runes before the last hold fell. He worked out the rest.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 10 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_rune_2	A runesmith taught him three runes before the last hold fell. He worked out the rest.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_rune_3	Third Tome: Lore of Runes	true
-character_skills_localised_description_advisor_overhaul_lore_rune_3	A runesmith taught him three runes before the last hold fell. He worked out the rest.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.\\n\\nOne lore per pick. This pick opens at rank 20 and locks the other lores, here and in the other picks.	true
+character_skills_localised_description_advisor_overhaul_lore_rune_3	A runesmith taught him three runes before the last hold fell. He worked out the rest.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 agent_actions_localised_action_name_advisor_overhaul_action_champion_assist_army_scavenge	{{tr:agent_action_name_scavenge}}	true
 agent_actions_localised_action_description_advisor_overhaul_action_champion_assist_army_scavenge	[[col:yellow]]Increases the {{tr:icon_income}}income of post-battle loot earned by the parent army by %n%.[[/col]]	true
 effects_description_advisor_overhaul_effect_enable_champion_assist_army_scavenge	Hero action: {{tr:agent_action_name_scavenge}}	true

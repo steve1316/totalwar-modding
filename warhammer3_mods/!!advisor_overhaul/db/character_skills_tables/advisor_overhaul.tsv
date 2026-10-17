@@ -12,12 +12,12 @@ advisor_overhaul_skill_arts_army_1	character_army.png			4	false	false	false	0.00
 advisor_overhaul_skill_arts_army_2	campaign_army.png			9	false	false	false	0.0000	0
 advisor_overhaul_skill_arts_army_3	battle_defence.png			14	false	false	false	0.0000	0
 advisor_overhaul_skill_arts_army_4	character_army.png			16	false	false	false	0.0000	0
-advisor_overhaul_skill_arts_army_gate	campaign_army.png			16	false	false	false	0.0000	0
+advisor_overhaul_skill_arts_army_gate	campaign_army.png			29	false	false	false	0.0000	0
 advisor_overhaul_skill_arts_art_1	character_defence.png			2	false	false	false	0.0000	0
 advisor_overhaul_skill_arts_art_2	character_attack.png			6	false	false	false	0.0000	0
 advisor_overhaul_skill_arts_art_3	character_charge.png			11	false	false	false	0.0000	0
 advisor_overhaul_skill_arts_art_4	character_armour.png			14	false	false	false	0.0000	0
-advisor_overhaul_skill_arts_gate	character_attack.png			14	false	false	false	0.0000	0
+advisor_overhaul_skill_arts_gate	character_attack.png			29	false	false	false	0.0000	0
 advisor_overhaul_skill_civic_0	campaign_item.png			1	false	false	false	0.0000	0
 advisor_overhaul_skill_civic_1	campaign_experience.png			2	false	false	false	0.0000	0
 advisor_overhaul_skill_civic_10	campaign_technology.png			0	false	false	false	0.0000	0
