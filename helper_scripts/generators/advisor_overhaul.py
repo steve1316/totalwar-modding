@@ -41,6 +41,7 @@ The rest of his kit, also in the registry:
 - `bundles`: id -> `name`, `description`, `icon`, `effects`. Effect bundles the story script puts on him (the pact's corruption, its debt).
 - `actions`: vanilla hero action keys copied for him, a wizard. Each copy gets its own enable effect (`action_effect_key`) that a skill level
   gives, and the vanilla action's name and description.
+- `action_overrides`: action key -> column -> value, swapped into his copy of that action (outcomes, description).
 - `items`: id -> `name`, `description`, `type` (a vanilla ancillary type), `category`, `effects`. His quest items.
 - `lore_slots`: a list of `row` and `rank`. Each slot is a row holding a copy of every lore, so he picks one lore per slot (at most one lore per slot,
   and never the same lore twice).
@@ -1102,6 +1103,8 @@ def action_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]
         source, key, effect = kept["rows"][action], action_key(action), action_effect_key(action)
         row = dict(source, unique_id=key, agent=AGENT_TYPE)
         row.update({column: AGENT_ATTRIBUTE for column in ("attribute", "target_attribute") if row[column] == source["attribute"]})
+        # `action_overrides` swaps columns of the copy, such as an outcome that would kill him.
+        row.update(registry.get("action_overrides", {}).get(action, {}))
         rows["agent_actions_tables"].append(row)
         rows["effects_tables"].append({"effect": effect, "icon": "", "priority": "0", "icon_negative": "", "category": "campaign", "is_positive_value_good": "true"})
         rows["effect_bonus_value_agent_action_record_junctions_tables"].append({"bonus_value_id": "active", "effect": effect, "agent_action_record": key})
@@ -1110,7 +1113,7 @@ def action_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]
         # The name and description are keyed by the action, so the copy carries the vanilla text. It uses `%n%` value markers.
         name = source["localised_action_name"]
         vanilla_texts.append((f"agent_actions_localised_action_name_{key}", name))
-        vanilla_texts.append((f"agent_actions_localised_action_description_{key}", source["localised_action_description"].replace("\\n", "\\\\n")))
+        vanilla_texts.append((f"agent_actions_localised_action_description_{key}", row["localised_action_description"].replace("\\n", "\\\\n")))
         vanilla_texts.append((f"effects_description_{effect}", f"Hero action: {name}"))
 
 

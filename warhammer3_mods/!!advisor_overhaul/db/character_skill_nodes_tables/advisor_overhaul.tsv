@@ -49,6 +49,12 @@ advisor_overhaul_skill_node_combat_storm_needles		advisor_overhaul_skill_combat_
 advisor_overhaul_skill_node_combat_unbroken		advisor_overhaul_skill_combat_unbroken		2	17		0	10	true
 advisor_overhaul_skill_node_combat_veteran_hide		advisor_overhaul_skill_combat_veteran_hide		2	11		0	0	true
 advisor_overhaul_skill_node_combat_wards		advisor_overhaul_skill_combat_wards		2	2		0	0	true
+advisor_overhaul_skill_node_hero_banner		advisor_overhaul_skill_hero_banner		8	20		0	9	true
+advisor_overhaul_skill_node_hero_forager		advisor_overhaul_skill_hero_forager		8	26		0	0	true
+advisor_overhaul_skill_node_hero_hand_pocket		advisor_overhaul_skill_hero_hand_pocket		8	10		0	11	true
+advisor_overhaul_skill_node_hero_lamp		advisor_overhaul_skill_hero_lamp		8	27		0	6	true
+advisor_overhaul_skill_node_hero_pathfinder		advisor_overhaul_skill_hero_pathfinder		8	25		0	0	true
+advisor_overhaul_skill_node_hero_students		advisor_overhaul_skill_hero_students		8	19		0	0	true
 advisor_overhaul_skill_node_magic_arcane_ward		advisor_overhaul_skill_magic_arcane_ward		2	10		0	0	true
 advisor_overhaul_skill_node_magic_archmage		advisor_overhaul_skill_magic_archmage		0	7		0	0	true
 advisor_overhaul_skill_node_magic_battle_caster		advisor_overhaul_skill_magic_battle_caster		2	0		0	0	true

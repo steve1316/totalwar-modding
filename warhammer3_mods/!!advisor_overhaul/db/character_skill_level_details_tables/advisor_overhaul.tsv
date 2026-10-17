@@ -24,9 +24,9 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_civic_1		x	2
 		2	advisor_overhaul_skill_civic_1		x	2
 		3	advisor_overhaul_skill_civic_1		x	2
-		1	advisor_overhaul_skill_civic_10		x	6
-		2	advisor_overhaul_skill_civic_10		x	6
-		3	advisor_overhaul_skill_civic_10		x	6
+		1	advisor_overhaul_skill_civic_10		x	0
+		2	advisor_overhaul_skill_civic_10		x	0
+		3	advisor_overhaul_skill_civic_10		x	0
 		1	advisor_overhaul_skill_civic_2		x	2
 		2	advisor_overhaul_skill_civic_2		x	2
 		3	advisor_overhaul_skill_civic_2		x	2
@@ -36,21 +36,21 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_civic_4		x	3
 		2	advisor_overhaul_skill_civic_4		x	3
 		3	advisor_overhaul_skill_civic_4		x	3
-		1	advisor_overhaul_skill_civic_5		x	2
-		2	advisor_overhaul_skill_civic_5		x	2
-		3	advisor_overhaul_skill_civic_5		x	2
-		1	advisor_overhaul_skill_civic_6		x	4
-		2	advisor_overhaul_skill_civic_6		x	4
-		3	advisor_overhaul_skill_civic_6		x	4
-		1	advisor_overhaul_skill_civic_7		x	3
-		2	advisor_overhaul_skill_civic_7		x	3
-		3	advisor_overhaul_skill_civic_7		x	3
+		1	advisor_overhaul_skill_civic_5		x	6
+		2	advisor_overhaul_skill_civic_5		x	6
+		3	advisor_overhaul_skill_civic_5		x	6
+		1	advisor_overhaul_skill_civic_6		x	8
+		2	advisor_overhaul_skill_civic_6		x	8
+		3	advisor_overhaul_skill_civic_6		x	8
+		1	advisor_overhaul_skill_civic_7		x	7
+		2	advisor_overhaul_skill_civic_7		x	7
+		3	advisor_overhaul_skill_civic_7		x	7
 		1	advisor_overhaul_skill_civic_8		x	5
 		2	advisor_overhaul_skill_civic_8		x	5
 		3	advisor_overhaul_skill_civic_8		x	5
-		1	advisor_overhaul_skill_civic_9		x	1
-		2	advisor_overhaul_skill_civic_9		x	1
-		3	advisor_overhaul_skill_civic_9		x	1
+		1	advisor_overhaul_skill_civic_9		x	3
+		2	advisor_overhaul_skill_civic_9		x	3
+		3	advisor_overhaul_skill_civic_9		x	3
 		1	advisor_overhaul_skill_civic_apex		x	25
 		1	advisor_overhaul_skill_combat_aim		x	0
 		2	advisor_overhaul_skill_combat_aim		x	0
@@ -97,6 +97,18 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_combat_wards		x	0
 		2	advisor_overhaul_skill_combat_wards		x	0
 		3	advisor_overhaul_skill_combat_wards		x	0
+		1	advisor_overhaul_skill_hero_banner		x	19
+		1	advisor_overhaul_skill_hero_forager		x	8
+		2	advisor_overhaul_skill_hero_forager		x	8
+		3	advisor_overhaul_skill_hero_forager		x	8
+		1	advisor_overhaul_skill_hero_hand_pocket		x	19
+		1	advisor_overhaul_skill_hero_lamp		x	19
+		1	advisor_overhaul_skill_hero_pathfinder		x	6
+		2	advisor_overhaul_skill_hero_pathfinder		x	6
+		3	advisor_overhaul_skill_hero_pathfinder		x	6
+		1	advisor_overhaul_skill_hero_students		x	0
+		2	advisor_overhaul_skill_hero_students		x	0
+		3	advisor_overhaul_skill_hero_students		x	0
 		1	advisor_overhaul_skill_magic_arcane_ward		x	0
 		2	advisor_overhaul_skill_magic_arcane_ward		x	0
 		1	advisor_overhaul_skill_magic_archmage		x	25
@@ -150,31 +162,31 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_magic_wider		x	0
 		2	advisor_overhaul_skill_magic_wider		x	0
 		3	advisor_overhaul_skill_magic_wider		x	0
-		1	advisor_overhaul_skill_martial_0		x	3
-		2	advisor_overhaul_skill_martial_0		x	3
-		3	advisor_overhaul_skill_martial_0		x	3
+		1	advisor_overhaul_skill_martial_0		x	0
+		2	advisor_overhaul_skill_martial_0		x	0
+		3	advisor_overhaul_skill_martial_0		x	0
 		1	advisor_overhaul_skill_martial_1		x	1
 		2	advisor_overhaul_skill_martial_1		x	1
 		3	advisor_overhaul_skill_martial_1		x	1
-		1	advisor_overhaul_skill_martial_2		x	10
-		1	advisor_overhaul_skill_martial_3		x	2
-		2	advisor_overhaul_skill_martial_3		x	2
-		3	advisor_overhaul_skill_martial_3		x	2
-		1	advisor_overhaul_skill_martial_4		x	4
-		2	advisor_overhaul_skill_martial_4		x	4
-		3	advisor_overhaul_skill_martial_4		x	4
-		1	advisor_overhaul_skill_martial_5		x	4
-		2	advisor_overhaul_skill_martial_5		x	4
-		3	advisor_overhaul_skill_martial_5		x	4
-		1	advisor_overhaul_skill_martial_6		x	5
-		2	advisor_overhaul_skill_martial_6		x	5
-		3	advisor_overhaul_skill_martial_6		x	5
-		1	advisor_overhaul_skill_martial_7		x	3
-		2	advisor_overhaul_skill_martial_7		x	3
-		3	advisor_overhaul_skill_martial_7		x	3
-		1	advisor_overhaul_skill_martial_9		x	4
-		2	advisor_overhaul_skill_martial_9		x	4
-		3	advisor_overhaul_skill_martial_9		x	4
+		1	advisor_overhaul_skill_martial_2		x	19
+		1	advisor_overhaul_skill_martial_3		x	0
+		2	advisor_overhaul_skill_martial_3		x	0
+		3	advisor_overhaul_skill_martial_3		x	0
+		1	advisor_overhaul_skill_martial_4		x	0
+		2	advisor_overhaul_skill_martial_4		x	0
+		3	advisor_overhaul_skill_martial_4		x	0
+		1	advisor_overhaul_skill_martial_5		x	0
+		2	advisor_overhaul_skill_martial_5		x	0
+		3	advisor_overhaul_skill_martial_5		x	0
+		1	advisor_overhaul_skill_martial_6		x	0
+		2	advisor_overhaul_skill_martial_6		x	0
+		3	advisor_overhaul_skill_martial_6		x	0
+		1	advisor_overhaul_skill_martial_7		x	0
+		2	advisor_overhaul_skill_martial_7		x	0
+		3	advisor_overhaul_skill_martial_7		x	0
+		1	advisor_overhaul_skill_martial_9		x	0
+		2	advisor_overhaul_skill_martial_9		x	0
+		3	advisor_overhaul_skill_martial_9		x	0
 		1	advisor_overhaul_skill_martial_apex		x	25
 		1	advisor_overhaul_skill_memory_calm_voice		x	0
 		2	advisor_overhaul_skill_memory_calm_voice		x	0

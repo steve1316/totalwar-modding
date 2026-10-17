@@ -1372,9 +1372,11 @@
    "icon": "campaign_subterfuge.png",
    "row": 8,
    "tier": 1,
-   "rank": 3,
+   "rank": 0,
    "build": true,
-   "requires": [],
+   "requires": [
+    "martial_1"
+   ],
    "description": "He knows which of them will matter later. He settles it now.\\\\n\\\\nUnlocks the Assassinate hero action.",
    "levels": [
     [
@@ -1468,10 +1470,12 @@
    "icon": "campaign_subterfuge.png",
    "row": 8,
    "tier": 2,
-   "rank": 10,
+   "rank": 19,
    "build": true,
-   "requires": [],
-   "description": "Generals die too. He has watched it happen in every ending.\\\\n\\\\nUnlocks the Assassinate Lord hero action.",
+   "requires": [
+    "martial_1"
+   ],
+   "description": "Generals die too. He has watched it happen in every ending.\\\\n\\\\nUnlocks the Assassinate Lord hero action. It has a slim 5 percent base chance to kill, raised by his hero success chance. A failed attempt costs him nothing but the try.",
    "levels": [
     [
      {
@@ -1487,9 +1491,11 @@
    "icon": "campaign_siege_attack.png",
    "row": 8,
    "tier": 6,
-   "rank": 2,
+   "rank": 0,
    "build": true,
-   "requires": [],
+   "requires": [
+    "martial_1"
+   ],
    "description": "Every wall falls eventually. He only hurries it along.\\\\n\\\\nUnlocks the Damage Walls hero action.",
    "levels": [
     [
@@ -1535,9 +1541,11 @@
    "icon": "campaign_siege_defence.png",
    "row": 8,
    "tier": 8,
-   "rank": 4,
+   "rank": 0,
    "build": true,
-   "requires": [],
+   "requires": [
+    "martial_1"
+   ],
    "description": "He walks in through the gate they forgot to watch.\\\\n\\\\nUnlocks the Assault Garrison hero action.",
    "levels": [
     [
@@ -1583,9 +1591,11 @@
    "icon": "campaign_siege_attack.png",
    "row": 8,
    "tier": 7,
-   "rank": 4,
+   "rank": 0,
    "build": true,
-   "requires": [],
+   "requires": [
+    "martial_1"
+   ],
    "description": "A fire in the right storehouse ends a siege early.\\\\n\\\\nUnlocks the Damage Building hero action.",
    "levels": [
     [
@@ -1631,9 +1641,11 @@
    "icon": "campaign_movement.png",
    "row": 8,
    "tier": 4,
-   "rank": 5,
+   "rank": 0,
    "build": true,
-   "requires": [],
+   "requires": [
+    "martial_1"
+   ],
    "description": "A cut rope, a spooked horse, a missing quartermaster.\\\\n\\\\nUnlocks the Block Army hero action.",
    "levels": [
     [
@@ -1679,9 +1691,11 @@
    "icon": "campaign_replenishment.png",
    "row": 8,
    "tier": 3,
-   "rank": 3,
+   "rank": 0,
    "build": true,
-   "requires": [],
+   "requires": [
+    "martial_1"
+   ],
    "description": "Their wounded do not come back to the line.\\\\n\\\\nUnlocks the Hinder Replenishment hero action.",
    "levels": [
     [
@@ -1727,9 +1741,11 @@
    "icon": "campaign_disaster.png",
    "row": 8,
    "tier": 9,
-   "rank": 4,
+   "rank": 0,
    "build": true,
-   "requires": [],
+   "requires": [
+    "martial_1"
+   ],
    "description": "The whole camp, the same night.\\\\n\\\\nUnlocks the Assault Units hero action.",
    "levels": [
     [
@@ -1858,7 +1874,9 @@
    "tier": 13,
    "rank": 2,
    "build": true,
-   "requires": [],
+   "requires": [
+    "civic_1"
+   ],
    "description": "He finds men to fill the gaps. He knows where they hide.\\\\n\\\\nUnlocks the Replenish Troops hero action.",
    "levels": [
     [
@@ -1906,7 +1924,9 @@
    "tier": 24,
    "rank": 4,
    "build": true,
-   "requires": [],
+   "requires": [
+    "civic_0"
+   ],
    "description": "He knows the shortcut. He has walked it in three other lives.\\\\n\\\\nUnlocks the Increase Mobility hero action.",
    "levels": [
     [
@@ -1954,7 +1974,9 @@
    "tier": 23,
    "rank": 3,
    "build": true,
-   "requires": [],
+   "requires": [
+    "civic_0"
+   ],
    "description": "Nothing on a battlefield is wasted while he is there.\\\\n\\\\nUnlocks the Scavenge hero action.",
    "levels": [
     [
@@ -2000,9 +2022,11 @@
    "icon": "campaign_public_order.png",
    "row": 8,
    "tier": 16,
-   "rank": 2,
+   "rank": 6,
    "build": true,
-   "requires": [],
+   "requires": [
+    "civic_1"
+   ],
    "description": "He reminds the people what the alternative looks like.\\\\n\\\\nUnlocks the Spread Public Order hero action.",
    "levels": [
     [
@@ -2078,9 +2102,11 @@
    "icon": "campaign_untainted.png",
    "row": 8,
    "tier": 18,
-   "rank": 4,
+   "rank": 8,
    "build": true,
-   "requires": [],
+   "requires": [
+    "civic_1"
+   ],
    "description": "He has seen what the taint becomes. He burns it out early.\\\\n\\\\nUnlocks the Cleanse Corruption hero action.",
    "levels": [
     [
@@ -2141,9 +2167,11 @@
    "icon": "campaign_growth.png",
    "row": 8,
    "tier": 17,
-   "rank": 3,
+   "rank": 7,
    "build": true,
-   "requires": [],
+   "requires": [
+    "civic_1"
+   ],
    "description": "He remembers which years the crops failed, and plants for them.\\\\n\\\\nUnlocks the Stimulate Growth hero action.",
    "levels": [
     [
@@ -2221,7 +2249,9 @@
    "tier": 15,
    "rank": 5,
    "build": true,
-   "requires": [],
+   "requires": [
+    "civic_1"
+   ],
    "description": "He knows which roads will close, and which ships will sink.\\\\n\\\\nUnlocks the Increase Trade hero action.",
    "levels": [
     [
@@ -2267,9 +2297,11 @@
    "icon": "campaign_military_spending.png",
    "row": 8,
    "tier": 14,
-   "rank": 1,
+   "rank": 3,
    "build": true,
-   "requires": [],
+   "requires": [
+    "civic_1"
+   ],
    "description": "Half the counting-houses in the Empire owe him money from a life they cannot remember.\\\\n\\\\nImproves his Boost Income hero action, which he always has.",
    "levels": [
     [
@@ -2330,9 +2362,11 @@
    "icon": "campaign_technology.png",
    "row": 8,
    "tier": 5,
-   "rank": 6,
+   "rank": 0,
    "build": true,
-   "requires": [],
+   "requires": [
+    "martial_1"
+   ],
    "description": "He has read books that have not been written yet. Theirs are easier.\\\\n\\\\nUnlocks the Steal Technology hero action.",
    "levels": [
     [
@@ -2424,7 +2458,9 @@
    "rank": 25,
    "build": true,
    "role": "apex",
-   "requires": [],
+   "requires": [
+    "hero_lamp"
+   ],
    "description": "Kings come and go. He has advised most of them, in one world or another.\\\\n\\\\nThe Civic row's Apex. Takes the place of the other Apexes and the Polymath.",
    "levels": [
     [
@@ -6017,6 +6053,242 @@
    "role": "gate",
    "needs": 5
   },
+  "hero_pathfinder": {
+   "name": "Pathfinder",
+   "icon": "campaign_movement.png",
+   "row": 8,
+   "tier": 25,
+   "rank": 6,
+   "build": true,
+   "requires": [
+    "civic_0"
+   ],
+   "description": "He has walked this road in four endings. It never got shorter by itself.\\\\n\\\\nHis army marches farther each turn.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_force_own_campaign_movement_range",
+      "scope": "agent_to_parent_army_own",
+      "value": 3
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_force_own_campaign_movement_range",
+      "scope": "agent_to_parent_army_own",
+      "value": 5
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_force_own_campaign_movement_range",
+      "scope": "agent_to_parent_army_own",
+      "value": 7
+     }
+    ]
+   ]
+  },
+  "hero_forager": {
+   "name": "Forager's Eye",
+   "icon": "campaign_army.png",
+   "row": 8,
+   "tier": 26,
+   "rank": 8,
+   "build": true,
+   "requires": [
+    "civic_0"
+   ],
+   "description": "Where others see scrub, he sees supper.\\\\n\\\\nMore loot after every battle.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_force_all_campaign_post_battle_loot_mod",
+      "scope": "agent_to_parent_army_own",
+      "value": 5
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_force_all_campaign_post_battle_loot_mod",
+      "scope": "agent_to_parent_army_own",
+      "value": 10
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_force_all_campaign_post_battle_loot_mod",
+      "scope": "agent_to_parent_army_own",
+      "value": 15
+     }
+    ]
+   ]
+  },
+  "hero_hand_pocket": {
+   "name": "A Hand in Every Pocket",
+   "icon": "campaign_subterfuge.png",
+   "row": 8,
+   "tier": 10,
+   "rank": 19,
+   "build": true,
+   "requires": [
+    "martial_0",
+    "martial_2",
+    "martial_7",
+    "martial_6",
+    "civic_10",
+    "martial_3",
+    "martial_5",
+    "martial_4",
+    "martial_9"
+   ],
+   "description": "Every door in the world has a friend on the inside, and he has met all of them.\\\\n\\\\nAll the faction's heroes act with more success, every army returns richer from battle, research speeds up, and his own army ambushes and moves better.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_agent_action_success_chance",
+      "scope": "character_to_character_own_factionwide_heroes",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_agent_action_success_chance",
+      "scope": "character_to_character_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_force_all_campaign_post_battle_loot_mod",
+      "scope": "character_to_character_own_factionwide",
+      "value": 20
+     },
+     {
+      "effect": "wh_main_effect_technology_research_rate_mod",
+      "scope": "character_to_faction_unseen",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_force_army_campaign_ambush_attack_success_chance",
+      "scope": "agent_to_parent_army_own",
+      "value": 25
+     },
+     {
+      "effect": "wh_main_effect_force_stat_speed",
+      "scope": "agent_to_parent_army_own",
+      "value": 10
+     }
+    ]
+   ],
+   "role": "gate",
+   "needs": 11
+  },
+  "hero_banner": {
+   "name": "The Banner Remembered",
+   "icon": "campaign_army.png",
+   "row": 8,
+   "tier": 20,
+   "rank": 19,
+   "build": true,
+   "requires": [
+    "civic_2",
+    "civic_9",
+    "civic_8",
+    "civic_5",
+    "civic_7",
+    "civic_6",
+    "hero_students"
+   ],
+   "description": "A banner remembered is a banner that does not fall. Every army he has ever stood with fights harder for it.\\\\n\\\\nEvery army in the faction costs less to keep, recovers faster and holds firmer, and his own army costs less again.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_force_all_campaign_upkeep",
+      "scope": "character_to_force_own_factionwide",
+      "value": -10
+     },
+     {
+      "effect": "wh_main_effect_force_all_campaign_replenishment_rate",
+      "scope": "character_to_force_own_factionwide",
+      "value": 5
+     },
+     {
+      "effect": "wh_main_effect_force_stat_leadership",
+      "scope": "character_to_force_own_factionwide",
+      "value": 6
+     },
+     {
+      "effect": "wh2_main_effect_public_order_characters_factionwide",
+      "scope": "character_to_province_own_factionwide",
+      "value": 2
+     },
+     {
+      "effect": "wh_main_effect_force_all_campaign_upkeep",
+      "scope": "general_to_force_own",
+      "value": -10
+     },
+     {
+      "effect": "wh_main_effect_force_stat_melee_defence",
+      "scope": "agent_to_parent_army_own",
+      "value": 8
+     }
+    ]
+   ],
+   "role": "gate",
+   "needs": 9
+  },
+  "hero_lamp": {
+   "name": "The Lamp in the Window",
+   "icon": "campaign_public_order.png",
+   "row": 8,
+   "tier": 27,
+   "rank": 19,
+   "build": true,
+   "requires": [
+    "civic_4",
+    "civic_3",
+    "hero_pathfinder",
+    "hero_forager"
+   ],
+   "description": "Wherever he rests, someone leaves a light on. He has never asked them to.\\\\n\\\\nEvery province of the faction is calmer and richer, all armies learn faster and hold firmer, and his own army learns fastest of all. Lords and heroes join the faction with even more ranks.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_public_order_characters_factionwide",
+      "scope": "character_to_province_own_factionwide",
+      "value": 3
+     },
+     {
+      "effect": "wh_main_effect_economy_gdp_mod_all",
+      "scope": "character_to_region_own_factionwide",
+      "value": 5
+     },
+     {
+      "effect": "wh_main_effect_force_all_campaign_experience_base_all",
+      "scope": "character_to_force_own_factionwide",
+      "value": 5
+     },
+     {
+      "effect": "wh_main_effect_force_stat_leadership",
+      "scope": "character_to_force_own_factionwide",
+      "value": 4
+     },
+     {
+      "effect": "wh_main_effect_province_growth_characters",
+      "scope": "character_to_province_own",
+      "value": 1
+     },
+     {
+      "effect": "wh_main_effect_force_all_campaign_experience_base_all",
+      "scope": "agent_to_parent_army_own",
+      "value": 2
+     },
+     {
+      "effect": "wh2_main_effect_agent_recruitment_xp_all_agents_and_lords",
+      "scope": "faction_to_province_own_factionwide",
+      "value": 4
+     }
+    ]
+   ],
+   "role": "gate",
+   "needs": 6
+  },
   "combat_barrier": {
    "name": "Shell of Light",
    "icon": "battle_defence.png",
@@ -6986,6 +7258,41 @@
     ]
    ]
   },
+  "hero_students": {
+   "name": "Students in Every Court",
+   "icon": "campaign_army.png",
+   "row": 8,
+   "tier": 19,
+   "rank": 0,
+   "build": true,
+   "requires": [
+    "civic_1"
+   ],
+   "description": "Half the captains of the world once sat at his table and listened.\\\\n\\\\nLords and heroes join the faction with more ranks.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_recruitment_xp_all_agents_and_lords",
+      "scope": "faction_to_province_own_factionwide",
+      "value": 1
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_recruitment_xp_all_agents_and_lords",
+      "scope": "faction_to_province_own_factionwide",
+      "value": 2
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_recruitment_xp_all_agents_and_lords",
+      "scope": "faction_to_province_own_factionwide",
+      "value": 3
+     }
+    ]
+   ]
+  },
   "combat_barrier_line": {
    "name": "Light Along the Line",
    "icon": "battle_defence.png",
@@ -7530,6 +7837,19 @@
    "icon": "barrier.png",
    "good": true,
    "text": "Barrier: %+n for all units in the army except characters"
+  }
+ },
+ "action_overrides": {
+  "wh2_main_agent_action_spy_hinder_character_assassinate": {
+   "cannot_fail": "wh_main_agent_action_all_hinder_agent_critical_success",
+   "critical_failure": "wh_main_agent_action_all_hinder_character_failure",
+   "critical_success": "wh_main_agent_action_all_hinder_agent_critical_success",
+   "failure": "wh_main_agent_action_all_hinder_character_failure",
+   "opportune_failure": "wh_main_agent_action_all_hinder_character_failure",
+   "success": "wh_main_agent_action_all_hinder_agent_critical_success",
+   "localised_action_description": "[[col:yellow]]Kills the target Character.[[/col]]",
+   "chance_of_success": "5",
+   "succeed_always_override": "false"
   }
  }
 }

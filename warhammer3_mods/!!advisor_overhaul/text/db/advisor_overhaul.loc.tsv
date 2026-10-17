@@ -142,6 +142,18 @@ character_skills_localised_name_advisor_overhaul_skill_combat_veteran_hide	Veter
 character_skills_localised_description_advisor_overhaul_skill_combat_veteran_hide	Scar over scar over scar. Little finds soft skin to bite.\\n\\nMore armour.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_wards	Duelling Wards	true
 character_skills_localised_description_advisor_overhaul_skill_combat_wards	A flick of the wrist and the blade glances aside. He has practised it on worse than swords.\\n\\nA ward save.	true
+character_skills_localised_name_advisor_overhaul_skill_hero_banner	The Banner Remembered	true
+character_skills_localised_description_advisor_overhaul_skill_hero_banner	A banner remembered is a banner that does not fall. Every army he has ever stood with fights harder for it.\\n\\nEvery army in the faction costs less to keep, recovers faster and holds firmer, and his own army costs less again.	true
+character_skills_localised_name_advisor_overhaul_skill_hero_forager	Forager's Eye	true
+character_skills_localised_description_advisor_overhaul_skill_hero_forager	Where others see scrub, he sees supper.\\n\\nMore loot after every battle.	true
+character_skills_localised_name_advisor_overhaul_skill_hero_hand_pocket	A Hand in Every Pocket	true
+character_skills_localised_description_advisor_overhaul_skill_hero_hand_pocket	Every door in the world has a friend on the inside, and he has met all of them.\\n\\nAll the faction's heroes act with more success, every army returns richer from battle, research speeds up, and his own army ambushes and moves better.	true
+character_skills_localised_name_advisor_overhaul_skill_hero_lamp	The Lamp in the Window	true
+character_skills_localised_description_advisor_overhaul_skill_hero_lamp	Wherever he rests, someone leaves a light on. He has never asked them to.\\n\\nEvery province of the faction is calmer and richer, all armies learn faster and hold firmer, and his own army learns fastest of all. Lords and heroes join the faction with even more ranks.	true
+character_skills_localised_name_advisor_overhaul_skill_hero_pathfinder	Pathfinder	true
+character_skills_localised_description_advisor_overhaul_skill_hero_pathfinder	He has walked this road in four endings. It never got shorter by itself.\\n\\nHis army marches farther each turn.	true
+character_skills_localised_name_advisor_overhaul_skill_hero_students	Students in Every Court	true
+character_skills_localised_description_advisor_overhaul_skill_hero_students	Half the captains of the world once sat at his table and listened.\\n\\nLords and heroes join the faction with more ranks.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_arcane_ward	Arcane Ward	true
 character_skills_localised_description_advisor_overhaul_skill_magic_arcane_ward	A thin shimmer, taught to him by a mage whose name no one else recalls.\\n\\nA ward save.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_archmage	Archmage	true
@@ -195,7 +207,7 @@ character_skills_localised_description_advisor_overhaul_skill_martial_0	He knows
 character_skills_localised_name_advisor_overhaul_skill_martial_1	Wound	true
 character_skills_localised_description_advisor_overhaul_skill_martial_1	Not a killing blow. A reminder.\\n\\nUnlocks the Wound hero action.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_2	Assassinate Lord	true
-character_skills_localised_description_advisor_overhaul_skill_martial_2	Generals die too. He has watched it happen in every ending.\\n\\nUnlocks the Assassinate Lord hero action.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_2	Generals die too. He has watched it happen in every ending.\\n\\nUnlocks the Assassinate Lord hero action. It has a slim 5 percent base chance to kill, raised by his hero success chance. A failed attempt costs him nothing but the try.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_3	Damage Walls	true
 character_skills_localised_description_advisor_overhaul_skill_martial_3	Every wall falls eventually. He only hurries it along.\\n\\nUnlocks the Damage Walls hero action.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_4	Assault Garrison	true
@@ -513,7 +525,7 @@ agent_actions_localised_action_name_advisor_overhaul_action_spy_assist_army_incr
 agent_actions_localised_action_description_advisor_overhaul_action_spy_assist_army_increase_mobility	[[col:yellow]]Increases the campaign movement range of the parent army by %n%.[[/col]]	true
 effects_description_advisor_overhaul_effect_enable_spy_assist_army_increase_mobility	Hero action: {{tr:agent_action_name_increase_mobility}}	true
 agent_actions_localised_action_name_advisor_overhaul_action_spy_hinder_character_assassinate	{{tr:agent_action_name_assassinate}}	true
-agent_actions_localised_action_description_advisor_overhaul_action_spy_hinder_character_assassinate	[[col:yellow]]Kills the target Character.[[/col]]\\n[[col:red]]This action will kill the Hand of the Shadow Crown![[/col]]	true
+agent_actions_localised_action_description_advisor_overhaul_action_spy_hinder_character_assassinate	[[col:yellow]]Kills the target Character.[[/col]]	true
 effects_description_advisor_overhaul_effect_enable_spy_hinder_character_assassinate	Hero action: {{tr:agent_action_name_assassinate}}	true
 effects_description_advisor_overhaul_effect_wom_cost_what_was	Winds of Magic cost: %+n% for Fire, Beasts, Metal, the Heavens, Light, Life, Shadows, Death, High Magic and Ice spells	true
 effects_description_advisor_overhaul_effect_wom_cost_what_is_held	Winds of Magic cost: %+n% for Tempest, Yang, Yin, Mists, the Hag, Dark Magic, Vampires, Undeath, Nehekhara and the Deep spells	true
