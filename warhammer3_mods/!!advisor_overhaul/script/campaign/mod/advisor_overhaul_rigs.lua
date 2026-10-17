@@ -12,8 +12,8 @@ ADVISOR_OVERHAUL_RIGS = {
 	weapons = {
 		{ key = "staff_and_sword", skill = "", name = "advisor_overhaul_ui_weapon_staff_and_sword", fallback = "Staff and Sword", icon = "ui/campaign ui/skills/item_weapon.png", art_set = "advisor_overhaul_art_staff_and_sword" },
 		{ key = "sword_and_shield", skill = "advisor_overhaul_choose_weapon_sword_and_shield", name = "advisor_overhaul_ui_weapon_sword_and_shield", fallback = "Sword and Shield", icon = "ui/campaign ui/skills/wh_dlc07_lord_abilities_lions_shield.png", art_set = "advisor_overhaul_art_sword_and_shield", grant_rank = 4 },
-		{ key = "greatsword", skill = "advisor_overhaul_choose_weapon_greatsword", name = "advisor_overhaul_ui_weapon_greatsword", fallback = "Greatsword", icon = "ui/campaign ui/skills/wh2_dlc11_strength_of_steel.png", art_set = "advisor_overhaul_art_greatsword", grant_rank = 10 },
 		{ key = "sword_and_bow", skill = "advisor_overhaul_choose_weapon_sword_and_bow", name = "advisor_overhaul_ui_weapon_sword_and_bow", fallback = "Sword and Bow", icon = "ui/campaign ui/skills/wh_dlc05_weapon_abilities_the_bow_of_loren.png", art_set = "advisor_overhaul_art_sword_and_bow", grant_rank = 7 },
+		{ key = "greatsword", skill = "advisor_overhaul_choose_weapon_greatsword", name = "advisor_overhaul_ui_weapon_greatsword", fallback = "Greatsword", icon = "ui/campaign ui/skills/wh2_dlc11_strength_of_steel.png", art_set = "advisor_overhaul_art_greatsword", grant_rank = 10 },
 	},
 	--- Mounts in skill tree order: key, unlock skill (empty for the default), name loc key, English fallback name and picker icon.
 	--- A `grant_rank` is the rank at which the script gives him that item's skill.
@@ -32,10 +32,10 @@ ADVISOR_OVERHAUL_RIGS = {
 		["sword_and_shield|foot"] = "advisor_overhaul_rig_sword_and_shield_foot",
 		["sword_and_shield|warhorse"] = "advisor_overhaul_rig_sword_and_shield_warhorse",
 		["sword_and_shield|pegasus"] = "advisor_overhaul_rig_sword_and_shield_pegasus",
-		["greatsword|foot"] = "advisor_overhaul_rig_greatsword_foot",
-		["greatsword|warhorse"] = "advisor_overhaul_rig_greatsword_warhorse",
 		["sword_and_bow|foot"] = "advisor_overhaul_rig_sword_and_bow_foot",
 		["sword_and_bow|warhorse"] = "advisor_overhaul_rig_sword_and_bow_warhorse",
+		["greatsword|foot"] = "advisor_overhaul_rig_greatsword_foot",
+		["greatsword|warhorse"] = "advisor_overhaul_rig_greatsword_warhorse",
 	},
 	--- Mount ancillary -> the weapon and mount of its pair.
 	rigs = {
@@ -46,10 +46,10 @@ ADVISOR_OVERHAUL_RIGS = {
 		["advisor_overhaul_rig_sword_and_shield_foot"] = { weapon = "sword_and_shield", mount = "foot" },
 		["advisor_overhaul_rig_sword_and_shield_warhorse"] = { weapon = "sword_and_shield", mount = "warhorse" },
 		["advisor_overhaul_rig_sword_and_shield_pegasus"] = { weapon = "sword_and_shield", mount = "pegasus" },
-		["advisor_overhaul_rig_greatsword_foot"] = { weapon = "greatsword", mount = "foot" },
-		["advisor_overhaul_rig_greatsword_warhorse"] = { weapon = "greatsword", mount = "warhorse" },
 		["advisor_overhaul_rig_sword_and_bow_foot"] = { weapon = "sword_and_bow", mount = "foot" },
 		["advisor_overhaul_rig_sword_and_bow_warhorse"] = { weapon = "sword_and_bow", mount = "warhorse" },
+		["advisor_overhaul_rig_greatsword_foot"] = { weapon = "greatsword", mount = "foot" },
+		["advisor_overhaul_rig_greatsword_warhorse"] = { weapon = "greatsword", mount = "warhorse" },
 	},
 	--- Forename loc key of his name.
 	name = "names_name_930556520",
@@ -82,17 +82,6 @@ ADVISOR_OVERHAUL_RIGS = {
 			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_sword_and_shield_apex", name = "Shield of Faith" },
 			{ skill = "advisor_overhaul_skill_arts_army_4", bundle = "advisor_overhaul_weapon_art_sword_and_shield_army_4", name = "Shield Wall" },
 		},
-		["greatsword"] = {
-			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_greatsword_art_1", name = "Overhand" },
-			{ skill = "advisor_overhaul_skill_arts_art_2", bundle = "advisor_overhaul_weapon_art_greatsword_art_2", name = "Momentum" },
-			{ skill = "advisor_overhaul_skill_arts_art_3", bundle = "advisor_overhaul_weapon_art_greatsword_art_3", name = "Cleaving Arc" },
-			{ skill = "advisor_overhaul_skill_arts_art_4", bundle = "advisor_overhaul_weapon_art_greatsword_art_4", name = "Headsman" },
-			{ skill = "advisor_overhaul_skill_arts_army_1", bundle = "advisor_overhaul_weapon_art_greatsword_army_1", name = "Bloody Drill" },
-			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_greatsword_army_2", name = "Charge Them" },
-			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_greatsword_army_3", name = "Butcher's Bill" },
-			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_greatsword_apex", name = "Killing Blow" },
-			{ skill = "advisor_overhaul_skill_arts_army_4", bundle = "advisor_overhaul_weapon_art_greatsword_army_4", name = "Through the Plate" },
-		},
 		["sword_and_bow"] = {
 			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_sword_and_bow_art_1", name = "Steady Draw" },
 			{ skill = "advisor_overhaul_skill_arts_art_2", bundle = "advisor_overhaul_weapon_art_sword_and_bow_art_2", name = "Long Eye" },
@@ -103,6 +92,17 @@ ADVISOR_OVERHAUL_RIGS = {
 			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_sword_and_bow_army_3", name = "From the Trees" },
 			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_sword_and_bow_apex", name = "Hail of Doom" },
 			{ skill = "advisor_overhaul_skill_arts_army_4", bundle = "advisor_overhaul_weapon_art_sword_and_bow_army_4", name = "Quick Hands" },
+		},
+		["greatsword"] = {
+			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_greatsword_art_1", name = "Overhand" },
+			{ skill = "advisor_overhaul_skill_arts_art_2", bundle = "advisor_overhaul_weapon_art_greatsword_art_2", name = "Momentum" },
+			{ skill = "advisor_overhaul_skill_arts_art_3", bundle = "advisor_overhaul_weapon_art_greatsword_art_3", name = "Cleaving Arc" },
+			{ skill = "advisor_overhaul_skill_arts_art_4", bundle = "advisor_overhaul_weapon_art_greatsword_art_4", name = "Headsman" },
+			{ skill = "advisor_overhaul_skill_arts_army_1", bundle = "advisor_overhaul_weapon_art_greatsword_army_1", name = "Bloody Drill" },
+			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_greatsword_army_2", name = "Charge Them" },
+			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_greatsword_army_3", name = "Butcher's Bill" },
+			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_greatsword_apex", name = "Killing Blow" },
+			{ skill = "advisor_overhaul_skill_arts_army_4", bundle = "advisor_overhaul_weapon_art_greatsword_army_4", name = "Through the Plate" },
 		},
 	},
 	--- The Polymath: its skill, how many skills of a discipline make it count, each discipline's skills, and the bundle for each number

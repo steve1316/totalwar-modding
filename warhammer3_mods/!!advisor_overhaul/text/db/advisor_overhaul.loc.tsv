@@ -26,22 +26,22 @@ ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_warhorse	He leaves
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_pegasus	The Advisor (Sword and Shield, Imperial Pegasus)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_pegasus	Sword and Shield, Imperial Pegasus	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_pegasus	He leaves the staff behind and takes up a knight's shield. A winged Imperial steed that lifts him over the battle line.	true
-land_units_onscreen_name_advisor_overhaul_greatsword_foot	The Advisor (Greatsword, On Foot)	true
-ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_foot	Greatsword, On Foot	true
-ancillaries_colour_text_advisor_overhaul_rig_greatsword_foot	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. He walks, as he always has.	true
-land_units_onscreen_name_advisor_overhaul_greatsword_warhorse	The Advisor (Greatsword, Barded Warhorse)	true
-ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_warhorse	Greatsword, Barded Warhorse	true
-ancillaries_colour_text_advisor_overhaul_rig_greatsword_warhorse	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. An armoured Imperial charger, steady under spellfire.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_bow_foot	The Advisor (Sword and Bow, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_foot	Sword and Bow, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_foot	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_bow_warhorse	The Advisor (Sword and Bow, Barded Warhorse)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_warhorse	Sword and Bow, Barded Warhorse	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_warhorse	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. An armoured Imperial charger, steady under spellfire.	true
+land_units_onscreen_name_advisor_overhaul_greatsword_foot	The Advisor (Greatsword, On Foot)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_foot	Greatsword, On Foot	true
+ancillaries_colour_text_advisor_overhaul_rig_greatsword_foot	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. He walks, as he always has.	true
+land_units_onscreen_name_advisor_overhaul_greatsword_warhorse	The Advisor (Greatsword, Barded Warhorse)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_warhorse	Greatsword, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_rig_greatsword_warhorse	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. An armoured Imperial charger, steady under spellfire.	true
 advisor_overhaul_ui_weapon_staff_and_sword	Staff and Sword	true
 advisor_overhaul_ui_weapon_sword_and_shield	Sword and Shield	true
-advisor_overhaul_ui_weapon_greatsword	Greatsword	true
 advisor_overhaul_ui_weapon_sword_and_bow	Sword and Bow	true
+advisor_overhaul_ui_weapon_greatsword	Greatsword	true
 advisor_overhaul_ui_mount_foot	On Foot	true
 advisor_overhaul_ui_mount_warhorse	Barded Warhorse	true
 advisor_overhaul_ui_mount_pegasus	Imperial Pegasus	true
@@ -56,10 +56,10 @@ character_skills_localised_name_advisor_overhaul_choose_weapon_staff_and_sword	S
 character_skills_localised_description_advisor_overhaul_choose_weapon_staff_and_sword	A walking staff for his spells and a plain Imperial blade for anything that gets too close.\\n\\nHis default weapon, which he always has. Switch back to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_shield	Sword and Shield	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_shield	He leaves the staff behind and takes up a knight's shield.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
-character_skills_localised_name_advisor_overhaul_choose_weapon_greatsword	Greatsword	true
-character_skills_localised_description_advisor_overhaul_choose_weapon_greatsword	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_bow	Sword and Bow	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_bow	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_name_advisor_overhaul_choose_weapon_greatsword	Greatsword	true
+character_skills_localised_description_advisor_overhaul_choose_weapon_greatsword	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_skill_actions_default	Default Actions	true
 character_skills_localised_description_advisor_overhaul_skill_actions_default	The hero actions he always has: Scouting, Scout Settlement and Boost Income.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_apex	Master of Arms	true
@@ -302,24 +302,6 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_apex
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_apex	Not his god's faith. His own, that this time will be different.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_army_4	Shield Wall	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_army_4	Every shield overlaps the next, the way he showed them.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_1	Overhand	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_1	A blow from above, with all of him behind it.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_2	Momentum	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_2	Once the blade is moving, nothing in front of it matters.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_3	Cleaving Arc	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_3	One swing, three men. He has done the sums.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_4	Headsman	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_4	Big things die the same way small ones do.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_1	Bloody Drill	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_1	He makes them practise until they stop flinching.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_2	Charge Them	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_2	He goes first. They follow.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_3	Butcher's Bill	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_3	He knows what this battle will cost and pays it early.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_apex	Killing Blow	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_apex	The blow that ended a king, in a world nobody else remembers.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_4	Through the Plate	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_4	He teaches them where the armour is thinnest.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_art_1	Steady Draw	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_art_1	He breathes out, and the arrow goes where he looked.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_art_2	Long Eye	true
@@ -338,6 +320,24 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_apex	Ha
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_apex	One arrow that splits into a storm.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_army_4	Quick Hands	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_army_4	Nock, draw, loose. He counts it out until they no longer need him to.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_1	Overhand	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_1	A blow from above, with all of him behind it.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_2	Momentum	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_2	Once the blade is moving, nothing in front of it matters.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_3	Cleaving Arc	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_3	One swing, three men. He has done the sums.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_4	Headsman	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_4	Big things die the same way small ones do.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_1	Bloody Drill	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_1	He makes them practise until they stop flinching.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_2	Charge Them	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_2	He goes first. They follow.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_3	Butcher's Bill	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_3	He knows what this battle will cost and pays it early.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_apex	Killing Blow	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_apex	The blow that ended a king, in a world nobody else remembers.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_4	Through the Plate	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_4	He teaches them where the armour is thinnest.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_1	Everything, Again (1 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_1	He draws on 1 of his disciplines at once.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_2	Everything, Again (2 of 4)	true

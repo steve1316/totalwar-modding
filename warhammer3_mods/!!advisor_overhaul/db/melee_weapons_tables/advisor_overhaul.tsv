@@ -2,5 +2,5 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 #melee_weapons_tables;25;db/melee_weapons_tables/advisor_overhaul																			
 advisor_overhaul_staff_and_sword_melee	0	0	210	90	3.0000	sword	sword	medium	3	1.0000	0.7500	0.0000	false		0	10	4.0000		false
 advisor_overhaul_sword_and_shield_melee	0	0	250	125	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
-advisor_overhaul_greatsword_melee	0	20	150	320	3.0000	sword	sword	medium	5	1.0000	0.7500	0.0000	false		0	10	4.0000		false
 advisor_overhaul_sword_and_bow_melee	0	0	270	90	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+advisor_overhaul_greatsword_melee	0	20	150	320	3.0000	sword	sword	medium	5	1.0000	0.7500	0.0000	false		0	10	4.0000		false
