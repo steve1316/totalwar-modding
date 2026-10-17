@@ -12,10 +12,13 @@ advisor_overhaul_skill_node_arts_apex		advisor_overhaul_skill_arts_apex		0	6		0	
 advisor_overhaul_skill_node_arts_army_1		advisor_overhaul_skill_arts_army_1		1	0		0	0	true
 advisor_overhaul_skill_node_arts_army_2		advisor_overhaul_skill_arts_army_2		1	1		0	0	true
 advisor_overhaul_skill_node_arts_army_3		advisor_overhaul_skill_arts_army_3		1	2		0	0	true
+advisor_overhaul_skill_node_arts_army_4		advisor_overhaul_skill_arts_army_4		1	3		0	0	true
+advisor_overhaul_skill_node_arts_army_gate		advisor_overhaul_skill_arts_army_gate		1	4		0	0	true
 advisor_overhaul_skill_node_arts_art_1		advisor_overhaul_skill_arts_art_1		1	6		0	0	true
 advisor_overhaul_skill_node_arts_art_2		advisor_overhaul_skill_arts_art_2		1	7		0	0	true
 advisor_overhaul_skill_node_arts_art_3		advisor_overhaul_skill_arts_art_3		1	8		0	0	true
 advisor_overhaul_skill_node_arts_art_4		advisor_overhaul_skill_arts_art_4		1	9		0	0	true
+advisor_overhaul_skill_node_arts_gate		advisor_overhaul_skill_arts_gate		1	10		0	0	true
 advisor_overhaul_skill_node_civic_0		advisor_overhaul_skill_civic_0		8	22		0	0	true
 advisor_overhaul_skill_node_civic_1		advisor_overhaul_skill_civic_1		8	12		0	0	true
 advisor_overhaul_skill_node_civic_10		advisor_overhaul_skill_civic_10		8	5		0	0	true

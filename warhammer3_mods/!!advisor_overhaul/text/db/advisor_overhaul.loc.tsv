@@ -68,6 +68,10 @@ character_skills_localised_name_advisor_overhaul_skill_arts_army_2	Army II: Form
 character_skills_localised_description_advisor_overhaul_skill_arts_army_2	He places men where he once saw them live.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_army_3	Army III: Last Stand	true
 character_skills_localised_description_advisor_overhaul_skill_arts_army_3	He has seen how armies break. He does not let this one.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_army_4	Army IV: Every Banner	true
+character_skills_localised_description_advisor_overhaul_skill_arts_army_4	Every army he ever marched with left him one trick. He hands them all on.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_army_gate	A Host of His Own	true
+character_skills_localised_description_advisor_overhaul_skill_arts_army_gate	The men around him fight the way he taught them, whatever he holds.\\n\\nHis army hits harder, holds firmer, stands longer and tires more slowly.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_art_1	Art I: Stance	true
 character_skills_localised_description_advisor_overhaul_skill_arts_art_1	The first thing he learned with every weapon he ever held, in every world that ended.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_art_2	Art II: Edge	true
@@ -76,6 +80,8 @@ character_skills_localised_name_advisor_overhaul_skill_arts_art_3	Art III: Flow	
 character_skills_localised_description_advisor_overhaul_skill_arts_art_3	The weapon stops being a tool and starts being an argument.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_art_4	Art IV: Ending	true
 character_skills_localised_description_advisor_overhaul_skill_arts_art_4	How he finished it last time. And the time before that.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_gate	A Style of His Own	true
+character_skills_localised_description_advisor_overhaul_skill_arts_gate	Seven teachers, seven endings, and he took the best of each. What comes out is nobody's but his.\\n\\nHis charges hit like a hammer and his lines hold against cavalry.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_0	Scouting	true
 character_skills_localised_description_advisor_overhaul_skill_civic_0	He knows where they are. He usually knows where they will be.\\n\\nImproves his Scouting hero action, which he always has.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_1	Training	true
@@ -156,6 +162,8 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_army_
 effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_army_3	Magic does not frighten men who have seen him use it.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_apex	Channelled Staff	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_apex	The staff drinks the Winds and gives them back to him.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_army_4	Woven Wards	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_army_4	He threads a ward through every rank before the first blow.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_art_1	Shield Wall	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_art_1	He stands where the blows land thickest and lets them come.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_art_2	Turn the Arrow	true
@@ -172,6 +180,8 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_army
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_army_3	This line held once, at the end of the world. It will hold now.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_apex	Shield of Faith	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_apex	Not his god's faith. His own, that this time will be different.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_army_4	Shield Wall	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_army_4	Every shield overlaps the next, the way he showed them.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_1	Overhand	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_1	A blow from above, with all of him behind it.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_2	Momentum	true
@@ -188,6 +198,8 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_3	But
 effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_3	He knows what this battle will cost and pays it early.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_apex	Killing Blow	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_apex	The blow that ended a king, in a world nobody else remembers.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_4	Through the Plate	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_4	He teaches them where the armour is thinnest.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_art_1	Steady Draw	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_art_1	He breathes out, and the arrow goes where he looked.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_art_2	Long Eye	true
@@ -204,6 +216,8 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_army_3	
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_army_3	He knows where the enemy will walk, because he has watched them walk there before.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_apex	Hail of Doom	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_apex	One arrow that splits into a storm.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_army_4	Quick Hands	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_army_4	Nock, draw, loose. He counts it out until they no longer need him to.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_1	Everything, Again (1 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_1	He draws on 1 of his disciplines at once.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_2	Everything, Again (2 of 4)	true

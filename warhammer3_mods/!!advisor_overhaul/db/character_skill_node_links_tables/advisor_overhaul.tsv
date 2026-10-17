@@ -1,10 +1,13 @@
 child_key	parent_key	initial_descent_tiers	parent_link_position	child_link_position	parent_link_position_offset	child_link_position_offset	link_type
 #character_skill_node_links_tables;3;db/character_skill_node_links_tables/advisor_overhaul							
-advisor_overhaul_skill_node_arts_apex	advisor_overhaul_skill_node_arts_art_4	0	1	1	0.0000	0.0000	REQUIRED
+advisor_overhaul_skill_node_arts_apex	advisor_overhaul_skill_node_arts_gate	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_arts_army_2	advisor_overhaul_skill_node_arts_army_1	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_arts_army_3	advisor_overhaul_skill_node_arts_army_2	0	1	1	0.0000	0.0000	REQUIRED
+advisor_overhaul_skill_node_arts_army_4	advisor_overhaul_skill_node_arts_army_3	0	1	1	0.0000	0.0000	REQUIRED
+advisor_overhaul_skill_node_arts_army_gate	advisor_overhaul_skill_node_arts_army_4	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_arts_art_2	advisor_overhaul_skill_node_arts_art_1	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_arts_art_3	advisor_overhaul_skill_node_arts_art_2	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_arts_art_4	advisor_overhaul_skill_node_arts_art_3	0	1	1	0.0000	0.0000	REQUIRED
+advisor_overhaul_skill_node_arts_gate	advisor_overhaul_skill_node_arts_art_4	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_magic_archmage	advisor_overhaul_skill_node_magic_reserves	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_magic_archmage	advisor_overhaul_skill_node_magic_steady	0	1	1	0.0000	0.0000	REQUIRED

@@ -69,6 +69,7 @@ ADVISOR_OVERHAUL_RIGS = {
 			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_staff_and_sword_army_2", name = "Patient Lines" },
 			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_staff_and_sword_army_3", name = "Calm in the Storm" },
 			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_staff_and_sword_apex", name = "Channelled Staff" },
+			{ skill = "advisor_overhaul_skill_arts_army_4", bundle = "advisor_overhaul_weapon_art_staff_and_sword_army_4", name = "Woven Wards" },
 		},
 		["sword_and_shield"] = {
 			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_sword_and_shield_art_1", name = "Shield Wall" },
@@ -79,6 +80,7 @@ ADVISOR_OVERHAUL_RIGS = {
 			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_sword_and_shield_army_2", name = "Shields Up" },
 			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_sword_and_shield_army_3", name = "Unbroken" },
 			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_sword_and_shield_apex", name = "Shield of Faith" },
+			{ skill = "advisor_overhaul_skill_arts_army_4", bundle = "advisor_overhaul_weapon_art_sword_and_shield_army_4", name = "Shield Wall" },
 		},
 		["greatsword"] = {
 			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_greatsword_art_1", name = "Overhand" },
@@ -89,6 +91,7 @@ ADVISOR_OVERHAUL_RIGS = {
 			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_greatsword_army_2", name = "Charge Them" },
 			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_greatsword_army_3", name = "Butcher's Bill" },
 			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_greatsword_apex", name = "Killing Blow" },
+			{ skill = "advisor_overhaul_skill_arts_army_4", bundle = "advisor_overhaul_weapon_art_greatsword_army_4", name = "Through the Plate" },
 		},
 		["sword_and_bow"] = {
 			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_sword_and_bow_art_1", name = "Steady Draw" },
@@ -99,6 +102,7 @@ ADVISOR_OVERHAUL_RIGS = {
 			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_sword_and_bow_army_2", name = "Marked Ground" },
 			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_sword_and_bow_army_3", name = "From the Trees" },
 			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_sword_and_bow_apex", name = "Hail of Doom" },
+			{ skill = "advisor_overhaul_skill_arts_army_4", bundle = "advisor_overhaul_weapon_art_sword_and_bow_army_4", name = "Quick Hands" },
 		},
 	},
 	--- The Polymath: its skill, how many skills of a discipline make it count, each discipline's skills, and the bundle for each number
@@ -107,7 +111,7 @@ ADVISOR_OVERHAUL_RIGS = {
 		skill = "advisor_overhaul_skill_memory_polymath",
 		needed = 3,
 		disciplines = {
-			arts = { "advisor_overhaul_skill_arts_army_1", "advisor_overhaul_skill_arts_army_2", "advisor_overhaul_skill_arts_army_3", "advisor_overhaul_skill_arts_art_1", "advisor_overhaul_skill_arts_art_2", "advisor_overhaul_skill_arts_art_3", "advisor_overhaul_skill_arts_art_4", "advisor_overhaul_skill_magic_steady" },
+			arts = { "advisor_overhaul_skill_arts_army_1", "advisor_overhaul_skill_arts_army_2", "advisor_overhaul_skill_arts_army_3", "advisor_overhaul_skill_arts_army_4", "advisor_overhaul_skill_arts_army_gate", "advisor_overhaul_skill_arts_art_1", "advisor_overhaul_skill_arts_art_2", "advisor_overhaul_skill_arts_art_3", "advisor_overhaul_skill_arts_art_4", "advisor_overhaul_skill_arts_gate", "advisor_overhaul_skill_magic_steady" },
 			memory = { "advisor_overhaul_skill_memory_calm_voice", "advisor_overhaul_skill_memory_every_mistake", "advisor_overhaul_skill_memory_old_lessons", "advisor_overhaul_skill_memory_seen_the_end", "advisor_overhaul_skill_memory_weight_of_years" },
 			magic = { "advisor_overhaul_lore_beasts", "advisor_overhaul_lore_beasts_2", "advisor_overhaul_lore_beasts_3", "advisor_overhaul_lore_big_waaagh", "advisor_overhaul_lore_big_waaagh_2", "advisor_overhaul_lore_big_waaagh_3", "advisor_overhaul_lore_dark_magic", "advisor_overhaul_lore_dark_magic_2", "advisor_overhaul_lore_dark_magic_3", "advisor_overhaul_lore_death", "advisor_overhaul_lore_death_2", "advisor_overhaul_lore_death_3", "advisor_overhaul_lore_deep", "advisor_overhaul_lore_deep_2", "advisor_overhaul_lore_deep_3", "advisor_overhaul_lore_fire", "advisor_overhaul_lore_fire_2", "advisor_overhaul_lore_fire_3", "advisor_overhaul_lore_hag", "advisor_overhaul_lore_hag_2", "advisor_overhaul_lore_hag_3", "advisor_overhaul_lore_hashut", "advisor_overhaul_lore_hashut_2", "advisor_overhaul_lore_hashut_3", "advisor_overhaul_lore_heavens", "advisor_overhaul_lore_heavens_2", "advisor_overhaul_lore_heavens_3", "advisor_overhaul_lore_high_magic", "advisor_overhaul_lore_high_magic_2", "advisor_overhaul_lore_high_magic_3", "advisor_overhaul_lore_life", "advisor_overhaul_lore_life_2", "advisor_overhaul_lore_life_3", "advisor_overhaul_lore_light", "advisor_overhaul_lore_light_2", "advisor_overhaul_lore_light_3", "advisor_overhaul_lore_lil_waaagh", "advisor_overhaul_lore_lil_waaagh_2", "advisor_overhaul_lore_lil_waaagh_3", "advisor_overhaul_lore_metal", "advisor_overhaul_lore_metal_2", "advisor_overhaul_lore_metal_3", "advisor_overhaul_lore_mists", "advisor_overhaul_lore_mists_2", "advisor_overhaul_lore_mists_3", "advisor_overhaul_lore_nehekhara", "advisor_overhaul_lore_nehekhara_2", "advisor_overhaul_lore_nehekhara_3", "advisor_overhaul_lore_nurgle", "advisor_overhaul_lore_nurgle_2", "advisor_overhaul_lore_nurgle_3", "advisor_overhaul_lore_of_great_maw", "advisor_overhaul_lore_of_great_maw_2", "advisor_overhaul_lore_of_great_maw_3", "advisor_overhaul_lore_of_ice", "advisor_overhaul_lore_of_ice_2", "advisor_overhaul_lore_of_ice_3", "advisor_overhaul_lore_of_tempest", "advisor_overhaul_lore_of_tempest_2", "advisor_overhaul_lore_of_tempest_3", "advisor_overhaul_lore_of_yang", "advisor_overhaul_lore_of_yang_2", "advisor_overhaul_lore_of_yang_3", "advisor_overhaul_lore_of_yin", "advisor_overhaul_lore_of_yin_2", "advisor_overhaul_lore_of_yin_3", "advisor_overhaul_lore_plague", "advisor_overhaul_lore_plague_2", "advisor_overhaul_lore_plague_3", "advisor_overhaul_lore_ruin", "advisor_overhaul_lore_ruin_2", "advisor_overhaul_lore_ruin_3", "advisor_overhaul_lore_rune", "advisor_overhaul_lore_rune_2", "advisor_overhaul_lore_rune_3", "advisor_overhaul_lore_shadows", "advisor_overhaul_lore_shadows_2", "advisor_overhaul_lore_shadows_3", "advisor_overhaul_lore_slaanesh", "advisor_overhaul_lore_slaanesh_2", "advisor_overhaul_lore_slaanesh_3", "advisor_overhaul_lore_stealth", "advisor_overhaul_lore_stealth_2", "advisor_overhaul_lore_stealth_3", "advisor_overhaul_lore_undeath", "advisor_overhaul_lore_undeath_2", "advisor_overhaul_lore_undeath_3", "advisor_overhaul_lore_vampires", "advisor_overhaul_lore_vampires_2", "advisor_overhaul_lore_vampires_3", "advisor_overhaul_lore_wild", "advisor_overhaul_lore_wild_2", "advisor_overhaul_lore_wild_3", "advisor_overhaul_skill_magic_reserves" },
 			hero_work = { "advisor_overhaul_skill_civic_0", "advisor_overhaul_skill_civic_1", "advisor_overhaul_skill_civic_10", "advisor_overhaul_skill_civic_2", "advisor_overhaul_skill_civic_3", "advisor_overhaul_skill_civic_4", "advisor_overhaul_skill_civic_5", "advisor_overhaul_skill_civic_6", "advisor_overhaul_skill_civic_7", "advisor_overhaul_skill_civic_8", "advisor_overhaul_skill_civic_9", "advisor_overhaul_skill_martial_0", "advisor_overhaul_skill_martial_1", "advisor_overhaul_skill_martial_2", "advisor_overhaul_skill_martial_3", "advisor_overhaul_skill_martial_4", "advisor_overhaul_skill_martial_5", "advisor_overhaul_skill_martial_6", "advisor_overhaul_skill_martial_7", "advisor_overhaul_skill_martial_9" },

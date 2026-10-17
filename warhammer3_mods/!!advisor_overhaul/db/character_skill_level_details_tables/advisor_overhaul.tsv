@@ -11,10 +11,13 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_arts_army_1		x	4
 		1	advisor_overhaul_skill_arts_army_2		x	9
 		1	advisor_overhaul_skill_arts_army_3		x	14
+		1	advisor_overhaul_skill_arts_army_4		x	16
+		1	advisor_overhaul_skill_arts_army_gate		x	16
 		1	advisor_overhaul_skill_arts_art_1		x	2
 		1	advisor_overhaul_skill_arts_art_2		x	6
 		1	advisor_overhaul_skill_arts_art_3		x	11
-		1	advisor_overhaul_skill_arts_art_4		x	16
+		1	advisor_overhaul_skill_arts_art_4		x	14
+		1	advisor_overhaul_skill_arts_gate		x	14
 		1	advisor_overhaul_skill_civic_0		x	1
 		2	advisor_overhaul_skill_civic_0		x	1
 		3	advisor_overhaul_skill_civic_0		x	1
