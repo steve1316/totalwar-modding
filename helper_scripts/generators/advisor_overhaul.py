@@ -32,7 +32,8 @@ His planned skills are the registry's `skills` (written by the workbench's Skill
 of skills it needs: all of them, or any `needs` of them), `exclusive` (ids of skills it locks, both ways), `locked_by` (ids of skills that lock it
 one way, such as a pact choice), `hidden` (no node shown, for skills a script gives him, with `learned` giving it to him when he is made), `slot`
 (an art slot, whose effect is the held weapon's art for that slot) and `build`. Only skills with `build` (In game in the workbench) are written.
-Drafts stay in the workbench. A weapon or mount with `unlock` "script" gets a hidden skill too: only a script unlocks it (the Disc, from the pact).
+Drafts stay in the workbench. A weapon or mount with `unlock` "script" gets a hidden skill too: only a script unlocks it (the Disc, from the pact). With `grant_rank` the loadout script gives
+it by itself once he reaches that rank (the Warhorse and the Pegasus).
 
 The rest of his kit, also in the registry:
 - `weapons.<w>.arts`: slot -> `name`, `description`, `effects` (each `effect`, `scope`, `value`). Each is an effect bundle, which the loadout
@@ -225,7 +226,7 @@ TABLES = [
     "projectiles_tables", "melee_weapons_tables", "unit_armour_types_tables", "character_skill_node_links_tables",
     "character_skill_level_to_effects_junctions_tables", "character_skill_nodes_skill_locks_tables", "effects_tables", "effect_bundles_tables",
     "effect_bundles_to_effects_junctions_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables",
-    "ancillary_to_effects_tables", "character_skill_categories_tables", *UNIT_ROW_TABLES,
+    "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables", *UNIT_ROW_TABLES,
 ]
 
 # Land unit columns a weapon's `stats` and `forms` may set. `armour` is set too, as an armour value.
@@ -917,6 +918,9 @@ def skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: Lis
             "campaign_key": "", "faction_key": "", "level": "1", "skill_key": skill, "subculture_key": "", "image_path": "x",
             "unlocked_at_rank": str(item.get("unlock_rank", 1)),
         })
+        # The game's own auto-grant: the node shows "Automatically granted at rank N" and the skill is given at that level.
+        if item.get("grant_rank"):
+            rows["character_skills_to_level_reached_criterias_tables"].append({"character_skill": skill, "character_level": str(item["grant_rank"] - 1), "upgrade_to_skill_level": "1"})
     # The vanilla skills keep their own levels and effects, so only the nodes are his.
     for skill, learned in HIDDEN_SKILLS:
         add_node(rows, f"{PREFIX}_hidden_node_{skill}", skill, HIDDEN_ROW, 0, hidden=True, learned=learned)
@@ -1650,12 +1654,14 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[
     for kind, items in (("weapon", registry["weapons"]), ("mount", registry["mounts"])):
         lines.append(f"\t--- {kind.capitalize()}s in skill tree order: key, unlock skill (empty for the default), name loc key, English fallback name and "
                      "picker icon.")
+        lines.append("\t--- A `grant_rank` is the rank at which the script gives him that item's skill.")
         if kind == "weapon":
             lines.append("\t--- Weapons also name the art set that shows them in the character panel.")
         lines.append(f"\t{kind}s = {{")
         for key, item in items.items():
             name = item["name"].replace('"', '\\"')
             art = f', art_set = "{weapon_art_set(key)}"' if kind == "weapon" else ""
+            art += f', grant_rank = {item["grant_rank"]}' if item.get("grant_rank") else ""
             lines.append(f'\t\t{{ key = "{key}", skill = "{unlock_skill(kind, key)}", name = "{ui_name(kind, key)}", fallback = "{name}", '
                          f'icon = "{item["picker_icon"]}"{art} }},')
         lines.append("\t},")

@@ -1004,7 +1004,9 @@
    "icon": "ui/campaign ui/mounts/mount_barded_warhorse.png",
    "picker_icon": "ui/campaign ui/skills/mount_barded_warhorse.png",
    "ancillary_type": "wh_main_anc_mount_barded_warhorse",
-   "campaign_rider_set": "cam_hu1_pr8_hr1_warhorse_amethyst_staff_and_sword"
+   "campaign_rider_set": "cam_hu1_pr8_hr1_warhorse_amethyst_staff_and_sword",
+   "grant_rank": 4,
+   "unlock_rank": 3
   },
   "pegasus": {
    "name": "Imperial Pegasus",
@@ -1014,7 +1016,9 @@
    "icon": "ui/campaign ui/mounts/mount_imperial_pegasus.png",
    "picker_icon": "ui/campaign ui/skills/mount_imperial_pegasus.png",
    "ancillary_type": "wh_main_anc_mount_imperial_pegasus",
-   "campaign_rider_set": "cam_hu1_pr8_hr1_warhorse_amethyst_staff_and_sword"
+   "campaign_rider_set": "cam_hu1_pr8_hr1_warhorse_amethyst_staff_and_sword",
+   "grant_rank": 12,
+   "unlock_rank": 11
   },
   "disc": {
    "name": "Disc of Tzeentch",

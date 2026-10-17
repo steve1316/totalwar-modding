@@ -23160,6 +23160,14 @@
    ],
    "version": "5"
   },
+  "character_skills_to_level_reached_criterias_tables": {
+   "header": [
+    "character_skill",
+    "character_level",
+    "upgrade_to_skill_level"
+   ],
+   "version": "0"
+  },
   "culture_to_battle_animation_tables_tables": {
    "header": [
     "battle_animations_table",

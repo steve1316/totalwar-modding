@@ -638,6 +638,24 @@ local function apply_pair(character)
 	return true
 end
 
+--- Gives the Advisor each weapon or mount skill that has a `grant_rank` once he has reached that rank. Runs from game events only, so every client
+--- grants the same skills.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @returns boolean True when a skill was given.
+local function grant_by_rank(character)
+	local granted = false
+	for _, kind in ipairs({ "weapon", "mount" }) do
+		for _, item in ipairs(items_of(kind)) do
+			if item.grant_rank and item.skill ~= "" and character:rank() >= item.grant_rank and not character:has_skill(item.skill) then
+				cm:add_skill(character, item.skill, true, true)
+				log("cqi " .. character:command_queue_index() .. " reached rank " .. character:rank() .. ", granted " .. kind .. " " .. item.key)
+				granted = true
+			end
+		end
+	end
+	return granted
+end
+
 --- Reads which rig the Advisor wears and makes it his loadout, so a pick in the character panel's Mount box sticks. With exactly one worn rig of an
 --- unlocked pair, that pair is saved as his choice. With none (the Mount box's "None"), a locked one or several, the saved pair is equipped again.
 --- Runs from game events and UI triggers only, so every client saves the same values. The caller syncs the pool.
@@ -645,6 +663,7 @@ end
 --- @param why string What asked for it, for the log.
 --- @returns boolean True when his loadout or ancillaries changed.
 local function reconcile_pair(character, why)
+	grant_by_rank(character)
 	local cqi = character:command_queue_index()
 	local worn = worn_rigs(character)
 	local saved_weapon, saved_mount = saved_pair(cqi)
@@ -1900,6 +1919,21 @@ core:add_listener(
 			guarded("unlock", function()
 				close_picker("a new item was unlocked")
 			end)
+		end
+	end,
+	true
+)
+
+core:add_listener(
+	TAG .. "_rank_up",
+	"CharacterRankUp",
+	function(context)
+		return is_advisor(context:character())
+	end,
+	function(context)
+		local character = context:character()
+		if grant_by_rank(character) then
+			reconcile(character, "rank up")
 		end
 	end,
 	true

@@ -7,6 +7,7 @@ ADVISOR_OVERHAUL_RIGS = {
 	--- Mount he rides when nothing else is chosen. Always unlocked.
 	default_mount = "foot",
 	--- Weapons in skill tree order: key, unlock skill (empty for the default), name loc key, English fallback name and picker icon.
+	--- A `grant_rank` is the rank at which the script gives him that item's skill.
 	--- Weapons also name the art set that shows them in the character panel.
 	weapons = {
 		{ key = "staff_and_sword", skill = "", name = "advisor_overhaul_ui_weapon_staff_and_sword", fallback = "Staff and Sword", icon = "ui/campaign ui/skills/item_weapon.png", art_set = "advisor_overhaul_art_staff_and_sword" },
@@ -15,10 +16,11 @@ ADVISOR_OVERHAUL_RIGS = {
 		{ key = "sword_and_bow", skill = "advisor_overhaul_choose_weapon_sword_and_bow", name = "advisor_overhaul_ui_weapon_sword_and_bow", fallback = "Sword and Bow", icon = "ui/campaign ui/skills/wh_dlc05_weapon_abilities_the_bow_of_loren.png", art_set = "advisor_overhaul_art_sword_and_bow" },
 	},
 	--- Mounts in skill tree order: key, unlock skill (empty for the default), name loc key, English fallback name and picker icon.
+	--- A `grant_rank` is the rank at which the script gives him that item's skill.
 	mounts = {
 		{ key = "foot", skill = "", name = "advisor_overhaul_ui_mount_foot", fallback = "On Foot", icon = "ui/campaign ui/skills/character_bonus_vs_infantry.png" },
-		{ key = "warhorse", skill = "advisor_overhaul_choose_mount_warhorse", name = "advisor_overhaul_ui_mount_warhorse", fallback = "Barded Warhorse", icon = "ui/campaign ui/skills/mount_barded_warhorse.png" },
-		{ key = "pegasus", skill = "advisor_overhaul_choose_mount_pegasus", name = "advisor_overhaul_ui_mount_pegasus", fallback = "Imperial Pegasus", icon = "ui/campaign ui/skills/mount_imperial_pegasus.png" },
+		{ key = "warhorse", skill = "advisor_overhaul_choose_mount_warhorse", name = "advisor_overhaul_ui_mount_warhorse", fallback = "Barded Warhorse", icon = "ui/campaign ui/skills/mount_barded_warhorse.png", grant_rank = 4 },
+		{ key = "pegasus", skill = "advisor_overhaul_choose_mount_pegasus", name = "advisor_overhaul_ui_mount_pegasus", fallback = "Imperial Pegasus", icon = "ui/campaign ui/skills/mount_imperial_pegasus.png", grant_rank = 12 },
 		{ key = "disc", skill = "advisor_overhaul_choose_mount_disc", name = "advisor_overhaul_ui_mount_disc", fallback = "Disc of Tzeentch", icon = "ui/campaign ui/skills/mount_disc_of_tzeentch.png" },
 	},
 	--- "weapon|mount" -> the mount ancillary that gives him that unit. Only pairs with a unit are listed.
