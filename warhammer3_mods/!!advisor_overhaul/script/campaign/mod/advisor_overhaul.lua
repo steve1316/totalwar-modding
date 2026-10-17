@@ -185,6 +185,9 @@ local last_decision = nil
 --- Unlock skill key -> { kind, key } of the item it unlocks, built once from the generated lists by `skill_items`.
 local unlock_skills = nil
 
+--- True while `grant_by_rank` is giving skills. Each `add_skill` fires the skill listener at once, and a grant from inside it crashed the game.
+local granting = false
+
 --- Every rig ancillary key, sorted, built once by `rig_keys`.
 local sorted_rigs = nil
 
@@ -639,19 +642,30 @@ local function apply_pair(character)
 end
 
 --- Gives the Advisor each weapon or mount skill that has a `grant_rank` once he has reached that rank. Runs from game events only, so every client
---- grants the same skills.
+--- grants the same skills. A call from inside a grant does nothing, so the outer loop gives each skill in turn.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
 --- @returns boolean True when a skill was given.
 local function grant_by_rank(character)
+	if granting then
+		return false
+	end
+	granting = true
 	local granted = false
-	for _, kind in ipairs({ "weapon", "mount" }) do
-		for _, item in ipairs(items_of(kind)) do
-			if item.grant_rank and item.skill ~= "" and character:rank() >= item.grant_rank and not character:has_skill(item.skill) then
-				cm:add_skill(character, item.skill, true, true)
-				log("cqi " .. character:command_queue_index() .. " reached rank " .. character:rank() .. ", granted " .. kind .. " " .. item.key)
-				granted = true
+	-- A raised error must not leave `granting` set, or he would never be given another skill.
+	local ok, err = pcall(function()
+		for _, kind in ipairs({ "weapon", "mount" }) do
+			for _, item in ipairs(items_of(kind)) do
+				if item.grant_rank and item.skill ~= "" and character:rank() >= item.grant_rank and not character:has_skill(item.skill) then
+					cm:add_skill(character, item.skill, true, true)
+					log("cqi " .. character:command_queue_index() .. " reached rank " .. character:rank() .. ", granted " .. kind .. " " .. item.key)
+					granted = true
+				end
 			end
 		end
+	end)
+	granting = false
+	if not ok then
+		log("grant by rank failed: " .. tostring(err))
 	end
 	return granted
 end
