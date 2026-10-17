@@ -142,6 +142,24 @@ character_skills_localised_name_advisor_overhaul_skill_combat_veteran_hide	Veter
 character_skills_localised_description_advisor_overhaul_skill_combat_veteran_hide	Scar over scar over scar. Little finds soft skin to bite.\\n\\nMore armour.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_wards	Duelling Wards	true
 character_skills_localised_description_advisor_overhaul_skill_combat_wards	A flick of the wrist and the blade glances aside. He has practised it on worse than swords.\\n\\nA ward save.	true
+character_skills_localised_name_advisor_overhaul_skill_corruption_chs	Spread Chaos Corruption	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_chs	He has watched Chaos corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Chaos Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_name_advisor_overhaul_skill_corruption_final	A Corrupting Presence	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_final	Every kind of corruption he has learned spreads far faster.\\n\\nNeeds 3 points in this row.	true
+character_skills_localised_name_advisor_overhaul_skill_corruption_kho	Spread Khorne Corruption	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_kho	He has watched Khorne corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Khorne Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_name_advisor_overhaul_skill_corruption_lead	The Taint Remembered	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_lead	He has walked through every kind of ruin the Dark Gods make. He can still smell each one.\\n\\nEvery kind of corruption he spreads spreads a little faster.	true
+character_skills_localised_name_advisor_overhaul_skill_corruption_nur	Spread Nurgle Corruption	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_nur	He has watched Nurgle corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Nurgle Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_name_advisor_overhaul_skill_corruption_skv	Spread Skaven Corruption	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_skv	He has watched Skaven corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Skaven Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_name_advisor_overhaul_skill_corruption_sla	Spread Slaanesh Corruption	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_sla	He has watched Slaanesh corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Slaanesh Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_name_advisor_overhaul_skill_corruption_tze	Spread Tzeentch Corruption	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_tze	He has watched Tzeentch corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Tzeentch Corruption hero action, and each level spreads it harder.	true
+character_skills_localised_name_advisor_overhaul_skill_corruption_vmp	Spread Vampiric Corruption	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_vmp	He has watched Vampiric corruption eat a world. He knows exactly where to plant it.\\n\\nUnlocks the Spread Vampiric Corruption hero action, and each level spreads it harder.	true
 character_skills_localised_name_advisor_overhaul_skill_hero_banner	The Banner Remembered	true
 character_skills_localised_description_advisor_overhaul_skill_hero_banner	A banner remembered is a banner that does not fall. Every army he has ever stood with fights harder for it.\\n\\nEvery army in the faction costs less to keep, recovers faster and holds firmer, and his own army costs less again.	true
 character_skills_localised_name_advisor_overhaul_skill_hero_forager	Forager's Eye	true
@@ -527,6 +545,9 @@ effects_description_advisor_overhaul_effect_enable_spy_assist_army_increase_mobi
 agent_actions_localised_action_name_advisor_overhaul_action_spy_hinder_character_assassinate	{{tr:agent_action_name_assassinate}}	true
 agent_actions_localised_action_description_advisor_overhaul_action_spy_hinder_character_assassinate	[[col:yellow]]Kills the target Character.[[/col]]	true
 effects_description_advisor_overhaul_effect_enable_spy_hinder_character_assassinate	Hero action: {{tr:agent_action_name_assassinate}}	true
+agent_actions_localised_action_name_advisor_overhaul_action_champion_passive_spread_corruption_kho	{{tr:agent_action_name_spread_corruption}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_champion_passive_spread_corruption_kho	[[col:yellow]]Increases the amount of [[img:icon_corruption_kho]][[/img]]Khorne corruption in the local province by %n.[[/col]]	true
+effects_description_advisor_overhaul_effect_enable_champion_passive_spread_corruption_kho	Hero action: {{tr:agent_action_name_spread_corruption}}	true
 effects_description_advisor_overhaul_effect_wom_cost_what_was	Winds of Magic cost: %+n% for Fire, Beasts, Metal, the Heavens, Light, Life, Shadows, Death, High Magic and Ice spells	true
 effects_description_advisor_overhaul_effect_wom_cost_what_is_held	Winds of Magic cost: %+n% for Tempest, Yang, Yin, Mists, the Hag, Dark Magic, Vampires, Undeath, Nehekhara and the Deep spells	true
 effects_description_advisor_overhaul_effect_wom_cost_what_comes	Winds of Magic cost: %+n% for Big Waaagh!, Little Waaagh!, Hashut, Ruin, Plague, Stealth, Nurgle, Slaanesh, the Great Maw and the Wild spells	true

@@ -7093,6 +7093,569 @@
     ]
    ]
   },
+  "corruption_chs": {
+   "name": "Spread Chaos Corruption",
+   "icon": "campaign_untainted.png",
+   "row": 9,
+   "tier": 1,
+   "rank": 0,
+   "build": true,
+   "requires": [
+    "corruption_lead"
+   ],
+   "description": "He has watched Chaos corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Chaos Corruption hero action, and each level spreads it harder.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_corruption_chs",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_chs",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_chaos_effect",
+      "scope": "character_to_province_any",
+      "value": 1.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_corruption_chs",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_chs",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_chaos_effect",
+      "scope": "character_to_province_any",
+      "value": 2.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_corruption_chs",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_chs",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_chaos_effect",
+      "scope": "character_to_province_any",
+      "value": 3.0
+     }
+    ]
+   ]
+  },
+  "corruption_kho": {
+   "name": "Spread Khorne Corruption",
+   "icon": "campaign_untainted.png",
+   "row": 9,
+   "tier": 2,
+   "rank": 0,
+   "build": true,
+   "requires": [
+    "corruption_lead"
+   ],
+   "description": "He has watched Khorne corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Khorne Corruption hero action, and each level spreads it harder.",
+   "levels": [
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_passive_spread_corruption_kho",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_kho",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_khorne_effect",
+      "scope": "character_to_province_any",
+      "value": 1.0
+     }
+    ],
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_passive_spread_corruption_kho",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_kho",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_khorne_effect",
+      "scope": "character_to_province_any",
+      "value": 2.0
+     }
+    ],
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_passive_spread_corruption_kho",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_kho",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_khorne_effect",
+      "scope": "character_to_province_any",
+      "value": 3.0
+     }
+    ]
+   ]
+  },
+  "corruption_nur": {
+   "name": "Spread Nurgle Corruption",
+   "icon": "campaign_untainted.png",
+   "row": 9,
+   "tier": 3,
+   "rank": 0,
+   "build": true,
+   "requires": [
+    "corruption_lead"
+   ],
+   "description": "He has watched Nurgle corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Nurgle Corruption hero action, and each level spreads it harder.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_dlc25_effect_agent_action_enable_wizard_passive_spread_corruption_nur",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_nur",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_nurgle_effect",
+      "scope": "character_to_province_any",
+      "value": 1.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_dlc25_effect_agent_action_enable_wizard_passive_spread_corruption_nur",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_nur",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_nurgle_effect",
+      "scope": "character_to_province_any",
+      "value": 2.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_dlc25_effect_agent_action_enable_wizard_passive_spread_corruption_nur",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_nur",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_nurgle_effect",
+      "scope": "character_to_province_any",
+      "value": 3.0
+     }
+    ]
+   ]
+  },
+  "corruption_sla": {
+   "name": "Spread Slaanesh Corruption",
+   "icon": "campaign_untainted.png",
+   "row": 9,
+   "tier": 4,
+   "rank": 0,
+   "build": true,
+   "requires": [
+    "corruption_lead"
+   ],
+   "description": "He has watched Slaanesh corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Slaanesh Corruption hero action, and each level spreads it harder.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_passive_spread_corruption_sla",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_sla",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_slaanesh_effect",
+      "scope": "character_to_province_any",
+      "value": 1.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_passive_spread_corruption_sla",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_sla",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_slaanesh_effect",
+      "scope": "character_to_province_any",
+      "value": 2.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_passive_spread_corruption_sla",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_sla",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_slaanesh_effect",
+      "scope": "character_to_province_any",
+      "value": 3.0
+     }
+    ]
+   ]
+  },
+  "corruption_tze": {
+   "name": "Spread Tzeentch Corruption",
+   "icon": "campaign_untainted.png",
+   "row": 9,
+   "tier": 5,
+   "rank": 0,
+   "build": true,
+   "requires": [
+    "corruption_lead"
+   ],
+   "description": "He has watched Tzeentch corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Tzeentch Corruption hero action, and each level spreads it harder.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_passive_spread_corruption_tze",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_tze",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_tzeentch_effect",
+      "scope": "character_to_province_any",
+      "value": 1.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_passive_spread_corruption_tze",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_tze",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_tzeentch_effect",
+      "scope": "character_to_province_any",
+      "value": 2.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_passive_spread_corruption_tze",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_tze",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_tzeentch_effect",
+      "scope": "character_to_province_any",
+      "value": 3.0
+     }
+    ]
+   ]
+  },
+  "corruption_skv": {
+   "name": "Spread Skaven Corruption",
+   "icon": "campaign_untainted.png",
+   "row": 9,
+   "tier": 6,
+   "rank": 0,
+   "build": true,
+   "requires": [
+    "corruption_lead"
+   ],
+   "description": "He has watched Skaven corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Skaven Corruption hero action, and each level spreads it harder.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_corruption_skv",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_skv",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_skaven_effect",
+      "scope": "character_to_province_any",
+      "value": 1.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_corruption_skv",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_skv",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_skaven_effect",
+      "scope": "character_to_province_any",
+      "value": 2.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_corruption_skv",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_skv",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_skaven_effect",
+      "scope": "character_to_province_any",
+      "value": 3.0
+     }
+    ]
+   ]
+  },
+  "corruption_vmp": {
+   "name": "Spread Vampiric Corruption",
+   "icon": "campaign_untainted.png",
+   "row": 9,
+   "tier": 7,
+   "rank": 0,
+   "build": true,
+   "requires": [
+    "corruption_lead"
+   ],
+   "description": "He has watched Vampiric corruption eat a world. He knows exactly where to plant it.\\\\n\\\\nUnlocks the Spread Vampiric Corruption hero action, and each level spreads it harder.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_dlc29_effect_agent_action_enable_wizard_passive_spread_corruption_vmp",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_vmp",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_vampiric_effect",
+      "scope": "character_to_province_any",
+      "value": 1.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_dlc29_effect_agent_action_enable_wizard_passive_spread_corruption_vmp",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_vmp",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_vampiric_effect",
+      "scope": "character_to_province_any",
+      "value": 2.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_dlc29_effect_agent_action_enable_wizard_passive_spread_corruption_vmp",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_vmp",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_vampiric_effect",
+      "scope": "character_to_province_any",
+      "value": 3.0
+     }
+    ]
+   ]
+  },
+  "corruption_final": {
+   "name": "A Corrupting Presence",
+   "icon": "campaign_untainted.png",
+   "row": 9,
+   "tier": 8,
+   "rank": 14,
+   "build": true,
+   "requires": [
+    "corruption_chs",
+    "corruption_kho",
+    "corruption_nur",
+    "corruption_sla",
+    "corruption_tze",
+    "corruption_skv",
+    "corruption_vmp"
+   ],
+   "description": "Every kind of corruption he has learned spreads far faster.\\\\n\\\\nNeeds 3 points in this row.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_chs",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_kho",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_nur",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_sla",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_tze",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_skv",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_vmp",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     }
+    ]
+   ],
+   "role": "gate",
+   "needs": 3
+  },
+  "corruption_lead": {
+   "name": "The Taint Remembered",
+   "icon": "campaign_untainted.png",
+   "row": 9,
+   "tier": 0,
+   "rank": 0,
+   "build": true,
+   "requires": [],
+   "description": "He has walked through every kind of ruin the Dark Gods make. He can still smell each one.\\\\n\\\\nEvery kind of corruption he spreads spreads a little faster.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_chs",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_kho",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_nur",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_sla",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_tze",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_skv",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_vmp",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     }
+    ]
+   ]
+  },
   "combat_momentum": {
    "name": "Weight of the Charge",
    "icon": "character_attack.png",
@@ -7603,7 +8166,8 @@
   "wh2_main_agent_action_champion_passive_increase_trade",
   "wh2_main_agent_action_champion_passive_stimulate_growth",
   "wh2_main_agent_action_spy_assist_army_increase_mobility",
-  "wh2_main_agent_action_spy_hinder_character_assassinate"
+  "wh2_main_agent_action_spy_hinder_character_assassinate",
+  "wh3_dlc26_agent_action_champion_passive_spread_corruption_kho"
  ],
  "bundles": {
   "polymath_1": {

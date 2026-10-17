@@ -50,6 +50,11 @@
     "agent_action_record": "wh2_main_agent_action_spy_hinder_character_assassinate",
     "bonus_value_id": "active",
     "effect": "wh2_main_effect_agent_action_enable_spy_hinder_character_assassinate"
+   },
+   {
+    "agent_action_record": "wh3_dlc26_agent_action_champion_passive_spread_corruption_kho",
+    "bonus_value_id": "active",
+    "effect": "wh3_dlc26_effect_agent_action_enable_champion_passive_spread_corruption_kho"
    }
   ],
   "rows": {
@@ -177,6 +182,31 @@
     "target_attribute": "subterfuge",
     "unique_id": "wh2_main_agent_action_spy_hinder_character_assassinate",
     "voiceover": "vo_campaign_action_enemy_character"
+   },
+   "wh3_dlc26_agent_action_champion_passive_spread_corruption_kho": {
+    "ability": "passive_ability",
+    "agent": "champion",
+    "attribute": "zeal",
+    "cannot_fail": "wh2_main_agent_action_passive_cannot_fail_spread_corruption",
+    "chance_of_success": "100",
+    "critical_failure": "wh_main_agent_action_dummy_critical_failure",
+    "critical_failure_proportion_modifier": "1.0000",
+    "critical_success": "wh_main_agent_action_dummy_critical_success",
+    "critical_success_proportion_modifier": "0.0000",
+    "failure": "wh_main_agent_action_dummy_failure",
+    "icon_path": "ui/campaign ui/effect_bundles/corruption_khorne.png",
+    "localised_action_description": "[[col:yellow]]Increases the amount of [[img:icon_corruption_kho]][[/img]]Khorne corruption in the local province by %n.[[/col]]",
+    "localised_action_name": "{{tr:agent_action_name_spread_corruption}}",
+    "opportune_failure": "wh_main_agent_action_dummy_failure",
+    "opportune_failure_proportion_modifier": "0.0000",
+    "order": "0",
+    "show_action_info_in_ui": "true",
+    "subculture": "",
+    "succeed_always_override": "true",
+    "success": "wh_main_agent_action_dummy_success",
+    "target_attribute": "authority",
+    "unique_id": "wh3_dlc26_agent_action_champion_passive_spread_corruption_kho",
+    "voiceover": "vo_campaign_action_passive"
    }
   }
  },

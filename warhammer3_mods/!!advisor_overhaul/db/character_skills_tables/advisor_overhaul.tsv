@@ -48,6 +48,15 @@ advisor_overhaul_skill_combat_storm_needles	character_attack.png			14	false	fals
 advisor_overhaul_skill_combat_unbroken	battle_defence.png			14	false	false	false	0.0000	0
 advisor_overhaul_skill_combat_veteran_hide	character_armour.png			0	false	false	false	0.0000	0
 advisor_overhaul_skill_combat_wards	character_armour.png			0	false	false	false	0.0000	0
+advisor_overhaul_skill_corruption_chs	campaign_untainted.png			0	false	false	false	0.0000	0
+advisor_overhaul_skill_corruption_final	campaign_untainted.png			14	false	false	false	0.0000	0
+advisor_overhaul_skill_corruption_kho	campaign_untainted.png			0	false	false	false	0.0000	0
+advisor_overhaul_skill_corruption_lead	campaign_untainted.png			0	false	false	false	0.0000	0
+advisor_overhaul_skill_corruption_nur	campaign_untainted.png			0	false	false	false	0.0000	0
+advisor_overhaul_skill_corruption_skv	campaign_untainted.png			0	false	false	false	0.0000	0
+advisor_overhaul_skill_corruption_sla	campaign_untainted.png			0	false	false	false	0.0000	0
+advisor_overhaul_skill_corruption_tze	campaign_untainted.png			0	false	false	false	0.0000	0
+advisor_overhaul_skill_corruption_vmp	campaign_untainted.png			0	false	false	false	0.0000	0
 advisor_overhaul_skill_hero_banner	campaign_army.png			19	false	false	false	0.0000	0
 advisor_overhaul_skill_hero_forager	campaign_army.png			8	false	false	false	0.0000	0
 advisor_overhaul_skill_hero_hand_pocket	campaign_subterfuge.png			19	false	false	false	0.0000	0

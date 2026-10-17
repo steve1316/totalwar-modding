@@ -49,6 +49,15 @@ advisor_overhaul_skill_node_combat_storm_needles		advisor_overhaul_skill_combat_
 advisor_overhaul_skill_node_combat_unbroken		advisor_overhaul_skill_combat_unbroken		2	17		0	10	true
 advisor_overhaul_skill_node_combat_veteran_hide		advisor_overhaul_skill_combat_veteran_hide		2	11		0	0	true
 advisor_overhaul_skill_node_combat_wards		advisor_overhaul_skill_combat_wards		2	2		0	0	true
+advisor_overhaul_skill_node_corruption_chs		advisor_overhaul_skill_corruption_chs		9	1		0	0	true
+advisor_overhaul_skill_node_corruption_final		advisor_overhaul_skill_corruption_final		9	8		0	3	true
+advisor_overhaul_skill_node_corruption_kho		advisor_overhaul_skill_corruption_kho		9	2		0	0	true
+advisor_overhaul_skill_node_corruption_lead		advisor_overhaul_skill_corruption_lead		9	0		0	0	true
+advisor_overhaul_skill_node_corruption_nur		advisor_overhaul_skill_corruption_nur		9	3		0	0	true
+advisor_overhaul_skill_node_corruption_skv		advisor_overhaul_skill_corruption_skv		9	6		0	0	true
+advisor_overhaul_skill_node_corruption_sla		advisor_overhaul_skill_corruption_sla		9	4		0	0	true
+advisor_overhaul_skill_node_corruption_tze		advisor_overhaul_skill_corruption_tze		9	5		0	0	true
+advisor_overhaul_skill_node_corruption_vmp		advisor_overhaul_skill_corruption_vmp		9	7		0	0	true
 advisor_overhaul_skill_node_hero_banner		advisor_overhaul_skill_hero_banner		8	20		0	9	true
 advisor_overhaul_skill_node_hero_forager		advisor_overhaul_skill_hero_forager		8	26		0	0	true
 advisor_overhaul_skill_node_hero_hand_pocket		advisor_overhaul_skill_hero_hand_pocket		8	10		0	11	true

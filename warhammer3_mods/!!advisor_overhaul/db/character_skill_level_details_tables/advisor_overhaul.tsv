@@ -97,6 +97,29 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_combat_wards		x	0
 		2	advisor_overhaul_skill_combat_wards		x	0
 		3	advisor_overhaul_skill_combat_wards		x	0
+		1	advisor_overhaul_skill_corruption_chs		x	0
+		2	advisor_overhaul_skill_corruption_chs		x	0
+		3	advisor_overhaul_skill_corruption_chs		x	0
+		1	advisor_overhaul_skill_corruption_final		x	14
+		1	advisor_overhaul_skill_corruption_kho		x	0
+		2	advisor_overhaul_skill_corruption_kho		x	0
+		3	advisor_overhaul_skill_corruption_kho		x	0
+		1	advisor_overhaul_skill_corruption_lead		x	0
+		1	advisor_overhaul_skill_corruption_nur		x	0
+		2	advisor_overhaul_skill_corruption_nur		x	0
+		3	advisor_overhaul_skill_corruption_nur		x	0
+		1	advisor_overhaul_skill_corruption_skv		x	0
+		2	advisor_overhaul_skill_corruption_skv		x	0
+		3	advisor_overhaul_skill_corruption_skv		x	0
+		1	advisor_overhaul_skill_corruption_sla		x	0
+		2	advisor_overhaul_skill_corruption_sla		x	0
+		3	advisor_overhaul_skill_corruption_sla		x	0
+		1	advisor_overhaul_skill_corruption_tze		x	0
+		2	advisor_overhaul_skill_corruption_tze		x	0
+		3	advisor_overhaul_skill_corruption_tze		x	0
+		1	advisor_overhaul_skill_corruption_vmp		x	0
+		2	advisor_overhaul_skill_corruption_vmp		x	0
+		3	advisor_overhaul_skill_corruption_vmp		x	0
 		1	advisor_overhaul_skill_hero_banner		x	19
 		1	advisor_overhaul_skill_hero_forager		x	8
 		2	advisor_overhaul_skill_hero_forager		x	8
