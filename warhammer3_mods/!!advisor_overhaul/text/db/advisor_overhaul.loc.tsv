@@ -106,12 +106,54 @@ character_skills_localised_name_advisor_overhaul_skill_civic_9	Boost Income	true
 character_skills_localised_description_advisor_overhaul_skill_civic_9	Half the counting-houses in the Empire owe him money from a life they cannot remember.\\n\\nImproves his Boost Income hero action, which he always has.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_apex	Power Behind Thrones	true
 character_skills_localised_description_advisor_overhaul_skill_civic_apex	Kings come and go. He has advised most of them, in one world or another.\\n\\nThe Civic row's Apex. Takes the place of the other Apexes and the Polymath.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_aim	Practised Aim	true
+character_skills_localised_description_advisor_overhaul_skill_combat_aim	He has loosed arrows at the end of every kind of world. The hand knows where to go.\\n\\nStronger missile damage, faster reloads.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_barrier	Shell of Light	true
+character_skills_localised_description_advisor_overhaul_skill_combat_barrier	A thin shimmer of the Winds holds in front of him.\\n\\nHe gains barrier health.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_barrier_line	Light Along the Line	true
+character_skills_localised_description_advisor_overhaul_skill_combat_barrier_line	He has learned to stretch the shimmer thin, across every rank that stands with him.\\n\\nEvery unit in his army gains barrier health.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_barrier_mend	Mended Shell	true
+character_skills_localised_description_advisor_overhaul_skill_combat_barrier_mend	A broken shell is a lesson. He has learned to stitch it faster.\\n\\nBarriers return sooner and faster, for him and for his army.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_blade_winds	Blade of the Winds	true
+character_skills_localised_description_advisor_overhaul_skill_combat_blade_winds	At the end of one world the Winds themselves held his sword arm. He remembers the grip.\\n\\nHe fights as a decent magical duellist, and the army he marches with fights harder.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_deep_quiver	Deep Quiver	true
+character_skills_localised_description_advisor_overhaul_skill_combat_deep_quiver	The last arrow is always the one he saved for himself. He stopped saving it.\\n\\nMore ammunition.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_long_breath	The Long Breath	true
+character_skills_localised_description_advisor_overhaul_skill_combat_long_breath	He has fought for days at the end of the world. One afternoon does not tire him.\\n\\nHe and his army tire more slowly in battle.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_long_sight	Long Sight	true
+character_skills_localised_description_advisor_overhaul_skill_combat_long_sight	A target seen sooner is a target already lost.\\n\\nLonger missile range.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_mending	Flesh Remembers	true
+character_skills_localised_description_advisor_overhaul_skill_combat_mending	His body has healed from worse, many times. It still knows how.\\n\\nHealing can restore more of his health and his army's in battle.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_momentum	Weight of the Charge	true
+character_skills_localised_description_advisor_overhaul_skill_combat_momentum	He learned to charge from a knight who rode into the last sunset of a dying world.\\n\\nHe runs faster, hits harder on the charge and lands heavier.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_piercing	Piercing Shot	true
+character_skills_localised_description_advisor_overhaul_skill_combat_piercing	Aim for the buckle. The buckle is where armour ends.\\n\\nMissile attacks pierce armour better.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_shell_aura	Warden of the Shell	true
+character_skills_localised_description_advisor_overhaul_skill_combat_shell_aura	Where he stands, broken shells knit again. The men near him feel it before they understand it.\\n\\nUnlocks the Paragon of Change ability, which restores the barrier of nearby combatants, and deepens the Winds reserve.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_sleeves	Ironbound Sleeves	true
+character_skills_localised_description_advisor_overhaul_skill_combat_sleeves	Leather, steel, and a lesson from a swordsman who did not live to see the sequel.\\n\\nStronger melee attack.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_steel_weave	Steel in the Weave	true
+character_skills_localised_description_advisor_overhaul_skill_combat_steel_weave	Every cut carries a little of the spell that guided it.\\n\\nHarder-hitting melee blows.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_storm_needles	Storm of Needles	true
+character_skills_localised_description_advisor_overhaul_skill_combat_storm_needles	One shot, then a hundred, then the sky goes dark with them.\\n\\nHis missile attacks hit harder and farther, and the army he marches with shoots faster.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_unbroken	Unbroken	true
+character_skills_localised_description_advisor_overhaul_skill_combat_unbroken	He has been the last man standing. It taught him how to be the first one back up.\\n\\nHe is harder to break and harder to kill, and the army he marches with holds its ground behind a stronger shell.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_veteran_hide	Veteran's Hide	true
+character_skills_localised_description_advisor_overhaul_skill_combat_veteran_hide	Scar over scar over scar. Little finds soft skin to bite.\\n\\nMore armour.	true
+character_skills_localised_name_advisor_overhaul_skill_combat_wards	Duelling Wards	true
+character_skills_localised_description_advisor_overhaul_skill_combat_wards	A flick of the wrist and the blade glances aside. He has practised it on worse than swords.\\n\\nA ward save.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_arcane_ward	Arcane Ward	true
+character_skills_localised_description_advisor_overhaul_skill_magic_arcane_ward	A thin shimmer, taught to him by a mage whose name no one else recalls.\\n\\nA ward save.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_archmage	Archmage	true
 character_skills_localised_description_advisor_overhaul_skill_magic_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nThe magic rows' Apex. Takes the place of the other Apexes and the Polymath.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_battle_caster	Spell and Steel	true
+character_skills_localised_description_advisor_overhaul_skill_magic_battle_caster	He casts with one hand and cuts with the other, and has never found the two work apart.\\n\\nStronger blows and spells, whatever he carries.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_reserves	Deep Reserves	true
 character_skills_localised_description_advisor_overhaul_skill_magic_reserves	He has learned to hold more of the Winds than a body should.\\n\\nMore Winds of Magic for his army in every battle.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_steady	Steady Hands	true
 character_skills_localised_description_advisor_overhaul_skill_magic_steady	He miscast once, at the worst possible moment, and the world ended a little early.\\n\\nFewer miscasts, stronger spells.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_warded_mind	Warded Mind	true
+character_skills_localised_description_advisor_overhaul_skill_magic_warded_mind	He has been unmade by sorcery before. He remembers the shape of the hole.\\n\\nMagic resistance.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_0	Assassinate	true
 character_skills_localised_description_advisor_overhaul_skill_martial_0	He knows which of them will matter later. He settles it now.\\n\\nUnlocks the Assassinate hero action.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_1	Wound	true
@@ -427,3 +469,4 @@ effects_description_advisor_overhaul_effect_enable_spy_assist_army_increase_mobi
 agent_actions_localised_action_name_advisor_overhaul_action_spy_hinder_character_assassinate	{{tr:agent_action_name_assassinate}}	true
 agent_actions_localised_action_description_advisor_overhaul_action_spy_hinder_character_assassinate	[[col:yellow]]Kills the target Character.[[/col]]\\n[[col:red]]This action will kill the Hand of the Shadow Crown![[/col]]	true
 effects_description_advisor_overhaul_effect_enable_spy_hinder_character_assassinate	Hero action: {{tr:agent_action_name_assassinate}}	true
+effects_description_advisor_overhaul_effect_army_barrier	Barrier: %+n for all units in the army except characters	true

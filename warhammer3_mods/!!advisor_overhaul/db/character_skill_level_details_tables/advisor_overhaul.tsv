@@ -52,10 +52,63 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		2	advisor_overhaul_skill_civic_9		x	1
 		3	advisor_overhaul_skill_civic_9		x	1
 		1	advisor_overhaul_skill_civic_apex		x	25
+		1	advisor_overhaul_skill_combat_aim		x	0
+		2	advisor_overhaul_skill_combat_aim		x	0
+		1	advisor_overhaul_skill_combat_barrier		x	0
+		2	advisor_overhaul_skill_combat_barrier		x	0
+		3	advisor_overhaul_skill_combat_barrier		x	0
+		1	advisor_overhaul_skill_combat_barrier_line		x	0
+		2	advisor_overhaul_skill_combat_barrier_line		x	0
+		3	advisor_overhaul_skill_combat_barrier_line		x	0
+		1	advisor_overhaul_skill_combat_barrier_mend		x	0
+		2	advisor_overhaul_skill_combat_barrier_mend		x	0
+		3	advisor_overhaul_skill_combat_barrier_mend		x	0
+		1	advisor_overhaul_skill_combat_blade_winds		x	14
+		1	advisor_overhaul_skill_combat_deep_quiver		x	0
+		2	advisor_overhaul_skill_combat_deep_quiver		x	0
+		3	advisor_overhaul_skill_combat_deep_quiver		x	0
+		1	advisor_overhaul_skill_combat_long_breath		x	0
+		2	advisor_overhaul_skill_combat_long_breath		x	0
+		3	advisor_overhaul_skill_combat_long_breath		x	0
+		1	advisor_overhaul_skill_combat_long_sight		x	0
+		2	advisor_overhaul_skill_combat_long_sight		x	0
+		3	advisor_overhaul_skill_combat_long_sight		x	0
+		1	advisor_overhaul_skill_combat_mending		x	0
+		2	advisor_overhaul_skill_combat_mending		x	0
+		3	advisor_overhaul_skill_combat_mending		x	0
+		1	advisor_overhaul_skill_combat_momentum		x	0
+		2	advisor_overhaul_skill_combat_momentum		x	0
+		3	advisor_overhaul_skill_combat_momentum		x	0
+		1	advisor_overhaul_skill_combat_piercing		x	0
+		2	advisor_overhaul_skill_combat_piercing		x	0
+		3	advisor_overhaul_skill_combat_piercing		x	0
+		1	advisor_overhaul_skill_combat_shell_aura		x	0
+		1	advisor_overhaul_skill_combat_sleeves		x	0
+		2	advisor_overhaul_skill_combat_sleeves		x	0
+		3	advisor_overhaul_skill_combat_sleeves		x	0
+		1	advisor_overhaul_skill_combat_steel_weave		x	0
+		2	advisor_overhaul_skill_combat_steel_weave		x	0
+		3	advisor_overhaul_skill_combat_steel_weave		x	0
+		1	advisor_overhaul_skill_combat_storm_needles		x	14
+		1	advisor_overhaul_skill_combat_unbroken		x	14
+		1	advisor_overhaul_skill_combat_veteran_hide		x	0
+		2	advisor_overhaul_skill_combat_veteran_hide		x	0
+		3	advisor_overhaul_skill_combat_veteran_hide		x	0
+		1	advisor_overhaul_skill_combat_wards		x	0
+		2	advisor_overhaul_skill_combat_wards		x	0
+		3	advisor_overhaul_skill_combat_wards		x	0
+		1	advisor_overhaul_skill_magic_arcane_ward		x	0
+		2	advisor_overhaul_skill_magic_arcane_ward		x	0
 		1	advisor_overhaul_skill_magic_archmage		x	25
+		1	advisor_overhaul_skill_magic_battle_caster		x	0
+		2	advisor_overhaul_skill_magic_battle_caster		x	0
 		1	advisor_overhaul_skill_magic_reserves		x	8
 		2	advisor_overhaul_skill_magic_reserves		x	8
-		1	advisor_overhaul_skill_magic_steady		x	12
+		1	advisor_overhaul_skill_magic_steady		x	0
+		2	advisor_overhaul_skill_magic_steady		x	0
+		1	advisor_overhaul_skill_magic_warded_mind		x	0
+		2	advisor_overhaul_skill_magic_warded_mind		x	0
+		3	advisor_overhaul_skill_magic_warded_mind		x	0
 		1	advisor_overhaul_skill_martial_0		x	3
 		2	advisor_overhaul_skill_martial_0		x	3
 		3	advisor_overhaul_skill_martial_0		x	3

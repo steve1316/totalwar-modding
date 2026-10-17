@@ -230,7 +230,8 @@ TABLES = [
     "projectiles_tables", "melee_weapons_tables", "unit_armour_types_tables", "character_skill_node_links_tables",
     "character_skill_level_to_effects_junctions_tables", "character_skill_nodes_skill_locks_tables", "effects_tables", "effect_bundles_tables",
     "effect_bundles_to_effects_junctions_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables",
-    "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables", *UNIT_ROW_TABLES,
+    "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables",
+    "effect_bonus_value_ids_unit_sets_tables", *UNIT_ROW_TABLES,
 ]
 
 # Land unit columns a weapon's `stats` and `forms` may set. `armour` is set too, as an armour value.
@@ -949,7 +950,7 @@ def planned_skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], te
     lock from each built skill it is `locked_by`.
 
     A skill that needs all of its skills gets `REQUIRED` links, which the game checks one by one (`required_num_parents` 0). One that needs only
-    some gets `SUBSET_REQUIRED` links and `required_num_parents` set to how many.
+    some gets `SUBSET_REQUIRED` links and `required_num_parents` set to how many. The game counts skill points in those skills, so `needs` may exceed their number.
 
     Args:
         registry (Dict): The registry.
@@ -975,7 +976,7 @@ def planned_skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], te
         if missing:
             raise SystemExit(f"skill {skill_id} needs {', '.join(missing)}, which is not built")
         needs = skill.get("needs")
-        some = isinstance(needs, int) and 0 < needs < len(requires)
+        some = isinstance(needs, int) and needs > 0
         hidden = bool(skill.get("hidden"))
         add_node(rows, node, key, skill.get("row", 1), skill.get("tier", 0), hidden, hidden and bool(skill.get("learned")), needs if some else 0)
         for other in skill.get("exclusive", []):
@@ -998,6 +999,24 @@ def planned_skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], te
             })
             rows["character_skill_level_to_effects_junctions_tables"] += [{"character_skill_key": key, "effect_key": e["effect"], "level": str(level),
                                                                            "effect_scope": e["scope"], "value": effect_value(e)} for e in level_effects]
+
+
+def effect_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], vanilla_texts: List[Tuple[str, str]]) -> None:
+    """Adds his own effects, the registry's `effects`. One with `unit_sets` gives its `bonus` to every unit in those sets. Its `priority` sets its
+    place in a skill's tooltip, which lists effects lowest priority first.
+
+    Args:
+        registry (Dict): The registry.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        vanilla_texts (List[Tuple[str, str]]): Loc rows with `%n` value markers, added to.
+    """
+    for effect, entry in registry.get("effects", {}).items():
+        icon = entry.get("icon", "magic_character.png")
+        rows["effects_tables"].append({"effect": effect, "icon": icon, "priority": str(entry["priority"]), "icon_negative": icon, "category": "battle",
+                                       "is_positive_value_good": "true" if entry.get("good") else "false"})
+        rows["effect_bonus_value_ids_unit_sets_tables"] += [{"bonus_value_id": entry["bonus"], "effect": effect, "unit_set": unit_set}
+                                                            for unit_set in entry.get("unit_sets", [])]
+        vanilla_texts.append((f"effects_description_{effect}", entry["text"]))
 
 
 def bundle_rows(key: str, entry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
@@ -1355,6 +1374,7 @@ def build() -> None:
     # Text copied from vanilla keeps its `%n%` value markers, so it skips `check_loc`. No script reads it.
     vanilla_texts: List[Tuple[str, str]] = []
     action_rows(registry, data, rows, vanilla_texts)
+    effect_rows(registry, rows, vanilla_texts)
     skill_rows(registry, rows, texts)
     planned_skill_rows(registry, rows, texts)
     arts = weapon_art_rows(registry, rows, texts)

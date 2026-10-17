@@ -23183,6 +23183,14 @@
    ],
    "version": "0"
   },
+  "effect_bonus_value_ids_unit_sets_tables": {
+   "header": [
+    "bonus_value_id",
+    "effect",
+    "unit_set"
+   ],
+   "version": "0"
+  },
   "effect_bundles_tables": {
    "header": [
     "key",
