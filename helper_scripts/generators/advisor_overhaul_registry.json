@@ -1033,21 +1033,10 @@
     "bonus_hit_points": 5300,
     "armour": 95
    },
-   "melee": {"template": "wh3_cp1_cth_taoyan_trident"},
+   "melee": {"template": "wh3_cp1_cth_taoyan_trident", "melee_attack_interval": "1.7000", "damage": "90", "ap_damage": "210", "bonus_v_large": "50", "splash_attack_max_attacks": "10"},
    "hood": false,
    "arts": {
     "art_1": {
-     "name": "Long Guard",
-     "description": "He holds the point out where a horse would have to run onto it.",
-     "effects": [
-      {
-       "effect": "wh_main_effect_character_stat_melee_defence",
-       "scope": "character_to_character_own",
-       "value": 10
-      }
-     ]
-    },
-    "art_2": {
      "name": "Horse Cutter",
      "description": "The blade was made for one job: rider and horse, one stroke.",
      "effects": [
@@ -1055,80 +1044,132 @@
        "effect": "wh_main_effect_character_stat_bonus_vs_large",
        "scope": "character_to_character_own",
        "value": 15
+      },
+      {
+       "effect": "wh_main_effect_character_stat_melee_defence",
+       "scope": "character_to_character_own",
+       "value": 6
+      }
+     ]
+    },
+    "art_2": {
+     "name": "Through the Barding",
+     "description": "He finds the gap in a war beast's armour on the first try.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_weapon_strength_ap_damage_mult",
+       "scope": "character_to_character_own",
+       "value": 20
+      },
+      {
+       "effect": "wh_main_effect_character_stat_melee_attack",
+       "scope": "character_to_character_own",
+       "value": 6
       }
      ]
     },
     "art_3": {
      "name": "Turning Blade",
-     "description": "The heavy head keeps moving after the cut, and so does he.",
+     "description": "The heavy head keeps moving after the cut, and whatever stands in its arc goes down with it.",
      "effects": [
       {
-       "effect": "wh_main_effect_character_stat_melee_attack",
+       "effect": "wh_main_effect_character_stat_weapon_splash_power_mult",
        "scope": "character_to_character_own",
-       "value": 8
-      }
+       "value": 50
+      },
+      {"effect": "wh_main_effect_character_stat_speed", "scope": "character_to_character_own", "value": 8}
      ]
     },
     "art_4": {
-     "name": "Through the Barding",
-     "description": "He finds the gap in a war beast's armour on the first try.",
+     "name": "Beastslayer",
+     "description": "Monsters are only large men. He has the reach for them.",
      "effects": [
       {
-       "effect": "wh_main_effect_character_stat_weapon_strength",
+       "effect": "wh2_dlc14_effect_ability_enable_beastslaver",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
+      {
+       "effect": "wh_main_effect_character_stat_bonus_vs_large",
        "scope": "character_to_character_own",
        "value": 10
       }
      ]
     },
     "army_1": {
-     "name": "Line Drill",
-     "description": "Shoulder to shoulder, points out, until they stop flinching at hooves.",
+     "name": "Long Arms",
+     "description": "He teaches every unit where to stand when the big ones come.",
      "effects": [
       {
-       "effect": "wh_main_effect_force_stat_melee_defence",
+       "effect": "wh3_dlc29_effect_force_stat_bonus_vs_large",
+       "scope": "agent_to_parent_army_own",
+       "value": 8
+      }
+     ]
+    },
+    "army_2": {
+     "name": "Light Kit",
+     "description": "Half the baggage, twice the marching. They arrive fresh.",
+     "effects": [
+      {"effect": "wh_main_effect_force_stat_speed", "scope": "agent_to_parent_army_own", "value": 8},
+      {
+       "effect": "wh_main_effect_force_stat_vigour_loss_reduction",
+       "scope": "agent_to_parent_army_own",
+       "value": 15
+      }
+     ]
+    },
+    "army_3": {
+     "name": "Find the Gap",
+     "description": "Every plate has a seam. He shows them all of them.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_ap_damage_mult",
+       "scope": "agent_to_parent_army_own",
+       "value": 15
+      },
+      {
+       "effect": "wh_main_effect_force_stat_weapon_strength",
        "scope": "agent_to_parent_army_own",
        "value": 5
       }
      ]
     },
-    "army_2": {
-     "name": "Wall of Blades",
-     "description": "He spaces them so no charge finds a gap.",
-     "effects": [
-      {"effect": "wh_main_effect_force_stat_armour", "scope": "agent_to_parent_army_own", "value": 8}
-     ]
-    },
-    "army_3": {
-     "name": "Hold the Line",
-     "description": "He has seen this charge before, in a war nobody else remembers. It breaks.",
-     "effects": [
-      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 8}
-     ]
-    },
     "army_4": {
-     "name": "Long Arms",
-     "description": "He teaches every unit to strike first and from further away.",
+     "name": "Wall of Blades",
+     "description": "He has seen this charge before, in a war nobody else remembers. It breaks on them.",
      "effects": [
       {
-       "effect": "wh_main_effect_force_stat_melee_attack",
+       "effect": "wh3_dlc29_effect_force_stat_bonus_vs_large",
        "scope": "agent_to_parent_army_own",
-       "value": 4
-      }
+       "value": 10
+      },
+      {
+       "effect": "wh_main_effect_force_stat_ap_damage_mult",
+       "scope": "agent_to_parent_army_own",
+       "value": 10
+      },
+      {"effect": "wh_main_effect_force_stat_speed", "scope": "agent_to_parent_army_own", "value": 6}
      ]
     },
     "apex": {
      "name": "Ten Thousand Blades",
-     "description": "The glaive line that stopped an empire's cavalry, as he remembers it.",
+     "description": "The glaive line that stopped an empire's cavalry, as he remembers it, in one pair of hands.",
      "effects": [
+      {
+       "effect": "wh3_dlc29_effect_ability_enable_doom_glaive",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
+      {
+       "effect": "wh_main_effect_character_stat_weapon_strength_ap_damage_mult",
+       "scope": "character_to_character_own",
+       "value": 15
+      },
       {
        "effect": "wh_main_effect_character_stat_bonus_vs_large",
        "scope": "character_to_character_own",
-       "value": 12
-      },
-      {
-       "effect": "wh_main_effect_character_stat_melee_defence",
-       "scope": "character_to_character_own",
-       "value": 8
+       "value": 10
       }
      ]
     }
@@ -1137,7 +1178,9 @@
    "body": "emp_free_company_torso_04",
    "pieces": {
     "piece_1": ["variantmeshes/wh_variantmodels/hu1/emp/emp_captains/head/emp_captains_helmet_01.wsmodel"]
-   }
+   },
+   "attributes": ["strider", "fatigue_res"],
+   "entity": {"walk_speed": "1.8000", "run_speed": "4.4000", "acceleration": "2.6000", "charge_speed": "5.2000"}
   },
   "iron_hand": {
    "name": "Iron Hand",

@@ -16,6 +16,8 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
   the vanilla mounted-minus-foot difference to them, as for the default stats.
 - `forms`: mount -> values that replace the computed ones for that one pair, and `props`: prop slots whose model that pair uses instead (its own
   variant then).
+- `entity`: its own foot battle entity, a copy of his vanilla foot entity with the given values (`run_speed`, `charge_speed`, ...). Mounted pairs keep
+  their mount's rider entity.
 - `attributes` adds unit attributes to every pair of the weapon, and `attributes_removed` takes them away. `abilities` and `abilities_removed` do
   the same for unit abilities.
 
@@ -255,7 +257,7 @@ TABLES = [
     "campaign_character_uniform_ancillary_junctions_tables", "character_skill_node_sets_tables", "character_skills_tables",
     "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables", "missile_weapons_tables",
     "projectiles_tables", "projectiles_explosions_tables", "projectile_displays_tables", "unit_missile_weapon_junctions_tables", "effect_bonus_value_missile_weapon_junctions_tables",
-    "melee_weapons_tables", "unit_armour_types_tables", "character_skill_node_links_tables",
+    "melee_weapons_tables", "battle_entities_tables", "unit_armour_types_tables", "character_skill_node_links_tables",
     "character_skill_level_to_effects_junctions_tables", "character_skill_nodes_skill_locks_tables", "effects_tables", "effect_bundles_tables",
     "effect_bundles_to_effects_junctions_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables",
     "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables",
@@ -411,6 +413,8 @@ def refresh() -> None:
     melees = {w["melee"]["template"] for w in registry["weapons"].values() if "melee" in w}
     melees |= {r["primary_melee_weapon"] for r in data["templates"]["land_units_tables"]}
     data["melee_weapons"] = {r["key"]: r for r in loaded["melee_weapons_tables"] if r["key"] in melees}
+    entities = {r["man_entity"] for r in data["templates"]["land_units_tables"]}
+    data["entities"] = {r["key"]: r for r in loaded["battle_entities_tables"] if r["key"] in entities}
     armours = {r["armour"] for r in data["templates"]["land_units_tables"]}
     data["armour_types"] = {r["key"]: r for r in loaded["unit_armour_types_tables"] if r["key"] in armours}
     data["effects"] = sorted(r["effect"] for r in loaded["effects_tables"])
@@ -716,6 +720,39 @@ def melee_key(weapon_key: str) -> str:
     return f"{PREFIX}_{weapon_key}_melee"
 
 
+def entity_key(weapon_key: str) -> str:
+    """The key of a weapon's own foot battle entity.
+
+    Args:
+        weapon_key (str): The weapon key.
+
+    Returns:
+        str: The key.
+    """
+    return f"{PREFIX}_{weapon_key}_entity"
+
+
+def entity_rows(registry: Dict, data: Dict, advisor: Dict[str, str], rows: Dict[str, List[Dict[str, str]]]) -> None:
+    """Adds a foot battle entity for every weapon with an `entity`: a copy of his vanilla foot entity under his own key, with the registry's values.
+
+    Args:
+        registry (Dict): The registry.
+        data (Dict): The kept vanilla rows.
+        advisor (Dict[str, str]): His foot land unit.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+
+    Raises:
+        SystemExit: When his foot entity is not in the kept rows (run `--refresh`).
+    """
+    for weapon_key, weapon in registry["weapons"].items():
+        if "entity" not in weapon:
+            continue
+        if advisor["man_entity"] not in data.get("entities", {}):
+            raise SystemExit(f"entity {advisor['man_entity']} is not kept, run with --refresh")
+        rows["battle_entities_tables"].append(dict(data["entities"][advisor["man_entity"]], key=entity_key(weapon_key),
+                                                   **{k: table_value(v) for k, v in weapon["entity"].items()}))
+
+
 def melee_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:
     """Adds a melee weapon for every weapon with a `melee`: a copy of the vanilla template's row under his own key, with the registry's values.
 
@@ -786,6 +823,8 @@ def land_unit(key: str, weapon_key: str, weapon: Dict, set_name: str, mount_key:
     advisor = dict(advisor, **{c: table_value(v) for c, v in weapon.get("stats", {}).items() if c in STAT_COLUMNS})
     if "template" not in mount:
         row = dict(advisor, key=key, man_animation=set_name, shield=weapon["shield"], attribute_group=key)
+        if "entity" in weapon:
+            row["man_entity"] = entity_key(weapon_key)
         return with_form(with_missile(row, weapon_key, weapon), weapon_key, weapon, mount_key)
     mounted, foot = templates[mount["template"]], templates[mount["template_foot"]]
     row = dict(mounted)
@@ -1568,6 +1607,7 @@ def build() -> None:
     art_rows(registry, data, rows)
     missile_rows(registry, data, rows)
     melee_rows(registry, data, rows)
+    entity_rows(registry, data, advisor, rows)
     check_duplicates(rows)
     check_node_slots(rows["character_skill_nodes_tables"])
     check_effects(rows, data)
