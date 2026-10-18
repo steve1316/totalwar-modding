@@ -490,6 +490,7 @@ end
 --- time his loadout is applied: a loadout change, a skill point, each load and each turn start.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
 --- @param weapon string The weapon he holds.
+--- @returns boolean True when a bundle was put on or taken off.
 local function sync_arts(character, weapon)
 	local wanted = {}
 	for _, art in ipairs(owned_arts(character, weapon)) do
@@ -512,15 +513,17 @@ local function sync_arts(character, weapon)
 		log("cqi " .. character:command_queue_index() .. " arts for " .. weapon .. ": added " .. table.concat(added, ", ") .. "; removed "
 			.. table.concat(removed, ", "))
 	end
+	return #added > 0 or #removed > 0
 end
 
 --- Puts on the Advisor the Polymath bundle for the number of disciplines in which he has enough skills, while he owns the Polymath, and takes every
 --- other Polymath bundle off. Runs with `sync_arts`, and on every skill point.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @returns boolean True when a bundle was put on or taken off.
 local function sync_polymath(character)
 	local data = rig_data().polymath
 	if not data then
-		return
+		return false
 	end
 	local counted = {}
 	if character:has_skill(data.skill) then
@@ -553,6 +556,7 @@ local function sync_polymath(character)
 		log("cqi " .. character:command_queue_index() .. " Polymath counts " .. #counted .. " disciplines (" .. table.concat(counted, ", ") .. "), bundle "
 			.. tostring(wanted))
 	end
+	return changed
 end
 
 --- Whether the once-per-turn rule blocks a change for this Advisor.
@@ -719,6 +723,22 @@ local function apply_pair(character)
 	log("cqi " .. cqi .. " now " .. weapon .. " on " .. mount .. " (" .. wanted .. "), returned or removed: " .. table.concat(stale, ", ")
 		.. ", pool copy taken: " .. tostring(from_pool) .. ", has it now: " .. tostring(character:has_ancillary(wanted)))
 	return true
+end
+
+--- Teleports the Advisor onto the spot he stands on, so the game works out his stats again. A bundle put on by script leaves his unit card stale
+--- until he moves on the map. Reselecting or putting his rig back on did not refresh it. Skipped inside an army or a settlement.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+local function refresh_stats(character)
+	local cqi = character:command_queue_index()
+	if character:is_embedded_in_military_force() or character:has_garrison_residence() then
+		log("cqi " .. cqi .. " stats refresh skipped: he is in an army or a settlement")
+		return
+	end
+	local x, y = character:logical_position_x(), character:logical_position_y()
+	local ok, err = pcall(function()
+		cm:teleport_to(cm:char_lookup_str(cqi), x, y)
+	end)
+	log("cqi " .. cqi .. " teleported onto his own spot " .. x .. "," .. y .. " to refresh his stats" .. (ok and "" or (", error: " .. tostring(err))))
 end
 
 --- Gives the Advisor each weapon or mount skill that has a `grant_rank` once he has reached that rank. Runs from game events only, so every client
@@ -2395,14 +2415,20 @@ core:add_listener(
 		local skill = context:skill_point_spent_on()
 		local unlocked = skill_items()[skill]
 		-- Any skill may change how many disciplines the Polymath counts.
-		sync_polymath(character)
+		local changed = sync_polymath(character)
 		if not unlocked then
 			-- An art slot skill puts on his held weapon's art at once.
 			local weapon = current_pair(character)
 			for _, art in ipairs((rig_data().arts or {})[weapon] or {}) do
 				if art.skill == skill then
 					log("cqi " .. character:command_queue_index() .. " learned art slot " .. skill .. ", holding " .. weapon)
-					sync_arts(character, weapon)
+					changed = sync_arts(character, weapon) or changed
+				end
+			end
+			if changed then
+				refresh_stats(character)
+				if is_local_advisor(character) then
+					reselect(character:command_queue_index())
 				end
 			end
 			return

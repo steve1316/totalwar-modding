@@ -1084,7 +1084,7 @@ def effect_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], vanilla_t
         vanilla_texts.append((f"effects_description_{effect}", entry["text"]))
 
 
-def bundle_rows(key: str, entry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
+def bundle_rows(key: str, entry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]], hidden: bool = False) -> None:
     """Adds one effect bundle for him and its effects.
 
     Args:
@@ -1092,9 +1092,10 @@ def bundle_rows(key: str, entry: Dict, rows: Dict[str, List[Dict[str, str]]], te
         entry (Dict): `name`, `description`, `icon` (a file in `ui/campaign ui/effect_bundles`) and `effects`.
         rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
         texts (List[Tuple[str, str]]): Loc rows, added to.
+        hidden (bool): Leaves out the icon, so no icon shows next to his portrait. Vanilla hides its bundles the same way.
     """
     rows["effect_bundles_tables"].append({"key": key, "localised_description": "", "localised_title": "", "bundle_target": "character", "priority": "1",
-                                          "ui_icon": entry.get("icon", "public_order.png"), "is_global_effect": "true", "show_in_3d_space": "false",
+                                          "ui_icon": "" if hidden else entry.get("icon", "public_order.png"), "is_global_effect": "true", "show_in_3d_space": "false",
                                           "owner_only": "true"})
     rows["effect_bundles_to_effects_junctions_tables"] += [{"effect_bundle_key": key, "effect_key": e["effect"], "effect_scope": e["scope"],
                                                             "value": effect_value(e), "advancement_stage": BUNDLE_STAGE}
@@ -1135,7 +1136,8 @@ def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts
             raise SystemExit(f"weapon {weapon_key} has no art for slot {', '.join(missing)}")
         for slot, art in weapon.get("arts", {}).items():
             bundle = art_bundle_key(weapon_key, slot)
-            bundle_rows(bundle, art, rows, texts)
+            # The art box on the Art and Army skill cards lists the effects, so the portrait icons are hidden.
+            bundle_rows(bundle, art, rows, texts, hidden=True)
             if slot in slots:
                 skill, skill_name, flavour, requires = slots[slot]
                 arts.setdefault(weapon_key, []).append({"skill": skill, "skill_name": skill_name, "bundle": bundle,
