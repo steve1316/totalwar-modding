@@ -233,7 +233,8 @@ TABLES = [
     "character_skill_level_to_effects_junctions_tables", "character_skill_nodes_skill_locks_tables", "effects_tables", "effect_bundles_tables",
     "effect_bundles_to_effects_junctions_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables",
     "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables",
-    "effect_bonus_value_special_ability_group_junctions_tables", "effect_bonus_value_ids_unit_sets_tables", *UNIT_ROW_TABLES,
+    "effect_bonus_value_special_ability_group_junctions_tables", "effect_bonus_value_ids_unit_sets_tables", "special_ability_groups_to_units_junctions_tables",
+    *UNIT_ROW_TABLES,
 ]
 
 # Land unit columns a weapon's `stats` and `forms` may set. `armour` is set too, as an armour value.
@@ -1184,7 +1185,7 @@ def lore_node_key(lore: str, slot: int) -> str:
 
 def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
     """Adds one 3-level skill per built lore of the registry's `lores`. Each level lists its full effects, since levels do not stack: level 1 the
-    cheapest spells, level 2 every spell, level 3 every spell and its overcast.
+    cheapest spells, level 2 every spell, level 3 every spell and its overcast. Each built lore is also a page of his battle Lore panel on every unit.
 
     Args:
         registry (Dict): The registry.
@@ -1197,6 +1198,9 @@ def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
     """
     me = "character_to_character_own"
     built = [lore for lore, entry in registry.get("lores", {}).items() if entry.get("build")]
+    # A unit linked to several lores, each on its own page, gets the Lore panel to switch between them, the way vanilla does it for Mannfred.
+    rows["special_ability_groups_to_units_junctions_tables"] += [{"ability_group": lore, "unit": r["unit"], "group_page_order": str(page)}
+                                                                 for page, lore in enumerate(built) for r in rows["main_units_tables"]]
     for lore, entry in registry.get("lores", {}).items():
         if not entry.get("build"):
             continue

@@ -23527,6 +23527,14 @@
    ],
    "version": "53"
   },
+  "special_ability_groups_to_units_junctions_tables": {
+   "header": [
+    "ability_group",
+    "unit",
+    "group_page_order"
+   ],
+   "version": "1"
+  },
   "ui_unit_bullet_point_unit_overrides_tables": {
    "header": [
     "bullet_point",
