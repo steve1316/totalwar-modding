@@ -22004,6 +22004,28 @@
    "splash_attack_target_size": "medium",
    "weapon_length": "3.0000"
   },
+  "wh3_cp1_cth_taoyan_trident": {
+   "ap_damage": "260",
+   "audio_type": "halberd",
+   "bonus_v_infantry": "0",
+   "bonus_v_large": "25",
+   "building_damage_multiplier": "0.7500",
+   "collision_attack_max_targets": "0",
+   "collision_attack_max_targets_cooldown": "10",
+   "contact_phase": "",
+   "damage": "160",
+   "ignition_amount": "0.0000",
+   "is_magical": "true",
+   "is_spell": "false",
+   "key": "wh3_cp1_cth_taoyan_trident",
+   "melee_attack_interval": "2.5000",
+   "melee_weapon_type": "spear",
+   "scaling_damage": "",
+   "splash_attack_max_attacks": "4",
+   "splash_attack_power_multiplier": "1.5000",
+   "splash_attack_target_size": "large",
+   "weapon_length": "3.0000"
+  },
   "wh3_dlc20_chs_sword_caster_hero_mtze": {
    "ap_damage": "95",
    "audio_type": "sword",

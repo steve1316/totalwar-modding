@@ -64,7 +64,8 @@ REFERENCE_UNITS = {"wh_main_emp_cha_captain_0": "Vanilla: Empire Captain - Sword
 # Retarget comparisons: vanilla source set of a retargeted set -> (entry name, the vanilla model it is shown on). A set missing here is compared
 # without a source model.
 COMPARE_SOURCES = {"hu1c_wh3_dlc20_tzeentch_sorcerer_wm_disc01_staff_sword": (
-    "Disc retarget: Tzeentch sorcerer vs Advisor", "variantmeshes/variantmeshdefinitions/dae_tze_chaos_sorcerer_disc.variantmeshdefinition")}
+    "Disc retarget: Tzeentch sorcerer vs Advisor", "variantmeshes/variantmeshdefinitions/dae_tze_chaos_sorcerer_disc.variantmeshdefinition"),
+                   "hu1e_cp1_taoyan_trident": ("Glaive retarget: Taoyan vs Advisor", "variantmeshes/variantmeshdefinitions/cth_taoyan.variantmeshdefinition")}
 
 # The look checks: the mount of his mounted default look, the slots of his default look on foot and mounted, the folder for the hoodless variant,
 # and the vanilla campaign Advisor (variant, skeleton and its animations by slot name).
@@ -199,17 +200,19 @@ def unit_entry(exporter: Exporter, name: str, rider_set: AnimSet, rider_variant:
     """
     rider_refs = first_refs(rider_set, exporter.names)
     mount_refs = first_refs(mount_set, exporter.names) if mount_set else {}
+    # Props docked by a set's metadata are held where the game holds them, as in the retarget comparisons.
+    rider_docking, mount_docking = exporter.docking(rider_set), exporter.docking(mount_set) if mount_set else None
     flyer = "FLY_STAND" in (mount_refs or rider_refs)
     slots = []
     for slot in slot_names or SLOTS + (FLY_SLOTS if flyer else []):
         rider_slot = f"RIDER_{slot}" if mount_set else slot
         if rider_slot not in rider_refs:
             continue
-        entry = {"slot": slot, "anims": {"rider": exporter.anim(rider_refs[rider_slot])}, "paths": {"rider": rider_refs[rider_slot]}, "slots": {"rider": rider_slot}}
+        entry = {"slot": slot, "anims": {"rider": exporter.anim(rider_refs[rider_slot], rider_docking)}, "paths": {"rider": rider_refs[rider_slot]}, "slots": {"rider": rider_slot}}
         if mount_set:
             # A slot the mount lacks (such as a cast) plays the mount's idle.
             mount_slot = slot if slot in mount_refs else ("FLY_STAND" if slot.startswith("FLY_") and "FLY_STAND" in mount_refs else "STAND")
-            entry["anims"]["mount"] = exporter.anim(mount_refs[mount_slot])
+            entry["anims"]["mount"] = exporter.anim(mount_refs[mount_slot], mount_docking)
             entry["paths"]["mount"] = mount_refs[mount_slot]
             entry["slots"]["mount"] = mount_slot
         if versus:
@@ -218,7 +221,7 @@ def unit_entry(exporter: Exporter, name: str, rider_set: AnimSet, rider_variant:
                 refs = first_refs(anim_set, exporter.names) if anim_set else {}
                 played = matching_slot(slot, mounted, refs)
                 if played:
-                    entry["anims"][side] = exporter.anim(refs[played])
+                    entry["anims"][side] = exporter.anim(refs[played], exporter.docking(anim_set))
                     entry["paths"][side] = refs[played]
                     entry["slots"][side] = played
         slots.append(entry)

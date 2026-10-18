@@ -178,12 +178,13 @@ function renderToggles() {
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Forms and slots
 
-// Forms grouped by weapon ("Greatsword - On Foot" goes under Greatsword). Gallery entries that are not a form (looks, previews, vanilla
-// references, retarget checks) are left out, unless the project has no forms at all.
+// Forms grouped by weapon ("Greatsword - On Foot" goes under Greatsword), then the retarget checks, so a retargeted set can be seen before any
+// form plays it. Other gallery entries (looks, previews, vanilla references) are left out, unless the project has no forms at all.
 const groups = new Map(), hasForms = manifest.entries.some(e => e.unit);
+const CHECKS = "Retarget checks";
 manifest.entries.forEach((e, i) => {
-  if (hasForms && !e.unit) return;
-  const [group, label] = e.unit ? e.name.split(" - ") : ["Gallery", e.name];
+  if (hasForms && !e.unit && e.kind !== "compare") return;
+  const [group, label] = e.unit ? e.name.split(" - ") : [hasForms ? CHECKS : "Gallery", e.name];
   if (!groups.has(group)) groups.set(group, []);
   groups.get(group).push({ index: i, label: label || e.name });
 });

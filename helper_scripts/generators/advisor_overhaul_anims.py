@@ -4,7 +4,9 @@ Retargeted sets copy a vanilla set from another human skeleton onto the advisor'
 has no humanoid01 disc rider, so the Chaos Sorcerer Lord's humanoid01c disc set is copied. Every animation the set plays is retargeted with
 `tools.anim_retarget`, and so is every animation its `.anm.meta` files splice in. Metas that splice a source animation are copied and pointed at
 the retargeted copy, or the game layers the source skeleton's animation over the advisor (his staff then stops spinning while he casts).
-Metas with no spliced animation keep their vanilla path.
+Metas with no spliced animation keep their vanilla path. The second is the Glaive, Taoyan's humanoid01e trident set. `FILL_SLOTS` gives it
+Settra's casts, which she lacks, `PROP_PINS` holds her sword, scabbard and glaive where her docking would have them, and `BAKED_DOCKING` bakes
+the docks into the tracks.
 
 Derived sets copy a vanilla `humanoid01` set under a new name with up to two fixes. Named slots take their animations from another vanilla set
 (several vanilla horse sets play foot casts in their rider cast slots, so the rider sinks into the mount, and the Huntsmarshal's short casts are bow
@@ -13,6 +15,8 @@ shield on his left hand the way his stand does.
 
 `ADDED_SLOTS` then gives the staff sets the fire slots of his staff bolt, GLF Battle Mage style: each fire slot copies a forward-facing cast whose
 meta has a `FIRE_POS`, plus a combat-ready stance where the set has none.
+
+`CAMPAIGN_SETS` retargets vanilla campaign sets for the campaign map, e.g. Taoyan's for the Glaive.
 
 The vanilla files come through `core.asset_source`, which caches pack listings and extracts.
 
@@ -24,13 +28,15 @@ import copy
 import os
 import re
 import shutil
+import struct
 import sys
 from dataclasses import replace
-from typing import Dict, List, Tuple
+from typing import Callable, Dict, List, Optional, Tuple
 
 from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim, write_anim
 from tools.anim_retarget import Transform, compose, relative, retarget, world_pose
+from tools.anim_viewer.docking import DOCK_POINTS, apply_docking, set_docking
 from tools.glf_rebuild_animpack import (ALL_WEAPONS, SCHEMAS_DIR, SLOT_IDS_FILE, AnimRef, Slot, load_slot_ids, load_vanilla_sets, pack_string, parse_set, write_animpack,
                                         write_set)
 
@@ -53,18 +59,68 @@ SET_FOLDER = "animations/database/battle/bin"
 # The advisor's skeleton.
 TARGET_SKELETON = "humanoid01"
 
-# New set name -> (vanilla source set, source skeleton, folder for the retargeted animations, file name prefix).
-SETS = {
-    "hu1_advisor_overhaul_disc01_staff_and_sword": ("hu1c_wh3_dlc20_tzeentch_sorcerer_wm_disc01_staff_sword", "humanoid01c",
-                                                    "animations/battle/humanoid01/advisor_overhaul/disc_staff_and_sword", "aod"),
-}
-
-# Folder for the derived sets' animations.
+# Folder for the new sets' animations.
 DERIVED_FOLDER = "animations/battle/humanoid01/advisor_overhaul"
 
-# Every derived set casts with `CAST_SPELL_*` on foot and `RIDER_CAST_SPELL_*` when mounted.
+# New set name -> (vanilla source set, source skeleton, folder for the retargeted animations, file name prefix).
+SETS = {
+    "hu1_advisor_overhaul_disc01_staff_and_sword": ("hu1c_wh3_dlc20_tzeentch_sorcerer_wm_disc01_staff_sword", "humanoid01c", f"{DERIVED_FOLDER}/disc_staff_and_sword",
+                                                    "aod"),
+    "hu1_advisor_overhaul_glaive": ("hu1e_cp1_taoyan_trident", "humanoid01e", f"{DERIVED_FOLDER}/glaive", "aog"),
+}
+
+# Source skeleton -> its bones that humanoid01 names differently. Humanoid01e's `weapon_1` to `weapon_6` are humanoid01's `be_prop_0` to `be_prop_5`,
+# in the same order the docking metadata counts props in (prop 3 is `weapon_3` on one and `be_prop_2` on the other).
+BONE_RENAMES = {
+    "humanoid01e": {**{f"weapon_{i + 1}": f"be_prop_{i}" for i in range(6)}, "head_0": "head", "jaw_0": "jaw", "eyebrows_0": "eyebrow",
+                    "shoulderpad_left_0": "shoulder_pad_left", "shoulderpad_right_0": "shoulder_pad_right"},
+}
+
+# Every set casts with `CAST_SPELL_*` on foot and `RIDER_CAST_SPELL_*` when mounted.
 FOOT_CASTS = r"^CAST_SPELL_"
 RIDER_CASTS = r"^RIDER_CAST_SPELL_"
+
+# Retargeted set -> (the vanilla humanoid01 set that gives it the slots it lacks, regex of the slots it gives). Taoyan casts no spells, so her set
+# has no casts, and Settra's halberd set gives them. Chosen 2026-10-17: the rest of the Glaive stays pure Taoyan, so only the casts come over.
+FILL_SLOTS = {
+    "hu1_advisor_overhaul_glaive": ("hu1_settra_2handed_halberd", FOOT_CASTS),
+}
+
+# Taoyan's sword and scabbard, held to the hip where her right waist dock has them.
+TAOYAN_HIP = {prop: DOCK_POINTS["RWAIST"] for prop in ("be_prop_2", "be_prop_3")}
+
+# Set name -> list of (slot regex, `grips`, `pins`, folder, file name prefix). Each matching slot plays a copy of its animation with props held, and a
+# copy of its meta pointed at the copy:
+# - `grips`: prop -> (the bone whose place it takes in the first frame, the bone it is then held to).
+# - `pins`: prop -> (the slot of the same set whose first frame gives its offset, the bone it is held to).
+# Settra's casts are the staff-and-sword ones with his halberd slung on his back. The Glaive's copies put the polearm where the staff starts, in his
+# left hand, and keep it there: the staff twirls in his fingers, which a long blade turns into a jitter. Both models lie centred along the same axis.
+# His casts also turn the persistent docks off, which would leave Taoyan's sword and scabbard on his props, so they stay at the hip.
+# Taoyan's ladder dismount (shared with the Jade Warriors) leaves the polearm's track behind and relies on her persistent right hand dock, which
+# holds her own polearm bone, so the copy holds the glaive to the right hand as that dock would.
+# Every disc cast throws the staff up to spin above him, which suits a spell but not a bolt from the staff, so `FIRE_LEVEL` keeps it in his hand.
+PROP_PINS = {
+    "hu1_advisor_overhaul_glaive": [
+        (r"^CAST_SPELL_", {"be_prop_1": ("be_prop_5", "hand_left")}, TAOYAN_HIP, f"{DERIVED_FOLDER}/glaive/casts", "aogc"),
+        (r"^CLIMB_OFF_LADDER_WALL$", {}, {"be_prop_1": DOCK_POINTS["RHAND"]}, f"{DERIVED_FOLDER}/glaive/climbs", "aogk"),
+    ],
+    "hu1_advisor_overhaul_disc01_staff_and_sword": [
+        (r"^FIRE_LEVEL$", {}, {"be_prop_5": ("STAND", "hand_left")}, f"{DERIVED_FOLDER}/disc_staff_and_sword/fire", "aodf"),
+    ],
+}
+
+# Set name -> (folder, file name prefix) for the copies of vanilla animations its docking is baked into. Taoyan's glaive, sword and scabbard ride on
+# her set's docks and their raw tracks wander, so the tracks get the docks baked in and look the same whether or not the game docks them.
+BAKED_DOCKING = {"hu1_advisor_overhaul_glaive": (f"{DERIVED_FOLDER}/glaive/docked", "aogd")}
+
+# Folder of campaign set files inside packs.
+CAMPAIGN_SET_FOLDER = "animations/campaign/database/bin"
+
+# New campaign set -> (vanilla campaign set, its skeleton, folder for the retargeted animations, file name prefix). Taoyan's campaign animations hold
+# her glaive, sword and scabbard in their tracks and her campaign persistent meta docks nothing, so a plain retarget plays as she does.
+CAMPAIGN_SETS = {
+    "cam_hu1_advisor_overhaul_glaive": ("cam_hero_hu1e_cp1_taoyan_trident", "humanoid01e", f"{DERIVED_FOLDER}/glaive_campaign", "aogm"),
+}
 
 # The staff-and-sword horse set. Its rider casts are proper seated ones (`hu1_hr1_sfsw_rider1_cast_*`), unlike the foot casts several vanilla
 # rider sets play, so it donates them to every derived horse set.
@@ -110,14 +166,6 @@ RIDER_FIRE += [("RIDER_COMBAT_READY", "RIDER_STAND")]
 # vanilla disc sorcerer. The disc set has no combat-ready stance, and a fire slot without one leaves him in a T-pose after the shot.
 DISC_FIRE = [("FIRE_LEVEL", "CAST_SPELL_FORWARD_SHORT"), ("COMBAT_READY", "STAND"), ("FLY_COMBAT_READY", "FLY_STAND")]
 
-# Every disc cast throws the staff up to spin above him, which suits a spell but not a bolt from the staff. Set name -> (slot, prop -> anchor bone,
-# folder, file name prefix): that slot plays a copy of its animation with the staff held to his left hand at its stand offset, and a copy of its
-# meta whose self-splice points at the copy.
-FIRE_PINS = {
-    "hu1_advisor_overhaul_disc01_staff_and_sword": ("FIRE_LEVEL", {"be_prop_5": "hand_left"},
-                                                    "animations/battle/humanoid01/advisor_overhaul/disc_staff_and_sword/fire", "aodf"),
-}
-
 # Set name -> (new slot, the slot of the same set it copies), added when the set lacks the new slot. The on-foot staff set needs none: vanilla
 # `hu1_pr8_amethyst_staff_and_sword` already has `FIRE_LEVEL` (`hu1_sfsw_aim_fire_stand_01`, `FIRE_POS` at 0.9 s of 2.2 s) and `COMBAT_READY`.
 ADDED_SLOTS = {
@@ -153,8 +201,7 @@ def renamed_path(path: str, folder: str, prefix: str) -> str:
         str: The new path, e.g. `.../hu1_aod_tzeentch_..._stand_01.anim`.
     """
     name = os.path.basename(path)
-    skeleton_prefix = name.split("_", 1)[0]
-    if skeleton_prefix.startswith("hu"):
+    if name.startswith("hu") and "_" in name:
         return f"{folder}/hu1_{prefix}_{name.split('_', 1)[1]}"
     return f"{folder}/{prefix}_{name}"
 
@@ -234,8 +281,12 @@ def build_set(name: str, source_data: bytes, source_skeleton: str, folder: str, 
     anims = sorted({r.anim for slot in source.slots for r in slot.refs if r.anim})
     metas = sorted({r.meta for slot in source.slots for r in slot.refs if r.meta})
     skeletons = [f"animations/skeletons/{source_skeleton}.anim", f"animations/skeletons/{TARGET_SKELETON}.anim"]
-    files = assets.fetch_all(anims + metas + skeletons)
-    meta_data = {m: files[norm(m)] for m in metas}
+    files = assets.fetch(anims + skeletons + metas)
+    missing = [path for path in anims + skeletons if norm(path) not in files]
+    if missing:
+        raise SystemExit(f"not in any searched pack: {', '.join(missing)}")
+    # Some vanilla slots name a meta no pack has, such as Taoyan's docking ones. The game skips those, so they keep their vanilla path.
+    meta_data = {m: files[norm(m)] for m in metas if norm(m) in files}
     spliced = sorted({p.decode() for data in meta_data.values() for p in ANIM_PATH.findall(data)} - set(anims))
     files.update(assets.fetch_all(spliced))
 
@@ -243,7 +294,8 @@ def build_set(name: str, source_data: bytes, source_skeleton: str, folder: str, 
         return read_anim(files[norm(path)])
 
     source_bind, target_bind = load(skeletons[0]), load(skeletons[1])
-    retargeted = {path: write_anim(retarget(load(path), source_bind, target_bind, TARGET_SKELETON)) for path in anims + spliced}
+    renames = BONE_RENAMES.get(source_skeleton)
+    retargeted = {path: write_anim(retarget(load(path), source_bind, target_bind, TARGET_SKELETON, renames=renames)) for path in anims + spliced}
     new = copy.deepcopy(source)
     new.name, new.skeleton = name, TARGET_SKELETON
     copied = write_copies(name, retargeted, meta_data, folder, prefix, new.slots)
@@ -251,15 +303,13 @@ def build_set(name: str, source_data: bytes, source_skeleton: str, folder: str, 
     return write_set(new)
 
 
-def pin_prop(anim: Animation, skeleton: Animation, prop_name: str, anchor_name: str, offset: Transform) -> None:
-    """Holds a prop at a fixed offset from its anchor bone in every frame.
+def hold_props(anim: Animation, skeleton: Animation, holds: Dict[str, Tuple[str, Transform]]) -> None:
+    """Holds props at fixed offsets from their anchor bones in every frame. No anchor may be one of the props.
 
     Args:
         anim (Animation): The animation, changed in place.
         skeleton (Animation): The skeleton's bind pose.
-        prop_name (str): The prop bone, e.g. `be_prop_2`.
-        anchor_name (str): The bone it is held to, e.g. `hand_left`.
-        offset (Transform): The prop's transform relative to the anchor bone.
+        holds (Dict[str, Tuple[str, Transform]]): Prop bone, e.g. `be_prop_2` -> (the bone it is held to, its transform relative to that bone).
 
     Raises:
         SystemExit: When the animation's bones are not the skeleton's.
@@ -267,13 +317,13 @@ def pin_prop(anim: Animation, skeleton: Animation, prop_name: str, anchor_name: 
     if [b.name for b in anim.bones] != [b.name for b in skeleton.bones]:
         raise SystemExit(f"{anim.skeleton} animation bones differ from the skeleton's")
     index = {bone.name: i for i, bone in enumerate(anim.bones)}
-    prop, anchor = index[prop_name], index[anchor_name]
-    parent = anim.bones[prop].parent
+    held = [(index[prop], index[anchor], offset) for prop, (anchor, offset) in holds.items()]
     for frame in range(len(anim.rotations)):
         world = world_pose(anim, skeleton, frame)
-        pinned = compose(world[anchor], offset)
-        local = relative(world[parent], pinned) if parent >= 0 else pinned
-        anim.rotations[frame][prop], anim.translations[frame][prop] = local
+        for prop, anchor, offset in held:
+            parent = anim.bones[prop].parent
+            pinned = compose(world[anchor], offset)
+            anim.rotations[frame][prop], anim.translations[frame][prop] = relative(world[parent], pinned) if parent >= 0 else pinned
 
 
 def build_derived(name: str, spec: Dict, sets: Dict[str, bytes], assets: AssetSource, names: Dict[int, str]) -> bytes:
@@ -338,8 +388,7 @@ def build_derived(name: str, spec: Dict, sets: Dict[str, bytes], assets: AssetSo
     pinned: Dict[str, bytes] = {}
     for path in anims:
         anim = load(path)
-        for prop, anchor in pins.items():
-            pin_prop(anim, skeleton, prop, anchor, offsets[prop])
+        hold_props(anim, skeleton, {prop: (anchor, offsets[prop]) for prop, anchor in pins.items()})
         pinned[path] = write_anim(anim)
     copied = write_copies(name, pinned, {m: files[norm(m)] for m in metas}, spec["folder"], spec["prefix"], pinned_slots)
     held = ", ".join(f"{prop} to {anchor}" for prop, anchor in pins.items())
@@ -379,13 +428,51 @@ def add_slots(data: bytes, pairs: List[Tuple[str, str]], names: Dict[int, str]) 
     return write_set(anim_set)
 
 
-def pin_slot(data: bytes, slot_name: str, pins: Dict[str, str], folder: str, prefix: str, names: Dict[int, str], assets: AssetSource) -> bytes:
-    """Points one slot at copies of its animation with props pinned to their stand offset, and of its meta pointed at the copy.
+def fill_slots(data: bytes, donor_data: bytes, pattern: str, names: Dict[int, str]) -> bytes:
+    """Adds every matching slot the donor set plays and the set does not, as the donor has it. An empty slot of the set is replaced.
 
     Args:
         data (bytes): The set `.bin`.
-        slot_name (str): The slot to change.
-        pins (Dict[str, str]): Prop bone -> the bone it is held to.
+        donor_data (bytes): The donor set `.bin`.
+        pattern (str): Regex of the slot names to fill.
+        names (Dict[int, str]): Slot names by id.
+
+    Returns:
+        bytes: The changed set `.bin`.
+    """
+    anim_set = parse_set(data)
+    present = {slot.slot_id for slot in anim_set.slots if slot.refs}
+    added = [slot for slot in parse_set(donor_data).slots if slot.refs and slot.slot_id not in present and re.match(pattern, names.get(slot.slot_id, ""))]
+    filled = {slot.slot_id for slot in added}
+    anim_set.slots = [slot for slot in anim_set.slots if slot.refs or slot.slot_id not in filled] + added
+    print(f"{anim_set.name}: filled {len(added)} {pattern} slots from the donor")
+    return write_set(anim_set)
+
+
+def read_files(paths: List[str], assets: AssetSource) -> Callable[[str], Optional[bytes]]:
+    """Reads game files in one go. Files the mod folder has win, the rest come from the vanilla packs.
+
+    Args:
+        paths (List[str]): Game paths.
+        assets (AssetSource): The vanilla packs.
+
+    Returns:
+        Callable[[str], Optional[bytes]]: Reads one of the paths, None when no pack has it.
+    """
+    local = {p: open(os.path.join(MOD, p), "rb").read() for p in set(paths) if os.path.exists(os.path.join(MOD, p))}
+    vanilla = assets.fetch(sorted(set(paths) - set(local)))
+    return lambda path: local[path] if path in local else vanilla.get(norm(path))
+
+
+def pin_props(data: bytes, pattern: str, grips: Dict[str, Tuple[str, str]], pins: Dict[str, Tuple[str, str]], folder: str, prefix: str, names: Dict[int, str],
+              assets: AssetSource) -> bytes:
+    """Points the matching slots at copies of their animations with props held, and at copies of their metas pointed at them.
+
+    Args:
+        data (bytes): The set `.bin`.
+        pattern (str): Regex of the slot names to change.
+        grips (Dict[str, Tuple[str, str]]): Prop bone -> (the bone whose place it takes in the first frame, the bone it is held to).
+        pins (Dict[str, Tuple[str, str]]): Prop bone -> (the slot whose first frame gives its offset, the bone it is held to).
         folder (str): Output folder for the copies, relative to the mod folder.
         prefix (str): Short prefix marking the copies.
         names (Dict[int, str]): Slot names by id.
@@ -395,32 +482,147 @@ def pin_slot(data: bytes, slot_name: str, pins: Dict[str, str], folder: str, pre
         bytes: The changed set `.bin`.
 
     Raises:
-        SystemExit: When the slot or the stand animation is missing.
+        SystemExit: When no slot matches or the set lacks a slot giving an offset.
     """
     anim_set = parse_set(data)
-    slot = next((s for s in anim_set.slots if names.get(s.slot_id) == slot_name and s.refs), None)
-    stand = next((s.refs[0].anim for s in anim_set.slots if names.get(s.slot_id) == "STAND" and s.refs), None)
-    if slot is None or stand is None:
-        raise SystemExit(f"{anim_set.name}: no {slot_name} or STAND to pin")
-    ref, skeleton_path = slot.refs[0], f"animations/skeletons/{TARGET_SKELETON}.anim"
+    slots = [slot for slot in anim_set.slots if slot.refs and re.match(pattern, names.get(slot.slot_id, ""))]
+    poses = {names.get(s.slot_id): s.refs[0].anim for s in anim_set.slots if s.refs}
+    needed = {pose for pose, _ in pins.values()}
+    if not slots or needed - set(poses):
+        raise SystemExit(f"{anim_set.name}: no {pattern} slot or no {', '.join(sorted(needed - set(poses)))} to pin to")
 
-    def read(path: str) -> bytes:
-        local = os.path.join(MOD, path)
-        return open(local, "rb").read() if os.path.exists(local) else assets.fetch_all([path])[norm(path)]
-
+    skeleton_path = f"animations/skeletons/{TARGET_SKELETON}.anim"
+    anims = sorted({r.anim for slot in slots for r in slot.refs if r.anim})
+    metas = sorted({r.meta for slot in slots for r in slot.refs if r.meta})
+    read = read_files([skeleton_path, *anims, *metas, *(poses[pose] for pose in needed)], assets)
     skeleton = read_anim(read(skeleton_path))
-    stand_world = world_pose(read_anim(read(stand)), skeleton, 0)
     index = {bone.name: i for i, bone in enumerate(skeleton.bones)}
-    anim = read_anim(read(ref.anim))
-    for prop, anchor in pins.items():
-        pin_prop(anim, skeleton, prop, anchor, relative(stand_world[index[anchor]], stand_world[index[prop]]))
-    write_copies(anim_set.name, {ref.anim: write_anim(anim)}, {ref.meta: read(ref.meta)} if ref.meta else {}, folder, prefix, [slot])
-    print(f"{anim_set.name}: {slot_name} plays {slot.refs[0].anim} with {', '.join(f'{p} held to {a}' for p, a in pins.items())}")
+    pose_worlds = {pose: world_pose(read_anim(read(poses[pose])), skeleton, 0) for pose in needed}
+    pinned = {prop: (anchor, relative(pose_worlds[pose][index[anchor]], pose_worlds[pose][index[prop]])) for prop, (pose, anchor) in pins.items()}
+    moved: Dict[str, bytes] = {}
+    for path in anims:
+        anim = read_anim(read(path))
+        first = world_pose(anim, skeleton, 0) if grips else None
+        gripped = {prop: (hand, relative(first[index[hand]], first[index[leader]])) for prop, (leader, hand) in grips.items()}
+        hold_props(anim, skeleton, {**gripped, **pinned})
+        moved[path] = write_anim(anim)
+    # Some vanilla slots name a meta that no pack has, e.g. Taoyan's ladder dismount.
+    copied = write_copies(anim_set.name, moved, {m: read(m) for m in metas if read(m)}, folder, prefix, slots)
+    held = [f"{prop} held to {hand} where {leader} starts" for prop, (leader, hand) in grips.items()] + [f"{p} held to {a} as in {pose}" for p, (pose, a) in pins.items()]
+    print(f"{anim_set.name}: {len(moved)} {pattern} animations with {', '.join(held)}, {copied} metas repointed")
     return write_set(anim_set)
 
 
+def bake_docking(data: bytes, folder: str, prefix: str, names: Dict[int, str], assets: AssetSource) -> bytes:
+    """Bakes the set's equipment docking into its animations, so the props sit where the docks hold them even when the game does not dock them.
+    Animations in the mod folder are changed in place, vanilla ones get copies the slots are pointed at.
+
+    Args:
+        data (bytes): The set `.bin`.
+        folder (str): Output folder for the vanilla animations' copies, relative to the mod folder.
+        prefix (str): Short prefix marking the copies.
+        names (Dict[int, str]): Slot names by id.
+        assets (AssetSource): The vanilla packs, for files the mod folder lacks.
+
+    Returns:
+        bytes: The changed set `.bin`.
+
+    Raises:
+        SystemExit: When the set docks nothing.
+    """
+    anim_set = parse_set(data)
+    skeleton_path = f"animations/skeletons/{TARGET_SKELETON}.anim"
+    read = read_files([skeleton_path] + [path for slot in anim_set.slots for r in slot.refs for path in (r.anim, r.meta) if path], assets)
+    docking = set_docking(anim_set, names, read)
+    if docking is None:
+        raise SystemExit(f"{anim_set.name}: no docks to bake")
+    skeleton = read_anim(read(skeleton_path))
+    # The dock poses and the persistent slot stay as they are, since the poses give the docks their offsets.
+    slots = [slot for slot in anim_set.slots if slot.refs and not names.get(slot.slot_id, "").startswith(("DOCK_EQUIPMENT_", "PERSISTENT_METADATA_"))]
+    in_place, copies = 0, {}
+    for path in sorted({r.anim for slot in slots for r in slot.refs if r.anim}):
+        anim = read_anim(read(path))
+        if not apply_docking(anim, path, docking, lambda pose: read_anim(read(pose)), skeleton):
+            continue
+        if os.path.exists(os.path.join(MOD, path)):
+            with open(os.path.join(MOD, path), "wb") as f:
+                f.write(write_anim(anim))
+            in_place += 1
+        else:
+            copies[path] = write_anim(anim)
+    metas = sorted({r.meta for slot in slots for r in slot.refs if r.meta and r.anim in copies})
+    copied = write_copies(anim_set.name, copies, {m: read(m) for m in metas if read(m)}, folder, prefix, [s for s in slots if any(r.anim in copies for r in s.refs)])
+    print(f"{anim_set.name}: docking baked into {in_place} animations in place and {len(copies)} copies, {copied} metas repointed")
+    return write_set(anim_set)
+
+
+def split_campaign_set(data: bytes) -> Tuple[bytes, List[str]]:
+    """Splits a campaign set `.bin`, which `parse_set()` does not read, into its slot block and its strings. The second u32 is the length of the
+    block after it, which names strings by their number, and u16-length-prefixed strings fill the rest of the file.
+
+    Args:
+        data (bytes): The campaign set `.bin`.
+
+    Returns:
+        Tuple[bytes, List[str]]: Everything before the strings, and the strings in order.
+
+    Raises:
+        SystemExit: When the strings do not end with the file.
+    """
+    head_end = 4 + struct.unpack_from("<I", data, 4)[0]
+    strings, offset = [], head_end
+    while offset + 2 <= len(data):
+        length = struct.unpack_from("<H", data, offset)[0]
+        strings.append(data[offset + 2:offset + 2 + length].decode())
+        offset += 2 + length
+    if offset != len(data):
+        raise SystemExit(f"campaign set strings end at byte {offset} of {len(data)}")
+    return data[:head_end], strings
+
+
+def build_campaign_set(name: str, source: str, source_skeleton: str, folder: str, prefix: str, assets: AssetSource) -> None:
+    """Retargets one vanilla campaign set and writes it and its animations into the mod folder. Its metas keep their vanilla paths.
+
+    Args:
+        name (str): The new set's name.
+        source (str): The vanilla campaign set.
+        source_skeleton (str): The vanilla set's skeleton.
+        folder (str): Output folder for the retargeted animations, relative to the mod folder.
+        prefix (str): Short prefix marking the copies.
+        assets (AssetSource): The vanilla packs.
+
+    Raises:
+        SystemExit: When a file is missing or two animations map to the same file name.
+    """
+    source_path = f"{CAMPAIGN_SET_FOLDER}/{source}.bin"
+    skeletons = [f"animations/skeletons/{source_skeleton}.anim", f"animations/skeletons/{TARGET_SKELETON}.anim"]
+    data = assets.fetch([source_path]).get(norm(source_path))
+    if data is None:
+        raise SystemExit(f"{name}: {source_path} is not in any searched pack")
+    head, strings = split_campaign_set(data)
+    anims = sorted({s for s in strings if s.endswith(".anim")})
+    files = assets.fetch(anims + skeletons)
+    missing = [path for path in anims + skeletons if norm(path) not in files]
+    if missing:
+        raise SystemExit(f"not in any searched pack: {', '.join(missing)}")
+    source_bind, target_bind = (read_anim(files[norm(path)]) for path in skeletons)
+    renamed = {path: renamed_path(path, folder, prefix) for path in anims}
+    if len(set(renamed.values())) != len(renamed):
+        raise SystemExit(f"{name}: two animations map to the same file name")
+    os.makedirs(os.path.join(MOD, folder), exist_ok=True)
+    for path, copy_path in renamed.items():
+        anim = retarget(read_anim(files[norm(path)]), source_bind, target_bind, TARGET_SKELETON, renames=BONE_RENAMES.get(source_skeleton))
+        with open(os.path.join(MOD, copy_path), "wb") as f:
+            f.write(write_anim(anim))
+    swaps = {**renamed, source: name, source_skeleton: TARGET_SKELETON}
+    os.makedirs(os.path.join(MOD, CAMPAIGN_SET_FOLDER), exist_ok=True)
+    with open(os.path.join(MOD, CAMPAIGN_SET_FOLDER, f"{name}.bin"), "wb") as f:
+        f.write(head + b"".join(pack_string(swaps.get(s, s)) for s in strings))
+    print(f"{name}: {len(anims)} animations of {source} retargeted")
+
+
 def build() -> None:
-    """Builds every set in `SETS` and `DERIVED_SETS` into the mod's animpack."""
+    """Builds every set in `SETS` and `DERIVED_SETS` into the mod's animpack, and every set in `CAMPAIGN_SETS`."""
     vanilla = {os.path.basename(path)[:-4]: data for path, data in load_vanilla_sets().items() if path.startswith(SET_FOLDER) and path.endswith(".bin")}
     names = load_slot_ids(open(f"{SCHEMAS_DIR}/{SLOT_IDS_FILE}", encoding="utf-8").read())
     assets = AssetSource([], [], VANILLA_PACKS)
@@ -428,10 +630,15 @@ def build() -> None:
     for name, (source, skeleton, folder, prefix) in SETS.items():
         shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
         data = build_set(name, vanilla[source], skeleton, folder, prefix, assets)
+        if name in FILL_SLOTS:
+            donor, pattern = FILL_SLOTS[name]
+            data = fill_slots(data, vanilla[donor], pattern, names)
         if name in ADDED_SLOTS:
             data = add_slots(data, ADDED_SLOTS[name], names)
-        if name in FIRE_PINS:
-            data = pin_slot(data, *FIRE_PINS[name], names, assets)
+        for spec in PROP_PINS.get(name, []):
+            data = pin_props(data, *spec, names, assets)
+        if name in BAKED_DOCKING:
+            data = bake_docking(data, *BAKED_DOCKING[name], names, assets)
         entries.append((f"{SET_FOLDER}/{name}.bin", data))
     for name, spec in DERIVED_SETS.items():
         if spec.get("folder"):
@@ -444,6 +651,10 @@ def build() -> None:
     with open(os.path.join(MOD, ANIMPACK), "wb") as f:
         f.write(write_animpack(entries))
     print(f"wrote {len(entries)} sets to {ANIMPACK}")
+    shutil.rmtree(os.path.join(MOD, CAMPAIGN_SET_FOLDER), ignore_errors=True)
+    for name, (source, skeleton, folder, prefix) in CAMPAIGN_SETS.items():
+        shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
+        build_campaign_set(name, source, skeleton, folder, prefix, assets)
 
 
 if __name__ == "__main__":

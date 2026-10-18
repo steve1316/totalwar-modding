@@ -4,253 +4,111 @@
   "body": "advisor",
   "bodies": {
    "advisor": {
-    "body": [
-     "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:leather"
-    ]
+    "body": ["variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
    },
    "grey_wizard": {
-    "body": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/body/emp_grey_wizard_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:leather"
-    ],
-    "cape": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/cape/emp_grey_wizard_cape_01.wsmodel"
-    ]
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/body/emp_grey_wizard_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"],
+    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/cape/emp_grey_wizard_cape_01.wsmodel"]
    },
    "jade_wizard": {
-    "body": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/body/emp_jade_wizard_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:leather"
-    ],
-    "cape": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/cape/emp_jade_wizard_cape_01.wsmodel"
-    ],
-    "legs": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/legs/emp_jade_wizard_legs_01.wsmodel"
-    ]
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/body/emp_jade_wizard_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"],
+    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/cape/emp_jade_wizard_cape_01.wsmodel"],
+    "legs": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/legs/emp_jade_wizard_legs_01.wsmodel"]
    },
    "gold_wizard": {
-    "collar": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/emp_wizard_metal/emp_wizard_metal_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:cloth"
-    ]
+    "collar": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/emp_wizard_metal/emp_wizard_metal_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:cloth"]
    },
    "amethyst_wizard": {
-    "body": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/amethyst/emp_amethyst_wizard_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:leather"
-    ]
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/amethyst/emp_amethyst_wizard_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
    },
    "captain": {
-    "torso": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_captains/body/emp_captains_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:plate"
-    ]
+    "torso": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_captains/body/emp_captains_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"]
    },
    "witch_hunter": {
-    "body": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_witch_hunter/body/emp_witch_hunter_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:plate"
-    ]
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_witch_hunter/body/emp_witch_hunter_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"]
    },
    "huntsmarshal": {
-    "body": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_huntsmarshal/emp_huntsmarshal_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:leather"
-    ]
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_huntsmarshal/emp_huntsmarshal_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
    },
    "general": {
-    "body": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:plate"
-    ],
-    "legs": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_legs_01.wsmodel"
-    ],
-    "cape": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_cape_01.wsmodel"
-    ]
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"],
+    "legs": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_legs_01.wsmodel"],
+    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_cape_01.wsmodel"]
    },
    "bretonnian_lord": {
-    "body": [
-     "VariantMeshes/wh_variantmodels/hu1/brt/brt_lord/brt_lord_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:plate"
-    ]
+    "body": ["VariantMeshes/wh_variantmodels/hu1/brt/brt_lord/brt_lord_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"]
    },
    "todbringer": {
-    "body": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:plate"
-    ],
-    "legs": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_legs_01.wsmodel"
-    ],
-    "cape": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_cape_01.wsmodel"
-    ]
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"],
+    "legs": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_legs_01.wsmodel"],
+    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_cape_01.wsmodel"]
    },
    "vmp_necromancer_body_01": {
-    "body": [
-     "variantmeshes/wh_variantmodels/hu1/vmp/vmp_necromancer/body/vmp_necromancer_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:leather"
-    ]
+    "body": ["variantmeshes/wh_variantmodels/hu1/vmp/vmp_necromancer/body/vmp_necromancer_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
    },
    "brt_knights_errant_body_02": {
-    "body": [
-     "variantmeshes/wh_variantmodels/hu1/brt/brt_knights_errant/brt_knights_errant_body_02.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:leather"
-    ]
+    "body": ["variantmeshes/wh_variantmodels/hu1/brt/brt_knights_errant/brt_knights_errant_body_02.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
    },
    "brt_knights_errant_body_01": {
-    "body": [
-     "variantmeshes/wh_variantmodels/hu1/brt/brt_knights_errant/brt_knights_errant_body_01.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:leather"
-    ]
+    "body": ["variantmeshes/wh_variantmodels/hu1/brt/brt_knights_errant/brt_knights_errant_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
    },
    "brt_knights_errant_body_ror_02": {
-    "body": [
-     "variantmeshes/wh_variantmodels/hu1/brt/brt_knights_errant/brt_knights_errant_body_ror_02.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:leather"
-    ]
+    "body": ["variantmeshes/wh_variantmodels/hu1/brt/brt_knights_errant/brt_knights_errant_body_ror_02.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
    },
    "emp_huntsmarshal_body_02": {
-    "body": [
-     "variantmeshes/wh_variantmodels/hu1/emp/emp_huntsmarshal/emp_huntsmarshal_body_02.wsmodel",
-     "audio_entity_type:wh_human_male_LH",
-     "audio_armour_type:leather"
-    ]
+    "body": ["variantmeshes/wh_variantmodels/hu1/emp/emp_huntsmarshal/emp_huntsmarshal_body_02.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
+   },
+   "emp_free_company_torso_04": {
+    "body": ["variantmeshes/wh_variantmodels/hu1/emp/emp_free_company/emp_free_company_torso_04.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
+   },
+   "brt_paladin_body_03": {
+    "body": ["variantmeshes/wh_variantmodels/hu1/brt/brt_paladin/brt_paladin_body_03.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
    }
   },
   "head": "advisor",
   "hood": true,
   "prop_offsets_description": "Weapon model -> [x, y, z] metres its model is moved in its own axes (x runs along the blade). Positive x slides the weapon blade first, so his hand sits further down the grip. Each one is written as a copy under the mod's props folder and used in place of the vanilla weapon. Set from the dashboard's Adjust panel.",
   "prop_offsets": {
-   "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2": [
-    0.045,
-    0.0,
-    0.0
-   ],
-   "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_sword_1h_01.wsmodel": [
-    0.017,
-    0.0,
-    0.0
-   ],
-   "variantmeshes/wh_variantmodels/hu1c/dae/dae_props/dae_lord_tzeentch_shield_01.wsmodel": [
-    0.053,
-    0.0,
-    0.0
-   ],
-   "variantmeshes/wh_variantmodels/hu1b/vmp/vmp_props/vmp_isabella_von_carstein_sword_1h_01.wsmodel": [
-    0.038,
-    0.0,
-    0.0
-   ]
+   "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2": [0.045, 0.0, 0.0],
+   "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_sword_1h_01.wsmodel": [0.017, 0.0, 0.0],
+   "variantmeshes/wh_variantmodels/hu1c/dae/dae_props/dae_lord_tzeentch_shield_01.wsmodel": [0.053, 0.0, 0.0],
+   "variantmeshes/wh_variantmodels/hu1b/vmp/vmp_props/vmp_isabella_von_carstein_sword_1h_01.wsmodel": [0.038, 0.0, 0.0]
   },
   "hand_shift_description": "[x, y, z] metres his hand and finger vertices move, in the right hand bone's bind frame (z flips for the left hand). Fitted against the vanilla Empire Captain so his fist closes around a weapon grip. Set from the dashboard's Adjust panel.",
-  "hand_shift": [
-   -0.009,
-   0.006,
-   -0.011
-  ],
+  "hand_shift": [-0.009, 0.006, -0.011],
   "heads": {
    "advisor": {
-    "hooded": [
-     "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01.wsmodel"
-    ],
-    "hoodless": [
-     "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01_hoodless.wsmodel"
-    ]
+    "hooded": ["variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01.wsmodel"],
+    "hoodless": ["variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01_hoodless.wsmodel"]
    },
    "jade": {
-    "hooded": [
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/head/emp_jade_wizard_head_02.wsmodel"
-    ]
+    "hooded": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/head/emp_jade_wizard_head_02.wsmodel"]
    }
   },
   "stumps": {
-   "stump_neck": [
-    "spine_2",
-    "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_neck_hu1_1.rigid_model_v2"
-   ],
-   "stump_left_arm": [
-    "clav_left",
-    "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_left_arm_hu1_1.rigid_model_v2"
-   ],
-   "stump_right_arm": [
-    "clav_right",
-    "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_right_arm_hu1_1.rigid_model_v2"
-   ],
-   "stump_waist": [
-    "root",
-    "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_waist_hu1_6.rigid_model_v2"
-   ],
-   "stump_severed_head": [
-    "head",
-    "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_head_hu1_3.rigid_model_v2"
-   ]
+   "stump_neck": ["spine_2", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_neck_hu1_1.rigid_model_v2"],
+   "stump_left_arm": ["clav_left", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_left_arm_hu1_1.rigid_model_v2"],
+   "stump_right_arm": ["clav_right", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_right_arm_hu1_1.rigid_model_v2"],
+   "stump_waist": ["root", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_waist_hu1_6.rigid_model_v2"],
+   "stump_severed_head": ["head", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_head_hu1_3.rigid_model_v2"]
   },
   "prop_turns": {
-   "variantmeshes/wh_variantmodels/hu1c/dae/dae_props/dae_lord_tzeentch_shield_01.wsmodel": [
-    25.0,
-    -180.0,
-    0.0
-   ]
+   "variantmeshes/wh_variantmodels/hu1c/dae/dae_props/dae_lord_tzeentch_shield_01.wsmodel": [25.0, -180.0, 0.0]
   },
-  "prop_sizes": {
-   "variantmeshes/wh_variantmodels/hu1c/dae/dae_props/dae_lord_tzeentch_shield_01.wsmodel": 0.6
-  },
-  "unpainted": {
-   "brt_knights_errant_body_02": true
-  }
+  "prop_sizes": {"variantmeshes/wh_variantmodels/hu1c/dae/dae_props/dae_lord_tzeentch_shield_01.wsmodel": 0.6},
+  "unpainted": {"brt_knights_errant_body_02": true}
  },
  "portrait": {
   "description": "His 2D portrait art and his 3D portrait camera. `source` is the vanilla Advisor bust (pack, path) every image is cut from. `porthole` places it on the 300x164 porthole image and `card` on the 60x130 unit card (and the 120x260 info picture at twice the size), bottom aligned over a top-to-bottom gradient. `camera_head` replaces the head camera of the Grey Wizard's portrait settings: `z` is the distance and `y` the height above the head bone, in metres.",
-  "source": [
-   "ui2.pack",
-   "ui/skins/default/preview_advisor.png"
-  ],
+  "source": ["ui2.pack", "ui/skins/default/preview_advisor.png"],
   "image": "advisor_overhaul_campaign_01_0",
-  "porthole": {
-   "x": 92,
-   "y": 3,
-   "scale": 1.0
-  },
+  "porthole": {"x": 92, "y": 3, "scale": 1.0},
   "card": {
    "scale": 0.72,
-   "top": [
-    150,
-    160,
-    165
-   ],
-   "bottom": [
-    55,
-    60,
-    62
-   ]
+   "top": [150, 160, 165],
+   "bottom": [55, 60, 62]
   },
-  "camera_head": {
-   "z": 1.0,
-   "y": 0.0,
-   "yaw": 0.0,
-   "pitch": 8.0,
-   "fov": 30.0
-  }
+  "camera_head": {"z": 1.0, "y": 0.0, "yaw": 0.0, "pitch": 8.0, "fov": 30.0}
  },
  "weapons": {
   "staff_and_sword": {
@@ -261,16 +119,8 @@
    "shield": "none",
    "body": "advisor",
    "props": {
-    "weapon_2": [
-     "be_prop_1",
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2",
-     "audio_melee_weapon_type:sword"
-    ],
-    "weapon_5": [
-     "be_prop_5",
-     "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_grey_wizard_staff_1h_01.rigid_model_v2",
-     "audio_melee_weapon_type:staff"
-    ]
+    "weapon_2": ["be_prop_1", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2", "audio_melee_weapon_type:sword"],
+    "weapon_5": ["be_prop_5", "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_grey_wizard_staff_1h_01.rigid_model_v2", "audio_melee_weapon_type:staff"]
    },
    "missile": {
     "description": "His staff bolt, a plain arcane bolt for now. Its element is meant to follow his first lore later, so the key names no element. `template` is the vanilla Hag Witch's staff bolt, with one bolt per shot instead of two, and `projectile` replacing the template's values. `ammo` is a little under the Hag Witch's 28.",
@@ -308,9 +158,7 @@
     "bonus_hit_points": 3412,
     "armour": 20
    },
-   "melee": {
-    "template": "wh_main_emp_sword_caster"
-   },
+   "melee": {"template": "wh_main_emp_sword_caster"},
    "forms": {
     "warhorse": {
      "armour": 50,
@@ -336,11 +184,7 @@
      "armour": 80,
      "bonus_hit_points": 3960,
      "props": {
-      "weapon_5": [
-       "be_prop_5",
-       "VariantMeshes/wh_variantmodels/hu1c/dae/dae_props/dae_sorcerer_tzeentch_staff_1h_01.wsmodel",
-       "audio_melee_weapon_type:staff"
-      ]
+      "weapon_5": ["be_prop_5", "VariantMeshes/wh_variantmodels/hu1c/dae/dae_props/dae_sorcerer_tzeentch_staff_1h_01.wsmodel", "audio_melee_weapon_type:staff"]
      }
     }
    },
@@ -359,11 +203,7 @@
        "scope": "character_to_character_own",
        "value": 15
       },
-      {
-       "effect": "wh3_main_effect_spell_mastery",
-       "scope": "character_to_character_own",
-       "value": 5
-      }
+      {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5}
      ]
     },
     "art_2": {
@@ -380,11 +220,7 @@
        "scope": "character_to_character_own",
        "value": 15
       },
-      {
-       "effect": "wh3_main_effect_spell_mastery",
-       "scope": "character_to_character_own",
-       "value": 8
-      }
+      {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 8}
      ]
     },
     "art_3": {
@@ -460,11 +296,7 @@
      "name": "Calm in the Storm",
      "description": "Magic does not frighten men who have seen him use it.",
      "effects": [
-      {
-       "effect": "wh_main_effect_force_stat_leadership",
-       "scope": "agent_to_parent_army_own",
-       "value": 8
-      },
+      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 8},
       {
        "effect": "wh_main_effect_force_stat_magic_resistance",
        "scope": "agent_to_parent_army_own",
@@ -486,22 +318,14 @@
        "scope": "character_to_character_own",
        "value": 8
       },
-      {
-       "effect": "wh3_main_effect_spell_mastery",
-       "scope": "character_to_character_own",
-       "value": 10
-      }
+      {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10}
      ]
     },
     "army_4": {
      "name": "Woven Wards",
      "description": "He threads a ward through every rank before the first blow.",
      "effects": [
-      {
-       "effect": "wh_main_effect_force_stat_ward_save",
-       "scope": "agent_to_parent_army_own",
-       "value": 5
-      }
+      {"effect": "wh_main_effect_force_stat_ward_save", "scope": "agent_to_parent_army_own", "value": 5}
      ]
     }
    },
@@ -520,16 +344,8 @@
    "shield": "wh_missile_block_35_metal",
    "body": "brt_knights_errant_body_02",
    "props": {
-    "weapon_2": [
-     "be_prop_1",
-     "variantmeshes/wh_variantmodels/hu1b/vmp/vmp_props/vmp_isabella_von_carstein_sword_1h_01.wsmodel",
-     "audio_melee_weapon_type:sword"
-    ],
-    "shield": [
-     "be_prop_2",
-     "variantmeshes/wh_variantmodels/hu1d/def/def_props/def_darkriders_shield_02.wsmodel",
-     ""
-    ]
+    "weapon_2": ["be_prop_1", "variantmeshes/wh_variantmodels/hu1b/vmp/vmp_props/vmp_isabella_von_carstein_sword_1h_01.wsmodel", "audio_melee_weapon_type:sword"],
+    "shield": ["be_prop_2", "variantmeshes/wh_variantmodels/hu1d/def/def_props/def_darkriders_shield_02.wsmodel", ""]
    },
    "sets": {
     "foot": "hu1_advisor_overhaul_sword_and_shield",
@@ -549,9 +365,7 @@
     "bonus_hit_points": 3680,
     "armour": 85
    },
-   "melee": {
-    "template": "wh_main_emp_sword_hero"
-   },
+   "melee": {"template": "wh_main_emp_sword_hero"},
    "forms": {
     "warhorse": {
      "melee_attack": 50,
@@ -572,9 +386,7 @@
    },
    "hood": false,
    "pieces": {
-    "piece_1": [
-     "variantmeshes/wh_variantmodels/hu1/tmb/tmb_liche_high_priest/tmb_liche_high_priest_body_02.wsmodel"
-    ]
+    "piece_1": ["variantmeshes/wh_variantmodels/hu1/tmb/tmb_liche_high_priest/tmb_liche_high_priest_body_02.wsmodel"]
    },
    "arts": {
     "art_1": {
@@ -625,11 +437,7 @@
      "name": "Hold the Line",
      "description": "Men stand firm next to a man who will not step back.",
      "effects": [
-      {
-       "effect": "wh_main_effect_force_stat_leadership",
-       "scope": "agent_to_parent_army_own",
-       "value": 6
-      }
+      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 6}
      ]
     },
     "army_2": {
@@ -674,11 +482,7 @@
      "name": "Shield Wall",
      "description": "Every shield overlaps the next, the way he showed them.",
      "effects": [
-      {
-       "effect": "wh_main_effect_force_stat_armour",
-       "scope": "agent_to_parent_army_own",
-       "value": 10
-      }
+      {"effect": "wh_main_effect_force_stat_armour", "scope": "agent_to_parent_army_own", "value": 10}
      ]
     }
    },
@@ -688,29 +492,15 @@
    "name": "Sword and Bow",
    "description": "A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten.",
    "campaign_set": "cam_lord_hu1_dlc13_huntsmarshal_sword_bow",
-   "campaign_rider_sets": {
-    "warhorse": "cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow"
-   },
+   "campaign_rider_sets": {"warhorse": "cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow"},
    "icon": "wh_dlc05_weapon_abilities_the_bow_of_loren.png",
    "picker_icon": "ui/campaign ui/skills/wh_dlc05_weapon_abilities_the_bow_of_loren.png",
    "shield": "none",
    "body": "emp_huntsmarshal_body_02",
    "props": {
-    "weapon_2": [
-     "be_prop_1",
-     "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.wsmodel",
-     "audio_melee_weapon_type:sword"
-    ],
-    "weapon_3": [
-     "be_prop_3",
-     "variantmeshes/wh_variantmodels/hu1d/hef/hef_props/hef_princess_bow_01_rigid.wsmodel",
-     ""
-    ],
-    "weapon_4": [
-     "be_prop_4",
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_arrow_01.wsmodel",
-     ""
-    ]
+    "weapon_2": ["be_prop_1", "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.wsmodel", "audio_melee_weapon_type:sword"],
+    "weapon_3": ["be_prop_3", "variantmeshes/wh_variantmodels/hu1d/hef/hef_props/hef_princess_bow_01_rigid.wsmodel", ""],
+    "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_arrow_01.wsmodel", ""]
    },
    "missile": {
     "description": "His bow. `template` is the vanilla missile weapon whose missile_weapons and projectiles rows are copied (the Huntsmarshal's arrow), with `projectile` replacing the template's values. `ammo` is the vanilla Ulrika's hero bow ammo.",
@@ -725,17 +515,12 @@
      "bonus_v_large": "100"
     }
    },
-   "attributes": [
-    "mounted_fire_move"
-   ],
+   "attributes": ["mounted_fire_move"],
    "sets": {
     "foot": "hu1_advisor_overhaul_sword_and_bow",
     "warhorse": "hu1_advisor_overhaul_hr1_warhorse_sword_and_bow"
    },
-   "vanilla": {
-    "foot": "wh2_dlc13_emp_cha_huntsmarshal_0",
-    "warhorse": "wh3_dlc23_neu_cha_ulrika_warhorse"
-   },
+   "vanilla": {"foot": "wh2_dlc13_emp_cha_huntsmarshal_0", "warhorse": "wh3_dlc23_neu_cha_ulrika_warhorse"},
    "stats": {
     "melee_attack": 43,
     "melee_defence": 40,
@@ -744,9 +529,7 @@
     "bonus_hit_points": 3900,
     "armour": 45
    },
-   "melee": {
-    "template": "wh2_dlc13_emp_huntsmarhsal"
-   },
+   "melee": {"template": "wh2_dlc13_emp_huntsmarhsal"},
    "forms": {
     "warhorse": {
      "melee_attack": 50,
@@ -818,11 +601,7 @@
      "name": "Marked Ground",
      "description": "Every stone and stake is a range marker to him.",
      "effects": [
-      {
-       "effect": "wh_main_effect_force_stat_range",
-       "scope": "agent_to_parent_army_own",
-       "value": 12
-      }
+      {"effect": "wh_main_effect_force_stat_range", "scope": "agent_to_parent_army_own", "value": 12}
      ]
     },
     "army_3": {
@@ -870,19 +649,13 @@
    "name": "Greatsword",
    "description": "A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough.",
    "campaign_set": "cam_hero_hu1_dlc29_walach_harkon_2handed_sword",
-   "campaign_rider_sets": {
-    "warhorse": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword"
-   },
+   "campaign_rider_sets": {"warhorse": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword"},
    "icon": "wh2_dlc11_strength_of_steel.png",
    "picker_icon": "ui/campaign ui/skills/wh2_dlc11_strength_of_steel.png",
    "shield": "none",
    "body": "witch_hunter",
    "props": {
-    "weapon_1": [
-     "be_prop_0",
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_greatswords_sword_2h_01.wsmodel",
-     "audio_melee_weapon_type:sword_ogre"
-    ]
+    "weapon_1": ["be_prop_0", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_greatswords_sword_2h_01.wsmodel", "audio_melee_weapon_type:sword_ogre"]
    },
    "sets": {
     "foot": "hu1_dlc29_walach_harkon_2handed_sword",
@@ -900,9 +673,7 @@
     "bonus_hit_points": 5060,
     "armour": 90
    },
-   "melee": {
-    "template": "wh3_dlc29_vmp_walach_harkon_greatsword"
-   },
+   "melee": {"template": "wh3_dlc29_vmp_walach_harkon_greatsword"},
    "forms": {
     "warhorse": {
      "melee_attack": 65,
@@ -914,50 +685,24 @@
     },
     "foot": {
      "props": {
-      "weapon_1": [
-       "be_prop_0",
-       "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_greatswords_sword_2h_01.wsmodel",
-       "audio_melee_weapon_type:sword_ogre"
-      ]
+      "weapon_1": ["be_prop_0", "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_greatswords_sword_2h_01.wsmodel", "audio_melee_weapon_type:sword_ogre"]
      }
     }
    },
    "hood": false,
    "pieces": {
-    "piece_1": [
-     "spine_2",
-     "variantmeshes/wh_variantmodels/hu3/dwf/dwf_props/dwf_slayers_dragonback_axe_1h_02.wsmodel"
-    ],
-    "piece_2": [
-     "spine_2",
-     "variantmeshes/wh_variantmodels/hu3/dwf/dwf_props/dwf_slayers_dragonback_axe_1h_02.wsmodel"
-    ]
+    "piece_1": ["spine_2", "variantmeshes/wh_variantmodels/hu3/dwf/dwf_props/dwf_slayers_dragonback_axe_1h_02.wsmodel"],
+    "piece_2": ["spine_2", "variantmeshes/wh_variantmodels/hu3/dwf/dwf_props/dwf_slayers_dragonback_axe_1h_02.wsmodel"]
    },
    "piece_shapes": {
     "piece_1": {
-     "offset": [
-      0.0,
-      -0.2,
-      0.0
-     ],
-     "turn": [
-      0.0,
-      30.0,
-      0.0
-     ],
+     "offset": [0.0, -0.2, 0.0],
+     "turn": [0.0, 30.0, 0.0],
      "size": 0.75
     },
     "piece_2": {
-     "offset": [
-      0.0,
-      -0.2,
-      0.0
-     ],
-     "turn": [
-      180.0,
-      30.0,
-      0.0
-     ],
+     "offset": [0.0, -0.2, 0.0],
+     "turn": [180.0, 30.0, 0.0],
      "size": 0.75
     }
    },
@@ -1059,15 +804,139 @@
      "name": "Through the Plate",
      "description": "He teaches them where the armour is thinnest.",
      "effects": [
+      {"effect": "wh_main_effect_force_stat_ap_damage", "scope": "agent_to_parent_army_own", "value": 8}
+     ]
+    }
+   },
+   "grant_rank": 10
+  },
+  "glaive": {
+   "name": "Glaive",
+   "description": "A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes.",
+   "campaign_set": "cam_hu1_advisor_overhaul_glaive",
+   "icon": "wh3_dlc29_item_abilities_doom_glaive.png",
+   "picker_icon": "ui/campaign ui/skills/wh3_dlc29_item_abilities_doom_glaive.png",
+   "shield": "none",
+   "props": {
+    "weapon_2": ["be_prop_1", "variantmeshes/wh_variantmodels/hu23/cth/cth_props/cth_tiger_iron_claw_guandao_2h_01.wsmodel", "audio_melee_weapon_type:spear_medium"],
+    "shield": ["be_prop_2", "VariantMeshes/wh_variantmodels/hu1e/cth/cth_props/cth_taoyan_sword_1h_01.wsmodel", "audio_melee_weapon_type:sword"],
+    "weapon_3": ["be_prop_3", "VariantMeshes/wh_variantmodels/hu1e/cth/cth_props/cth_taoyan_scabard_1h_01.wsmodel", ""]
+   },
+   "sets": {"foot": "hu1_advisor_overhaul_glaive"},
+   "vanilla": {"foot": "wh3_cp1_cth_cha_taoyan"},
+   "stats": {
+    "melee_attack": 58,
+    "melee_defence": 55,
+    "charge_bonus": 30,
+    "morale": 85,
+    "bonus_hit_points": 5300,
+    "armour": 95
+   },
+   "melee": {"template": "wh3_cp1_cth_taoyan_trident"},
+   "hood": false,
+   "arts": {
+    "art_1": {
+     "name": "Long Guard",
+     "description": "He holds the point out where a horse would have to run onto it.",
+     "effects": [
       {
-       "effect": "wh_main_effect_force_stat_ap_damage",
+       "effect": "wh_main_effect_character_stat_melee_defence",
+       "scope": "character_to_character_own",
+       "value": 10
+      }
+     ]
+    },
+    "art_2": {
+     "name": "Horse Cutter",
+     "description": "The blade was made for one job: rider and horse, one stroke.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_bonus_vs_large",
+       "scope": "character_to_character_own",
+       "value": 15
+      }
+     ]
+    },
+    "art_3": {
+     "name": "Turning Blade",
+     "description": "The heavy head keeps moving after the cut, and so does he.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_melee_attack",
+       "scope": "character_to_character_own",
+       "value": 8
+      }
+     ]
+    },
+    "art_4": {
+     "name": "Through the Barding",
+     "description": "He finds the gap in a war beast's armour on the first try.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_weapon_strength",
+       "scope": "character_to_character_own",
+       "value": 10
+      }
+     ]
+    },
+    "army_1": {
+     "name": "Line Drill",
+     "description": "Shoulder to shoulder, points out, until they stop flinching at hooves.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_melee_defence",
        "scope": "agent_to_parent_army_own",
+       "value": 5
+      }
+     ]
+    },
+    "army_2": {
+     "name": "Wall of Blades",
+     "description": "He spaces them so no charge finds a gap.",
+     "effects": [
+      {"effect": "wh_main_effect_force_stat_armour", "scope": "agent_to_parent_army_own", "value": 8}
+     ]
+    },
+    "army_3": {
+     "name": "Hold the Line",
+     "description": "He has seen this charge before, in a war nobody else remembers. It breaks.",
+     "effects": [
+      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 8}
+     ]
+    },
+    "army_4": {
+     "name": "Long Arms",
+     "description": "He teaches every unit to strike first and from further away.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_melee_attack",
+       "scope": "agent_to_parent_army_own",
+       "value": 4
+      }
+     ]
+    },
+    "apex": {
+     "name": "Ten Thousand Blades",
+     "description": "The glaive line that stopped an empire's cavalry, as he remembers it.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_bonus_vs_large",
+       "scope": "character_to_character_own",
+       "value": 12
+      },
+      {
+       "effect": "wh_main_effect_character_stat_melee_defence",
+       "scope": "character_to_character_own",
        "value": 8
       }
      ]
     }
    },
-   "grant_rank": 10
+   "grant_rank": 13,
+   "body": "emp_free_company_torso_04",
+   "pieces": {
+    "piece_1": ["variantmeshes/wh_variantmodels/hu1/emp/emp_captains/head/emp_captains_helmet_01.wsmodel"]
+   }
   }
  },
  "mounts": {
@@ -1113,11 +982,7 @@
    "ancillary_type": "wh3_main_anc_mount_disc_of_tzeentch",
    "campaign_rider_set": "cam_hu1_pr8_amethyst_staff_and_sword",
    "variant_props": {
-    "weapon_4": [
-     "be_prop_4",
-     "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel",
-     "equipment"
-    ]
+    "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel", "equipment"]
    },
    "unlock": "script"
   }
@@ -1147,9 +1012,7 @@
    "levels": [
     []
    ],
-   "requires": [
-    "arts_art_1"
-   ],
+   "requires": ["arts_art_1"],
    "slot": "art_2",
    "build": true
   },
@@ -1163,9 +1026,7 @@
    "levels": [
     []
    ],
-   "requires": [
-    "arts_art_2"
-   ],
+   "requires": ["arts_art_2"],
    "slot": "art_3",
    "build": true
   },
@@ -1179,9 +1040,7 @@
    "levels": [
     []
    ],
-   "requires": [
-    "arts_art_3"
-   ],
+   "requires": ["arts_art_3"],
    "slot": "art_4",
    "build": true
   },
@@ -1209,9 +1068,7 @@
    "levels": [
     []
    ],
-   "requires": [
-    "arts_army_1"
-   ],
+   "requires": ["arts_army_1"],
    "slot": "army_2",
    "build": true
   },
@@ -1225,9 +1082,7 @@
    "levels": [
     []
    ],
-   "requires": [
-    "arts_army_2"
-   ],
+   "requires": ["arts_army_2"],
    "slot": "army_3",
    "build": true
   },
@@ -1236,23 +1091,16 @@
    "description": "Every weapon he has ever held, in every ending, answers him at once.\\\\n\\\\nLocks the other Apexes and the Polymath.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "spell_mastery.png",
    "row": 0,
-   "tier": 6,
+   "tier": 7,
    "rank": 25,
    "levels": [
     []
    ],
-   "requires": [
-    "arts_gate"
-   ],
+   "requires": ["arts_gate"],
    "slot": "apex",
    "build": true,
    "role": "apex",
-   "exclusive": [
-    "civic_apex",
-    "magic_archmage",
-    "martial_apex",
-    "memory_polymath"
-   ]
+   "exclusive": ["civic_apex", "magic_archmage", "martial_apex", "memory_polymath"]
   },
   "magic_reserves": {
    "name": "Deep Reserves",
@@ -1261,9 +1109,7 @@
    "tier": 1,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_channel"
-   ],
+   "requires": ["magic_channel"],
    "description": "He has learned to hold more of the Winds than a body should.",
    "levels": [
     [
@@ -1308,11 +1154,7 @@
       "scope": "character_to_character_own",
       "value": -15
      },
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 10
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10}
     ],
     [
      {
@@ -1320,11 +1162,7 @@
       "scope": "character_to_character_own",
       "value": -25
      },
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 15
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 15}
     ]
    ]
   },
@@ -1332,21 +1170,15 @@
    "name": "Archmage",
    "icon": "spell_mastery.png",
    "row": 0,
-   "tier": 7,
+   "tier": 8,
    "rank": 25,
    "build": true,
    "role": "apex",
-   "requires": [
-    "magic_beyond_sight"
-   ],
+   "requires": ["magic_beyond_sight"],
    "description": "Every lore he ever learned, in every world, answers him now.\\\\n\\\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\\\n\\\\nLocks the other Apexes and the Polymath.",
    "levels": [
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 20
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 20},
      {
       "effect": "wh_main_effect_character_stat_miscast",
       "scope": "character_to_character_own",
@@ -1364,12 +1196,7 @@
      }
     ]
    ],
-   "exclusive": [
-    "arts_apex",
-    "civic_apex",
-    "martial_apex",
-    "memory_polymath"
-   ]
+   "exclusive": ["arts_apex", "civic_apex", "martial_apex", "memory_polymath"]
   },
   "martial_0": {
    "name": "Assassinate",
@@ -1378,9 +1205,7 @@
    "tier": 1,
    "rank": 0,
    "build": true,
-   "requires": [
-    "martial_1"
-   ],
+   "requires": ["martial_1"],
    "description": "He knows which of them will matter later. He settles it now.",
    "levels": [
     [
@@ -1476,9 +1301,7 @@
    "tier": 2,
    "rank": 19,
    "build": true,
-   "requires": [
-    "martial_1"
-   ],
+   "requires": ["martial_1"],
    "description": "Generals die too. He has watched it happen in every ending.",
    "levels": [
     [
@@ -1497,9 +1320,7 @@
    "tier": 6,
    "rank": 0,
    "build": true,
-   "requires": [
-    "martial_1"
-   ],
+   "requires": ["martial_1"],
    "description": "Every wall falls eventually. He only hurries it along.",
    "levels": [
     [
@@ -1547,9 +1368,7 @@
    "tier": 8,
    "rank": 0,
    "build": true,
-   "requires": [
-    "martial_1"
-   ],
+   "requires": ["martial_1"],
    "description": "He walks in through the gate they forgot to watch.",
    "levels": [
     [
@@ -1597,9 +1416,7 @@
    "tier": 7,
    "rank": 0,
    "build": true,
-   "requires": [
-    "martial_1"
-   ],
+   "requires": ["martial_1"],
    "description": "A fire in the right storehouse ends a siege early.",
    "levels": [
     [
@@ -1647,9 +1464,7 @@
    "tier": 4,
    "rank": 0,
    "build": true,
-   "requires": [
-    "martial_1"
-   ],
+   "requires": ["martial_1"],
    "description": "A cut rope, a spooked horse, a missing quartermaster.",
    "levels": [
     [
@@ -1697,9 +1512,7 @@
    "tier": 3,
    "rank": 0,
    "build": true,
-   "requires": [
-    "martial_1"
-   ],
+   "requires": ["martial_1"],
    "description": "Their wounded do not come back to the line.",
    "levels": [
     [
@@ -1747,9 +1560,7 @@
    "tier": 9,
    "rank": 0,
    "build": true,
-   "requires": [
-    "martial_1"
-   ],
+   "requires": ["martial_1"],
    "description": "The whole camp, the same night.",
    "levels": [
     [
@@ -1878,9 +1689,7 @@
    "tier": 13,
    "rank": 2,
    "build": true,
-   "requires": [
-    "civic_1"
-   ],
+   "requires": ["civic_1"],
    "description": "He finds men to fill the gaps. He knows where they hide.",
    "levels": [
     [
@@ -1928,9 +1737,7 @@
    "tier": 24,
    "rank": 4,
    "build": true,
-   "requires": [
-    "civic_0"
-   ],
+   "requires": ["civic_0"],
    "description": "He knows the shortcut. He has walked it in three other lives.",
    "levels": [
     [
@@ -1978,9 +1785,7 @@
    "tier": 23,
    "rank": 3,
    "build": true,
-   "requires": [
-    "civic_0"
-   ],
+   "requires": ["civic_0"],
    "description": "Nothing on a battlefield is wasted while he is there.",
    "levels": [
     [
@@ -2028,9 +1833,7 @@
    "tier": 16,
    "rank": 6,
    "build": true,
-   "requires": [
-    "civic_1"
-   ],
+   "requires": ["civic_1"],
    "description": "He reminds the people what the alternative looks like.",
    "levels": [
     [
@@ -2108,9 +1911,7 @@
    "tier": 18,
    "rank": 8,
    "build": true,
-   "requires": [
-    "civic_1"
-   ],
+   "requires": ["civic_1"],
    "description": "He has seen what the taint becomes. He burns it out early.",
    "levels": [
     [
@@ -2173,9 +1974,7 @@
    "tier": 17,
    "rank": 7,
    "build": true,
-   "requires": [
-    "civic_1"
-   ],
+   "requires": ["civic_1"],
    "description": "He remembers which years the crops failed, and plants for them.",
    "levels": [
     [
@@ -2253,9 +2052,7 @@
    "tier": 15,
    "rank": 5,
    "build": true,
-   "requires": [
-    "civic_1"
-   ],
+   "requires": ["civic_1"],
    "description": "He knows which roads will close, and which ships will sink.",
    "levels": [
     [
@@ -2303,9 +2100,7 @@
    "tier": 14,
    "rank": 3,
    "build": true,
-   "requires": [
-    "civic_1"
-   ],
+   "requires": ["civic_1"],
    "description": "Half the counting-houses in the Empire owe him money from a life they cannot remember.",
    "levels": [
     [
@@ -2368,9 +2163,7 @@
    "tier": 5,
    "rank": 0,
    "build": true,
-   "requires": [
-    "martial_1"
-   ],
+   "requires": ["martial_1"],
    "description": "He has read books that have not been written yet. Theirs are easier.",
    "levels": [
     [
@@ -2415,13 +2208,11 @@
    "name": "The Last Sword",
    "icon": "character_attack.png",
    "row": 0,
-   "tier": 8,
+   "tier": 9,
    "rank": 25,
    "build": true,
    "role": "apex",
-   "requires": [
-    "combat_storm_needles"
-   ],
+   "requires": ["combat_storm_needles"],
    "description": "At the end of one world he was the last one standing. He intends to be again.\\\\n\\\\nLocks the other Apexes and the Polymath.",
    "levels": [
     [
@@ -2447,24 +2238,17 @@
      }
     ]
    ],
-   "exclusive": [
-    "arts_apex",
-    "civic_apex",
-    "magic_archmage",
-    "memory_polymath"
-   ]
+   "exclusive": ["arts_apex", "civic_apex", "magic_archmage", "memory_polymath"]
   },
   "civic_apex": {
    "name": "Power Behind Thrones",
    "icon": "campaign_army.png",
    "row": 0,
-   "tier": 9,
+   "tier": 10,
    "rank": 25,
    "build": true,
    "role": "apex",
-   "requires": [
-    "hero_lamp"
-   ],
+   "requires": ["hero_lamp"],
    "description": "Kings come and go. He has advised most of them, in one world or another.\\\\n\\\\nLocks the other Apexes and the Polymath.",
    "levels": [
     [
@@ -2490,12 +2274,7 @@
      }
     ]
    ],
-   "exclusive": [
-    "arts_apex",
-    "magic_archmage",
-    "martial_apex",
-    "memory_polymath"
-   ]
+   "exclusive": ["arts_apex", "magic_archmage", "martial_apex", "memory_polymath"]
   },
   "actions_default": {
    "name": "Default Actions",
@@ -2545,9 +2324,7 @@
    "tier": 1,
    "rank": 0,
    "build": true,
-   "requires": [
-    "memory_weight_of_years"
-   ],
+   "requires": ["memory_weight_of_years"],
    "description": "He has watched this army walk into this ambush before. Not this time.",
    "levels": [
     [
@@ -2595,11 +2372,7 @@
    "tier": 4,
    "rank": 14,
    "build": true,
-   "requires": [
-    "memory_seen_the_end",
-    "memory_calm_voice",
-    "memory_every_mistake"
-   ],
+   "requires": ["memory_seen_the_end", "memory_calm_voice", "memory_every_mistake"],
    "description": "Everything he teaches, he learned the hard way. Several times.",
    "levels": [
     [
@@ -2636,9 +2409,7 @@
    "tier": 2,
    "rank": 0,
    "build": true,
-   "requires": [
-    "memory_weight_of_years"
-   ],
+   "requires": ["memory_weight_of_years"],
    "description": "Men stand firm around someone who is not afraid. He stopped being afraid a long time ago.",
    "levels": [
     [
@@ -2722,9 +2493,7 @@
    "tier": 3,
    "rank": 0,
    "build": true,
-   "requires": [
-    "memory_weight_of_years"
-   ],
+   "requires": ["memory_weight_of_years"],
    "description": "There is no error left for him to make. He made them all in other lives.",
    "levels": [
     [
@@ -2769,7 +2538,7 @@
    "name": "Everything, Again",
    "icon": "spell_mastery.png",
    "row": 0,
-   "tier": 10,
+   "tier": 11,
    "rank": 29,
    "build": true,
    "role": "polymath",
@@ -2787,11 +2556,7 @@
       "scope": "character_to_character_own",
       "value": 8
      },
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 10
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10},
      {
       "effect": "wh_main_effect_agent_action_success_chance",
       "scope": "character_to_character_own",
@@ -2804,29 +2569,20 @@
      }
     ]
    ],
-   "exclusive": [
-    "arts_apex",
-    "civic_apex",
-    "magic_archmage",
-    "martial_apex"
-   ]
+   "exclusive": ["arts_apex", "civic_apex", "magic_archmage", "martial_apex"]
   },
   "memory_long_patience": {
    "name": "The Long Patience",
    "icon": "campaign_experience.png",
    "row": 0,
-   "tier": 11,
+   "tier": 12,
    "rank": 30,
    "build": true,
    "requires": [],
    "description": "He has all the time in the world. He has had it before.",
    "levels": [
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 1},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -2839,11 +2595,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 2
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 2},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -2856,11 +2608,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 3
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 3},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -2873,11 +2621,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 4
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 4},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -2890,11 +2634,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 5
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -2907,11 +2647,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 6
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 6},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -2924,11 +2660,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 7
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 7},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -2941,11 +2673,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 8
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 8},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -2958,11 +2686,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 9
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 9},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -2975,11 +2699,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 10
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -2992,11 +2712,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 11
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 11},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3009,11 +2725,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 12
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 12},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3026,11 +2738,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 13
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 13},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3043,11 +2751,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 14
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 14},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3060,11 +2764,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 15
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 15},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3077,11 +2777,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 16
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 16},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3094,11 +2790,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 17
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 17},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3111,11 +2803,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 18
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 18},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3128,11 +2816,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 19
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 19},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3145,11 +2829,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 20
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 20},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3162,11 +2842,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 21
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 21},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3179,11 +2855,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 22
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 22},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3196,11 +2868,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 23
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 23},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3213,11 +2881,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 24
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 24},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3230,11 +2894,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 25
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 25},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3247,11 +2907,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 26
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 26},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3264,11 +2920,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 27
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 27},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3281,11 +2933,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 28
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 28},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3298,11 +2946,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 29
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 29},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3315,11 +2959,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 30
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 30},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3332,11 +2972,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 31
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 31},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3349,11 +2985,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 32
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 32},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3366,11 +2998,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 33
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 33},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3383,11 +3011,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 34
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 34},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3400,11 +3024,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 35
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 35},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3417,11 +3037,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 36
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 36},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3434,11 +3050,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 37
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 37},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3451,11 +3063,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 38
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 38},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3468,11 +3076,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 39
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 39},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3485,11 +3089,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 40
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 40},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3502,11 +3102,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 41
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 41},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3519,11 +3115,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 42
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 42},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3536,11 +3128,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 43
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 43},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3553,11 +3141,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 44
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 44},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3570,11 +3154,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 45
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 45},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3587,11 +3167,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 46
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 46},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3604,11 +3180,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 47
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 47},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3621,11 +3193,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 48
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 48},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3638,11 +3206,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 49
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 49},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3655,11 +3219,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 50
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 50},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3672,11 +3232,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 51
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 51},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3689,11 +3245,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 52
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 52},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3706,11 +3258,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 53
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 53},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3723,11 +3271,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 54
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 54},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3740,11 +3284,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 55
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 55},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3757,11 +3297,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 56
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 56},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3774,11 +3310,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 57
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 57},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3791,11 +3323,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 58
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 58},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3808,11 +3336,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 59
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 59},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3825,11 +3349,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 60
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 60},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3842,11 +3362,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 61
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 61},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3859,11 +3375,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 62
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 62},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3876,11 +3388,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 63
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 63},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3893,11 +3401,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 64
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 64},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3910,11 +3414,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 65
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 65},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3927,11 +3427,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 66
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 66},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3944,11 +3440,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 67
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 67},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3961,11 +3453,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 68
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 68},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3978,11 +3466,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 69
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 69},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -3995,11 +3479,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 70
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 70},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4012,11 +3492,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 71
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 71},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4029,11 +3505,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 72
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 72},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4046,11 +3518,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 73
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 73},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4063,11 +3531,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 74
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 74},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4080,11 +3544,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 75
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 75},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4097,11 +3557,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 76
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 76},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4114,11 +3570,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 77
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 77},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4131,11 +3583,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 78
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 78},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4148,11 +3596,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 79
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 79},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4165,11 +3609,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 80
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 80},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4182,11 +3622,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 81
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 81},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4199,11 +3635,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 82
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 82},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4216,11 +3648,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 83
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 83},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4233,11 +3661,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 84
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 84},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4250,11 +3674,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 85
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 85},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4267,11 +3687,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 86
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 86},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4284,11 +3700,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 87
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 87},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4301,11 +3713,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 88
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 88},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4318,11 +3726,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 89
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 89},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4335,11 +3739,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 90
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 90},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4352,11 +3752,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 91
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 91},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4369,11 +3765,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 92
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 92},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4386,11 +3778,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 93
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 93},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4403,11 +3791,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 94
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 94},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4420,11 +3804,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 95
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 95},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4437,11 +3817,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 96
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 96},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4454,11 +3830,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 97
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 97},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4471,11 +3843,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 98
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 98},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4488,11 +3856,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 99
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 99},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4505,11 +3869,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 100
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 100},
      {
       "effect": "wh_main_effect_character_stat_weapon_strength",
       "scope": "character_to_character_own",
@@ -4530,9 +3890,7 @@
    "tier": 5,
    "rank": 19,
    "build": true,
-   "requires": [
-    "memory_old_lessons"
-   ],
+   "requires": ["memory_old_lessons"],
    "description": "The sky burned for nine days and he watched it from the last tower. His blade remembers the heat.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
@@ -4632,12 +3990,7 @@
      }
     ]
    ],
-   "exclusive": [
-    "memory_end_plague",
-    "memory_end_silence",
-    "memory_end_drowning",
-    "memory_end_hunger"
-   ]
+   "exclusive": ["memory_end_plague", "memory_end_silence", "memory_end_drowning", "memory_end_hunger"]
   },
   "memory_end_plague": {
    "name": "The Ending of Plague",
@@ -4646,9 +3999,7 @@
    "tier": 6,
    "rank": 19,
    "build": true,
-   "requires": [
-    "memory_old_lessons"
-   ],
+   "requires": ["memory_old_lessons"],
    "description": "The cities emptied quietly. He learned what a slow death tastes like.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
@@ -4748,12 +4099,7 @@
      }
     ]
    ],
-   "exclusive": [
-    "memory_end_fire",
-    "memory_end_silence",
-    "memory_end_drowning",
-    "memory_end_hunger"
-   ]
+   "exclusive": ["memory_end_fire", "memory_end_silence", "memory_end_drowning", "memory_end_hunger"]
   },
   "memory_end_silence": {
    "name": "The Ending of Silence",
@@ -4762,9 +4108,7 @@
    "tier": 7,
    "rank": 19,
    "build": true,
-   "requires": [
-    "memory_old_lessons"
-   ],
+   "requires": ["memory_old_lessons"],
    "description": "Nobody screamed. The army simply stopped arriving. He keeps his own march quiet now.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
@@ -4864,12 +4208,7 @@
      }
     ]
    ],
-   "exclusive": [
-    "memory_end_fire",
-    "memory_end_plague",
-    "memory_end_drowning",
-    "memory_end_hunger"
-   ]
+   "exclusive": ["memory_end_fire", "memory_end_plague", "memory_end_drowning", "memory_end_hunger"]
   },
   "memory_end_drowning": {
    "name": "The Ending of Drowning",
@@ -4878,17 +4217,11 @@
    "tier": 8,
    "rank": 19,
    "build": true,
-   "requires": [
-    "memory_old_lessons"
-   ],
+   "requires": ["memory_old_lessons"],
    "description": "The sea came in over the walls. He held a shield above his head for a long time.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
-     {
-      "effect": "wh2_dlc16_enable_charmed_attacks",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
+     {"effect": "wh2_dlc16_enable_charmed_attacks", "scope": "character_to_character_own", "value": 1},
      {
       "effect": "wh2_dlc16_effect_character_stat_enable_dampening_attacks",
       "scope": "character_to_character_own",
@@ -4916,11 +4249,7 @@
      }
     ],
     [
-     {
-      "effect": "wh2_dlc16_enable_charmed_attacks",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
+     {"effect": "wh2_dlc16_enable_charmed_attacks", "scope": "character_to_character_own", "value": 1},
      {
       "effect": "wh2_dlc16_effect_character_stat_enable_dampening_attacks",
       "scope": "character_to_character_own",
@@ -4948,11 +4277,7 @@
      }
     ],
     [
-     {
-      "effect": "wh2_dlc16_enable_charmed_attacks",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
+     {"effect": "wh2_dlc16_enable_charmed_attacks", "scope": "character_to_character_own", "value": 1},
      {
       "effect": "wh2_dlc16_effect_character_stat_enable_dampening_attacks",
       "scope": "character_to_character_own",
@@ -4980,12 +4305,7 @@
      }
     ]
    ],
-   "exclusive": [
-    "memory_end_fire",
-    "memory_end_plague",
-    "memory_end_silence",
-    "memory_end_hunger"
-   ]
+   "exclusive": ["memory_end_fire", "memory_end_plague", "memory_end_silence", "memory_end_hunger"]
   },
   "memory_end_hunger": {
    "name": "The Ending of Hunger",
@@ -4994,9 +4314,7 @@
    "tier": 9,
    "rank": 19,
    "build": true,
-   "requires": [
-    "memory_old_lessons"
-   ],
+   "requires": ["memory_old_lessons"],
    "description": "The granaries were empty before the first battle. He remembers what was worth taking.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
@@ -5020,11 +4338,7 @@
       "scope": "agent_to_parent_army_own",
       "value": 4
      },
-     {
-      "effect": "wh_main_effect_force_stat_ap_damage",
-      "scope": "agent_to_parent_army_own",
-      "value": 3
-     },
+     {"effect": "wh_main_effect_force_stat_ap_damage", "scope": "agent_to_parent_army_own", "value": 3},
      {
       "effect": "wh_main_effect_force_stat_ammunition",
       "scope": "agent_to_parent_army_own",
@@ -5052,11 +4366,7 @@
       "scope": "agent_to_parent_army_own",
       "value": 8
      },
-     {
-      "effect": "wh_main_effect_force_stat_ap_damage",
-      "scope": "agent_to_parent_army_own",
-      "value": 6
-     },
+     {"effect": "wh_main_effect_force_stat_ap_damage", "scope": "agent_to_parent_army_own", "value": 6},
      {
       "effect": "wh_main_effect_force_stat_ammunition",
       "scope": "agent_to_parent_army_own",
@@ -5084,11 +4394,7 @@
       "scope": "agent_to_parent_army_own",
       "value": 12
      },
-     {
-      "effect": "wh_main_effect_force_stat_ap_damage",
-      "scope": "agent_to_parent_army_own",
-      "value": 9
-     },
+     {"effect": "wh_main_effect_force_stat_ap_damage", "scope": "agent_to_parent_army_own", "value": 9},
      {
       "effect": "wh_main_effect_force_stat_ammunition",
       "scope": "agent_to_parent_army_own",
@@ -5096,12 +4402,7 @@
      }
     ]
    ],
-   "exclusive": [
-    "memory_end_fire",
-    "memory_end_plague",
-    "memory_end_silence",
-    "memory_end_drowning"
-   ]
+   "exclusive": ["memory_end_fire", "memory_end_plague", "memory_end_silence", "memory_end_drowning"]
   },
   "magic_focus": {
    "name": "Spellweaver's Focus",
@@ -5114,18 +4415,10 @@
    "description": "Every ending, the first thing he learned was to hold one thought steady while the world shook.",
    "levels": [
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 5
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5}
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 15
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 15}
     ]
    ]
   },
@@ -5162,9 +4455,7 @@
    "tier": 9,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_steady"
-   ],
+   "requires": ["magic_steady"],
    "description": "He has been unmade by sorcery before. He remembers the shape of the hole.",
    "levels": [
     [
@@ -5223,9 +4514,7 @@
    "tier": 7,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_recitation"
-   ],
+   "requires": ["magic_recitation"],
    "description": "Anyone can pour more power in. He knows when to stop.",
    "levels": [
     [
@@ -5251,9 +4540,7 @@
    "tier": 10,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_steady"
-   ],
+   "requires": ["magic_steady"],
    "description": "A thin shimmer, taught to him by a mage whose name no one else recalls.",
    "levels": [
     [
@@ -5288,11 +4575,7 @@
       "scope": "character_to_character_own",
       "value": 3
      },
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 3
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 3}
     ],
     [
      {
@@ -5300,11 +4583,7 @@
       "scope": "character_to_character_own",
       "value": 6
      },
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 6
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 6}
     ]
    ]
   },
@@ -5396,9 +4675,7 @@
    "tier": 1,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_battle_caster"
-   ],
+   "requires": ["magic_battle_caster"],
    "description": "Leather, steel, and a lesson from a swordsman who did not live to see the sequel.",
    "levels": [
     [
@@ -5431,9 +4708,7 @@
    "tier": 2,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_battle_caster"
-   ],
+   "requires": ["magic_battle_caster"],
    "description": "A flick of the wrist and the blade glances aside. He has practised it on worse than swords.",
    "levels": [
     [
@@ -5466,9 +4741,7 @@
    "tier": 3,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_battle_caster"
-   ],
+   "requires": ["magic_battle_caster"],
    "description": "Every cut carries a little of the spell that guided it.",
    "levels": [
     [
@@ -5501,13 +4774,7 @@
    "tier": 6,
    "rank": 14,
    "build": true,
-   "requires": [
-    "combat_sleeves",
-    "combat_wards",
-    "combat_steel_weave",
-    "combat_momentum",
-    "combat_long_breath"
-   ],
+   "requires": ["combat_sleeves", "combat_wards", "combat_steel_weave", "combat_momentum", "combat_long_breath"],
    "description": "At the end of one world the Winds themselves held his sword arm. He remembers the grip.",
    "levels": [
     [
@@ -5526,11 +4793,7 @@
       "scope": "character_to_character_own",
       "value": 5
      },
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 5
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5},
      {
       "effect": "wh_main_effect_force_stat_melee_attack",
       "scope": "agent_to_parent_army_own",
@@ -5548,9 +4811,7 @@
    "tier": 11,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_steady"
-   ],
+   "requires": ["magic_steady"],
    "description": "Scar over scar over scar. Little finds soft skin to bite.",
    "levels": [
     [
@@ -5583,16 +4844,7 @@
    "tier": 17,
    "rank": 14,
    "build": true,
-   "requires": [
-    "magic_warded_mind",
-    "magic_arcane_ward",
-    "combat_veteran_hide",
-    "combat_barrier",
-    "combat_barrier_mend",
-    "combat_shell_aura",
-    "combat_mending",
-    "combat_barrier_line"
-   ],
+   "requires": ["magic_warded_mind", "magic_arcane_ward", "combat_veteran_hide", "combat_barrier", "combat_barrier_mend", "combat_shell_aura", "combat_mending", "combat_barrier_line"],
    "description": "He has been the last man standing. It taught him how to be the first one back up.",
    "levels": [
     [
@@ -5611,11 +4863,7 @@
       "scope": "agent_to_parent_army_own",
       "value": 5
      },
-     {
-      "effect": "wh_main_effect_force_stat_leadership",
-      "scope": "agent_to_parent_army_own",
-      "value": 5
-     },
+     {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 5},
      {
       "effect": "advisor_overhaul_effect_army_barrier",
       "scope": "agent_to_parent_army_own",
@@ -5669,9 +4917,7 @@
    "tier": 20,
    "rank": 0,
    "build": true,
-   "requires": [
-    "combat_aim"
-   ],
+   "requires": ["combat_aim"],
    "description": "Aim for the buckle. The buckle is where armour ends.",
    "levels": [
     [
@@ -5704,17 +4950,11 @@
    "tier": 21,
    "rank": 0,
    "build": true,
-   "requires": [
-    "combat_aim"
-   ],
+   "requires": ["combat_aim"],
    "description": "A target seen sooner is a target already lost.",
    "levels": [
     [
-     {
-      "effect": "wh_main_effect_character_stat_range",
-      "scope": "character_to_character_own",
-      "value": 5
-     }
+     {"effect": "wh_main_effect_character_stat_range", "scope": "character_to_character_own", "value": 5}
     ],
     [
      {
@@ -5739,9 +4979,7 @@
    "tier": 22,
    "rank": 0,
    "build": true,
-   "requires": [
-    "combat_aim"
-   ],
+   "requires": ["combat_aim"],
    "description": "The last arrow is always the one he saved for himself. He stopped saving it.",
    "levels": [
     [
@@ -5774,11 +5012,7 @@
    "tier": 23,
    "rank": 14,
    "build": true,
-   "requires": [
-    "combat_piercing",
-    "combat_long_sight",
-    "combat_deep_quiver"
-   ],
+   "requires": ["combat_piercing", "combat_long_sight", "combat_deep_quiver"],
    "description": "One shot, then a hundred, then the sky goes dark with them.",
    "levels": [
     [
@@ -5819,9 +5053,7 @@
    "tier": 2,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_channel"
-   ],
+   "requires": ["magic_channel"],
    "description": "The Winds come easier to a mind with no fear left in it.",
    "levels": [
     [
@@ -5854,9 +5086,7 @@
    "tier": 3,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_channel"
-   ],
+   "requires": ["magic_channel"],
    "description": "Just when the pool runs dry, he finds another cup behind it.",
    "levels": [
     [
@@ -5889,11 +5119,7 @@
    "tier": 4,
    "rank": 14,
    "build": true,
-   "requires": [
-    "magic_reserves",
-    "magic_quiet_mind",
-    "magic_second_wind"
-   ],
+   "requires": ["magic_reserves", "magic_quiet_mind", "magic_second_wind"],
    "description": "He has drunk from this well in lives that never were. The well recalls him kindly.",
    "levels": [
     [
@@ -5924,31 +5150,17 @@
    "tier": 8,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_recitation"
-   ],
+   "requires": ["magic_recitation"],
    "description": "The same words, the same breath, every time. The Winds learn to expect it.",
    "levels": [
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 3
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 3}
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 5
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5}
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 7
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 7}
     ]
    ]
   },
@@ -5959,10 +5171,7 @@
    "tier": 9,
    "rank": 14,
    "build": true,
-   "requires": [
-    "magic_overcast",
-    "magic_cadence"
-   ],
+   "requires": ["magic_overcast", "magic_cadence"],
    "description": "He stopped asking the Winds for power. Now he simply lets them through.",
    "levels": [
     [
@@ -5971,11 +5180,7 @@
       "scope": "character_to_character_own",
       "value": -25
      },
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 5
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5}
     ]
    ],
    "role": "gate",
@@ -5988,31 +5193,17 @@
    "tier": 12,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_focus"
-   ],
+   "requires": ["magic_focus"],
    "description": "He learned to let the thread spread before it settles.",
    "levels": [
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 4
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 4}
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 7
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 7}
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 10
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10}
     ]
    ]
   },
@@ -6023,17 +5214,11 @@
    "tier": 13,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_focus"
-   ],
+   "requires": ["magic_focus"],
    "description": "And then to pull it tight, to a point.",
    "levels": [
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 4
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 4},
      {
       "effect": "wh_main_effect_character_stat_miscast",
       "scope": "character_to_character_own",
@@ -6041,11 +5226,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 7
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 7},
      {
       "effect": "wh_main_effect_character_stat_miscast",
       "scope": "character_to_character_own",
@@ -6053,11 +5234,7 @@
      }
     ],
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 10
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10},
      {
       "effect": "wh_main_effect_character_stat_miscast",
       "scope": "character_to_character_own",
@@ -6073,19 +5250,11 @@
    "tier": 15,
    "rank": 14,
    "build": true,
-   "requires": [
-    "magic_wider",
-    "magic_sharper",
-    "magic_ruinous"
-   ],
+   "requires": ["magic_wider", "magic_sharper", "magic_ruinous"],
    "description": "There is a pattern behind the pattern. He has seen it from the far side.",
    "levels": [
     [
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 15
-     },
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 15},
      {
       "effect": "wh_main_effect_character_stat_miscast",
       "scope": "character_to_character_own",
@@ -6108,9 +5277,7 @@
    "tier": 25,
    "rank": 6,
    "build": true,
-   "requires": [
-    "civic_0"
-   ],
+   "requires": ["civic_0"],
    "description": "He has walked this road in four endings. It never got shorter by itself.",
    "levels": [
     [
@@ -6143,9 +5310,7 @@
    "tier": 26,
    "rank": 8,
    "build": true,
-   "requires": [
-    "civic_0"
-   ],
+   "requires": ["civic_0"],
    "description": "Where others see scrub, he sees supper.",
    "levels": [
     [
@@ -6178,17 +5343,7 @@
    "tier": 10,
    "rank": 19,
    "build": true,
-   "requires": [
-    "martial_0",
-    "martial_2",
-    "martial_7",
-    "martial_6",
-    "civic_10",
-    "martial_3",
-    "martial_5",
-    "martial_4",
-    "martial_9"
-   ],
+   "requires": ["martial_0", "martial_2", "martial_7", "martial_6", "civic_10", "martial_3", "martial_5", "martial_4", "martial_9"],
    "description": "Every door in the world has a friend on the inside, and he has met all of them.",
    "levels": [
     [
@@ -6217,11 +5372,7 @@
       "scope": "agent_to_parent_army_own",
       "value": 25
      },
-     {
-      "effect": "wh_main_effect_force_stat_speed",
-      "scope": "agent_to_parent_army_own",
-      "value": 10
-     }
+     {"effect": "wh_main_effect_force_stat_speed", "scope": "agent_to_parent_army_own", "value": 10}
     ]
    ],
    "role": "gate",
@@ -6234,15 +5385,7 @@
    "tier": 20,
    "rank": 19,
    "build": true,
-   "requires": [
-    "civic_2",
-    "civic_9",
-    "civic_8",
-    "civic_5",
-    "civic_7",
-    "civic_6",
-    "hero_students"
-   ],
+   "requires": ["civic_2", "civic_9", "civic_8", "civic_5", "civic_7", "civic_6", "hero_students"],
    "description": "A banner remembered is a banner that does not fall. Every army he has ever stood with fights harder for it.",
    "levels": [
     [
@@ -6288,12 +5431,7 @@
    "tier": 27,
    "rank": 19,
    "build": true,
-   "requires": [
-    "civic_4",
-    "civic_3",
-    "hero_pathfinder",
-    "hero_forager"
-   ],
+   "requires": ["civic_4", "civic_3", "hero_pathfinder", "hero_forager"],
    "description": "Wherever he rests, someone leaves a light on. He has never asked them to.",
    "levels": [
     [
@@ -6344,9 +5482,7 @@
    "tier": 12,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_steady"
-   ],
+   "requires": ["magic_steady"],
    "description": "A thin shimmer of the Winds holds in front of him.",
    "levels": [
     [
@@ -6379,9 +5515,7 @@
    "tier": 14,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_steady"
-   ],
+   "requires": ["magic_steady"],
    "description": "A broken shell is a lesson. He has learned to stitch it faster.",
    "levels": [
     [
@@ -6444,9 +5578,7 @@
    "tier": 14,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_focus"
-   ],
+   "requires": ["magic_focus"],
    "description": "He knows exactly how a spell goes wrong, because he has watched it go wrong.",
    "levels": [
     [
@@ -6520,9 +5652,7 @@
    "tier": 18,
    "rank": 19,
    "build": true,
-   "requires": [
-    "magic_standing_conduit"
-   ],
+   "requires": ["magic_standing_conduit"],
    "description": "Every lore he ever studied left a habit behind.",
    "levels": [
     [
@@ -6697,10 +5827,7 @@
      }
     ]
    ],
-   "level_ranks": [
-    24,
-    29
-   ]
+   "level_ranks": [24, 29]
   },
   "magic_what_is_held": {
    "name": "What Is Held",
@@ -6709,9 +5836,7 @@
    "tier": 19,
    "rank": 19,
    "build": true,
-   "requires": [
-    "magic_standing_conduit"
-   ],
+   "requires": ["magic_standing_conduit"],
    "description": "He does not reach for the old lores. They are simply there, held.",
    "levels": [
     [
@@ -6886,10 +6011,7 @@
      }
     ]
    ],
-   "level_ranks": [
-    24,
-    29
-   ]
+   "level_ranks": [24, 29]
   },
   "magic_what_comes": {
    "name": "What Comes",
@@ -6898,9 +6020,7 @@
    "tier": 20,
    "rank": 19,
    "build": true,
-   "requires": [
-    "magic_standing_conduit"
-   ],
+   "requires": ["magic_standing_conduit"],
    "description": "He has already seen how the next casting will end.",
    "levels": [
     [
@@ -7075,10 +6195,7 @@
      }
     ]
    ],
-   "level_ranks": [
-    24,
-    29
-   ]
+   "level_ranks": [24, 29]
   },
   "magic_last_word": {
    "name": "The Last Word",
@@ -7087,11 +6204,7 @@
    "tier": 21,
    "rank": 19,
    "build": true,
-   "requires": [
-    "magic_what_was",
-    "magic_what_is_held",
-    "magic_what_comes"
-   ],
+   "requires": ["magic_what_was", "magic_what_is_held", "magic_what_comes"],
    "description": "He no longer waits for the Winds to cool. He cuts the pause out of every spell.",
    "levels": [
     [
@@ -7105,11 +6218,7 @@
       "scope": "character_to_character_own",
       "value": -25
      },
-     {
-      "effect": "wh3_main_effect_spell_mastery",
-      "scope": "character_to_character_own",
-      "value": 15
-     }
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 15}
     ]
    ],
    "role": "gate",
@@ -7122,9 +6231,7 @@
    "tier": 15,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_steady"
-   ],
+   "requires": ["magic_steady"],
    "description": "Where he stands, broken shells knit again. The men near him feel it before they understand it.",
    "levels": [
     [
@@ -7148,9 +6255,7 @@
    "tier": 1,
    "rank": 0,
    "build": true,
-   "requires": [
-    "corruption_lead"
-   ],
+   "requires": ["corruption_lead"],
    "description": "He has watched Chaos corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -7213,9 +6318,7 @@
    "tier": 2,
    "rank": 0,
    "build": true,
-   "requires": [
-    "corruption_lead"
-   ],
+   "requires": ["corruption_lead"],
    "description": "He has watched Khorne corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -7278,9 +6381,7 @@
    "tier": 3,
    "rank": 0,
    "build": true,
-   "requires": [
-    "corruption_lead"
-   ],
+   "requires": ["corruption_lead"],
    "description": "He has watched Nurgle corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -7343,9 +6444,7 @@
    "tier": 4,
    "rank": 0,
    "build": true,
-   "requires": [
-    "corruption_lead"
-   ],
+   "requires": ["corruption_lead"],
    "description": "He has watched Slaanesh corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -7408,9 +6507,7 @@
    "tier": 5,
    "rank": 0,
    "build": true,
-   "requires": [
-    "corruption_lead"
-   ],
+   "requires": ["corruption_lead"],
    "description": "He has watched Tzeentch corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -7473,9 +6570,7 @@
    "tier": 6,
    "rank": 0,
    "build": true,
-   "requires": [
-    "corruption_lead"
-   ],
+   "requires": ["corruption_lead"],
    "description": "He has watched Skaven corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -7538,9 +6633,7 @@
    "tier": 7,
    "rank": 0,
    "build": true,
-   "requires": [
-    "corruption_lead"
-   ],
+   "requires": ["corruption_lead"],
    "description": "He has watched Vampiric corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -7603,15 +6696,7 @@
    "tier": 8,
    "rank": 14,
    "build": true,
-   "requires": [
-    "corruption_chs",
-    "corruption_kho",
-    "corruption_nur",
-    "corruption_sla",
-    "corruption_tze",
-    "corruption_skv",
-    "corruption_vmp"
-   ],
+   "requires": ["corruption_chs", "corruption_kho", "corruption_nur", "corruption_sla", "corruption_tze", "corruption_skv", "corruption_vmp"],
    "description": "Three kinds of rot are not enough.",
    "levels": [
     [
@@ -7711,17 +6796,11 @@
    "tier": 4,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_battle_caster"
-   ],
+   "requires": ["magic_battle_caster"],
    "description": "He learned to charge from a knight who rode into the last sunset of a dying world.",
    "levels": [
     [
-     {
-      "effect": "wh_main_effect_character_stat_speed",
-      "scope": "character_to_character_own",
-      "value": 5
-     },
+     {"effect": "wh_main_effect_character_stat_speed", "scope": "character_to_character_own", "value": 5},
      {
       "effect": "wh_main_effect_character_stat_charge_bonus_add",
       "scope": "character_to_character_own",
@@ -7776,9 +6855,7 @@
    "tier": 5,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_battle_caster"
-   ],
+   "requires": ["magic_battle_caster"],
    "description": "He has fought for days at the end of the world. One afternoon does not tire him.",
    "levels": [
     [
@@ -7826,9 +6903,7 @@
    "tier": 16,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_steady"
-   ],
+   "requires": ["magic_steady"],
    "description": "His body has healed from worse, many times. It still knows how.",
    "levels": [
     [
@@ -7837,11 +6912,7 @@
       "scope": "character_to_character_own",
       "value": 15
      },
-     {
-      "effect": "wh3_dlc20_effect_healing_cap_modifier",
-      "scope": "agent_to_parent_army_own",
-      "value": 5
-     }
+     {"effect": "wh3_dlc20_effect_healing_cap_modifier", "scope": "agent_to_parent_army_own", "value": 5}
     ],
     [
      {
@@ -7876,9 +6947,7 @@
    "tier": 19,
    "rank": 0,
    "build": true,
-   "requires": [
-    "civic_1"
-   ],
+   "requires": ["civic_1"],
    "description": "Half the captains of the world once sat at his table and listened.",
    "levels": [
     [
@@ -7911,9 +6980,7 @@
    "tier": 13,
    "rank": 0,
    "build": true,
-   "requires": [
-    "magic_steady"
-   ],
+   "requires": ["magic_steady"],
    "description": "He has learned to stretch the shimmer thin, across every rank that stands with him.",
    "levels": [
     [
@@ -7945,9 +7012,7 @@
    "row": 1,
    "tier": 3,
    "rank": 16,
-   "requires": [
-    "arts_army_3"
-   ],
+   "requires": ["arts_army_3"],
    "slot": "army_4",
    "build": true,
    "description": "Every army he ever marched with left him one trick. He hands them all on.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects."
@@ -7979,21 +7044,9 @@
       "scope": "agent_to_parent_army_own",
       "value": 10
      },
-     {
-      "effect": "wh_main_effect_force_stat_armour",
-      "scope": "agent_to_parent_army_own",
-      "value": 15
-     },
-     {
-      "effect": "wh_main_effect_force_stat_ward_save",
-      "scope": "agent_to_parent_army_own",
-      "value": 5
-     },
-     {
-      "effect": "wh_main_effect_force_stat_leadership",
-      "scope": "agent_to_parent_army_own",
-      "value": 12
-     },
+     {"effect": "wh_main_effect_force_stat_armour", "scope": "agent_to_parent_army_own", "value": 15},
+     {"effect": "wh_main_effect_force_stat_ward_save", "scope": "agent_to_parent_army_own", "value": 5},
+     {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 12},
      {
       "effect": "wh_main_effect_force_stat_vigour_loss_reduction",
       "scope": "agent_to_parent_army_own",
@@ -8004,11 +7057,7 @@
       "scope": "agent_to_parent_army_own",
       "value": 20
      },
-     {
-      "effect": "wh_main_effect_force_stat_speed",
-      "scope": "agent_to_parent_army_own",
-      "value": 10
-     },
+     {"effect": "wh_main_effect_force_stat_speed", "scope": "agent_to_parent_army_own", "value": 10},
      {
       "effect": "wh_main_effect_force_stat_missile_damage",
       "scope": "agent_to_parent_army_own",
@@ -8019,16 +7068,8 @@
       "scope": "agent_to_parent_army_own",
       "value": 10
      },
-     {
-      "effect": "wh_main_effect_force_stat_range",
-      "scope": "agent_to_parent_army_own",
-      "value": 10
-     },
-     {
-      "effect": "wh_main_effect_force_stat_ammunition",
-      "scope": "agent_to_parent_army_own",
-      "value": 20
-     }
+     {"effect": "wh_main_effect_force_stat_range", "scope": "agent_to_parent_army_own", "value": 10},
+     {"effect": "wh_main_effect_force_stat_ammunition", "scope": "agent_to_parent_army_own", "value": 20}
     ]
    ],
    "grant_rank": 30
@@ -8253,14 +7294,7 @@
    "tier": 30
   }
  },
- "actions": [
-  "wh2_main_agent_action_champion_assist_army_scavenge",
-  "wh2_main_agent_action_champion_passive_increase_trade",
-  "wh2_main_agent_action_champion_passive_stimulate_growth",
-  "wh2_main_agent_action_spy_assist_army_increase_mobility",
-  "wh2_main_agent_action_spy_hinder_character_assassinate",
-  "wh3_dlc26_agent_action_champion_passive_spread_corruption_kho"
- ],
+ "actions": ["wh2_main_agent_action_champion_assist_army_scavenge", "wh2_main_agent_action_champion_passive_increase_trade", "wh2_main_agent_action_champion_passive_stimulate_growth", "wh2_main_agent_action_spy_assist_army_increase_mobility", "wh2_main_agent_action_spy_hinder_character_assassinate", "wh3_dlc26_agent_action_champion_passive_spread_corruption_kho"],
  "bundles": {
   "polymath_1": {
    "name": "Everything, Again (1 of 4)",
@@ -8277,11 +7311,7 @@
      "scope": "character_to_character_own",
      "value": 5
     },
-    {
-     "effect": "wh3_main_effect_spell_mastery",
-     "scope": "character_to_character_own",
-     "value": 6
-    },
+    {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 6},
     {
      "effect": "wh_main_effect_agent_action_success_chance",
      "scope": "character_to_character_own",
@@ -8309,11 +7339,7 @@
      "scope": "character_to_character_own",
      "value": 10
     },
-    {
-     "effect": "wh3_main_effect_spell_mastery",
-     "scope": "character_to_character_own",
-     "value": 12
-    },
+    {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 12},
     {
      "effect": "wh_main_effect_agent_action_success_chance",
      "scope": "character_to_character_own",
@@ -8341,11 +7367,7 @@
      "scope": "character_to_character_own",
      "value": 15
     },
-    {
-     "effect": "wh3_main_effect_spell_mastery",
-     "scope": "character_to_character_own",
-     "value": 18
-    },
+    {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 18},
     {
      "effect": "wh_main_effect_agent_action_success_chance",
      "scope": "character_to_character_own",
@@ -8373,11 +7395,7 @@
      "scope": "character_to_character_own",
      "value": 20
     },
-    {
-     "effect": "wh3_main_effect_spell_mastery",
-     "scope": "character_to_character_own",
-     "value": 24
-    },
+    {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 24},
     {
      "effect": "wh_main_effect_agent_action_success_chance",
      "scope": "character_to_character_own",
@@ -8392,104 +7410,30 @@
   }
  },
  "lore_slots": [
-  {
-   "row": 5,
-   "rank": 1
-  },
-  {
-   "row": 6,
-   "rank": 9
-  },
-  {
-   "row": 7,
-   "rank": 19
-  }
+  {"row": 5, "rank": 1},
+  {"row": 6, "rank": 9},
+  {"row": 7, "rank": 19}
  ],
  "effects": {
   "advisor_overhaul_effect_wom_cost_what_was": {
    "priority": 1,
-   "groups": [
-    "wh_main_lore_fire",
-    "wh_main_lore_fire_upgraded",
-    "wh_dlc03_lore_beasts",
-    "wh_dlc03_lore_beasts_upgraded",
-    "wh_main_lore_metal",
-    "wh_main_lore_metal_upgraded",
-    "wh_main_lore_heavens",
-    "wh_main_lore_heavens_upgraded",
-    "wh_main_lore_light",
-    "wh_main_lore_light_upgraded",
-    "wh_dlc05_lore_life",
-    "wh_dlc05_lore_life_upgraded",
-    "wh_dlc05_lore_shadows",
-    "wh_dlc05_lore_shadows_upgraded",
-    "wh_main_lore_death",
-    "wh_main_lore_death_upgraded",
-    "wh2_main_lore_high_magic",
-    "wh2_main_lore_high_magic_upgraded",
-    "wh3_main_lore_of_ice",
-    "wh3_main_lore_of_ice_upgraded"
-   ],
+   "groups": ["wh_main_lore_fire", "wh_main_lore_fire_upgraded", "wh_dlc03_lore_beasts", "wh_dlc03_lore_beasts_upgraded", "wh_main_lore_metal", "wh_main_lore_metal_upgraded", "wh_main_lore_heavens", "wh_main_lore_heavens_upgraded", "wh_main_lore_light", "wh_main_lore_light_upgraded", "wh_dlc05_lore_life", "wh_dlc05_lore_life_upgraded", "wh_dlc05_lore_shadows", "wh_dlc05_lore_shadows_upgraded", "wh_main_lore_death", "wh_main_lore_death_upgraded", "wh2_main_lore_high_magic", "wh2_main_lore_high_magic_upgraded", "wh3_main_lore_of_ice", "wh3_main_lore_of_ice_upgraded"],
    "text": "Winds of Magic cost: %+n% for Fire, Beasts, Metal, the Heavens, Light, Life, Shadows, Death, High Magic and Ice spells"
   },
   "advisor_overhaul_effect_wom_cost_what_is_held": {
    "priority": 1,
-   "groups": [
-    "wh3_main_lore_of_tempest",
-    "wh3_main_lore_of_tempest_upgraded",
-    "wh3_main_lore_of_yang",
-    "wh3_main_lore_of_yang_upgraded",
-    "wh3_main_lore_of_yin",
-    "wh3_main_lore_of_yin_upgraded",
-    "wh3_dlc27_lore_mists",
-    "wh3_dlc27_lore_mists_upgraded",
-    "wh3_dlc24_lore_hag",
-    "wh3_dlc24_lore_hag_upgraded",
-    "wh2_main_lore_dark_magic",
-    "wh2_main_lore_dark_magic_upgraded",
-    "wh_main_lore_vampires",
-    "wh_main_lore_vampires_upgraded",
-    "wh3_dlc29_lore_undeath",
-    "wh3_dlc29_lore_undeath_upgraded",
-    "wh2_dlc09_lore_nehekhara",
-    "wh2_dlc09_lore_nehekhara_upgraded",
-    "wh2_dlc11_lore_deep",
-    "wh2_dlc11_lore_deep_upgraded"
-   ],
+   "groups": ["wh3_main_lore_of_tempest", "wh3_main_lore_of_tempest_upgraded", "wh3_main_lore_of_yang", "wh3_main_lore_of_yang_upgraded", "wh3_main_lore_of_yin", "wh3_main_lore_of_yin_upgraded", "wh3_dlc27_lore_mists", "wh3_dlc27_lore_mists_upgraded", "wh3_dlc24_lore_hag", "wh3_dlc24_lore_hag_upgraded", "wh2_main_lore_dark_magic", "wh2_main_lore_dark_magic_upgraded", "wh_main_lore_vampires", "wh_main_lore_vampires_upgraded", "wh3_dlc29_lore_undeath", "wh3_dlc29_lore_undeath_upgraded", "wh2_dlc09_lore_nehekhara", "wh2_dlc09_lore_nehekhara_upgraded", "wh2_dlc11_lore_deep", "wh2_dlc11_lore_deep_upgraded"],
    "text": "Winds of Magic cost: %+n% for Tempest, Yang, Yin, Mists, the Hag, Dark Magic, Vampires, Undeath, Nehekhara and the Deep spells"
   },
   "advisor_overhaul_effect_wom_cost_what_comes": {
    "priority": 1,
-   "groups": [
-    "wh_main_lore_big_waaagh",
-    "wh_main_lore_big_waaagh_upgraded",
-    "wh_main_lore_lil_waaagh",
-    "wh_main_lore_lil_waaagh_upgraded",
-    "wh3_dlc23_lore_hashut",
-    "wh3_dlc23_lore_hashut_upgraded",
-    "wh2_main_lore_ruin",
-    "wh2_main_lore_ruin_upgraded",
-    "wh2_main_lore_plague",
-    "wh2_main_lore_plague_upgraded",
-    "wh2_dlc14_lore_stealth",
-    "wh2_dlc14_lore_stealth_upgraded",
-    "wh3_main_lore_nurgle",
-    "wh3_main_lore_nurgle_upgraded",
-    "wh3_main_lore_slaanesh",
-    "wh3_main_lore_slaanesh_upgraded",
-    "wh3_main_lore_of_great_maw",
-    "wh3_main_lore_of_great_maw_upgraded",
-    "wh_dlc03_lore_wild",
-    "wh_dlc03_lore_wild_upgraded"
-   ],
+   "groups": ["wh_main_lore_big_waaagh", "wh_main_lore_big_waaagh_upgraded", "wh_main_lore_lil_waaagh", "wh_main_lore_lil_waaagh_upgraded", "wh3_dlc23_lore_hashut", "wh3_dlc23_lore_hashut_upgraded", "wh2_main_lore_ruin", "wh2_main_lore_ruin_upgraded", "wh2_main_lore_plague", "wh2_main_lore_plague_upgraded", "wh2_dlc14_lore_stealth", "wh2_dlc14_lore_stealth_upgraded", "wh3_main_lore_nurgle", "wh3_main_lore_nurgle_upgraded", "wh3_main_lore_slaanesh", "wh3_main_lore_slaanesh_upgraded", "wh3_main_lore_of_great_maw", "wh3_main_lore_of_great_maw_upgraded", "wh_dlc03_lore_wild", "wh_dlc03_lore_wild_upgraded"],
    "text": "Winds of Magic cost: %+n% for Big Waaagh!, Little Waaagh!, Hashut, Ruin, Plague, Stealth, Nurgle, Slaanesh, the Great Maw and the Wild spells"
   },
   "advisor_overhaul_effect_army_barrier": {
    "priority": 320,
    "bonus": "battle_barrier_health",
-   "unit_sets": [
-    "dlc14_all_units_excluding_characters"
-   ],
+   "unit_sets": ["dlc14_all_units_excluding_characters"],
    "icon": "barrier.png",
    "good": true,
    "text": "Barrier: %+n for all units in the army except characters"

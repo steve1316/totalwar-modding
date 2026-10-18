@@ -7,9 +7,10 @@ advisor_overhaul_choose_weapon_node_staff_and_sword		advisor_overhaul_choose_wea
 advisor_overhaul_choose_weapon_node_sword_and_shield		advisor_overhaul_choose_weapon_sword_and_shield		0	3		0	0	true
 advisor_overhaul_choose_weapon_node_sword_and_bow		advisor_overhaul_choose_weapon_sword_and_bow		0	4		0	0	true
 advisor_overhaul_choose_weapon_node_greatsword		advisor_overhaul_choose_weapon_greatsword		0	5		0	0	true
+advisor_overhaul_choose_weapon_node_glaive		advisor_overhaul_choose_weapon_glaive		0	6		0	0	true
 advisor_overhaul_hidden_node_wh3_main_skill_agent_action_success_scaling		wh3_main_skill_agent_action_success_scaling		99	1		0	0	false
 advisor_overhaul_skill_node_actions_default		advisor_overhaul_skill_actions_default		99	2		1	0	false
-advisor_overhaul_skill_node_arts_apex		advisor_overhaul_skill_arts_apex		0	6		0	0	true
+advisor_overhaul_skill_node_arts_apex		advisor_overhaul_skill_arts_apex		0	7		0	0	true
 advisor_overhaul_skill_node_arts_army_1		advisor_overhaul_skill_arts_army_1		1	0		0	0	true
 advisor_overhaul_skill_node_arts_army_2		advisor_overhaul_skill_arts_army_2		1	1		0	0	true
 advisor_overhaul_skill_node_arts_army_3		advisor_overhaul_skill_arts_army_3		1	2		0	0	true
@@ -31,7 +32,7 @@ advisor_overhaul_skill_node_civic_6		advisor_overhaul_skill_civic_6		8	18		0	0	t
 advisor_overhaul_skill_node_civic_7		advisor_overhaul_skill_civic_7		8	17		0	0	true
 advisor_overhaul_skill_node_civic_8		advisor_overhaul_skill_civic_8		8	15		0	0	true
 advisor_overhaul_skill_node_civic_9		advisor_overhaul_skill_civic_9		8	14		0	0	true
-advisor_overhaul_skill_node_civic_apex		advisor_overhaul_skill_civic_apex		0	9		0	0	true
+advisor_overhaul_skill_node_civic_apex		advisor_overhaul_skill_civic_apex		0	10		0	0	true
 advisor_overhaul_skill_node_combat_aim		advisor_overhaul_skill_combat_aim		2	19		0	0	true
 advisor_overhaul_skill_node_combat_barrier		advisor_overhaul_skill_combat_barrier		2	12		0	0	true
 advisor_overhaul_skill_node_combat_barrier_line		advisor_overhaul_skill_combat_barrier_line		2	13		0	0	true
@@ -66,7 +67,7 @@ advisor_overhaul_skill_node_hero_lamp		advisor_overhaul_skill_hero_lamp		8	27		0
 advisor_overhaul_skill_node_hero_pathfinder		advisor_overhaul_skill_hero_pathfinder		8	25		0	0	true
 advisor_overhaul_skill_node_hero_students		advisor_overhaul_skill_hero_students		8	19		0	0	true
 advisor_overhaul_skill_node_magic_arcane_ward		advisor_overhaul_skill_magic_arcane_ward		2	10		0	0	true
-advisor_overhaul_skill_node_magic_archmage		advisor_overhaul_skill_magic_archmage		0	7		0	0	true
+advisor_overhaul_skill_node_magic_archmage		advisor_overhaul_skill_magic_archmage		0	8		0	0	true
 advisor_overhaul_skill_node_magic_battle_caster		advisor_overhaul_skill_magic_battle_caster		2	0		0	0	true
 advisor_overhaul_skill_node_magic_beyond_sight		advisor_overhaul_skill_magic_beyond_sight		3	15		0	5	true
 advisor_overhaul_skill_node_magic_cadence		advisor_overhaul_skill_magic_cadence		3	8		0	0	true
@@ -98,7 +99,7 @@ advisor_overhaul_skill_node_martial_5		advisor_overhaul_skill_martial_5		8	7		0	
 advisor_overhaul_skill_node_martial_6		advisor_overhaul_skill_martial_6		8	4		0	0	true
 advisor_overhaul_skill_node_martial_7		advisor_overhaul_skill_martial_7		8	3		0	0	true
 advisor_overhaul_skill_node_martial_9		advisor_overhaul_skill_martial_9		8	9		0	0	true
-advisor_overhaul_skill_node_martial_apex		advisor_overhaul_skill_martial_apex		0	8		0	0	true
+advisor_overhaul_skill_node_martial_apex		advisor_overhaul_skill_martial_apex		0	9		0	0	true
 advisor_overhaul_skill_node_memory_calm_voice		advisor_overhaul_skill_memory_calm_voice		4	2		0	0	true
 advisor_overhaul_skill_node_memory_end_drowning		advisor_overhaul_skill_memory_end_drowning		4	8		0	0	true
 advisor_overhaul_skill_node_memory_end_fire		advisor_overhaul_skill_memory_end_fire		4	5		0	0	true
@@ -106,9 +107,9 @@ advisor_overhaul_skill_node_memory_end_hunger		advisor_overhaul_skill_memory_end
 advisor_overhaul_skill_node_memory_end_plague		advisor_overhaul_skill_memory_end_plague		4	6		0	0	true
 advisor_overhaul_skill_node_memory_end_silence		advisor_overhaul_skill_memory_end_silence		4	7		0	0	true
 advisor_overhaul_skill_node_memory_every_mistake		advisor_overhaul_skill_memory_every_mistake		4	3		0	0	true
-advisor_overhaul_skill_node_memory_long_patience		advisor_overhaul_skill_memory_long_patience		0	11		0	0	true
+advisor_overhaul_skill_node_memory_long_patience		advisor_overhaul_skill_memory_long_patience		0	12		0	0	true
 advisor_overhaul_skill_node_memory_old_lessons		advisor_overhaul_skill_memory_old_lessons		4	4		0	5	true
-advisor_overhaul_skill_node_memory_polymath		advisor_overhaul_skill_memory_polymath		0	10		0	0	true
+advisor_overhaul_skill_node_memory_polymath		advisor_overhaul_skill_memory_polymath		0	11		0	0	true
 advisor_overhaul_skill_node_memory_seen_the_end		advisor_overhaul_skill_memory_seen_the_end		4	1		0	0	true
 advisor_overhaul_skill_node_memory_weight_of_years		advisor_overhaul_skill_memory_weight_of_years		4	0		0	0	true
 advisor_overhaul_lore_node_fire		advisor_overhaul_lore_fire		5	0		0	0	true

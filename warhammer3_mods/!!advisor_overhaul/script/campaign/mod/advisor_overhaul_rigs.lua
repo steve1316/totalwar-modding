@@ -14,6 +14,7 @@ ADVISOR_OVERHAUL_RIGS = {
 		{ key = "sword_and_shield", skill = "advisor_overhaul_choose_weapon_sword_and_shield", name = "advisor_overhaul_ui_weapon_sword_and_shield", fallback = "Sword and Shield", icon = "ui/campaign ui/skills/wh_dlc07_lord_abilities_lions_shield.png", art_set = "advisor_overhaul_art_sword_and_shield", grant_rank = 4 },
 		{ key = "sword_and_bow", skill = "advisor_overhaul_choose_weapon_sword_and_bow", name = "advisor_overhaul_ui_weapon_sword_and_bow", fallback = "Sword and Bow", icon = "ui/campaign ui/skills/wh_dlc05_weapon_abilities_the_bow_of_loren.png", art_set = "advisor_overhaul_art_sword_and_bow", grant_rank = 7 },
 		{ key = "greatsword", skill = "advisor_overhaul_choose_weapon_greatsword", name = "advisor_overhaul_ui_weapon_greatsword", fallback = "Greatsword", icon = "ui/campaign ui/skills/wh2_dlc11_strength_of_steel.png", art_set = "advisor_overhaul_art_greatsword", grant_rank = 10 },
+		{ key = "glaive", skill = "advisor_overhaul_choose_weapon_glaive", name = "advisor_overhaul_ui_weapon_glaive", fallback = "Glaive", icon = "ui/campaign ui/skills/wh3_dlc29_item_abilities_doom_glaive.png", art_set = "advisor_overhaul_art_glaive", grant_rank = 13 },
 	},
 	--- Mounts in skill tree order: key, unlock skill (empty for the default), name loc key, English fallback name and picker icon.
 	--- A `grant_rank` is the rank at which the script gives him that item's skill.
@@ -36,6 +37,7 @@ ADVISOR_OVERHAUL_RIGS = {
 		["sword_and_bow|warhorse"] = "advisor_overhaul_rig_sword_and_bow_warhorse",
 		["greatsword|foot"] = "advisor_overhaul_rig_greatsword_foot",
 		["greatsword|warhorse"] = "advisor_overhaul_rig_greatsword_warhorse",
+		["glaive|foot"] = "advisor_overhaul_rig_glaive_foot",
 	},
 	--- Mount ancillary -> the weapon and mount of its pair.
 	rigs = {
@@ -50,6 +52,7 @@ ADVISOR_OVERHAUL_RIGS = {
 		["advisor_overhaul_rig_sword_and_bow_warhorse"] = { weapon = "sword_and_bow", mount = "warhorse" },
 		["advisor_overhaul_rig_greatsword_foot"] = { weapon = "greatsword", mount = "foot" },
 		["advisor_overhaul_rig_greatsword_warhorse"] = { weapon = "greatsword", mount = "warhorse" },
+		["advisor_overhaul_rig_glaive_foot"] = { weapon = "glaive", mount = "foot" },
 	},
 	--- Forename loc key of his name.
 	name = "names_name_930556520",
@@ -103,6 +106,17 @@ ADVISOR_OVERHAUL_RIGS = {
 			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_greatsword_army_3", name = "Butcher's Bill" },
 			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_greatsword_apex", name = "Killing Blow" },
 			{ skill = "advisor_overhaul_skill_arts_army_4", bundle = "advisor_overhaul_weapon_art_greatsword_army_4", name = "Through the Plate" },
+		},
+		["glaive"] = {
+			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_glaive_art_1", name = "Long Guard" },
+			{ skill = "advisor_overhaul_skill_arts_art_2", bundle = "advisor_overhaul_weapon_art_glaive_art_2", name = "Horse Cutter" },
+			{ skill = "advisor_overhaul_skill_arts_art_3", bundle = "advisor_overhaul_weapon_art_glaive_art_3", name = "Turning Blade" },
+			{ skill = "advisor_overhaul_skill_arts_art_4", bundle = "advisor_overhaul_weapon_art_glaive_art_4", name = "Through the Barding" },
+			{ skill = "advisor_overhaul_skill_arts_army_1", bundle = "advisor_overhaul_weapon_art_glaive_army_1", name = "Line Drill" },
+			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_glaive_army_2", name = "Wall of Blades" },
+			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_glaive_army_3", name = "Hold the Line" },
+			{ skill = "advisor_overhaul_skill_arts_army_4", bundle = "advisor_overhaul_weapon_art_glaive_army_4", name = "Long Arms" },
+			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_glaive_apex", name = "Ten Thousand Blades" },
 		},
 	},
 	--- The Polymath: its skill, how many skills of a discipline make it count, each discipline's skills, and the bundle for each number

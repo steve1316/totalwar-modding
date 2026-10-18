@@ -38,10 +38,14 @@ ancillaries_colour_text_advisor_overhaul_rig_greatsword_foot	A two-handed Imperi
 land_units_onscreen_name_advisor_overhaul_greatsword_warhorse	The Advisor (Greatsword, Barded Warhorse)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_warhorse	Greatsword, Barded Warhorse	true
 ancillaries_colour_text_advisor_overhaul_rig_greatsword_warhorse	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. An armoured Imperial charger, steady under spellfire.	true
+land_units_onscreen_name_advisor_overhaul_glaive_foot	The Advisor (Glaive, On Foot)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_glaive_foot	Glaive, On Foot	true
+ancillaries_colour_text_advisor_overhaul_rig_glaive_foot	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes. He walks, as he always has.	true
 advisor_overhaul_ui_weapon_staff_and_sword	Staff and Sword	true
 advisor_overhaul_ui_weapon_sword_and_shield	Sword and Shield	true
 advisor_overhaul_ui_weapon_sword_and_bow	Sword and Bow	true
 advisor_overhaul_ui_weapon_greatsword	Greatsword	true
+advisor_overhaul_ui_weapon_glaive	Glaive	true
 advisor_overhaul_ui_mount_foot	On Foot	true
 advisor_overhaul_ui_mount_warhorse	Barded Warhorse	true
 advisor_overhaul_ui_mount_pegasus	Imperial Pegasus	true
@@ -60,6 +64,8 @@ character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_bow	Swo
 character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_bow	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_greatsword	Greatsword	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_greatsword	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_name_advisor_overhaul_choose_weapon_glaive	Glaive	true
+character_skills_localised_description_advisor_overhaul_choose_weapon_glaive	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_skill_actions_default	Default Actions	true
 character_skills_localised_description_advisor_overhaul_skill_actions_default	The hero actions he always has: Scouting, Scout Settlement and Boost Income.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_apex	Master of Arms	true
@@ -338,6 +344,24 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_apex	Killi
 effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_apex	The blow that ended a king, in a world nobody else remembers.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_4	Through the Plate	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_4	He teaches them where the armour is thinnest.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_glaive_art_1	Long Guard	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_glaive_art_1	He holds the point out where a horse would have to run onto it.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_glaive_art_2	Horse Cutter	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_glaive_art_2	The blade was made for one job: rider and horse, one stroke.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_glaive_art_3	Turning Blade	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_glaive_art_3	The heavy head keeps moving after the cut, and so does he.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_glaive_art_4	Through the Barding	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_glaive_art_4	He finds the gap in a war beast's armour on the first try.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_glaive_army_1	Line Drill	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_glaive_army_1	Shoulder to shoulder, points out, until they stop flinching at hooves.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_glaive_army_2	Wall of Blades	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_glaive_army_2	He spaces them so no charge finds a gap.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_glaive_army_3	Hold the Line	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_glaive_army_3	He has seen this charge before, in a war nobody else remembers. It breaks.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_glaive_army_4	Long Arms	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_glaive_army_4	He teaches every unit to strike first and from further away.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_glaive_apex	Ten Thousand Blades	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_glaive_apex	The glaive line that stopped an empire's cavalry, as he remembers it.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_1	Everything, Again (1 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_1	He draws on 1 of his disciplines at once.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_2	Everything, Again (2 of 4)	true
