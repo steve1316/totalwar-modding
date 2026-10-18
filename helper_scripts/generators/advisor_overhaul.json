@@ -20134,6 +20134,31 @@
   "wh_pro02_faction_trait_isabella_vlad_dummy",
   "wh_pro02_faction_trait_isabella_vlad_unique_building"
  ],
+ "explosions": {
+  "wh3_dlc24_scribes_blue_flame_bombardment": {
+   "affects_allies": "true",
+   "camera_shake": "wh_main_unit_explosion_light",
+   "contact_phase_effect": "wh3_main_unit_contact_warpflame",
+   "detonation_damage": "30.0000",
+   "detonation_damage_ap": "20.0000",
+   "detonation_duration": "1.0000",
+   "detonation_force": "50.0000",
+   "detonation_radius": "5.0000",
+   "detonation_speed": "5.0000",
+   "detonation_type": "shockwave",
+   "detonator_type": "percussive",
+   "explosion_audio": "wh_generic_small",
+   "explosion_particle_effect": "wh3_main_tzeentch_blue_flame_explosion",
+   "explosion_particle_effect_on_ground": "",
+   "fuse_distance_from_target": "0.0000",
+   "fuse_fixed_time": "-1.0000",
+   "ignition_amount": "1.0000",
+   "is_magical": "true",
+   "is_spell": "true",
+   "key": "wh3_dlc24_scribes_blue_flame_bombardment",
+   "shrapnel": ""
+  }
+ },
  "factions": [
   "wh2_dlc09_rogue_black_creek_raiders",
   "wh2_dlc09_rogue_dwellers_of_zardok",
@@ -23292,6 +23317,14 @@
    ],
    "version": "0"
   },
+  "effect_bonus_value_missile_weapon_junctions_tables": {
+   "header": [
+    "bonus_value_id",
+    "effect",
+    "missile_weapon_junction"
+   ],
+   "version": "0"
+  },
   "effect_bonus_value_special_ability_group_junctions_tables": {
    "header": [
     "bonus_value_id",
@@ -23513,6 +23546,32 @@
    ],
    "version": "0"
   },
+  "projectiles_explosions_tables": {
+   "header": [
+    "key",
+    "detonator_type",
+    "detonation_type",
+    "detonation_radius",
+    "detonation_duration",
+    "detonation_speed",
+    "detonation_damage",
+    "shrapnel",
+    "explosion_particle_effect",
+    "fuse_distance_from_target",
+    "explosion_particle_effect_on_ground",
+    "explosion_audio",
+    "contact_phase_effect",
+    "ignition_amount",
+    "is_magical",
+    "detonation_damage_ap",
+    "camera_shake",
+    "detonation_force",
+    "fuse_fixed_time",
+    "affects_allies",
+    "is_spell"
+   ],
+   "version": "19"
+  },
   "projectiles_tables": {
    "header": [
     "key",
@@ -23640,6 +23699,15 @@
     "key"
    ],
    "version": "0"
+  },
+  "unit_missile_weapon_junctions_tables": {
+   "header": [
+    "id",
+    "missile_weapon",
+    "unit",
+    "battle_entity_stats_override"
+   ],
+   "version": "1"
   },
   "unit_special_abilities_tables": {
    "header": [

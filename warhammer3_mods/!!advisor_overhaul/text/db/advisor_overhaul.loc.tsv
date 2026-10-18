@@ -290,7 +290,7 @@ effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword
 effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_army_3	Woven Wards	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_army_3	He threads a ward through every rank before the first blow.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_apex	Channelled Staff	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_apex	The staff drinks the Winds and gives them back to him, one bolt at a time.	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_apex	The staff drinks the Winds and gives them back to him, five bolts at a time.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_army_4	Charged Steel	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_army_4	Before the lines meet he walks along them and touches every blade.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_art_1	Shield Wall	true
@@ -597,3 +597,4 @@ agent_actions_localised_action_description_advisor_overhaul_action_champion_pass
 effects_description_advisor_overhaul_effect_enable_champion_passive_spread_corruption_kho	Hero action: {{tr:agent_action_name_spread_corruption}}	true
 effects_description_advisor_overhaul_effect_army_barrier	Barrier: %+n for all units in the army except characters	true
 effects_description_advisor_overhaul_effect_army_splash_power	Splash attack power: %+n%	true
+effects_description_advisor_overhaul_effect_staff_bolt_burst	"Bursting Bolts" (each staff shot fires five bolts that burst in a wide blue blast, sparing his own side)	true

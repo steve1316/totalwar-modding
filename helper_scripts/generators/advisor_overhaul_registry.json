@@ -136,6 +136,23 @@
      "marksmanship_bonus": "50.0000",
      "spread": "2.0000",
      "homing_params": "homing_strong_magical_fast"
+    },
+    "upgrade": {
+     "description": "Bursting Bolts, the Staff apex reward. Five weaker bolts per shot instead of one, each bursting in a wide blue blast that spares his own side. The blast is the Blue Scribes' blue flame burst, as wide as the Poison Wind Mortar's blast and pushing harder, without its Warpflame.",
+     "key": "advisor_overhaul_staff_bolt_burst",
+     "effect": "advisor_overhaul_effect_staff_bolt_burst",
+     "projectile": {"projectile_number": "5", "spread": "10.0000", "damage": "25", "ap_damage": "50"},
+     "explosion": {
+      "template": "wh3_dlc24_scribes_blue_flame_bombardment",
+      "detonation_radius": "6.0000",
+      "detonation_damage": "10.0000",
+      "detonation_damage_ap": "30.0000",
+      "detonation_force": "100.0000",
+      "contact_phase_effect": "",
+      "ignition_amount": "0.0000",
+      "affects_allies": "false",
+      "is_spell": "false"
+     }
     }
    },
    "sets": {
@@ -320,8 +337,13 @@
     },
     "apex": {
      "name": "Channelled Staff",
-     "description": "The staff drinks the Winds and gives them back to him, one bolt at a time.",
+     "description": "The staff drinks the Winds and gives them back to him, five bolts at a time.",
      "effects": [
+      {
+       "effect": "advisor_overhaul_effect_staff_bolt_burst",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
       {
        "effect": "wh_main_effect_ability_enable_channelling_staff",
        "scope": "character_to_character_own",
@@ -7101,6 +7123,12 @@
    "icon": "weapon_damage_character.png",
    "good": true,
    "text": "Splash attack power: %+n%"
+  },
+  "advisor_overhaul_effect_staff_bolt_burst": {
+   "priority": 10,
+   "icon": "archer.png",
+   "good": true,
+   "text": "\"Bursting Bolts\" (each staff shot fires five bolts that burst in a wide blue blast, sparing his own side)"
   }
  },
  "action_overrides": {
