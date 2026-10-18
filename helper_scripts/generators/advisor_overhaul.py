@@ -7,7 +7,7 @@ How a pair reaches the battle map:
 - That ancillary's `provided_bodyguard_unit` is the pair's main unit, and `campaign_character_uniform_ancillary_junctions` swaps his uniform to the
   pair's, whose battle variant carries the weapon props (and the disc).
 - A weapon with a `missile` gets its own missile weapon and projectile, copied from a vanilla template with the registry's values.
-- A missile's `upgrade` is a second missile weapon with its own projectile and explosion. Every unit of that weapon swaps to it while he has the
+- A missile's `upgrade` is a second missile weapon with its own projectile, and optionally its own explosion and look. Every unit of that weapon swaps to it while he has the
   upgrade's `effect`, the way vanilla upgrades a hero's projectile.
 
 How a weapon's stats are set (all optional, written by the modding workbench's Edit tab):
@@ -254,13 +254,19 @@ TABLES = [
     "campaign_mount_animation_set_overrides_tables", "ancillaries_tables", "ancillary_info_tables", "ancillaries_included_agent_subtypes_tables",
     "campaign_character_uniform_ancillary_junctions_tables", "character_skill_node_sets_tables", "character_skills_tables",
     "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables", "missile_weapons_tables",
-    "projectiles_tables", "projectiles_explosions_tables", "unit_missile_weapon_junctions_tables", "effect_bonus_value_missile_weapon_junctions_tables",
+    "projectiles_tables", "projectiles_explosions_tables", "projectile_displays_tables", "unit_missile_weapon_junctions_tables", "effect_bonus_value_missile_weapon_junctions_tables",
     "melee_weapons_tables", "unit_armour_types_tables", "character_skill_node_links_tables",
     "character_skill_level_to_effects_junctions_tables", "character_skill_nodes_skill_locks_tables", "effects_tables", "effect_bundles_tables",
     "effect_bundles_to_effects_junctions_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables",
     "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables",
     "effect_bonus_value_special_ability_group_junctions_tables", "effect_bonus_value_ids_unit_sets_tables", "special_ability_groups_to_units_junctions_tables",
     "unit_abilities_tables", "unit_special_abilities_tables", *UNIT_ROW_TABLES,
+]
+
+# Vanilla rows a missile `upgrade` can copy: registry field, kept-data name, table, and the projectile column pointed at the copy.
+UPGRADE_COPIES = [
+    ("explosion", "explosions", "projectiles_explosions_tables", "explosion_type"),
+    ("display", "displays", "projectile_displays_tables", "projectile_display"),
 ]
 
 # First unique id of his transform abilities, above every vanilla special ability id.
@@ -399,8 +405,9 @@ def refresh() -> None:
     data["missile_weapons"] = {r["key"]: r for r in loaded["missile_weapons_tables"] if r["key"] in missiles}
     projectiles = {r["default_projectile"] for r in data["missile_weapons"].values()}
     data["projectiles"] = {r["key"]: r for r in loaded["projectiles_tables"] if r["key"] in projectiles}
-    explosions = {w["missile"]["upgrade"]["explosion"]["template"] for w in registry["weapons"].values() if "upgrade" in w.get("missile", {})}
-    data["explosions"] = {r["key"]: r for r in loaded["projectiles_explosions_tables"] if r["key"] in explosions}
+    for field, kept, table, _ in UPGRADE_COPIES:
+        copied = {w["missile"]["upgrade"][field]["template"] for w in registry["weapons"].values() if field in w.get("missile", {}).get("upgrade", {})}
+        data[kept] = {r["key"]: r for r in loaded[table] if r["key"] in copied}
     melees = {w["melee"]["template"] for w in registry["weapons"].values() if "melee" in w}
     melees |= {r["primary_melee_weapon"] for r in data["templates"]["land_units_tables"]}
     data["melee_weapons"] = {r["key"]: r for r in loaded["melee_weapons_tables"] if r["key"] in melees}
@@ -1357,8 +1364,8 @@ def art_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) 
 
 def missile_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:
     """Adds a missile weapon and its projectile for every weapon with a `missile`: copies of the vanilla template's rows under his own keys, with
-    the registry's projectile values. A missile's `upgrade` adds a second missile weapon, a copy of the first with its own projectile values and an
-    explosion copied from its `template`. Its `effect` swaps every unit of that weapon to it.
+    the registry's projectile values. A missile's `upgrade` adds a second missile weapon, a copy of the first with its own projectile values. Its optional
+    `explosion` and `display` each copy the vanilla row named by their `template`. Its `effect` swaps every unit of that weapon to it.
 
     Args:
         registry (Dict): The registry.
@@ -1382,15 +1389,18 @@ def missile_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]
         if "upgrade" not in missile:
             continue
         upgrade = missile["upgrade"]
-        explosion = dict(upgrade["explosion"])
-        explosion_template = explosion.pop("template")
-        if explosion_template not in data.get("explosions", {}):
-            raise SystemExit(f"explosion template {explosion_template} is not kept, run with --refresh")
+        upgraded = dict(projectile, key=upgrade["key"], **{k: table_value(v) for k, v in upgrade["projectile"].items()})
+        for field, kept, table, column in UPGRADE_COPIES:
+            if field not in upgrade:
+                continue
+            values = dict(upgrade[field])
+            copied = values.pop("template")
+            if copied not in data.get(kept, {}):
+                raise SystemExit(f"{field} template {copied} is not kept, run with --refresh")
+            upgraded[column] = upgrade["key"]
+            rows[table].append(dict(data[kept][copied], key=upgrade["key"], **{k: table_value(v) for k, v in values.items()}))
         rows["missile_weapons_tables"].append(dict(template, key=upgrade["key"], default_projectile=upgrade["key"]))
-        rows["projectiles_tables"].append(dict(projectile, key=upgrade["key"], explosion_type=upgrade["key"],
-                                               **{k: table_value(v) for k, v in upgrade["projectile"].items()}))
-        rows["projectiles_explosions_tables"].append(dict(data["explosions"][explosion_template], key=upgrade["key"],
-                                                          **{k: table_value(v) for k, v in explosion.items()}))
+        rows["projectiles_tables"].append(upgraded)
         for unit in (unit_key(w, m) for w, m in pairs(registry) if w == weapon_key):
             junction = str(zlib.crc32(f"{unit}_{upgrade['key']}".encode()) & 0x7FFFFFFF)
             rows["unit_missile_weapon_junctions_tables"].append({"id": junction, "missile_weapon": upgrade["key"], "unit": unit, "battle_entity_stats_override": ""})

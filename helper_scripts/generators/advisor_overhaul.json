@@ -2394,6 +2394,29 @@
   "wh_main_grn_greenskins",
   "wh_main_vmp_vampire_counts"
  ],
+ "displays": {
+  "wh2_dlc13_markus_wulfhart_arrow": {
+   "airborne_anim": "",
+   "display_model": "projectiles\\wh2_dlc13_emp_markus_arrow_glow.wsmodel",
+   "impact": "wh2_dlc13_magic_arrow",
+   "impact_blood": "",
+   "impact_bounce": "wh3_main_arrow_bounce",
+   "impact_bounce_blood": "",
+   "impact_penetrate": "wh_main_entity_impact",
+   "impact_penetrate_blood": "",
+   "key": "wh2_dlc13_markus_wulfhart_arrow",
+   "landing_anim": "",
+   "launch_camera_shake": "",
+   "launch_fx": "",
+   "mirroring_start": "wh3_main_yin_missile_mirror_impact_small",
+   "mirroring_trail": "wh3_main_spell_yin_missile_mirror_trail_small",
+   "scale": "1.0000",
+   "stationary_fx": "",
+   "tip_offset": "-0.0500",
+   "trail_fx": "wh2_dlc13_wulfhart_arrow_trail",
+   "trail_spin": "false"
+  }
+ },
  "effects": [
   "blank_effect",
   "building_upkeep",
@@ -20157,6 +20180,29 @@
    "is_spell": "true",
    "key": "wh3_dlc24_scribes_blue_flame_bombardment",
    "shrapnel": ""
+  },
+  "wh_dlc05_item_abilities_hail_of_doom_arrow": {
+   "affects_allies": "true",
+   "camera_shake": "wh_main_unit_explosion_medium",
+   "contact_phase_effect": "",
+   "detonation_damage": "0.0000",
+   "detonation_damage_ap": "45.0000",
+   "detonation_duration": "0.0000",
+   "detonation_force": "70.0000",
+   "detonation_radius": "6.0000",
+   "detonation_speed": "13.0000",
+   "detonation_type": "shockwave",
+   "detonator_type": "percussive",
+   "explosion_audio": "wh_main_spell_fire_fireball",
+   "explosion_particle_effect": "wh_dlc05_abilities_hail_of_doom_explosion",
+   "explosion_particle_effect_on_ground": "",
+   "fuse_distance_from_target": "0.0000",
+   "fuse_fixed_time": "-1.0000",
+   "ignition_amount": "0.0000",
+   "is_magical": "true",
+   "is_spell": "true",
+   "key": "wh_dlc05_item_abilities_hail_of_doom_arrow",
+   "shrapnel": ""
   }
  },
  "factions": [
@@ -23545,6 +23591,30 @@
     "frequency"
    ],
    "version": "0"
+  },
+  "projectile_displays_tables": {
+   "header": [
+    "key",
+    "display_model",
+    "impact",
+    "launch_fx",
+    "trail_fx",
+    "stationary_fx",
+    "airborne_anim",
+    "landing_anim",
+    "tip_offset",
+    "trail_spin",
+    "launch_camera_shake",
+    "impact_bounce",
+    "impact_penetrate",
+    "impact_blood",
+    "impact_bounce_blood",
+    "impact_penetrate_blood",
+    "mirroring_start",
+    "mirroring_trail",
+    "scale"
+   ],
+   "version": "12"
   },
   "projectiles_explosions_tables": {
    "header": [

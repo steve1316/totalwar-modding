@@ -590,7 +590,7 @@
     "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_arrow_01.wsmodel", ""]
    },
    "missile": {
-    "description": "His bow. `template` is the vanilla missile weapon whose missile_weapons and projectiles rows are copied (the Huntsmarshal's arrow), with `projectile` replacing the template's values. `ammo` is the vanilla Ulrika's hero bow ammo.",
+    "description": "His bow. `template` is the vanilla missile weapon whose missile_weapons and projectiles rows are copied (the Huntsmarshal's arrow), with `projectile` replacing the template's values. `ammo` is the vanilla Ulrika's hero bow ammo. The arrow hits hard against both infantry and large targets.",
     "template": "wh2_dlc13_emp_huntsmarshal_arrow",
     "ammo": 45,
     "projectile": {
@@ -599,7 +599,25 @@
      "effective_range": "180",
      "base_reload_time": "8.0000",
      "marksmanship_bonus": "100.0000",
+     "bonus_v_infantry": "40",
      "bonus_v_large": "100"
+    },
+    "upgrade": {
+     "description": "Hunter's Spread, the Bow apex reward. Six lighter arrows per shot instead of one, fanned out so they find more than one man in a block of infantry. Each arrow bursts in a small Hail of Doom blast that spares his own side, much smaller than the Staff's. The arrow is Markus Wulfhart's glowing arrow with the Hail of Doom trail, since Wulfhart's own trails draw ghost arrows beside a fan of arrows. The bonus against infantry and large targets is cut per arrow.",
+     "key": "advisor_overhaul_bow_spread_arrow",
+     "effect": "advisor_overhaul_effect_bow_spread_arrow",
+     "projectile": {"projectile_number": "6", "spread": "5.0000", "damage": "60", "ap_damage": "45", "bonus_v_infantry": "25", "bonus_v_large": "35"},
+     "display": {"template": "wh2_dlc13_markus_wulfhart_arrow", "trail_fx": "wh_dlc05_abilities_hail_of_doom_trail"},
+     "explosion": {
+      "template": "wh_dlc05_item_abilities_hail_of_doom_arrow",
+      "detonation_radius": "3.0000",
+      "detonation_damage": "0.0000",
+      "detonation_damage_ap": "20.0000",
+      "detonation_force": "30.0000",
+      "camera_shake": "wh_main_unit_explosion_light",
+      "affects_allies": "false",
+      "is_spell": "false"
+     }
     }
    },
    "attributes": ["mounted_fire_move"],
@@ -637,39 +655,69 @@
        "effect": "wh_main_effect_character_stat_missile_damage",
        "scope": "character_to_character_own",
        "value": 15
+      },
+      {
+       "effect": "wh_main_effect_character_stat_ap_missile_damage",
+       "scope": "character_to_character_own",
+       "value": 10
       }
      ]
     },
     "art_2": {
+     "name": "Hunter's Blade",
+     "description": "Sometimes the beast reaches him anyway. The knife was always for that.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_melee_attack",
+       "scope": "character_to_character_own",
+       "value": 6
+      },
+      {
+       "effect": "wh_main_effect_character_stat_melee_defence",
+       "scope": "character_to_character_own",
+       "value": 6
+      },
+      {
+       "effect": "wh_main_effect_character_stat_bonus_vs_large",
+       "scope": "character_to_character_own",
+       "value": 10
+      }
+     ]
+    },
+    "art_3": {
      "name": "Long Eye",
-     "description": "He sees the shot before he takes it.",
+     "description": "He sees the shot before he takes it, and he packed for a long hunt.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_range",
        "scope": "character_to_character_own",
        "value": 15
-      }
-     ]
-    },
-    "art_3": {
-     "name": "Full Quiver",
-     "description": "He never runs out. He planned for this.",
-     "effects": [
+      },
       {
        "effect": "wh_main_effect_character_stat_ammunition",
        "scope": "character_to_character_own",
        "value": 40
+      },
+      {
+       "effect": "wh_main_effect_character_stat_reload_time_reduction",
+       "scope": "character_to_character_own",
+       "value": 10
       }
      ]
     },
     "art_4": {
-     "name": "Quick Hands",
-     "description": "Draw, loose, draw, loose, faster than thought.",
+     "name": "Executioner's Shot",
+     "description": "One arrow, saved for the biggest thing on the field.",
      "effects": [
       {
-       "effect": "wh_main_effect_character_stat_reload_time_reduction",
+       "effect": "wh2_dlc13_ability_enable_kill_shot_1",
        "scope": "character_to_character_own",
-       "value": 15
+       "value": 1
+      },
+      {
+       "effect": "wh_main_effect_character_stat_missile_damage",
+       "scope": "character_to_character_own",
+       "value": 10
       }
      ]
     },
@@ -686,28 +734,34 @@
     },
     "army_2": {
      "name": "Marked Ground",
-     "description": "Every stone and stake is a range marker to him.",
+     "description": "Every stone and stake is a range marker to him, and every cart carries spare shafts.",
      "effects": [
-      {"effect": "wh_main_effect_force_stat_range", "scope": "agent_to_parent_army_own", "value": 12}
+      {"effect": "wh_main_effect_force_stat_range", "scope": "agent_to_parent_army_own", "value": 12},
+      {"effect": "wh_main_effect_force_stat_ammunition", "scope": "agent_to_parent_army_own", "value": 15}
      ]
     },
     "army_3": {
-     "name": "From the Trees",
-     "description": "He knows where the enemy will walk, because he has watched them walk there before.",
+     "name": "Trueshot",
+     "description": "Archers near him shoot as if he were checking every shot.",
      "effects": [
       {
-       "effect": "wh_main_effect_force_army_campaign_ambush_attack_success_chance",
+       "effect": "wh2_dlc13_ability_enable_true_shot_aura",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
+      {
+       "effect": "wh_main_effect_force_stat_ap_missile_damage_mult",
        "scope": "agent_to_parent_army_own",
-       "value": 20
+       "value": 10
       }
      ]
     },
     "apex": {
-     "name": "Hail of Doom",
-     "description": "One arrow that splits into a storm.",
+     "name": "Hunter's Spread",
+     "description": "He nocks six arrows at once. He learned it from a world where there was never time for one.",
      "effects": [
       {
-       "effect": "wh_dlc05_effect_ability_enable_hail_of_doom_arrow",
+       "effect": "advisor_overhaul_effect_bow_spread_arrow",
        "scope": "character_to_character_own",
        "value": 1
       },
@@ -715,13 +769,23 @@
        "effect": "wh_main_effect_character_stat_missile_damage",
        "scope": "character_to_character_own",
        "value": 10
+      },
+      {
+       "effect": "wh_main_effect_character_stat_reload_time_reduction",
+       "scope": "character_to_character_own",
+       "value": 10
       }
      ]
     },
     "army_4": {
-     "name": "Quick Hands",
+     "name": "Loose!",
      "description": "Nock, draw, loose. He counts it out until they no longer need him to.",
      "effects": [
+      {
+       "effect": "wh2_main_effect_ability_enable_fire_at_will",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
       {
        "effect": "wh_main_effect_force_stat_reload_time_reduction",
        "scope": "agent_to_parent_army_own",
@@ -7129,6 +7193,12 @@
    "icon": "archer.png",
    "good": true,
    "text": "\"Bursting Bolts\" (each staff shot fires five bolts that burst in a wide blue blast, sparing his own side)"
+  },
+  "advisor_overhaul_effect_bow_spread_arrow": {
+   "priority": 10,
+   "icon": "archer.png",
+   "good": true,
+   "text": "\"Hunter's Spread\" (each bow shot fires six lighter arrows in a glowing fan, each bursting in a small blast that spares his own side)"
   }
  },
  "action_overrides": {
