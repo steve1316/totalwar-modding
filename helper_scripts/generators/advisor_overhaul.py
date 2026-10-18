@@ -76,7 +76,7 @@ import os
 import re
 import sys
 import zlib
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 from PIL import Image, ImageChops, ImageDraw
 
@@ -254,8 +254,11 @@ TABLES = [
     "effect_bundles_to_effects_junctions_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables",
     "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables",
     "effect_bonus_value_special_ability_group_junctions_tables", "effect_bonus_value_ids_unit_sets_tables", "special_ability_groups_to_units_junctions_tables",
-    *UNIT_ROW_TABLES,
+    "unit_abilities_tables", "unit_special_abilities_tables", *UNIT_ROW_TABLES,
 ]
+
+# First unique id of his transform abilities, above every vanilla special ability id.
+TRANSFORM_UNIQUE_ID = 1493349900
 
 # Land unit columns a weapon's `stats` and `forms` may set. `armour` is set too, as an armour value.
 STAT_COLUMNS = ["melee_attack", "melee_defence", "charge_bonus", "morale", "bonus_hit_points"]
@@ -363,7 +366,8 @@ def vanilla_lores() -> Dict[str, Dict]:
 def refresh() -> None:
     """Keeps the vanilla rows the build reads and every written table's header and version."""
     registry = load_registry()
-    units = {m[k] for m in registry["mounts"].values() for k in ("template", "template_foot") if k in m} | {FOOT_TEMPLATE}
+    dragons = [w["dragon"] for w in registry["weapons"].values() if "dragon" in w]
+    units = {m[k] for m in registry["mounts"].values() for k in ("template", "template_foot") if k in m} | {FOOT_TEMPLATE} | {d["template"] for d in dragons}
     data: Dict = {"tables": {}, "templates": {}}
     loaded: Dict[str, List[Dict[str, str]]] = {}
     for table in TABLES:
@@ -402,6 +406,8 @@ def refresh() -> None:
                        "links": [r for r in loaded["effect_bonus_value_agent_action_record_junctions_tables"] if r["agent_action_record"] in actions]}
     data["scopes"] = sorted(r["key"] for r in read_vanilla("campaign_effect_scopes_tables")[0])
     data["portraits"] = vanilla_portraits(LOOK_ART_SET)
+    transforms = {d[form] for d in dragons for form in ("to_dragon", "to_human")}
+    data["transforms"] = {t: {r["key"]: r for r in loaded[t] if r["key"] in transforms} for t in ("unit_abilities_tables", "unit_special_abilities_tables")}
     json.dump(data, open(DATA, "w", encoding="utf-8"), indent=1, sort_keys=True)
     print(f"kept {len(data['templates']['land_units_tables'])} template units, {len(data['factions'])} factions in {DATA}")
 
@@ -422,6 +428,19 @@ def unit_key(weapon: str, mount: str) -> str:
         str: The unit key.
     """
     return f"{PREFIX}_{weapon}_{mount}"
+
+
+def transform_key(weapon: str, form: str) -> str:
+    """The ability that turns a weapon's unit into one of its forms.
+
+    Args:
+        weapon (str): Weapon key.
+        form (str): The form it turns into, `dragon` or `human`.
+
+    Returns:
+        str: The ability key.
+    """
+    return f"{PREFIX}_{weapon}_{form}_form"
 
 
 def rig_key(weapon: str, mount: str) -> str:
@@ -1338,6 +1357,76 @@ def missile_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]
                                                **{k: table_value(v) for k, v in missile["projectile"].items()}))
 
 
+def unit_rows(key: str, template: str, main: Dict[str, str], attributes: Iterable[str], abilities: List[str], variant: str, name: str, unique_index: int,
+              data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
+    """Adds the rows each of his units has next to its land unit: main unit, attributes, abilities, template copies, variant and name.
+
+    Args:
+        key (str): The unit key.
+        template (str): The template unit its per-unit rows are copied from.
+        main (Dict[str, str]): The main unit row to copy.
+        attributes (Iterable[str]): Its unit attributes, before `SKIPPED_ATTRIBUTES` are taken out.
+        abilities (List[str]): Its abilities.
+        variant (str): Its variant.
+        name (str): Its onscreen name.
+        unique_index (int): Its main unit index.
+        data (Dict): The generator data.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+    """
+    rows["main_units_tables"].append(dict(main, unit=key, land_unit=key, unique_index=str(unique_index), caste="hero"))
+    rows["unit_attributes_groups_tables"].append({"group_name": key})
+    rows["unit_attributes_to_groups_junctions_tables"] += [{"attribute": a, "attribute_group": key} for a in sorted(set(attributes) - SKIPPED_ATTRIBUTES)]
+    rows["land_units_to_unit_abilites_junctions_tables"] += [{"ability": a, "land_unit": key, "culture": "*"} for a in dict.fromkeys(abilities)]
+    for table, column in UNIT_ROW_TABLES.items():
+        rows[table] += [dict(r, **{column: key}) for r in data["templates"][table] if r[column] == template]
+    rows["unit_variants_tables"].append({"faction": "", "unit": key, "name": SUBTYPE, "variant": variant, "unit_card": UNIT_CARD})
+    texts.append((f"land_units_onscreen_name_{key}", name))
+
+
+def dragon_rows(registry: Dict, unique_index: int, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
+    """Adds the dragon form of each foot pair whose weapon has one: a unit copied from the vanilla dragon with his stats and voice, and the two
+    abilities that swap forms.
+
+    Args:
+        registry (Dict): The units registry.
+        unique_index (int): The first dragon's main unit index, after every pair's.
+        data (Dict): The generator data.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+    """
+    templates = data["templates"]
+    foot = next(r for r in templates["main_units_tables"] if r["land_unit"] == FOOT_TEMPLATE)
+    # He keeps his own voice and campaign cap. The dragon's porthole camera stays, since it frames the dragon.
+    voice = {k: foot[k] for k in MAIN_IDENTITY_COLUMNS if k != "porthole_camera"}
+    for weapon_key, mount_key in pairs(registry):
+        weapon, mount = registry["weapons"][weapon_key], registry["mounts"][mount_key]
+        if "dragon" not in weapon or "template" in mount:
+            continue
+        dragon, template = weapon["dragon"], weapon["dragon"]["template"]
+        human = unit_key(weapon_key, mount_key)
+        key = f"{human}_dragon"
+        land = next(r for r in templates["land_units_tables"] if r["key"] == template)
+        stats = {c: table_value(v) for c, v in dragon.get("stats", {}).items() if c in STAT_COLUMNS}
+        rows["land_units_tables"].append(dict(land, **stats, key=key, attribute_group=key, historical_description_text=DESCRIPTION,
+                                              short_description_text=DESCRIPTION))
+        main = next(r for r in templates["main_units_tables"] if r["land_unit"] == template)
+        attributes = [r["attribute"] for r in templates["unit_attributes_to_groups_junctions_tables"] if r["attribute_group"] == template]
+        abilities = ["wh3_main_unit_passive_single_entity", transform_key(weapon_key, "human")] + dragon.get("abilities", [])
+        unit_rows(key, template, dict(main, **voice, vo_is_dragon="false"), attributes, abilities, dragon["variant"], f"The Advisor ({dragon['name']})",
+                  unique_index, data, rows, texts)
+        unique_index += 1
+        rows["land_units_to_unit_abilites_junctions_tables"].append({"ability": transform_key(weapon_key, "dragon"), "land_unit": human, "culture": "*"})
+        for form, spawned in (("dragon", key), ("human", human)):
+            ability, vanilla = transform_key(weapon_key, form), dragon[f"to_{form}"]
+            unique_id = str(TRANSFORM_UNIQUE_ID + len(rows["unit_special_abilities_tables"]))
+            rows["unit_abilities_tables"].append(dict(data["transforms"]["unit_abilities_tables"][vanilla], key=ability))
+            rows["unit_special_abilities_tables"].append(dict(data["transforms"]["unit_special_abilities_tables"][vanilla], key=ability, spawned_unit=spawned,
+                                                              unique_id=unique_id))
+            texts.append((f"unit_abilities_onscreen_name_{ability}", dragon[form]["name"]))
+            texts.append((f"unit_abilities_tooltip_text_{ability}", dragon[form]["description"]))
+
+
 def build() -> None:
     """Writes every table, variant, portrait setting, loc row and the script data file into the mod folder."""
     registry = load_registry()
@@ -1376,22 +1465,15 @@ def build() -> None:
         rows["land_units_tables"].append(land)
         # Voice, campaign cap and portrait camera stay his own on every mount, since the disc template is a Chaos Sorcerer.
         main = dict(template_main[template], **{k: template_main[FOOT_TEMPLATE][k] for k in MAIN_IDENTITY_COLUMNS})
-        rows["main_units_tables"].append(dict(main, unit=key, land_unit=key, unique_index=str(unique_index), caste="hero"))
+        attributes = (set(template_attributes.get(template, [])) | set(weapon.get("attributes", []))) - set(weapon.get("attributes_removed", []))
+        abilities = [a for a in ["wh3_main_unit_passive_single_entity"] + weapon.get("abilities", []) if a not in weapon.get("abilities_removed", [])]
+        name = "The Advisor" if key == unit_key(DEFAULT_WEAPON, DEFAULT_MOUNT) else f"The Advisor ({weapon['name']}, {mount['name']})"
+        unit_rows(key, template, main, attributes, abilities, variant, name, unique_index, data, rows, texts)
         unique_index += 1
-        rows["unit_attributes_groups_tables"].append({"group_name": key})
-        attributes = (set(template_attributes.get(template, [])) | set(weapon.get("attributes", []))) - SKIPPED_ATTRIBUTES - set(weapon.get("attributes_removed", []))
-        rows["unit_attributes_to_groups_junctions_tables"] += [{"attribute": a, "attribute_group": key} for a in sorted(attributes)]
-        abilities = [a for a in dict.fromkeys(["wh3_main_unit_passive_single_entity"] + weapon.get("abilities", [])) if a not in weapon.get("abilities_removed", [])]
-        rows["land_units_to_unit_abilites_junctions_tables"] += [{"ability": a, "land_unit": key, "culture": "*"} for a in abilities]
-        for table, column in UNIT_ROW_TABLES.items():
-            rows[table] += [dict(r, **{column: key}) for r in templates[table] if r[column] == template]
         rows["units_custom_battle_permissions_tables"].append(dict(template_perm, unit=key, general_uniform=uniform, general_portrait=portrait_png,
                                                                    set_piece_character=""))
         if mount_key != DEFAULT_MOUNT:
             rows["units_custom_battle_mounts_tables"].append({"base_unit": unit_key(weapon_key, DEFAULT_MOUNT), "mounted_unit": key, "icon_name": mount["icon"]})
-        rows["unit_variants_tables"].append({"faction": "", "unit": key, "name": SUBTYPE, "variant": variant, "unit_card": UNIT_CARD})
-        texts.append((f"land_units_onscreen_name_{key}", "The Advisor" if key == unit_key(DEFAULT_WEAPON, DEFAULT_MOUNT)
-                      else f"The Advisor ({weapon['name']}, {mount['name']})"))
 
         ancillary_rows(rows, ancillary, mount["ancillary_type"], "mount", provided_bodyguard_unit=key)
         for art_set in (weapon_art_set(w) for w in registry["weapons"]):
@@ -1412,6 +1494,7 @@ def build() -> None:
                 "piece_shapes": weapon.get("piece_shapes", {})}
         variants[variant] = (weapon.get("body", registry["model"]["body"]), dict(weapon["props"], **mount.get("variant_props", {}), **form_props), look)
 
+    dragon_rows(registry, unique_index, data, rows, texts)
     for variant in variants:
         rows["variants_tables"].append({"variant_name": variant, "variant_filename": variant, "mount_scale": "1.0000", "scale": "1.1500", "scale_variation": "0.0000"})
     for set_name in [*anims.SETS, *anims.DERIVED_SETS]:
@@ -1469,7 +1552,7 @@ def check_duplicates(rows: Dict[str, List[Dict[str, str]]]) -> None:
     for table, column in (("land_units_tables", "key"), ("character_skills_tables", "key"), ("ancillaries_tables", "key"), ("agent_actions_tables", "unique_id"),
                           ("effect_bundles_tables", "key"),
                           ("agent_uniforms_tables", "uniform_name"), ("main_units_tables", "unique_index"), ("missile_weapons_tables", "key"),
-                          ("projectiles_tables", "key")):
+                          ("projectiles_tables", "key"), ("unit_special_abilities_tables", "unique_id")):
         keys = [r[column] for r in rows[table]]
         if len(keys) != len(set(keys)):
             raise SystemExit(f"duplicate keys in {table}: {sorted(k for k in set(keys) if keys.count(k) > 1)}")

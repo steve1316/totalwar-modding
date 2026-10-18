@@ -6,7 +6,7 @@ has no humanoid01 disc rider, so the Chaos Sorcerer Lord's humanoid01c disc set 
 the retargeted copy, or the game layers the source skeleton's animation over the advisor (his staff then stops spinning while he casts).
 Metas with no spliced animation keep their vanilla path. The second is the Glaive, Taoyan's humanoid01e trident set. `FILL_SLOTS` gives it
 Settra's casts, which she lacks, `PROP_PINS` holds her sword, scabbard and glaive where her docking would have them, and `BAKED_DOCKING` bakes
-the docks into the tracks.
+the docks into the tracks. The third is the Iron Hand, Zhao Ming's unarmed humanoid01e human form set with his own casts.
 
 Derived sets copy a vanilla `humanoid01` set under a new name with up to two fixes. Named slots take their animations from another vanilla set
 (several vanilla horse sets play foot casts in their rider cast slots, so the rider sinks into the mount, and the Huntsmarshal's short casts are bow
@@ -16,7 +16,7 @@ shield on his left hand the way his stand does.
 `ADDED_SLOTS` then gives the staff sets the fire slots of his staff bolt, GLF Battle Mage style: each fire slot copies a forward-facing cast whose
 meta has a `FIRE_POS`, plus a combat-ready stance where the set has none.
 
-`CAMPAIGN_SETS` retargets vanilla campaign sets for the campaign map, e.g. Taoyan's for the Glaive.
+`CAMPAIGN_SETS` retargets vanilla campaign sets for the campaign map, e.g. Taoyan's for the Glaive and Zhao Ming's for the Iron Hand.
 
 The vanilla files come through `core.asset_source`, which caches pack listings and extracts.
 
@@ -67,6 +67,8 @@ SETS = {
     "hu1_advisor_overhaul_disc01_staff_and_sword": ("hu1c_wh3_dlc20_tzeentch_sorcerer_wm_disc01_staff_sword", "humanoid01c", f"{DERIVED_FOLDER}/disc_staff_and_sword",
                                                     "aod"),
     "hu1_advisor_overhaul_glaive": ("hu1e_cp1_taoyan_trident", "humanoid01e", f"{DERIVED_FOLDER}/glaive", "aog"),
+    # Zhao Ming's human form. He fights unarmed and has his own casts, so the set copies as it is.
+    "hu1_advisor_overhaul_iron_hand": ("hu1e_mage_iron_dragon", "humanoid01e", f"{DERIVED_FOLDER}/iron_hand", "aoz"),
 }
 
 # Source skeleton -> its bones that humanoid01 names differently. Humanoid01e's `weapon_1` to `weapon_6` are humanoid01's `be_prop_0` to `be_prop_5`,
@@ -120,6 +122,7 @@ CAMPAIGN_SET_FOLDER = "animations/campaign/database/bin"
 # her glaive, sword and scabbard in their tracks and her campaign persistent meta docks nothing, so a plain retarget plays as she does.
 CAMPAIGN_SETS = {
     "cam_hu1_advisor_overhaul_glaive": ("cam_hero_hu1e_cp1_taoyan_trident", "humanoid01e", f"{DERIVED_FOLDER}/glaive_campaign", "aogm"),
+    "cam_hu1_advisor_overhaul_iron_hand": ("cam_hu1e_mage_iron_dragon", "humanoid01e", f"{DERIVED_FOLDER}/iron_hand_campaign", "aozm"),
 }
 
 # The staff-and-sword horse set. Its rider casts are proper seated ones (`hu1_hr1_sfsw_rider1_cast_*`), unlike the foot casts several vanilla

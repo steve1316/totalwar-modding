@@ -937,6 +937,143 @@
    "pieces": {
     "piece_1": ["variantmeshes/wh_variantmodels/hu1/emp/emp_captains/head/emp_captains_helmet_01.wsmodel"]
    }
+  },
+  "iron_hand": {
+   "name": "Iron Hand",
+   "description": "No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way Zhao Ming fights before he takes his dragon form.",
+   "campaign_set": "cam_hu1_advisor_overhaul_iron_hand",
+   "icon": "wh3_main_lord_abilities_iron_dragon_human_form.png",
+   "picker_icon": "ui/campaign ui/skills/wh3_main_lord_abilities_iron_dragon_human_form.png",
+   "shield": "none",
+   "props": {},
+   "sets": {"foot": "hu1_advisor_overhaul_iron_hand"},
+   "vanilla": {"foot": "wh3_main_cth_cha_iron_dragon_0"},
+   "stats": {
+    "melee_attack": 52,
+    "melee_defence": 57,
+    "charge_bonus": 25,
+    "morale": 88,
+    "bonus_hit_points": 5600,
+    "armour": 70
+   },
+   "melee": {"template": "wh3_main_cth_iron_dragon_human"},
+   "dragon": {
+    "name": "Iron Dragon",
+    "template": "wh3_main_cth_cha_iron_dragon_1",
+    "variant": "wh3_main_cth_cha_iron_dragon_1",
+    "to_dragon": "wh3_main_lord_abilities_iron_dragon_dragon_form",
+    "to_human": "wh3_main_lord_abilities_iron_dragon_human_form",
+    "abilities": ["wh3_main_lord_passive_hardened_scale"],
+    "stats": {"melee_attack": 47, "melee_defence": 47, "charge_bonus": 25, "morale": 88, "bonus_hit_points": 5600},
+    "dragon": {
+     "name": "Dragon Form",
+     "description": "He lets the old shape take him: iron scales, a forge-hot breath, wings over the field. The Iron Dragon of Cathay, as he remembers it."
+    },
+    "human": {
+     "name": "Human Form",
+     "description": "He folds the dragon away and stands as a man again, open hands and an unbending stance."
+    }
+   },
+   "arts": {
+    "art_1": {
+     "name": "Iron Skin",
+     "description": "Blows ring off him like a hammer off an anvil.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_melee_defence",
+       "scope": "character_to_character_own",
+       "value": 10
+      }
+     ]
+    },
+    "art_2": {
+     "name": "Forge Palm",
+     "description": "An open hand that lands with the weight of a falling ingot.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_weapon_strength",
+       "scope": "character_to_character_own",
+       "value": 12
+      }
+     ]
+    },
+    "art_3": {
+     "name": "Unbending",
+     "description": "He takes the hit and does not move a step.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_armour",
+       "scope": "character_to_character_own",
+       "value": 20
+      }
+     ]
+    },
+    "art_4": {
+     "name": "Hammer Hands",
+     "description": "Each strike falls like the smith's hammer, steady and without end.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_melee_attack",
+       "scope": "character_to_character_own",
+       "value": 8
+      }
+     ]
+    },
+    "army_1": {
+     "name": "Foundry Drill",
+     "description": "He works them like iron, heat and blow, until the line holds its shape.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_melee_defence",
+       "scope": "agent_to_parent_army_own",
+       "value": 4
+      }
+     ]
+    },
+    "army_2": {
+     "name": "Tempered Ranks",
+     "description": "Quenched and hardened, they wear their armour like a second skin.",
+     "effects": [
+      {"effect": "wh_main_effect_force_stat_armour", "scope": "agent_to_parent_army_own", "value": 5}
+     ]
+    },
+    "army_3": {
+     "name": "The Great Bastion",
+     "description": "Where he stands, the line stands like the wall in the north.",
+     "effects": [
+      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 8}
+     ]
+    },
+    "army_4": {
+     "name": "Cast in Iron",
+     "description": "He teaches them to take a blow the way metal takes the hammer.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_physical_resistance",
+       "scope": "agent_to_parent_army_own",
+       "value": 5
+      }
+     ]
+    },
+    "apex": {
+     "name": "Heart of the Forge",
+     "description": "The iron Zhao Ming carries, as he remembers it.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_melee_defence",
+       "scope": "character_to_character_own",
+       "value": 8
+      },
+      {
+       "effect": "wh_main_effect_character_stat_physical_resistance",
+       "scope": "character_to_character_own",
+       "value": 10
+      }
+     ]
+    }
+   },
+   "grant_rank": 16,
+   "body": "advisor"
   }
  },
  "mounts": {
@@ -1091,7 +1228,7 @@
    "description": "Every weapon he has ever held, in every ending, answers him at once.\\\\n\\\\nLocks the other Apexes and the Polymath.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "spell_mastery.png",
    "row": 0,
-   "tier": 7,
+   "tier": 8,
    "rank": 25,
    "levels": [
     []
@@ -1170,7 +1307,7 @@
    "name": "Archmage",
    "icon": "character_magic.png",
    "row": 0,
-   "tier": 8,
+   "tier": 9,
    "rank": 25,
    "build": true,
    "role": "apex",
@@ -2208,7 +2345,7 @@
    "name": "The Last Sword",
    "icon": "character_attack.png",
    "row": 0,
-   "tier": 9,
+   "tier": 10,
    "rank": 25,
    "build": true,
    "role": "apex",
@@ -2244,7 +2381,7 @@
    "name": "Power Behind Thrones",
    "icon": "campaign_public_order.png",
    "row": 0,
-   "tier": 10,
+   "tier": 11,
    "rank": 25,
    "build": true,
    "role": "apex",
@@ -2538,7 +2675,7 @@
    "name": "Everything, Again",
    "icon": "character_general_ability.png",
    "row": 0,
-   "tier": 11,
+   "tier": 12,
    "rank": 29,
    "build": true,
    "role": "polymath",
@@ -2575,7 +2712,7 @@
    "name": "The Long Patience",
    "icon": "character_damage.png",
    "row": 0,
-   "tier": 12,
+   "tier": 13,
    "rank": 30,
    "build": true,
    "requires": [],
