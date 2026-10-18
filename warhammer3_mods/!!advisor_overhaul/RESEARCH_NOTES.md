@@ -220,6 +220,30 @@ Answered by the test build `generators/advisor_overhaul_spike.py` plus `script/c
   locks from the skill the dilemma choice adds. `[game]`
 - **Adding the Disc's unlock skill by script makes the Disc pickable,** and a `character_to_province_any` Tzeentch corruption effect in a bundle
   on him spreads corruption. `[game]`
+- **A skill description shows a context expression as raw text (2026-10-18).** `{{CcoCampaignCharacterSkill:ScriptObjectContext("id").StringValue}}`,
+  the same with `CcoStaticObject:`, and with no root all printed as typed in the skill tooltip, though the script had set the value with
+  `common.set_context_value`. Vanilla uses these only in incident, dilemma, payload and layout texts. Skill and effect texts use only `{{tr:}}`. `[game]`
+- **`ComponentMouseOn` never reached a mod listener in the campaign (2026-10-18).** Not one hover was logged over the character panel, with
+  no condition on the listener. Poll with `cm:real_callback` to react to a hover. `[game]`
+- **A skill tree card's tooltip is `edict_tooltip`, built inside the hovered card (2026-10-18).** The card's `layout_path` is
+  `ui/campaign ui/edict_tooltip`, not `character_background_skill_tooltip`. It appears as `... > <skill key> > card > edict_tooltip`, so the
+  card's parent names the skill. Its children are copied with a `_copy_N` suffix: `list_parent > dy_heading_textbox_copy_0` holds the skill
+  name and `dy_description_textbox_copy_2` the description, so match them by their start. `[game]`
+- **`SetStateText` on that tooltip's description stops every script (2026-10-18, two runs).** `GetStateText` read 153 characters fine. The
+  next call, `SetStateText` with plain ASCII and no `%`, left the tooltip empty, and `out` wrote nothing more from any script, the same as the
+  `square_large_text_button` runs that also called `SetStateText`. Do not write text into vanilla tooltips. `[game]`
+- **Our own tooltip box over the skill card works (2026-10-18).** Hide `edict_tooltip` with `SetVisible(false)` (the game re-fades an
+  opacity change, so that flashes), then show a box made from `ui/common ui/tooltip_centred_title_and_text` under the UI root. Poll every
+  20ms, as the game destroys `edict_tooltip` when the hover ends. `SetStateText` on our own box is safe. `[game]`
+- **The vanilla effect list can be moved into our box (2026-10-18).** Make `ui/common ui/tooltip_effect_bundle` as a child of the box,
+  `box:Adopt(effect_list:Address())`, destroy the rest, then `effect_list:SetContextObject(cco("CcoEffectBundle", bundle_key))`. The game
+  builds the rows itself with the right icons, colours and the eye tooltips on attributes, abilities and contact effects. Text lines with
+  `SetTooltipText` had the same words but not the vanilla layout or icons. `[game]`
+- **`CopyComponent` and `SetTextYOffset` work on our own text components (2026-10-18).** A copy lands in the same List layout, below the
+  original. `[game]`
+- **The lock bar must sit outside the box's List layout (2026-10-18).** `ui/templates/stick_progress_bar` made inside the box was stacked
+  under the text, too far up. Made under the UI root and moved to the box's bottom edge each look, it matches vanilla. Vanilla's lock times
+  are `ui_tooltip_stick_delay` 0.35s and `ui_tooltip_removal_delay` 0.15s (`preferences.script.txt`). `[game]`
 
 ## Weapons and mounts
 

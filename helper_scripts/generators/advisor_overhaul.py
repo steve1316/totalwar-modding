@@ -139,6 +139,9 @@ BORROWED_ICON_FOLDERS = ("ui/battle ui/ability_icons", "ui/campaign ui/effect_bu
 # Vanilla packs holding the ui icons.
 UI_PACKS = re.compile(r"^ui")
 
+# Start of the last paragraph of each art slot skill's description, which points at Change Loadout.
+ART_SLOT_NOTE = "What it does follows the weapon"
+
 # Every key of the mod starts with this.
 PREFIX = "advisor_overhaul"
 
@@ -1100,7 +1103,7 @@ def bundle_rows(key: str, entry: Dict, rows: Dict[str, List[Dict[str, str]]], te
     texts.append((f"effect_bundles_localised_description_{key}", entry.get("description", "")))
 
 
-def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> Dict[str, List[Tuple[str, str, str]]]:
+def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> Dict[str, List[Dict]]:
     """Adds every weapon's arts, one effect bundle per art slot.
 
     Args:
@@ -1109,13 +1112,23 @@ def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts
         texts (List[Tuple[str, str]]): Loc rows, added to.
 
     Returns:
-        Dict[str, List[Tuple[str, str, str]]]: Weapon -> (slot skill key, bundle key, art name) for each built art slot, for the loadout script.
+        Dict[str, List[Dict]]: Weapon -> one art per built slot, for the loadout script: `skill` (slot skill key), `skill_name`, `bundle`, `name`,
+        `flavour` (the slot skill's description without its loadout note), `about` (the art's description) and `requires` (the slot skills it needs,
+        each `skill` and `name`).
 
     Raises:
         SystemExit: When a weapon leaves a built slot undefined.
     """
-    slots = {skill["slot"]: planned_skill_key(skill_id) for skill_id, skill in registry.get("skills", {}).items() if skill.get("build") and skill.get("slot")}
-    arts: Dict[str, List[Tuple[str, str, str]]] = {}
+    skills = registry.get("skills", {})
+    slot_skills = {skill["slot"]: skill_id for skill_id, skill in skills.items() if skill.get("build") and skill.get("slot")}
+    slots = {}
+    for slot, skill_id in slot_skills.items():
+        skill = skills[skill_id]
+        # The art tooltip replaces the vanilla one, so the note pointing at Change Loadout is left out.
+        flavour = "\n\n".join(p for p in skill.get("description", "").split("\\\\n\\\\n") if not p.startswith(ART_SLOT_NOTE))
+        requires = [{"skill": planned_skill_key(r), "name": skills[r].get("name", r)} for r in skill.get("requires", []) if r in skills]
+        slots[slot] = (planned_skill_key(skill_id), skill["name"], flavour, requires)
+    arts: Dict[str, List[Dict]] = {}
     for weapon_key, weapon in registry["weapons"].items():
         missing = sorted(set(slots) - set(weapon.get("arts", {})))
         if missing:
@@ -1124,7 +1137,10 @@ def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts
             bundle = art_bundle_key(weapon_key, slot)
             bundle_rows(bundle, art, rows, texts)
             if slot in slots:
-                arts.setdefault(weapon_key, []).append((slots[slot], bundle, art["name"]))
+                skill, skill_name, flavour, requires = slots[slot]
+                arts.setdefault(weapon_key, []).append({"skill": skill, "skill_name": skill_name, "bundle": bundle,
+                                                        "name": art["name"], "flavour": flavour, "about": art.get("description", ""),
+                                                        "requires": requires})
     return arts
 
 
@@ -1872,18 +1888,18 @@ def write_skill_icons(skills: List[Dict[str, str]]) -> None:
         icon.save(os.path.join(out, name), optimize=True)
 
 
-def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[str, List[Tuple[str, str, str]]], learned: List[str], polymath: Optional[Dict]) -> None:
+def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[str, List[Dict]], learned: List[str], polymath: Optional[Dict]) -> None:
     """Writes the Lua data table the campaign scripts read: his subtype, the weapons and mounts with their unlock skills, names and picker icons,
     the ancillary of every valid pair both ways, the skills he is made with, each weapon's arts and the Polymath.
 
     Args:
         registry (Dict): The registry.
         combos (List[Tuple[str, str, str]]): (weapon, mount, ancillary) per valid pair.
-        arts (Dict[str, List[Tuple[str, str, str]]]): Weapon -> (slot skill, art bundle, art name) per built art slot.
+        arts (Dict[str, List[Dict]]): Weapon -> its arts, from `weapon_art_rows`.
         learned (List[str]): The skills he is made with.
         polymath (Optional[Dict]): The Polymath, from `polymath_data`, or None.
     """
-    quote = lambda text: text.replace("\\", "\\\\").replace('"', '\\"')
+    quote = lambda text: text.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
     folder = os.path.join(MOD, "script", "campaign", "mod")
     os.makedirs(folder, exist_ok=True)
     lines = ["--- Generated by generators/advisor_overhaul.py. Do not edit by hand.", "ADVISOR_OVERHAUL_RIGS = {",
@@ -1898,7 +1914,7 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[
             lines.append("\t--- Weapons also name the art set that shows them in the character panel.")
         lines.append(f"\t{kind}s = {{")
         for key, item in items.items():
-            name = item["name"].replace('"', '\\"')
+            name = quote(item["name"])
             art = f', art_set = "{weapon_art_set(key)}"' if kind == "weapon" else ""
             art += f', grant_rank = {item["grant_rank"]}' if item.get("grant_rank") else ""
             lines.append(f'\t\t{{ key = "{key}", skill = "{unlock_skill(kind, key)}", name = "{ui_name(kind, key)}", fallback = "{name}", '
@@ -1911,10 +1927,16 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[
     lines += ["\t},", "\t--- Forename loc key of his name.", f'\tname = "names_name_{name_id()}",']
     lines += ["\t--- Hidden skills he is made with. An Advisor from before they were added gets them from the spawn script.", "\tlearned_skills = {"]
     lines += [f'\t\t"{skill}",' for skill in learned]
-    lines += ["\t},", "\t--- Weapon -> its arts: the art slot skill he must own, the effect bundle he wears for it while holding that weapon, and the art's",
-              "\t--- English name (its loc key is the bundle's title).", "\tarts = {"]
+    lines += ["\t},", "\t--- Weapon -> its arts: the art slot skill he must own and its English name, the effect bundle he wears",
+              "\t--- for it while holding that weapon, the art's English name (its loc key is the bundle's title), the slot skill's flavour text,",
+              "\t--- the art's description and the slot skills it needs, for the art card tooltip.", "\tarts = {"]
     for weapon, slots in arts.items():
-        lines += [f'\t\t["{weapon}"] = {{'] + [f'\t\t\t{{ skill = "{s}", bundle = "{b}", name = "{n.replace(chr(34), chr(92) + chr(34))}" }},' for s, b, n in slots]
+        lines.append(f'\t\t["{weapon}"] = {{')
+        for art in slots:
+            requires = ", ".join(f'{{ skill = "{r["skill"]}", name = "{quote(r["name"])}" }}' for r in art["requires"])
+            lines.append(f'\t\t\t{{ skill = "{art["skill"]}", skill_name = "{quote(art["skill_name"])}", '
+                         f'bundle = "{art["bundle"]}", name = "{quote(art["name"])}", flavour = "{quote(art["flavour"])}", '
+                         f'about = "{quote(art["about"])}", requires = {{ {requires} }} }},')
         lines += ["\t\t},"]
     lines += ["\t},"]
     if polymath:

@@ -120,6 +120,56 @@ local MOUNT_PICK_NAME = TAG .. "_mount_pick"
 --- Delay of that callback in milliseconds, so the game has run the native equip command first.
 local MOUNT_PICK_MS = 500
 
+--- The vanilla tooltip the game builds inside a hovered skill card. The card's `layout_path` is ui3.pack ui/campaign ui/edict_tooltip.
+local SKILL_TOOLTIP = "edict_tooltip"
+
+--- Our own box shown in place of an art card's vanilla tooltip, with the layout it is made from and its title and text children.
+local ART_BOX = TAG .. "_art_box"
+local ART_BOX_LAYOUT = "ui/common ui/tooltip_centred_title_and_text"
+local ART_BOX_TITLE = "dy_title"
+local ART_BOX_TEXT = "dy_text"
+
+--- Copy of the box's text made below its effect list, for the skills the art still needs.
+local ART_BOX_FOOT = TAG .. "_art_foot"
+
+--- The vanilla effect bundle tooltip, made only to move its effect list into the art box. The list draws the effects of the `CcoEffectBundle` it is
+--- given with the game's own icons and eye tooltips.
+local ART_BUNDLE = TAG .. "_art_bundle"
+local ART_BUNDLE_LAYOUT = "ui/common ui/tooltip_effect_bundle"
+local ART_EFFECT_LIST = "effect_list"
+
+--- Top and bottom text padding in pixels of the foot. The text it is copied from has 10 above and below.
+local ART_FOOT_PAD = { 10, 0 }
+
+--- The lock bar the game draws in its tooltips, the part of it set to the box's width, and the part that fills while a card is hovered. The bar is
+--- its own UI root child laid on the box's bottom edge, as inside the box its layout stacked the bar under the text.
+local ART_BAR = TAG .. "_art_bar"
+local ART_BAR_LAYOUT = "ui/templates/stick_progress_bar"
+local ART_BAR_FRAME = "bar_extents_and_pos"
+local ART_BAR_FILL = "auto_resizing_comp"
+
+--- Children of the fill shown while it fills and once the box is locked, the bar's height in pixels, and pixels from its top up to the box's bottom.
+--- The fill's line is drawn 2 pixels below the bar's top.
+local ART_BAR_FILLING = "in_progress_comp"
+local ART_BAR_DONE = "completed_comp"
+local ART_BAR_H = 3
+local ART_BAR_LIFT = 5
+
+--- Gap in pixels kept between an art card and its box.
+local ART_BOX_GAP = 8
+
+--- Seconds a card is hovered before its art box locks, and seconds a locked box stays after the mouse leaves it. These match the game's
+--- `ui_tooltip_stick_delay` and `ui_tooltip_removal_delay` in preferences.script.txt.
+local ART_STICK_S = 0.35
+local ART_REMOVAL_S = 0.15
+
+--- Name of the real-time callback that shows the art box while the character panel is open.
+local ART_TOOLTIP_NAME = TAG .. "_art_tooltip"
+
+--- Delay in milliseconds between looks for a hovered art card, and how many looks pass between rebuilds of the art cards' texts.
+local ART_TOOLTIP_MS = 20
+local ART_CARD_LOOKS = 15
+
 --- UI text: loc key in text/db/advisor_overhaul_ui.loc and the English fallback used if the key does not resolve.
 local TEXT = {
 	--- Tooltip of the Change Loadout button.
@@ -144,6 +194,9 @@ local TEXT = {
 	arts = { "advisor_overhaul_ui_weapon_arts", "Arts:" },
 	--- A weapon option's art line when he owns none of its arts yet.
 	arts_none = { "advisor_overhaul_ui_weapon_arts_none", "Arts: none yet. Learn the art skills to unlock this weapon's arts." },
+	--- Start of the line an art slot skill's tooltip gets for the weapon he holds, followed by the weapon's name.
+	art_with = { "advisor_overhaul_ui_art_with", "With" },
+	art_locked = { "advisor_overhaul_ui_art_locked", "Available after unlocking" },
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,6 +225,33 @@ local topmost = {}
 
 --- Whether the character panel is open, from `PanelOpenedCampaign` and `PanelClosedCampaign`.
 local panel_open = false
+
+--- What each art card's box shows, by skill key, from `art_card_tooltip`. Cleared when the panel opens.
+local art_card_tips = {}
+
+--- Our art box: the component, false when it could not be made while this panel is open, or nil when it is not made yet.
+local art_box = nil
+
+--- The skill key and text the art box shows, or nil while it is hidden.
+local art_box_skill = nil
+local art_box_text = nil
+
+--- The vanilla effect list moved into the art box, or nil when it could not be made.
+local art_box_effects = nil
+
+--- The art box's foot copy. Made with the box.
+local art_box_foot = nil
+
+--- The art box's lock bar parts by name, nil when it could not be made, its full width in pixels, and the width and state it was last given.
+local art_bar = nil
+local art_bar_full = 0
+local art_bar_width = nil
+local art_bar_done = nil
+
+--- When the shown art card's hover began, from `os.clock`, whether the art box is locked, and when the mouse left a locked box (nil while on it).
+local art_box_since = 0
+local art_box_locked = false
+local art_box_left = nil
 
 --- CQI of an Advisor whose loadout changed while the character panel was open, so he is selected again once it closes. Nil when none waits.
 local pending_reselect = nil
@@ -395,7 +475,7 @@ end
 --- The arts of a weapon whose slot skill the Advisor owns.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
 --- @param weapon string The weapon key.
---- @returns table The owned art rows of `ADVISOR_OVERHAUL_RIGS.arts` (`skill`, `bundle`, `name`).
+--- @returns table The owned art rows of `ADVISOR_OVERHAUL_RIGS.arts`.
 local function owned_arts(character, weapon)
 	local owned = {}
 	for _, art in ipairs((rig_data().arts or {})[weapon] or {}) do
@@ -791,16 +871,24 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- UI text
 
+--- A loc text, or a fallback when its key does not resolve.
+--- @param key string The loc key.
+--- @param fallback string The text to use when the key does not resolve.
+--- @returns string The text.
+local function localised(key, fallback)
+	local text = common.get_localised_string(key)
+	if not text or text == "" then
+		return fallback
+	end
+	return text
+end
+
 --- A UI text, localised when its key resolves.
 --- @param id string Key of `TEXT`.
 --- @returns string The text.
 local function ui_text(id)
 	local entry = TEXT[id]
-	local text = common.get_localised_string(entry[1])
-	if not text or text == "" then
-		return entry[2]
-	end
-	return text
+	return localised(entry[1], entry[2])
 end
 
 --- A weapon option's line of the arts the Advisor owns for it.
@@ -810,8 +898,7 @@ end
 local function arts_line(character, weapon)
 	local names = {}
 	for _, art in ipairs(owned_arts(character, weapon)) do
-		local text = common.get_localised_string("effect_bundles_localised_title_" .. art.bundle)
-		table.insert(names, (text and text ~= "") and text or art.name)
+		table.insert(names, localised("effect_bundles_localised_title_" .. art.bundle, art.name))
 	end
 	if #names == 0 then
 		return ui_text("arts_none")
@@ -823,11 +910,7 @@ end
 --- @param item table The item row.
 --- @returns string The name.
 local function item_name(item)
-	local text = common.get_localised_string(item.name)
-	if not text or text == "" then
-		return item.fallback
-	end
-	return text
+	return localised(item.name, item.fallback)
 end
 
 --- Whether a character is an Advisor of the local player's faction.
@@ -1557,6 +1640,401 @@ local function in_mount_box(address)
 	return false
 end
 
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Art skill tooltips
+
+--- Runs a step and logs it when it fails, without hiding the button: a failed art tooltip only leaves the vanilla tooltip.
+--- @param what string The step, for the log.
+--- @param step function The step.
+local function logged(what, step)
+	local ok, err = pcall(step)
+	if not ok then
+		log(what .. " failed: " .. tostring(err))
+	end
+end
+
+--- What an art slot skill's card box shows, in the game's text markup: the skill name as its title, then the skill's flavour text and the art of
+--- the weapon he holds with its description, and the skills it still needs. The effect list draws the art's effects.
+--- @param art table The art row.
+--- @param weapon string The weapon key.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @returns table `title`, `text` (up to the effects), `foot` ("" for none), `bundle` and `whole` (all of it).
+local function art_card_tooltip(art, weapon, character)
+	local item = find_item("weapon", weapon)
+	local head = {
+		"[[i]]" .. art.flavour .. "[[/i]]",
+		"",
+		"[[col:yellow]]" .. ui_text("art_with") .. " " .. (item and item_name(item) or weapon) .. ": "
+			.. localised("effect_bundles_localised_title_" .. art.bundle, art.name) .. "[[/col]]",
+	}
+	if art.about ~= "" then
+		table.insert(head, "[[i]]" .. art.about .. "[[/i]]")
+	end
+	local foot = {}
+	for _, required in ipairs(art.requires) do
+		if not character:has_skill(required.skill) then
+			table.insert(foot, "[[col:red]]" .. ui_text("art_locked") .. " \"" .. localised("character_skills_localised_name_" .. required.skill, required.name) .. "\".[[/col]]")
+		end
+	end
+	local tip = {
+		title = localised("character_skills_localised_name_" .. art.skill, art.skill_name),
+		text = table.concat(head, "\n"),
+		foot = table.concat(foot, "\n\n"),
+		bundle = art.bundle,
+	}
+	tip.whole = tip.title .. "||" .. tip.text .. "\n" .. tip.bundle .. "\n" .. tip.foot
+	return tip
+end
+
+--- Rebuilds the box of each art slot skill from the art of the weapon the Advisor holds, so a weapon switch or a learned skill shows up.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+local function update_art_card_tips(character)
+	local weapon = current_pair(character)
+	local tips = {}
+	for _, art in ipairs((rig_data().arts or {})[weapon] or {}) do
+		tips[art.skill] = art_card_tooltip(art, weapon, character)
+		if not art_card_tips[art.skill] or art_card_tips[art.skill].whole ~= tips[art.skill].whole then
+			log("art tooltip: " .. art.skill .. " shows art " .. art.name .. " of " .. weapon)
+		end
+	end
+	art_card_tips = tips
+end
+
+--- Copies the art box's text into its foot below the effect list, hidden and left out of mouse hits until the box locks.
+--- @param text UIC The box's text.
+--- @returns UIC|nil The copy, or nil when it could not be made.
+local function make_art_foot(text)
+	local ok, address = pcall(function()
+		return text:CopyComponent(ART_BOX_FOOT)
+	end)
+	if not ok or not address then
+		log("art box: CopyComponent " .. ART_BOX_FOOT .. " failed: " .. tostring(address))
+		return nil
+	end
+	local copy = UIComponent(address)
+	copy:SetInteractive(false)
+	logged("art box: SetTextYOffset on " .. ART_BOX_FOOT, function()
+		copy:SetTextYOffset(ART_FOOT_PAD[1], ART_FOOT_PAD[2])
+	end)
+	copy:SetVisible(false)
+	return copy
+end
+
+--- Makes the art box's lock bar, hidden and set to the width of the box's text. Leaves `art_bar` nil when the game refuses any of it.
+--- @param width number The width in pixels of the box's text.
+local function make_art_bar(width)
+	local bar = create_own(ART_BAR, ART_BAR_LAYOUT)
+	if not bar then
+		return
+	end
+	local parts = { root = bar }
+	for _, name in ipairs({ ART_BAR_FRAME, ART_BAR_FILL, ART_BAR_FILLING, ART_BAR_DONE }) do
+		parts[name] = find_named(bar, name)
+		if not parts[name] then
+			log("art box: no " .. name .. " in " .. ART_BAR_LAYOUT)
+			return
+		end
+	end
+	local ok, err = pcall(function()
+		bar:SetInteractive(false)
+		bar:SetCanResizeWidth(true)
+		bar:Resize(width, ART_BAR_H)
+		for _, name in ipairs({ ART_BAR_FRAME, ART_BAR_FILL, ART_BAR_FILLING, ART_BAR_DONE }) do
+			parts[name]:SetCanResizeWidth(true)
+		end
+		parts[ART_BAR_FRAME]:Resize(width, ART_BAR_H)
+		bar:PropagatePriority(ui_priority)
+		bar:RegisterTopMost()
+		topmost[ART_BAR] = true
+		bar:SetVisible(false)
+	end)
+	log("art box: lock bar " .. (ok and ("made " .. width .. " wide") or ("failed: " .. tostring(err))))
+	if ok then
+		art_bar, art_bar_full = parts, width
+	end
+end
+
+--- Fills the art box's lock bar from its middle out, as the game's tooltips do while they wait to lock.
+--- @param progress number How full, from 0 to 1.
+--- @param done boolean True once the box is locked.
+local function fill_art_bar(progress, done)
+	if not art_bar then
+		return
+	end
+	local width = math.max(1, math.floor(art_bar_full * math.min(1, progress) + 0.5))
+	if width == art_bar_width and done == art_bar_done then
+		return
+	end
+	art_bar_width, art_bar_done = width, done
+	logged("art box: lock bar fill", function()
+		for _, name in ipairs({ ART_BAR_FILL, ART_BAR_FILLING, ART_BAR_DONE }) do
+			art_bar[name]:Resize(width, ART_BAR_H)
+		end
+		art_bar[ART_BAR_FILLING]:SetVisible(not done)
+		art_bar[ART_BAR_DONE]:SetVisible(done)
+	end)
+end
+
+--- Makes a vanilla effect bundle tooltip in the art box, moves its effect list under the box and removes the rest, so the list sits below the
+--- box's text. Read only of the game's data: the list only draws the bundle it is given later.
+--- @param box UIC The art box.
+--- @param bounds table|nil Bounds of the box's text, whose width the list takes.
+--- @returns UIC|nil The effect list, or nil when it could not be made.
+local function make_art_effect_list(box, bounds)
+	local bundle = create_child(box, ART_BUNDLE, ART_BUNDLE_LAYOUT)
+	local list = bundle and find_named(bundle, ART_EFFECT_LIST)
+	if not list then
+		log("art box: no " .. ART_EFFECT_LIST .. " in " .. ART_BUNDLE_LAYOUT)
+		destroy_child(box, ART_BUNDLE, "it has no effect list")
+		return nil
+	end
+	local ok, err = pcall(function()
+		box:Adopt(list:Address())
+		if bounds then
+			local _, h = list:Dimensions()
+			list:SetCanResizeWidth(true)
+			list:Resize(bounds.w, h)
+		end
+	end)
+	destroy_child(box, ART_BUNDLE, "its effect list was moved into the art box")
+	log("art box: vanilla effect list " .. (ok and "moved in" or ("failed: " .. tostring(err))))
+	return ok and list or nil
+end
+
+--- Makes the art box under the UI root, drawn over the character panel and left out of mouse hits so it never takes the hover from the card. Its
+--- text is copied once for the foot under the vanilla effect list, then the lock bar goes last.
+--- @returns UIC|nil The box, or nil when it could not be made.
+local function make_art_box()
+	local box = create_own(ART_BOX, ART_BOX_LAYOUT)
+	if not box then
+		return nil
+	end
+	log_call(ART_BOX, "SetInteractive false, PropagatePriority " .. ui_priority .. ", RegisterTopMost")
+	box:SetInteractive(false)
+	for _, name in ipairs({ ART_BOX_TITLE, ART_BOX_TEXT }) do
+		local child = find_named(box, name)
+		if not child then
+			log("art box: no " .. name .. " in " .. ART_BOX_LAYOUT)
+			return nil
+		end
+		child:SetInteractive(false)
+	end
+	local text = find_named(box, ART_BOX_TEXT)
+	-- The layout centres its text, while the skill tooltips read from the left.
+	logged("art box: left align", function()
+		text:SetTextHAlign("left")
+	end)
+	local bounds = read_bounds(text)
+	art_box_effects = make_art_effect_list(box, bounds)
+	art_box_foot = make_art_foot(text)
+	if not art_box_foot then
+		return nil
+	end
+	box:PropagatePriority(ui_priority)
+	box:RegisterTopMost()
+	topmost[ART_BOX] = true
+	box:SetVisible(false)
+	-- Made after the box is drawn on top, so the bar draws over the box's frame.
+	make_art_bar(bounds and bounds.w or 0)
+	return box
+end
+
+--- Sets the art box's texts, and points the vanilla effect list at the art's bundle.
+--- @param tip table What the box shows, from `art_card_tooltip`.
+local function fill_art_box(tip)
+	find_named(art_box, ART_BOX_TITLE):SetStateText(tip.title, "")
+	find_named(art_box, ART_BOX_TEXT):SetStateText(tip.text, "")
+	if art_box_effects then
+		logged("art box: effect list context " .. tip.bundle, function()
+			art_box_effects:SetContextObject(cco("CcoEffectBundle", tip.bundle))
+		end)
+	end
+	if tip.foot ~= "" then
+		art_box_foot:SetStateText(tip.foot, "")
+	end
+	art_box_foot:SetVisible(tip.foot ~= "")
+end
+
+--- Shows the art box with an art card's text, just below the card or just above it when it would leave the screen.
+--- @param card UIC The hovered art card.
+--- @param skill string The card's skill key.
+local function show_art_box(card, skill)
+	if art_box == nil then
+		art_box = make_art_box() or false
+	end
+	if not art_box then
+		return
+	end
+	local tip = art_card_tips[skill]
+	if art_box_text ~= tip.whole then
+		art_box_text = tip.whole
+		log_call(ART_BOX, "SetStateText for " .. skill)
+		fill_art_box(tip)
+	end
+	if art_box_skill ~= skill then
+		art_box_skill = skill
+		art_box:SetVisible(true)
+		if art_bar then
+			art_bar.root:SetVisible(true)
+		end
+	end
+	-- Placed on every look, as the box may only take its full height a frame after its text is set.
+	local bounds, card_bounds = read_bounds(art_box), read_bounds(card)
+	if not bounds or not card_bounds then
+		return
+	end
+	local screen_w, screen_h = core:get_screen_resolution()
+	local x = math.max(0, math.min(card_bounds.x, screen_w - bounds.w))
+	local y = card_bounds.y + card_bounds.h + ART_BOX_GAP
+	if y + bounds.h > screen_h then
+		y = math.max(0, card_bounds.y - bounds.h - ART_BOX_GAP)
+	end
+	if x ~= bounds.x or y ~= bounds.y then
+		log("art box: " .. skill .. " placed at " .. x .. "," .. y .. ", size " .. bounds.w .. "x" .. bounds.h)
+		art_box:MoveTo(x, y)
+	end
+	local bar_bounds = art_bar and read_bounds(art_bar.root)
+	if bar_bounds then
+		local bar_x, bar_y = x + math.floor((bounds.w - art_bar_full) / 2), y + bounds.h - ART_BAR_LIFT
+		if bar_x ~= bar_bounds.x or bar_y ~= bar_bounds.y then
+			art_bar.root:MoveTo(bar_x, bar_y)
+		end
+	end
+end
+
+--- Sets whether the art box and its texts take the mouse, which they do only while the box is locked, so its effects' tooltips show then.
+--- @param on boolean True to take the mouse.
+local function set_art_box_interactive(on)
+	art_box:SetInteractive(on)
+	for _, name in ipairs({ ART_BOX_TITLE, ART_BOX_TEXT }) do
+		find_named(art_box, name):SetInteractive(on)
+	end
+	art_box_foot:SetInteractive(on)
+end
+
+--- Hides the art box if it is shown, and unlocks it.
+--- @param why string Why, for the log.
+local function hide_art_box(why)
+	if art_box and art_box_skill then
+		log("art box: hid " .. art_box_skill .. " (" .. why .. ")")
+		art_box:SetVisible(false)
+		if art_bar then
+			art_bar.root:SetVisible(false)
+		end
+		if art_box_locked then
+			set_art_box_interactive(false)
+		end
+	end
+	art_box_skill, art_box_locked, art_box_left = nil, false, nil
+	art_bar_width, art_bar_done = nil, nil
+end
+
+--- Removes the art box and its lock bar if made, and forgets them, so the next hover makes them again.
+--- @param why string Why, for the log.
+local function remove_art_box(why)
+	hide_art_box(why)
+	if art_box then
+		destroy_own(ART_BOX, why)
+	end
+	if art_bar then
+		destroy_own(ART_BAR, why)
+	end
+	art_box, art_box_text, art_box_foot, art_bar, art_box_effects = nil, nil, nil, nil, nil
+end
+
+--- Whether the mouse is over the art box or anything in it.
+--- @returns boolean True when it is.
+local function mouse_over_art_box()
+	local ok, over = pcall(function()
+		return art_box:IsMouseOverChildren()
+	end)
+	if not ok then
+		log("art box: IsMouseOverChildren failed: " .. tostring(over))
+		return false
+	end
+	return over == true
+end
+
+--- Shows the art box in place of the vanilla tooltip while an art card is hovered. Like the game's tooltips, the box locks once the card has been
+--- hovered for `ART_STICK_S`, and a locked box stays while the mouse is over it, closing `ART_REMOVAL_S` after the mouse leaves both. The
+--- vanilla tooltip is hidden, as the game keeps undoing a see-through one while it fades it in. The game removes it when the card hover ends.
+--- @param panel UIC The character panel.
+local function update_art_box(panel)
+	local tooltip = find_named(panel, SKILL_TOOLTIP)
+	local card, skill = nil, nil
+	if tooltip then
+		-- The game builds the tooltip inside the hovered card, and the card's parent entry is named after the skill key.
+		card = UIComponent(tooltip:Parent())
+		skill = component_id(UIComponent(card:Parent()))
+	end
+	if skill and art_card_tips[skill] then
+		if tooltip:Visible() then
+			log_call(SKILL_TOOLTIP, "SetVisible false for " .. skill)
+			tooltip:SetVisible(false)
+		end
+		if art_box_skill ~= skill then
+			hide_art_box("another art card hovered")
+			art_box_since = os.clock()
+		end
+		art_box_left = nil
+		show_art_box(card, skill)
+		if art_box and not art_box_locked then
+			local held = os.clock() - art_box_since
+			fill_art_bar(held / ART_STICK_S, held >= ART_STICK_S)
+			if held >= ART_STICK_S then
+				art_box_locked = true
+				set_art_box_interactive(true)
+				log("art box: locked " .. skill)
+			end
+		end
+		return
+	end
+	if tooltip then
+		hide_art_box("another skill hovered")
+		return
+	end
+	if not art_box_skill then
+		return
+	end
+	if art_box_locked and mouse_over_art_box() then
+		if art_box_left then
+			log("art box: mouse on the locked box of " .. art_box_skill)
+		end
+		art_box_left = nil
+		return
+	end
+	art_box_left = art_box_left or os.clock()
+	if not art_box_locked or os.clock() - art_box_left >= ART_REMOVAL_S then
+		hide_art_box(art_box_locked and "mouse left the locked box" or "vanilla tooltip gone")
+	end
+end
+
+--- While the character panel shows the local Advisor, looks for a hovered art card every `ART_TOOLTIP_MS` and rebuilds the art cards' texts
+--- every `ART_CARD_LOOKS` of those looks. Removes the art box once the panel closes.
+--- @param looks number Looks made since the panel opened.
+local function poll_art_cards(looks)
+	if not panel_open then
+		remove_art_box("the character panel closed")
+		return
+	end
+	if button_cqi ~= nil and button_path == ROW_PATH then
+		logged("art tooltip", function()
+			local panel = find_named(ui_root(), PANEL)
+			local character = cm:get_character_by_cqi(button_cqi)
+			if panel and character then
+				if looks % ART_CARD_LOOKS == 0 then
+					update_art_card_tips(character)
+				end
+				update_art_box(panel)
+			end
+		end)
+	end
+	cm:real_callback(function()
+		poll_art_cards(looks + 1)
+	end, ART_TOOLTIP_MS, ART_TOOLTIP_NAME)
+end
+
 --- After a click in the Mount box, reads the shown Advisor's worn rig without changing anything. When it no longer matches his saved pair (a pick
 --- the ancillary event missed, or "None"), it sends a UI trigger so every client reconciles him the same way.
 local function check_mount_pick()
@@ -1690,6 +2168,11 @@ core:add_listener(
 		local panel = tostring(context.string)
 		if panel == PANEL then
 			panel_open = true
+			-- The panel opens twice in a row, so any running look is stopped first to keep a single one.
+			cm:remove_real_callback(ART_TOOLTIP_NAME)
+			art_card_tips = {}
+			remove_art_box("the character panel opened")
+			poll_art_cards(0)
 		end
 		local hides = hides_on_open(panel)
 		if worth_logging(panel, hides) then
