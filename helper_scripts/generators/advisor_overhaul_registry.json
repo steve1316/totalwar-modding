@@ -779,18 +779,28 @@
       {
        "effect": "wh_main_effect_character_stat_melee_attack",
        "scope": "character_to_character_own",
+       "value": 8
+      },
+      {
+       "effect": "wh_main_effect_character_stat_weapon_strength",
+       "scope": "character_to_character_own",
        "value": 10
       }
      ]
     },
     "art_2": {
-     "name": "Momentum",
-     "description": "Once the blade is moving, nothing in front of it matters.",
+     "name": "Wide Arc",
+     "description": "He stopped aiming at one man a long time ago.",
      "effects": [
       {
-       "effect": "wh_main_effect_character_stat_charge_bonus_pct",
+       "effect": "wh_main_effect_character_stat_weapon_splash_power_mult",
        "scope": "character_to_character_own",
-       "value": 25
+       "value": 50
+      },
+      {
+       "effect": "wh_main_effect_character_stat_bonus_vs_infantry",
+       "scope": "character_to_character_own",
+       "value": 10
       }
      ]
     },
@@ -802,17 +812,32 @@
        "effect": "wh_main_effect_character_stat_bonus_vs_infantry",
        "scope": "character_to_character_own",
        "value": 15
+      },
+      {
+       "effect": "wh_main_effect_character_stat_charge_bonus_pct",
+       "scope": "character_to_character_own",
+       "value": 25
+      },
+      {
+       "effect": "wh_main_effect_character_stat_weapon_strength_ap_damage_mult",
+       "scope": "character_to_character_own",
+       "value": 15
       }
      ]
     },
     "art_4": {
      "name": "Headsman",
-     "description": "Big things die the same way small ones do.",
+     "description": "Every man in the arc gets the same chance. None of them like it.",
      "effects": [
       {
-       "effect": "wh_main_effect_character_stat_bonus_vs_large",
+       "effect": "wh_main_effect_ability_enable_heroic_killing_blow",
        "scope": "character_to_character_own",
-       "value": 18
+       "value": 1
+      },
+      {
+       "effect": "wh_main_effect_character_stat_weapon_strength",
+       "scope": "character_to_character_own",
+       "value": 10
       }
      ]
     },
@@ -829,34 +854,49 @@
     },
     "army_2": {
      "name": "Charge Them",
-     "description": "He goes first. They follow.",
+     "description": "He goes first. They follow, and they keep swinging.",
      "effects": [
       {
        "effect": "wh_main_effect_force_stat_charge_bonus_pct",
        "scope": "agent_to_parent_army_own",
        "value": 12
+      },
+      {
+       "effect": "wh_main_effect_force_stat_vigour_loss_reduction",
+       "scope": "agent_to_parent_army_own",
+       "value": 15
       }
      ]
     },
     "army_3": {
-     "name": "Butcher's Bill",
-     "description": "He knows what this battle will cost and pays it early.",
+     "name": "Through the Plate",
+     "description": "He teaches them where the armour is thinnest.",
      "effects": [
       {
        "effect": "wh_main_effect_force_stat_weapon_strength",
+       "scope": "agent_to_parent_army_own",
+       "value": 8
+      },
+      {
+       "effect": "wh_main_effect_force_stat_ap_damage_mult",
        "scope": "agent_to_parent_army_own",
        "value": 10
       }
      ]
     },
     "apex": {
-     "name": "Killing Blow",
-     "description": "The blow that ended a king, in a world nobody else remembers.",
+     "name": "Whirl of Steel",
+     "description": "He stops choosing targets and lets the blade go round.",
      "effects": [
       {
-       "effect": "wh_main_effect_ability_enable_heroic_killing_blow",
+       "effect": "wh2_dlc14_effect_ability_enable_whirl_of_weeping_blades",
        "scope": "character_to_character_own",
        "value": 1
+      },
+      {
+       "effect": "wh_main_effect_character_stat_weapon_splash_power_mult",
+       "scope": "character_to_character_own",
+       "value": 50
       },
       {
        "effect": "wh_main_effect_character_stat_melee_attack",
@@ -866,10 +906,15 @@
      ]
     },
     "army_4": {
-     "name": "Through the Plate",
-     "description": "He teaches them where the armour is thinnest.",
+     "name": "Butcher's Bill",
+     "description": "He knows what this battle will cost and pays it early.",
      "effects": [
-      {"effect": "wh_main_effect_force_stat_ap_damage", "scope": "agent_to_parent_army_own", "value": 8}
+      {
+       "effect": "wh3_dlc27_effect_ability_enable_frenzy_all",
+       "scope": "agent_to_parent_army_own",
+       "value": 1
+      },
+      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 6}
      ]
     }
    },
