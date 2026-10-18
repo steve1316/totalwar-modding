@@ -1104,7 +1104,7 @@
   },
   "magic_reserves": {
    "name": "Deep Reserves",
-   "icon": "spell_mastery.png",
+   "icon": "character_magic.png",
    "row": 3,
    "tier": 1,
    "rank": 0,
@@ -1140,7 +1140,7 @@
   },
   "magic_steady": {
    "name": "Steady Hands",
-   "icon": "character_defence.png",
+   "icon": "character_magic.png",
    "row": 2,
    "tier": 8,
    "rank": 0,
@@ -1168,7 +1168,7 @@
   },
   "magic_archmage": {
    "name": "Archmage",
-   "icon": "spell_mastery.png",
+   "icon": "character_magic.png",
    "row": 0,
    "tier": 8,
    "rank": 25,
@@ -2242,7 +2242,7 @@
   },
   "civic_apex": {
    "name": "Power Behind Thrones",
-   "icon": "campaign_army.png",
+   "icon": "campaign_public_order.png",
    "row": 0,
    "tier": 10,
    "rank": 25,
@@ -2278,7 +2278,7 @@
   },
   "actions_default": {
    "name": "Default Actions",
-   "icon": "campaign_item.png",
+   "icon": "character_agent.png",
    "row": 0,
    "tier": 0,
    "rank": 1,
@@ -2367,7 +2367,7 @@
   },
   "memory_old_lessons": {
    "name": "Old Lessons",
-   "icon": "campaign_experience.png",
+   "icon": "character_experience.png",
    "row": 4,
    "tier": 4,
    "rank": 14,
@@ -2404,7 +2404,7 @@
   },
   "memory_calm_voice": {
    "name": "Calm Voice",
-   "icon": "character_defence.png",
+   "icon": "character_morale.png",
    "row": 4,
    "tier": 2,
    "rank": 0,
@@ -2452,7 +2452,7 @@
   },
   "memory_weight_of_years": {
    "name": "The Weight of Years",
-   "icon": "character_armour.png",
+   "icon": "character_health.png",
    "row": 4,
    "tier": 0,
    "rank": 0,
@@ -2488,7 +2488,7 @@
   },
   "memory_every_mistake": {
    "name": "Every Mistake Already Made",
-   "icon": "spell_mastery.png",
+   "icon": "character_agent.png",
    "row": 4,
    "tier": 3,
    "rank": 0,
@@ -2536,7 +2536,7 @@
   },
   "memory_polymath": {
    "name": "Everything, Again",
-   "icon": "spell_mastery.png",
+   "icon": "character_general_ability.png",
    "row": 0,
    "tier": 11,
    "rank": 29,
@@ -2573,7 +2573,7 @@
   },
   "memory_long_patience": {
    "name": "The Long Patience",
-   "icon": "campaign_experience.png",
+   "icon": "character_damage.png",
    "row": 0,
    "tier": 12,
    "rank": 30,
@@ -3885,7 +3885,7 @@
   },
   "memory_end_fire": {
    "name": "The Ending of Fire",
-   "icon": "campaign_siege_attack.png",
+   "icon": "wh3_main_unit_contact_warpflame.png",
    "row": 4,
    "tier": 5,
    "rank": 19,
@@ -3994,7 +3994,7 @@
   },
   "memory_end_plague": {
    "name": "The Ending of Plague",
-   "icon": "campaign_replenishment.png",
+   "icon": "wh_main_unit_contact_poison.png",
    "row": 4,
    "tier": 6,
    "rank": 19,
@@ -4103,7 +4103,7 @@
   },
   "memory_end_silence": {
    "name": "The Ending of Silence",
-   "icon": "campaign_ambush.png",
+   "icon": "wh3_main_unit_contact_disrupted.png",
    "row": 4,
    "tier": 7,
    "rank": 19,
@@ -4212,7 +4212,7 @@
   },
   "memory_end_drowning": {
    "name": "The Ending of Drowning",
-   "icon": "character_defence.png",
+   "icon": "wh3_dlc27_character_skill_dampen.png",
    "row": 4,
    "tier": 8,
    "rank": 19,
@@ -4309,7 +4309,7 @@
   },
   "memory_end_hunger": {
    "name": "The Ending of Hunger",
-   "icon": "campaign_military_spending.png",
+   "icon": "wh_dlc03_spell_beasts_the_curse_of_anraheir.png",
    "row": 4,
    "tier": 9,
    "rank": 19,
@@ -4408,7 +4408,7 @@
    "name": "Spellweaver's Focus",
    "icon": "spell_mastery.png",
    "row": 3,
-   "tier": 11,
+   "tier": 12,
    "rank": 0,
    "build": true,
    "requires": [],
@@ -4424,7 +4424,7 @@
   },
   "magic_recitation": {
    "name": "Quick Recitation",
-   "icon": "campaign_experience.png",
+   "icon": "character_cooldown.png",
    "row": 3,
    "tier": 6,
    "rank": 0,
@@ -4450,7 +4450,7 @@
   },
   "magic_warded_mind": {
    "name": "Warded Mind",
-   "icon": "character_defence.png",
+   "icon": "resistance_magic.png",
    "row": 2,
    "tier": 9,
    "rank": 0,
@@ -4483,7 +4483,7 @@
   },
   "magic_channel": {
    "name": "Open Channel",
-   "icon": "campaign_replenishment.png",
+   "icon": "character_magic.png",
    "row": 3,
    "tier": 0,
    "rank": 0,
@@ -4509,7 +4509,7 @@
   },
   "magic_overcast": {
    "name": "Overcast Discipline",
-   "icon": "spell_mastery.png",
+   "icon": "character_cooldown.png",
    "row": 3,
    "tier": 7,
    "rank": 0,
@@ -4535,7 +4535,7 @@
   },
   "magic_arcane_ward": {
    "name": "Arcane Ward",
-   "icon": "character_armour.png",
+   "icon": "character_ward_save.png",
    "row": 2,
    "tier": 10,
    "rank": 0,
@@ -4561,7 +4561,7 @@
   },
   "magic_battle_caster": {
    "name": "Spell and Steel",
-   "icon": "character_attack.png",
+   "icon": "character_damage.png",
    "row": 2,
    "tier": 0,
    "rank": 0,
@@ -4703,7 +4703,7 @@
   },
   "combat_wards": {
    "name": "Duelling Wards",
-   "icon": "character_armour.png",
+   "icon": "character_ward_save.png",
    "row": 2,
    "tier": 2,
    "rank": 0,
@@ -4736,7 +4736,7 @@
   },
   "combat_steel_weave": {
    "name": "Steel in the Weave",
-   "icon": "character_attack.png",
+   "icon": "character_damage.png",
    "row": 2,
    "tier": 3,
    "rank": 0,
@@ -4839,7 +4839,7 @@
   },
   "combat_unbroken": {
    "name": "Unbroken",
-   "icon": "battle_defence.png",
+   "icon": "unbreakable.png",
    "row": 2,
    "tier": 17,
    "rank": 14,
@@ -4876,7 +4876,7 @@
   },
   "combat_aim": {
    "name": "Practised Aim",
-   "icon": "character_attack.png",
+   "icon": "character_ranged_damage.png",
    "row": 2,
    "tier": 19,
    "rank": 0,
@@ -4912,7 +4912,7 @@
   },
   "combat_piercing": {
    "name": "Piercing Shot",
-   "icon": "character_armour.png",
+   "icon": "character_ranged_damage.png",
    "row": 2,
    "tier": 20,
    "rank": 0,
@@ -4945,7 +4945,7 @@
   },
   "combat_long_sight": {
    "name": "Long Sight",
-   "icon": "campaign_ambush.png",
+   "icon": "character_range.png",
    "row": 2,
    "tier": 21,
    "rank": 0,
@@ -4974,7 +4974,7 @@
   },
   "combat_deep_quiver": {
    "name": "Deep Quiver",
-   "icon": "campaign_military_spending.png",
+   "icon": "character_ammo.png",
    "row": 2,
    "tier": 22,
    "rank": 0,
@@ -5007,7 +5007,7 @@
   },
   "combat_storm_needles": {
    "name": "Storm of Needles",
-   "icon": "character_attack.png",
+   "icon": "character_ranged_damage.png",
    "row": 2,
    "tier": 23,
    "rank": 14,
@@ -5048,7 +5048,7 @@
   },
   "magic_quiet_mind": {
    "name": "Quiet Mind",
-   "icon": "spell_mastery.png",
+   "icon": "character_cooldown.png",
    "row": 3,
    "tier": 2,
    "rank": 0,
@@ -5081,7 +5081,7 @@
   },
   "magic_second_wind": {
    "name": "Second Wind",
-   "icon": "campaign_replenishment.png",
+   "icon": "character_magic.png",
    "row": 3,
    "tier": 3,
    "rank": 0,
@@ -5114,7 +5114,7 @@
   },
   "magic_well_remembers": {
    "name": "The Well Remembers",
-   "icon": "spell_mastery.png",
+   "icon": "character_magic.png",
    "row": 3,
    "tier": 4,
    "rank": 14,
@@ -5145,7 +5145,7 @@
   },
   "magic_cadence": {
    "name": "Steady Cadence",
-   "icon": "campaign_experience.png",
+   "icon": "spell_mastery.png",
    "row": 3,
    "tier": 8,
    "rank": 0,
@@ -5166,12 +5166,12 @@
   },
   "magic_conduit": {
    "name": "Conduit Unbound",
-   "icon": "spell_mastery.png",
+   "icon": "wh_main_character_abilities_arcane_conduit.png",
    "row": 3,
-   "tier": 9,
+   "tier": 10,
    "rank": 14,
    "build": true,
-   "requires": ["magic_overcast", "magic_cadence"],
+   "requires": ["magic_overcast", "magic_cadence", "magic_standing_conduit"],
    "description": "He stopped asking the Winds for power. Now he simply lets them through.",
    "levels": [
     [
@@ -5180,7 +5180,12 @@
       "scope": "character_to_character_own",
       "value": -25
      },
-     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5}
+     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5},
+     {
+      "effect": "wh_dlc08_effect_ability_enable_greater_arcane_conduit",
+      "scope": "character_to_character_own",
+      "value": 1
+     }
     ]
    ],
    "role": "gate",
@@ -5190,7 +5195,7 @@
    "name": "Wider Weave",
    "icon": "spell_mastery.png",
    "row": 3,
-   "tier": 12,
+   "tier": 13,
    "rank": 0,
    "build": true,
    "requires": ["magic_focus"],
@@ -5209,9 +5214,9 @@
   },
   "magic_sharper": {
    "name": "Sharper Weave",
-   "icon": "spell_mastery.png",
+   "icon": "character_magic.png",
    "row": 3,
-   "tier": 13,
+   "tier": 14,
    "rank": 0,
    "build": true,
    "requires": ["magic_focus"],
@@ -5245,9 +5250,9 @@
   },
   "magic_beyond_sight": {
    "name": "Weave Beyond Sight",
-   "icon": "spell_mastery.png",
+   "icon": "character_magic.png",
    "row": 3,
-   "tier": 15,
+   "tier": 16,
    "rank": 14,
    "build": true,
    "requires": ["magic_wider", "magic_sharper", "magic_ruinous"],
@@ -5305,7 +5310,7 @@
   },
   "hero_forager": {
    "name": "Forager's Eye",
-   "icon": "campaign_army.png",
+   "icon": "campaign_military_spending.png",
    "row": 8,
    "tier": 26,
    "rank": 8,
@@ -5477,7 +5482,7 @@
   },
   "combat_barrier": {
    "name": "Shell of Light",
-   "icon": "battle_defence.png",
+   "icon": "character_barrier.png",
    "row": 2,
    "tier": 12,
    "rank": 0,
@@ -5510,7 +5515,7 @@
   },
   "combat_barrier_mend": {
    "name": "Mended Shell",
-   "icon": "battle_defence.png",
+   "icon": "character_barrier.png",
    "row": 2,
    "tier": 14,
    "rank": 0,
@@ -5573,9 +5578,9 @@
   },
   "magic_ruinous": {
    "name": "Hex of Misfire",
-   "icon": "spell_mastery.png",
+   "icon": "battle_magic.png",
    "row": 3,
-   "tier": 14,
+   "tier": 15,
    "rank": 0,
    "build": true,
    "requires": ["magic_focus"],
@@ -5620,13 +5625,13 @@
    ]
   },
   "magic_standing_conduit": {
-   "name": "Standing Conduit",
-   "icon": "spell_mastery.png",
+   "name": "Arcane Conduit",
+   "icon": "wh_main_character_abilities_arcane_conduit.png",
    "row": 3,
-   "tier": 17,
-   "rank": 19,
+   "tier": 9,
+   "rank": 0,
    "build": true,
-   "requires": [],
+   "requires": ["magic_recitation"],
    "description": "The Winds do not rush through him anymore. They wait in him, patient, like water in a cistern.",
    "levels": [
     [
@@ -5635,598 +5640,12 @@
       "scope": "character_to_character_own",
       "value": 1
      }
-    ],
-    [
-     {
-      "effect": "wh_dlc08_effect_ability_enable_greater_arcane_conduit",
-      "scope": "character_to_character_own",
-      "value": 1
-     }
     ]
    ]
   },
-  "magic_what_was": {
-   "name": "What Was Learned",
-   "icon": "spell_mastery.png",
-   "row": 3,
-   "tier": 18,
-   "rank": 19,
-   "build": true,
-   "requires": ["magic_standing_conduit"],
-   "description": "Every lore he ever studied left a habit behind.",
-   "levels": [
-    [
-     {
-      "effect": "advisor_overhaul_effect_wom_cost_what_was",
-      "scope": "character_to_character_own",
-      "value": -10
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_kindleflame",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc03_effect_ability_enable_wild_heart",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_metalshifting",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_roiling_skies",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_exorcism",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc05_effect_ability_enable_life_bloom",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc05_effect_ability_enable_smoke_and_mirrors",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_life-leeching",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_shield_of_saphery",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_frost_shield",
-      "scope": "character_to_character_own",
-      "value": 1
-     }
-    ],
-    [
-     {
-      "effect": "advisor_overhaul_effect_wom_cost_what_was",
-      "scope": "character_to_character_own",
-      "value": -15
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_kindleflame",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc03_effect_ability_enable_wild_heart",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_metalshifting",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_roiling_skies",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_exorcism",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc05_effect_ability_enable_life_bloom",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc05_effect_ability_enable_smoke_and_mirrors",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_life-leeching",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_shield_of_saphery",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_frost_shield",
-      "scope": "character_to_character_own",
-      "value": 1
-     }
-    ],
-    [
-     {
-      "effect": "advisor_overhaul_effect_wom_cost_what_was",
-      "scope": "character_to_character_own",
-      "value": -20
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_kindleflame",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc03_effect_ability_enable_wild_heart",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_metalshifting",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_roiling_skies",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_exorcism",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc05_effect_ability_enable_life_bloom",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc05_effect_ability_enable_smoke_and_mirrors",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_life-leeching",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_shield_of_saphery",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_frost_shield",
-      "scope": "character_to_character_own",
-      "value": 1
-     }
-    ]
-   ],
-   "level_ranks": [24, 29]
-  },
-  "magic_what_is_held": {
-   "name": "What Is Held",
-   "icon": "spell_mastery.png",
-   "row": 3,
-   "tier": 19,
-   "rank": 19,
-   "build": true,
-   "requires": ["magic_standing_conduit"],
-   "description": "He does not reach for the old lores. They are simply there, held.",
-   "levels": [
-    [
-     {
-      "effect": "advisor_overhaul_effect_wom_cost_what_is_held",
-      "scope": "character_to_character_own",
-      "value": -10
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_freezing_winds",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_strength_of_yang",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_power_of_yin",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc27_effect_ability_enable_obscuring_haze",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc24_effect_ability_enable_fate_of_interlopers",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_spiteful_conjuration",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_curse_of_undeath",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc29_effect_ability_enable_raise_the_dead",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_dlc09_effect_ability_enable_the_restless_dead",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_dlc11_effect_ability_enable_kiss_of_the_deep",
-      "scope": "character_to_character_own",
-      "value": 1
-     }
-    ],
-    [
-     {
-      "effect": "advisor_overhaul_effect_wom_cost_what_is_held",
-      "scope": "character_to_character_own",
-      "value": -15
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_freezing_winds",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_strength_of_yang",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_power_of_yin",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc27_effect_ability_enable_obscuring_haze",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc24_effect_ability_enable_fate_of_interlopers",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_spiteful_conjuration",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_curse_of_undeath",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc29_effect_ability_enable_raise_the_dead",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_dlc09_effect_ability_enable_the_restless_dead",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_dlc11_effect_ability_enable_kiss_of_the_deep",
-      "scope": "character_to_character_own",
-      "value": 1
-     }
-    ],
-    [
-     {
-      "effect": "advisor_overhaul_effect_wom_cost_what_is_held",
-      "scope": "character_to_character_own",
-      "value": -20
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_freezing_winds",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_strength_of_yang",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_power_of_yin",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc27_effect_ability_enable_obscuring_haze",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc24_effect_ability_enable_fate_of_interlopers",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_spiteful_conjuration",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_curse_of_undeath",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc29_effect_ability_enable_raise_the_dead",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_dlc09_effect_ability_enable_the_restless_dead",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_dlc11_effect_ability_enable_kiss_of_the_deep",
-      "scope": "character_to_character_own",
-      "value": 1
-     }
-    ]
-   ],
-   "level_ranks": [24, 29]
-  },
-  "magic_what_comes": {
-   "name": "What Comes",
-   "icon": "spell_mastery.png",
-   "row": 3,
-   "tier": 20,
-   "rank": 19,
-   "build": true,
-   "requires": ["magic_standing_conduit"],
-   "description": "He has already seen how the next casting will end.",
-   "levels": [
-    [
-     {
-      "effect": "advisor_overhaul_effect_wom_cost_what_comes",
-      "scope": "character_to_character_own",
-      "value": -10
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_power_of_da_waaagh",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_sneaky_stealin",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc23_effect_ability_enable_killing_fire",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_musk_of_fear",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_plague_rash",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_dlc14_effect_magic_stealth_enable_toxic_rain_lore_attribute",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_children_of_nurgle",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_blissful_rapture",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_bloodgruel",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc03_effect_ability_enable_bestial_surge",
-      "scope": "character_to_character_own",
-      "value": 1
-     }
-    ],
-    [
-     {
-      "effect": "advisor_overhaul_effect_wom_cost_what_comes",
-      "scope": "character_to_character_own",
-      "value": -15
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_power_of_da_waaagh",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_sneaky_stealin",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc23_effect_ability_enable_killing_fire",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_musk_of_fear",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_plague_rash",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_dlc14_effect_magic_stealth_enable_toxic_rain_lore_attribute",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_children_of_nurgle",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_blissful_rapture",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_bloodgruel",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc03_effect_ability_enable_bestial_surge",
-      "scope": "character_to_character_own",
-      "value": 1
-     }
-    ],
-    [
-     {
-      "effect": "advisor_overhaul_effect_wom_cost_what_comes",
-      "scope": "character_to_character_own",
-      "value": -20
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_power_of_da_waaagh",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_main_effect_ability_enable_sneaky_stealin",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_dlc23_effect_ability_enable_killing_fire",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_musk_of_fear",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_main_effect_ability_enable_plague_rash",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh2_dlc14_effect_magic_stealth_enable_toxic_rain_lore_attribute",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_children_of_nurgle",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_blissful_rapture",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh3_main_effect_ability_enable_bloodgruel",
-      "scope": "character_to_character_own",
-      "value": 1
-     },
-     {
-      "effect": "wh_dlc03_effect_ability_enable_bestial_surge",
-      "scope": "character_to_character_own",
-      "value": 1
-     }
-    ]
-   ],
-   "level_ranks": [24, 29]
-  },
-  "magic_last_word": {
-   "name": "The Last Word",
-   "icon": "spell_mastery.png",
-   "row": 3,
-   "tier": 21,
-   "rank": 19,
-   "build": true,
-   "requires": ["magic_what_was", "magic_what_is_held", "magic_what_comes"],
-   "description": "He no longer waits for the Winds to cool. He cuts the pause out of every spell.",
-   "levels": [
-    [
-     {
-      "effect": "wh2_dlc14_effect_magic_cost_all_lores_percentage",
-      "scope": "character_to_character_own",
-      "value": -10
-     },
-     {
-      "effect": "wh2_dlc12_effect_magic_cooldown_all_lores",
-      "scope": "character_to_character_own",
-      "value": -25
-     },
-     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 15}
-    ]
-   ],
-   "role": "gate",
-   "needs": 3
-  },
   "combat_shell_aura": {
    "name": "Warden of the Shell",
-   "icon": "battle_defence.png",
+   "icon": "character_barrier.png",
    "row": 2,
    "tier": 15,
    "rank": 0,
@@ -6250,7 +5669,7 @@
   },
   "corruption_chs": {
    "name": "Spread Chaos Corruption",
-   "icon": "campaign_untainted.png",
+   "icon": "campaign_chaos_corruption.png",
    "row": 9,
    "tier": 1,
    "rank": 0,
@@ -6313,7 +5732,7 @@
   },
   "corruption_kho": {
    "name": "Spread Khorne Corruption",
-   "icon": "campaign_untainted.png",
+   "icon": "campaign_khorne_corruption.png",
    "row": 9,
    "tier": 2,
    "rank": 0,
@@ -6376,7 +5795,7 @@
   },
   "corruption_nur": {
    "name": "Spread Nurgle Corruption",
-   "icon": "campaign_untainted.png",
+   "icon": "campaign_nurgle_corruption.png",
    "row": 9,
    "tier": 3,
    "rank": 0,
@@ -6439,7 +5858,7 @@
   },
   "corruption_sla": {
    "name": "Spread Slaanesh Corruption",
-   "icon": "campaign_untainted.png",
+   "icon": "campaign_slaanesh_corruption.png",
    "row": 9,
    "tier": 4,
    "rank": 0,
@@ -6502,7 +5921,7 @@
   },
   "corruption_tze": {
    "name": "Spread Tzeentch Corruption",
-   "icon": "campaign_untainted.png",
+   "icon": "campaign_tzeentch_corruption.png",
    "row": 9,
    "tier": 5,
    "rank": 0,
@@ -6565,7 +5984,7 @@
   },
   "corruption_skv": {
    "name": "Spread Skaven Corruption",
-   "icon": "campaign_untainted.png",
+   "icon": "campaign_skaven_corruption.png",
    "row": 9,
    "tier": 6,
    "rank": 0,
@@ -6628,7 +6047,7 @@
   },
   "corruption_vmp": {
    "name": "Spread Vampiric Corruption",
-   "icon": "campaign_untainted.png",
+   "icon": "campaign_vampiric_corruption.png",
    "row": 9,
    "tier": 7,
    "rank": 0,
@@ -6691,7 +6110,7 @@
   },
   "corruption_final": {
    "name": "A Corrupting Presence",
-   "icon": "campaign_untainted.png",
+   "icon": "campaign_chaos_corruption.png",
    "row": 9,
    "tier": 8,
    "rank": 14,
@@ -6742,7 +6161,7 @@
   },
   "corruption_lead": {
    "name": "The Taint Remembered",
-   "icon": "campaign_untainted.png",
+   "icon": "campaign_chaos_corruption.png",
    "row": 9,
    "tier": 0,
    "rank": 0,
@@ -6791,7 +6210,7 @@
   },
   "combat_momentum": {
    "name": "Weight of the Charge",
-   "icon": "character_attack.png",
+   "icon": "character_charge.png",
    "row": 2,
    "tier": 4,
    "rank": 0,
@@ -6850,7 +6269,7 @@
   },
   "combat_long_breath": {
    "name": "The Long Breath",
-   "icon": "character_attack.png",
+   "icon": "character_speed.png",
    "row": 2,
    "tier": 5,
    "rank": 0,
@@ -6898,7 +6317,7 @@
   },
   "combat_mending": {
    "name": "Flesh Remembers",
-   "icon": "battle_defence.png",
+   "icon": "character_health.png",
    "row": 2,
    "tier": 16,
    "rank": 0,
@@ -6942,7 +6361,7 @@
   },
   "hero_students": {
    "name": "Students in Every Court",
-   "icon": "campaign_army.png",
+   "icon": "campaign_agent.png",
    "row": 8,
    "tier": 19,
    "rank": 0,
@@ -6975,7 +6394,7 @@
   },
   "combat_barrier_line": {
    "name": "Light Along the Line",
-   "icon": "battle_defence.png",
+   "icon": "character_barrier.png",
    "row": 2,
    "tier": 13,
    "rank": 0,
@@ -7415,21 +6834,6 @@
   {"row": 7, "rank": 19}
  ],
  "effects": {
-  "advisor_overhaul_effect_wom_cost_what_was": {
-   "priority": 1,
-   "groups": ["wh_main_lore_fire", "wh_main_lore_fire_upgraded", "wh_dlc03_lore_beasts", "wh_dlc03_lore_beasts_upgraded", "wh_main_lore_metal", "wh_main_lore_metal_upgraded", "wh_main_lore_heavens", "wh_main_lore_heavens_upgraded", "wh_main_lore_light", "wh_main_lore_light_upgraded", "wh_dlc05_lore_life", "wh_dlc05_lore_life_upgraded", "wh_dlc05_lore_shadows", "wh_dlc05_lore_shadows_upgraded", "wh_main_lore_death", "wh_main_lore_death_upgraded", "wh2_main_lore_high_magic", "wh2_main_lore_high_magic_upgraded", "wh3_main_lore_of_ice", "wh3_main_lore_of_ice_upgraded"],
-   "text": "Winds of Magic cost: %+n% for Fire, Beasts, Metal, the Heavens, Light, Life, Shadows, Death, High Magic and Ice spells"
-  },
-  "advisor_overhaul_effect_wom_cost_what_is_held": {
-   "priority": 1,
-   "groups": ["wh3_main_lore_of_tempest", "wh3_main_lore_of_tempest_upgraded", "wh3_main_lore_of_yang", "wh3_main_lore_of_yang_upgraded", "wh3_main_lore_of_yin", "wh3_main_lore_of_yin_upgraded", "wh3_dlc27_lore_mists", "wh3_dlc27_lore_mists_upgraded", "wh3_dlc24_lore_hag", "wh3_dlc24_lore_hag_upgraded", "wh2_main_lore_dark_magic", "wh2_main_lore_dark_magic_upgraded", "wh_main_lore_vampires", "wh_main_lore_vampires_upgraded", "wh3_dlc29_lore_undeath", "wh3_dlc29_lore_undeath_upgraded", "wh2_dlc09_lore_nehekhara", "wh2_dlc09_lore_nehekhara_upgraded", "wh2_dlc11_lore_deep", "wh2_dlc11_lore_deep_upgraded"],
-   "text": "Winds of Magic cost: %+n% for Tempest, Yang, Yin, Mists, the Hag, Dark Magic, Vampires, Undeath, Nehekhara and the Deep spells"
-  },
-  "advisor_overhaul_effect_wom_cost_what_comes": {
-   "priority": 1,
-   "groups": ["wh_main_lore_big_waaagh", "wh_main_lore_big_waaagh_upgraded", "wh_main_lore_lil_waaagh", "wh_main_lore_lil_waaagh_upgraded", "wh3_dlc23_lore_hashut", "wh3_dlc23_lore_hashut_upgraded", "wh2_main_lore_ruin", "wh2_main_lore_ruin_upgraded", "wh2_main_lore_plague", "wh2_main_lore_plague_upgraded", "wh2_dlc14_lore_stealth", "wh2_dlc14_lore_stealth_upgraded", "wh3_main_lore_nurgle", "wh3_main_lore_nurgle_upgraded", "wh3_main_lore_slaanesh", "wh3_main_lore_slaanesh_upgraded", "wh3_main_lore_of_great_maw", "wh3_main_lore_of_great_maw_upgraded", "wh_dlc03_lore_wild", "wh_dlc03_lore_wild_upgraded"],
-   "text": "Winds of Magic cost: %+n% for Big Waaagh!, Little Waaagh!, Hashut, Ruin, Plague, Stealth, Nurgle, Slaanesh, the Great Maw and the Wild spells"
-  },
   "advisor_overhaul_effect_army_barrier": {
    "priority": 320,
    "bonus": "battle_barrier_health",

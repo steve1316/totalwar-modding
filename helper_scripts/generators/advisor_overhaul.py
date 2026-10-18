@@ -28,7 +28,7 @@ A set picked from another skeleton waits in `retarget` (mount -> `set`, `skeleto
 is retargeted into a set of his own and moved to `sets`. A weapon with no sets yet is left out of the build.
 
 His planned skills are the registry's `skills` (written by the workbench's Skills tab): id -> `name`, `description`, `icon` (a file in
-`ui/campaign ui/skills`), `row` and `tier` in the tree, `rank` it unlocks at, `levels` (each a list of `effect`, `scope`, `value`), `requires` (ids
+`ui/campaign ui/skills`, or in the ability or effect icons, which is copied in), `row` and `tier` in the tree, `rank` it unlocks at, `levels` (each a list of `effect`, `scope`, `value`), `requires` (ids
 of skills it needs: all of them, or any `needs` of them), `exclusive` (ids of skills it locks, both ways), `locked_by` (ids of skills that lock it
 one way, such as a pact choice), `hidden` (no node shown, for skills a script gives him, with `learned` giving it to him when he is made), `slot`
 (an art slot, whose effect is the held weapon's art for that slot), `grant_rank` (the rank at which the game gives it to him by itself) and
@@ -70,14 +70,17 @@ Build:
 """
 
 import argparse
+import io
 import json
 import os
+import re
 import sys
 import zlib
 from typing import Any, Dict, List, Optional, Tuple
 
-from PIL import Image
+from PIL import Image, ImageChops, ImageDraw
 
+from core.asset_source import AssetSource
 from core.extract_cache import cached_pack_extract
 from core.utilities import STEAM_LIBRARY_DRIVE, extract_tsv_data, load_tsv_data, run_rpfm_cli
 from generators import advisor_overhaul_anims as anims
@@ -118,6 +121,23 @@ INFOPIC_SIZE = (120, 260)
 
 # Portrait folders that each get a settings file.
 PORTRAIT_FOLDERS = ("portholes", "units")
+
+# Where skill nodes look up their icon, the size of a vanilla skill icon, the black disc centred in it, and the picture on that disc. The disc
+# edge keeps the skill frame's bronze ring clear, as vanilla icons do.
+SKILL_ICON_FOLDER = "ui/campaign ui/skills"
+SKILL_ICON_SIZE = (72, 72)
+SKILL_ICON_OUTLINE = (48, 48)
+SKILL_ICON_PICTURE = (44, 44)
+
+# Pixels at or under this alpha, or this brightness, count as the border around a copied icon's picture. Battle icons have a black shadow ring.
+ICON_ALPHA_FLOOR = 40
+ICON_DARK_FLOOR = 16
+
+# Folders a skill icon missing from the skills folder is copied from, in order, such as a contact effect's battle icon.
+BORROWED_ICON_FOLDERS = ("ui/battle ui/ability_icons", "ui/campaign ui/effect_bundles")
+
+# Vanilla packs holding the ui icons.
+UI_PACKS = re.compile(r"^ui")
 
 # Every key of the mod starts with this.
 PREFIX = "advisor_overhaul"
@@ -1185,7 +1205,7 @@ def lore_node_key(lore: str, slot: int) -> str:
 
 def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
     """Adds one 3-level skill per built lore of the registry's `lores`. Each level lists its full effects, since levels do not stack: level 1 the
-    cheapest spells, level 2 every spell, level 3 every spell and its overcast. Each built lore is also a page of his battle Lore panel on every unit.
+    passive and cheapest spells, level 2 every spell, level 3 every spell and its overcast. Each built lore is also a page of his battle Lore panel on every unit.
 
     Args:
         registry (Dict): The registry.
@@ -1209,7 +1229,9 @@ def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
         kept = data["lores"][lore]
         spells = kept["spells"]
         overcasts = [s["overcast"] for s in spells if s["overcast"]]
-        levels = [[s["enable"] for s in spells[:LORE_FIRST_SPELLS]], [s["enable"] for s in spells], [s["enable"] for s in spells] + overcasts]
+        passives = kept["passives"]
+        levels = [passives + [s["enable"] for s in spells[:LORE_FIRST_SPELLS]], passives + [s["enable"] for s in spells],
+                  passives + [s["enable"] for s in spells] + overcasts]
         first = min(LORE_FIRST_SPELLS, len(spells))
         for slot, (slot_row, slot_rank) in enumerate(lore_slots(registry)):
             key, rank = lore_skill_key(lore, slot), str(slot_rank)
@@ -1225,7 +1247,8 @@ def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
                                                                                "effect_scope": me, "value": "1.0000"} for e in effects]
             texts.append((f"character_skills_localised_name_{key}", f"{TOME_ORDINALS[slot]} Tome: {entry['name']}"))
             texts.append((f"character_skills_localised_description_{key}", entry.get("description", "He learned this lore in a world that no longer exists.")
-                          + f"\\\\n\\\\nLevel 1: {first} of its {len(spells)} spells. Level 2: every spell. Level 3: every spell can be overcast."))
+                          + f"\\\\n\\\\nLevel 1: {'its passive and ' if passives else ''}{first} of its {len(spells)} spells. Level 2: every spell. "
+                          "Level 3: every spell can be overcast."))
             rows["character_skill_nodes_skill_locks_tables"] += [
                 {"character_skill": key, "character_skill_node": lore_node_key(other, other_slot), "level": "1"}
                 for other in built for other_slot in range(len(lore_slots(registry))) if (other, other_slot) != (lore, slot) and (other_slot == slot or other == lore)]
@@ -1425,6 +1448,7 @@ def build() -> None:
     portrait_ids = [(weapon_art_set(w), foot_variant(w)) for w in registry["weapons"]] + [(foot_variant(w), foot_variant(w)) for w in registry["weapons"]]
     write_portraits(data["portraits"], registry["portrait"], portrait_ids)
     write_portrait_images(registry["portrait"])
+    write_skill_icons(rows["character_skills_tables"])
     write_script(registry, combos, arts, [n["character_skill_key"] for n in rows["character_skill_nodes_tables"] if n["points_on_creation"] == "1"],
                  polymath_data(registry))
     with open(os.path.join(MOD, "text", "db", f"{FILE}.loc.tsv"), "w", encoding="utf-8", newline="\n") as f:
@@ -1714,6 +1738,55 @@ def write_portrait_images(portrait: Dict) -> None:
         out = os.path.join(MOD, game_path)
         os.makedirs(os.path.dirname(out), exist_ok=True)
         image.save(out, optimize=True)
+
+
+def write_skill_icons(skills: List[Dict[str, str]]) -> None:
+    """Copies each skill icon the game keeps only next to its ability or effect icons into his skills folder. Like a vanilla skill icon, it is
+    shrunk onto a centred black disc. Icons he no longer uses are removed from that folder.
+
+    Args:
+        skills (List[Dict[str, str]]): His `character_skills_tables` rows.
+
+    Raises:
+        SystemExit: When an icon is in no vanilla ui folder.
+    """
+    source = AssetSource([], [], vanilla=UI_PACKS)
+    borrowed = {}
+    for name in sorted({s["image_path"].lower() for s in skills if s["image_path"]}):
+        if f"{SKILL_ICON_FOLDER}/{name}" in source.index:
+            continue
+        path = next((f"{folder}/{name}" for folder in BORROWED_ICON_FOLDERS if f"{folder}/{name}" in source.index), None)
+        if path is None:
+            raise SystemExit(f"skill icon {name} is in no vanilla ui folder")
+        borrowed[name] = path
+    found = source.fetch_all(borrowed.values())
+    out = os.path.join(MOD, SKILL_ICON_FOLDER)
+    os.makedirs(out, exist_ok=True)
+    for name in os.listdir(out):
+        if name.endswith(".png") and name not in borrowed:
+            os.remove(os.path.join(out, name))
+    def disc(size: Tuple[int, int]) -> Image.Image:
+        """A round mask, drawn large and shrunk for a smooth edge."""
+        big = Image.new("L", (size[0] * 4, size[1] * 4))
+        ImageDraw.Draw(big).ellipse((0, 0, big.width - 1, big.height - 1), fill=255)
+        return big.resize(size, Image.LANCZOS)
+
+    outline = Image.new("RGBA", SKILL_ICON_OUTLINE, (0, 0, 0, 255))
+    outline.putalpha(disc(SKILL_ICON_OUTLINE))
+    for name, path in borrowed.items():
+        # Crop to the picture first, so an icon with a clear or shadowed border of its own still fills the picture.
+        image = Image.open(io.BytesIO(found[path])).convert("RGBA")
+        solid = image.getchannel("A").point(lambda a: 255 if a > ICON_ALPHA_FLOOR else 0)
+        lit = image.convert("RGB").convert("L").point(lambda v: 255 if v > ICON_DARK_FLOOR else 0)
+        image = image.crop(ImageChops.darker(solid, lit).getbbox())
+        scale = min(SKILL_ICON_PICTURE[0] / image.width, SKILL_ICON_PICTURE[1] / image.height)
+        image = image.resize((round(image.width * scale), round(image.height * scale)), Image.LANCZOS)
+        # Trim to a circle, so a square glow does not show at the corners.
+        image.putalpha(ImageChops.darker(image.getchannel("A"), disc(image.size)))
+        icon = Image.new("RGBA", SKILL_ICON_SIZE)
+        icon.alpha_composite(outline, ((SKILL_ICON_SIZE[0] - outline.width) // 2, (SKILL_ICON_SIZE[1] - outline.height) // 2))
+        icon.alpha_composite(image,((SKILL_ICON_SIZE[0] - image.width) // 2, (SKILL_ICON_SIZE[1] - image.height) // 2))
+        icon.save(os.path.join(out, name), optimize=True)
 
 
 def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[str, List[Tuple[str, str, str]]], learned: List[str], polymath: Optional[Dict]) -> None:

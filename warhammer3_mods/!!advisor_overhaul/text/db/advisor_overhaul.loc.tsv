@@ -196,8 +196,6 @@ character_skills_localised_name_advisor_overhaul_skill_magic_conduit	Conduit Unb
 character_skills_localised_description_advisor_overhaul_skill_magic_conduit	He stopped asking the Winds for power. Now he simply lets them through.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_focus	Spellweaver's Focus	true
 character_skills_localised_description_advisor_overhaul_skill_magic_focus	Every ending, the first thing he learned was to hold one thought steady while the world shook.	true
-character_skills_localised_name_advisor_overhaul_skill_magic_last_word	The Last Word	true
-character_skills_localised_description_advisor_overhaul_skill_magic_last_word	He no longer waits for the Winds to cool. He cuts the pause out of every spell.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_overcast	Overcast Discipline	true
 character_skills_localised_description_advisor_overhaul_skill_magic_overcast	Anyone can pour more power in. He knows when to stop.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_quiet_mind	Quiet Mind	true
@@ -212,7 +210,7 @@ character_skills_localised_name_advisor_overhaul_skill_magic_second_wind	Second 
 character_skills_localised_description_advisor_overhaul_skill_magic_second_wind	Just when the pool runs dry, he finds another cup behind it.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_sharper	Sharper Weave	true
 character_skills_localised_description_advisor_overhaul_skill_magic_sharper	And then to pull it tight, to a point.	true
-character_skills_localised_name_advisor_overhaul_skill_magic_standing_conduit	Standing Conduit	true
+character_skills_localised_name_advisor_overhaul_skill_magic_standing_conduit	Arcane Conduit	true
 character_skills_localised_description_advisor_overhaul_skill_magic_standing_conduit	The Winds do not rush through him anymore. They wait in him, patient, like water in a cistern.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_steady	Steady Hands	true
 character_skills_localised_description_advisor_overhaul_skill_magic_steady	He miscast once, at the worst possible moment, and the world ended a little early.	true
@@ -220,12 +218,6 @@ character_skills_localised_name_advisor_overhaul_skill_magic_warded_mind	Warded 
 character_skills_localised_description_advisor_overhaul_skill_magic_warded_mind	He has been unmade by sorcery before. He remembers the shape of the hole.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_well_remembers	The Well Remembers	true
 character_skills_localised_description_advisor_overhaul_skill_magic_well_remembers	He has drunk from this well in lives that never were. The well recalls him kindly.	true
-character_skills_localised_name_advisor_overhaul_skill_magic_what_comes	What Comes	true
-character_skills_localised_description_advisor_overhaul_skill_magic_what_comes	He has already seen how the next casting will end.	true
-character_skills_localised_name_advisor_overhaul_skill_magic_what_is_held	What Is Held	true
-character_skills_localised_description_advisor_overhaul_skill_magic_what_is_held	He does not reach for the old lores. They are simply there, held.	true
-character_skills_localised_name_advisor_overhaul_skill_magic_what_was	What Was Learned	true
-character_skills_localised_description_advisor_overhaul_skill_magic_what_was	Every lore he ever studied left a habit behind.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_wider	Wider Weave	true
 character_skills_localised_description_advisor_overhaul_skill_magic_wider	He learned to let the thread spread before it settles.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_0	Assassinate	true
@@ -371,185 +363,185 @@ effect_bundles_localised_description_advisor_overhaul_bundle_polymath_3	He draws
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_4	Everything, Again (4 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_4	He draws on 4 of his disciplines at once.	true
 character_skills_localised_name_advisor_overhaul_lore_fire	First Tome: Lore of Fire	true
-character_skills_localised_description_advisor_overhaul_lore_fire	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_fire	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_fire_2	Second Tome: Lore of Fire	true
-character_skills_localised_description_advisor_overhaul_lore_fire_2	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_fire_2	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_fire_3	Third Tome: Lore of Fire	true
-character_skills_localised_description_advisor_overhaul_lore_fire_3	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_fire_3	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_beasts	First Tome: Lore of Beasts	true
-character_skills_localised_description_advisor_overhaul_lore_beasts	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_beasts	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_beasts_2	Second Tome: Lore of Beasts	true
-character_skills_localised_description_advisor_overhaul_lore_beasts_2	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_beasts_2	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_beasts_3	Third Tome: Lore of Beasts	true
-character_skills_localised_description_advisor_overhaul_lore_beasts_3	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_beasts_3	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_metal	First Tome: Lore of Metal	true
-character_skills_localised_description_advisor_overhaul_lore_metal	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_metal	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_metal_2	Second Tome: Lore of Metal	true
-character_skills_localised_description_advisor_overhaul_lore_metal_2	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_metal_2	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_metal_3	Third Tome: Lore of Metal	true
-character_skills_localised_description_advisor_overhaul_lore_metal_3	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_metal_3	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_heavens	First Tome: Lore of the Heavens	true
-character_skills_localised_description_advisor_overhaul_lore_heavens	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_heavens	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_heavens_2	Second Tome: Lore of the Heavens	true
-character_skills_localised_description_advisor_overhaul_lore_heavens_2	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_heavens_2	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_heavens_3	Third Tome: Lore of the Heavens	true
-character_skills_localised_description_advisor_overhaul_lore_heavens_3	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_heavens_3	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_light	First Tome: Lore of Light	true
-character_skills_localised_description_advisor_overhaul_lore_light	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_light	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_light_2	Second Tome: Lore of Light	true
-character_skills_localised_description_advisor_overhaul_lore_light_2	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_light_2	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_light_3	Third Tome: Lore of Light	true
-character_skills_localised_description_advisor_overhaul_lore_light_3	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_light_3	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_life	First Tome: Lore of Life	true
-character_skills_localised_description_advisor_overhaul_lore_life	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_life	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_life_2	Second Tome: Lore of Life	true
-character_skills_localised_description_advisor_overhaul_lore_life_2	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_life_2	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_life_3	Third Tome: Lore of Life	true
-character_skills_localised_description_advisor_overhaul_lore_life_3	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_life_3	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_shadows	First Tome: Lore of Shadows	true
-character_skills_localised_description_advisor_overhaul_lore_shadows	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_shadows	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_shadows_2	Second Tome: Lore of Shadows	true
-character_skills_localised_description_advisor_overhaul_lore_shadows_2	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_shadows_2	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_shadows_3	Third Tome: Lore of Shadows	true
-character_skills_localised_description_advisor_overhaul_lore_shadows_3	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_shadows_3	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_death	First Tome: Lore of Death	true
-character_skills_localised_description_advisor_overhaul_lore_death	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_death	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_death_2	Second Tome: Lore of Death	true
-character_skills_localised_description_advisor_overhaul_lore_death_2	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_death_2	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_death_3	Third Tome: Lore of Death	true
-character_skills_localised_description_advisor_overhaul_lore_death_3	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_death_3	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_high_magic	First Tome: High Magic	true
-character_skills_localised_description_advisor_overhaul_lore_high_magic	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_high_magic	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_high_magic_2	Second Tome: High Magic	true
-character_skills_localised_description_advisor_overhaul_lore_high_magic_2	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_high_magic_2	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_high_magic_3	Third Tome: High Magic	true
-character_skills_localised_description_advisor_overhaul_lore_high_magic_3	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_high_magic_3	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_ice	First Tome: Lore of Ice	true
-character_skills_localised_description_advisor_overhaul_lore_of_ice	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_ice	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_ice_2	Second Tome: Lore of Ice	true
-character_skills_localised_description_advisor_overhaul_lore_of_ice_2	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_ice_2	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_ice_3	Third Tome: Lore of Ice	true
-character_skills_localised_description_advisor_overhaul_lore_of_ice_3	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_ice_3	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_tempest	First Tome: Lore of Tempest	true
-character_skills_localised_description_advisor_overhaul_lore_of_tempest	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_tempest	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_tempest_2	Second Tome: Lore of Tempest	true
-character_skills_localised_description_advisor_overhaul_lore_of_tempest_2	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_tempest_2	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_tempest_3	Third Tome: Lore of Tempest	true
-character_skills_localised_description_advisor_overhaul_lore_of_tempest_3	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_tempest_3	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yang	First Tome: Lore of Yang	true
-character_skills_localised_description_advisor_overhaul_lore_of_yang	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yang	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yang_2	Second Tome: Lore of Yang	true
-character_skills_localised_description_advisor_overhaul_lore_of_yang_2	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yang_2	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yang_3	Third Tome: Lore of Yang	true
-character_skills_localised_description_advisor_overhaul_lore_of_yang_3	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yang_3	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yin	First Tome: Lore of Yin	true
-character_skills_localised_description_advisor_overhaul_lore_of_yin	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yin	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yin_2	Second Tome: Lore of Yin	true
-character_skills_localised_description_advisor_overhaul_lore_of_yin_2	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yin_2	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_yin_3	Third Tome: Lore of Yin	true
-character_skills_localised_description_advisor_overhaul_lore_of_yin_3	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_yin_3	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_mists	First Tome: Lore of Mists	true
-character_skills_localised_description_advisor_overhaul_lore_mists	Sea-fog spells from a coast that sank.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_mists	Sea-fog spells from a coast that sank.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_mists_2	Second Tome: Lore of Mists	true
-character_skills_localised_description_advisor_overhaul_lore_mists_2	Sea-fog spells from a coast that sank.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_mists_2	Sea-fog spells from a coast that sank.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_mists_3	Third Tome: Lore of Mists	true
-character_skills_localised_description_advisor_overhaul_lore_mists_3	Sea-fog spells from a coast that sank.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_mists_3	Sea-fog spells from a coast that sank.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hag	First Tome: Lore of the Hag	true
-character_skills_localised_description_advisor_overhaul_lore_hag	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_hag	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hag_2	Second Tome: Lore of the Hag	true
-character_skills_localised_description_advisor_overhaul_lore_hag_2	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_hag_2	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hag_3	Third Tome: Lore of the Hag	true
-character_skills_localised_description_advisor_overhaul_lore_hag_3	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_hag_3	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_dark_magic	First Tome: Dark Magic	true
-character_skills_localised_description_advisor_overhaul_lore_dark_magic	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_dark_magic	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_dark_magic_2	Second Tome: Dark Magic	true
-character_skills_localised_description_advisor_overhaul_lore_dark_magic_2	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_dark_magic_2	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_dark_magic_3	Third Tome: Dark Magic	true
-character_skills_localised_description_advisor_overhaul_lore_dark_magic_3	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_dark_magic_3	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_vampires	First Tome: Lore of Vampires	true
-character_skills_localised_description_advisor_overhaul_lore_vampires	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_vampires	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_vampires_2	Second Tome: Lore of Vampires	true
-character_skills_localised_description_advisor_overhaul_lore_vampires_2	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_vampires_2	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_vampires_3	Third Tome: Lore of Vampires	true
-character_skills_localised_description_advisor_overhaul_lore_vampires_3	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_vampires_3	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_undeath	First Tome: Lore of Undeath	true
-character_skills_localised_description_advisor_overhaul_lore_undeath	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_undeath	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_undeath_2	Second Tome: Lore of Undeath	true
-character_skills_localised_description_advisor_overhaul_lore_undeath_2	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_undeath_2	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_undeath_3	Third Tome: Lore of Undeath	true
-character_skills_localised_description_advisor_overhaul_lore_undeath_3	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_undeath_3	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nehekhara	First Tome: Lore of Nehekhara	true
-character_skills_localised_description_advisor_overhaul_lore_nehekhara	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_nehekhara	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nehekhara_2	Second Tome: Lore of Nehekhara	true
-character_skills_localised_description_advisor_overhaul_lore_nehekhara_2	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_nehekhara_2	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nehekhara_3	Third Tome: Lore of Nehekhara	true
-character_skills_localised_description_advisor_overhaul_lore_nehekhara_3	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_nehekhara_3	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_deep	First Tome: Lore of the Deep	true
-character_skills_localised_description_advisor_overhaul_lore_deep	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_deep	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_deep_2	Second Tome: Lore of the Deep	true
-character_skills_localised_description_advisor_overhaul_lore_deep_2	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_deep_2	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_deep_3	Third Tome: Lore of the Deep	true
-character_skills_localised_description_advisor_overhaul_lore_deep_3	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_deep_3	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_big_waaagh	First Tome: Big Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_big_waaagh	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_big_waaagh	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_big_waaagh_2	Second Tome: Big Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_big_waaagh_2	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_big_waaagh_2	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_big_waaagh_3	Third Tome: Big Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_big_waaagh_3	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_big_waaagh_3	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_lil_waaagh	First Tome: Little Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_lil_waaagh	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_lil_waaagh	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_lil_waaagh_2	Second Tome: Little Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_lil_waaagh_2	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_lil_waaagh_2	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_lil_waaagh_3	Third Tome: Little Waaagh!	true
-character_skills_localised_description_advisor_overhaul_lore_lil_waaagh_3	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_lil_waaagh_3	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hashut	First Tome: Lore of Hashut	true
-character_skills_localised_description_advisor_overhaul_lore_hashut	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_hashut	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hashut_2	Second Tome: Lore of Hashut	true
-character_skills_localised_description_advisor_overhaul_lore_hashut_2	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_hashut_2	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_hashut_3	Third Tome: Lore of Hashut	true
-character_skills_localised_description_advisor_overhaul_lore_hashut_3	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_hashut_3	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_ruin	First Tome: Lore of Ruin	true
-character_skills_localised_description_advisor_overhaul_lore_ruin	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_ruin	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_ruin_2	Second Tome: Lore of Ruin	true
-character_skills_localised_description_advisor_overhaul_lore_ruin_2	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_ruin_2	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_ruin_3	Third Tome: Lore of Ruin	true
-character_skills_localised_description_advisor_overhaul_lore_ruin_3	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_ruin_3	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_plague	First Tome: Lore of Plague	true
-character_skills_localised_description_advisor_overhaul_lore_plague	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_plague	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_plague_2	Second Tome: Lore of Plague	true
-character_skills_localised_description_advisor_overhaul_lore_plague_2	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_plague_2	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_plague_3	Third Tome: Lore of Plague	true
-character_skills_localised_description_advisor_overhaul_lore_plague_3	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_plague_3	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_stealth	First Tome: Lore of Stealth	true
-character_skills_localised_description_advisor_overhaul_lore_stealth	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_stealth	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_stealth_2	Second Tome: Lore of Stealth	true
-character_skills_localised_description_advisor_overhaul_lore_stealth_2	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_stealth_2	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_stealth_3	Third Tome: Lore of Stealth	true
-character_skills_localised_description_advisor_overhaul_lore_stealth_3	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_stealth_3	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nurgle	First Tome: Lore of Nurgle	true
-character_skills_localised_description_advisor_overhaul_lore_nurgle	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_nurgle	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nurgle_2	Second Tome: Lore of Nurgle	true
-character_skills_localised_description_advisor_overhaul_lore_nurgle_2	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_nurgle_2	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_nurgle_3	Third Tome: Lore of Nurgle	true
-character_skills_localised_description_advisor_overhaul_lore_nurgle_3	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_nurgle_3	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_slaanesh	First Tome: Lore of Slaanesh	true
-character_skills_localised_description_advisor_overhaul_lore_slaanesh	He refused this one too. It was harder.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_slaanesh	He refused this one too. It was harder.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_slaanesh_2	Second Tome: Lore of Slaanesh	true
-character_skills_localised_description_advisor_overhaul_lore_slaanesh_2	He refused this one too. It was harder.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_slaanesh_2	He refused this one too. It was harder.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_slaanesh_3	Third Tome: Lore of Slaanesh	true
-character_skills_localised_description_advisor_overhaul_lore_slaanesh_3	He refused this one too. It was harder.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_slaanesh_3	He refused this one too. It was harder.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_great_maw	First Tome: Lore of the Great Maw	true
-character_skills_localised_description_advisor_overhaul_lore_of_great_maw	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_great_maw	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_great_maw_2	Second Tome: Lore of the Great Maw	true
-character_skills_localised_description_advisor_overhaul_lore_of_great_maw_2	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_great_maw_2	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_of_great_maw_3	Third Tome: Lore of the Great Maw	true
-character_skills_localised_description_advisor_overhaul_lore_of_great_maw_3	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_of_great_maw_3	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_wild	First Tome: Lore of the Wild	true
-character_skills_localised_description_advisor_overhaul_lore_wild	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_wild	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_wild_2	Second Tome: Lore of the Wild	true
-character_skills_localised_description_advisor_overhaul_lore_wild_2	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_wild_2	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_wild_3	Third Tome: Lore of the Wild	true
-character_skills_localised_description_advisor_overhaul_lore_wild_3	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_description_advisor_overhaul_lore_wild_3	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_rune	First Tome: Lore of Runes	true
 character_skills_localised_description_advisor_overhaul_lore_rune	A runesmith taught him three runes before the last hold fell. He worked out the rest.\\n\\nLevel 1: 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_rune_2	Second Tome: Lore of Runes	true
@@ -574,7 +566,4 @@ effects_description_advisor_overhaul_effect_enable_spy_hinder_character_assassin
 agent_actions_localised_action_name_advisor_overhaul_action_champion_passive_spread_corruption_kho	{{tr:agent_action_name_spread_corruption}}	true
 agent_actions_localised_action_description_advisor_overhaul_action_champion_passive_spread_corruption_kho	[[col:yellow]]Increases the amount of [[img:icon_corruption_kho]][[/img]]Khorne corruption in the local province by %n.[[/col]]	true
 effects_description_advisor_overhaul_effect_enable_champion_passive_spread_corruption_kho	Hero action: {{tr:agent_action_name_spread_corruption}}	true
-effects_description_advisor_overhaul_effect_wom_cost_what_was	Winds of Magic cost: %+n% for Fire, Beasts, Metal, the Heavens, Light, Life, Shadows, Death, High Magic and Ice spells	true
-effects_description_advisor_overhaul_effect_wom_cost_what_is_held	Winds of Magic cost: %+n% for Tempest, Yang, Yin, Mists, the Hag, Dark Magic, Vampires, Undeath, Nehekhara and the Deep spells	true
-effects_description_advisor_overhaul_effect_wom_cost_what_comes	Winds of Magic cost: %+n% for Big Waaagh!, Little Waaagh!, Hashut, Ruin, Plague, Stealth, Nurgle, Slaanesh, the Great Maw and the Wild spells	true
 effects_description_advisor_overhaul_effect_army_barrier	Barrier: %+n for all units in the army except characters	true
