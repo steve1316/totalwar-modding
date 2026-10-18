@@ -421,6 +421,11 @@
        "effect": "wh_main_effect_character_stat_melee_defence",
        "scope": "character_to_character_own",
        "value": 10
+      },
+      {
+       "effect": "wh_main_effect_character_stat_armour",
+       "scope": "character_to_character_own",
+       "value": 15
       }
      ]
     },
@@ -432,17 +437,27 @@
        "effect": "wh_main_effect_character_stat_missile_resistance",
        "scope": "character_to_character_own",
        "value": 20
+      },
+      {
+       "effect": "wh_main_effect_character_stat_missile_block",
+       "scope": "character_to_character_own",
+       "value": 15
       }
      ]
     },
     "art_3": {
-     "name": "Steady Hand",
-     "description": "A knight's shield, a scholar's patience.",
+     "name": "Iron Body",
+     "description": "He was never quick. He learned to be hard to kill instead.",
      "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_unit_health",
+       "scope": "character_to_character_own",
+       "value": 10
+      },
       {
        "effect": "wh_main_effect_character_stat_armour",
        "scope": "character_to_character_own",
-       "value": 25
+       "value": 15
       }
      ]
     },
@@ -454,6 +469,16 @@
        "effect": "wh_main_effect_character_stat_physical_resistance",
        "scope": "character_to_character_own",
        "value": 12
+      },
+      {
+       "effect": "wh_main_effect_character_stat_unit_health",
+       "scope": "character_to_character_own",
+       "value": 10
+      },
+      {
+       "effect": "wh_main_effect_character_stat_leadership",
+       "scope": "character_to_character_own",
+       "value": 10
       }
      ]
     },
@@ -461,7 +486,12 @@
      "name": "Hold the Line",
      "description": "Men stand firm next to a man who will not step back.",
      "effects": [
-      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 6}
+      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 6},
+      {
+       "effect": "wh_main_effect_force_stat_melee_defence",
+       "scope": "agent_to_parent_army_own",
+       "value": 3
+      }
      ]
     },
     "army_2": {
@@ -476,13 +506,14 @@
      ]
     },
     "army_3": {
-     "name": "Unbroken",
-     "description": "This line held once, at the end of the world. It will hold now.",
+     "name": "Shield Wall",
+     "description": "Every shield overlaps the next, the way he showed them.",
      "effects": [
+      {"effect": "wh_main_effect_force_stat_armour", "scope": "agent_to_parent_army_own", "value": 10},
       {
        "effect": "wh_main_effect_force_stat_melee_defence",
        "scope": "agent_to_parent_army_own",
-       "value": 7
+       "value": 4
       }
      ]
     },
@@ -499,14 +530,24 @@
        "effect": "wh_main_effect_character_stat_melee_defence",
        "scope": "character_to_character_own",
        "value": 8
+      },
+      {
+       "effect": "wh_main_effect_character_stat_armour",
+       "scope": "character_to_character_own",
+       "value": 20
       }
      ]
     },
     "army_4": {
-     "name": "Shield Wall",
-     "description": "Every shield overlaps the next, the way he showed them.",
+     "name": "Guardian",
+     "description": "Whoever stands behind him is out of reach. He has made sure of it in every world that ended.",
      "effects": [
-      {"effect": "wh_main_effect_force_stat_armour", "scope": "agent_to_parent_army_own", "value": 10}
+      {
+       "effect": "wh2_dlc10_effect_ability_enable_guardian",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
+      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 4}
      ]
     }
    },
