@@ -1194,10 +1194,10 @@
    "vanilla": {"foot": "wh3_main_cth_cha_iron_dragon_0"},
    "stats": {
     "melee_attack": 52,
-    "melee_defence": 57,
-    "charge_bonus": 25,
-    "morale": 88,
-    "bonus_hit_points": 5600,
+    "melee_defence": 48,
+    "charge_bonus": 30,
+    "morale": 85,
+    "bonus_hit_points": 4800,
     "armour": 70
    },
    "melee": {"template": "wh3_main_cth_iron_dragon_human"},
@@ -1226,6 +1226,11 @@
       {
        "effect": "wh_main_effect_character_stat_melee_defence",
        "scope": "character_to_character_own",
+       "value": 6
+      },
+      {
+       "effect": "wh_main_effect_character_stat_armour",
+       "scope": "character_to_character_own",
        "value": 10
       }
      ]
@@ -1237,61 +1242,88 @@
       {
        "effect": "wh_main_effect_character_stat_weapon_strength",
        "scope": "character_to_character_own",
-       "value": 12
+       "value": 10
+      },
+      {
+       "effect": "wh_main_effect_character_stat_melee_attack",
+       "scope": "character_to_character_own",
+       "value": 4
       }
      ]
     },
     "art_3": {
-     "name": "Unbending",
-     "description": "He takes the hit and does not move a step.",
+     "name": "Hammer Hands",
+     "description": "Each strike falls like the smith's hammer, and the men around the one he hits feel it too.",
      "effects": [
       {
-       "effect": "wh_main_effect_character_stat_armour",
+       "effect": "wh_main_effect_character_stat_weapon_splash_power_mult",
        "scope": "character_to_character_own",
-       "value": 20
+       "value": 50
+      },
+      {
+       "effect": "wh_main_effect_character_stat_melee_attack",
+       "scope": "character_to_character_own",
+       "value": 4
       }
      ]
     },
     "art_4": {
-     "name": "Hammer Hands",
-     "description": "Each strike falls like the smith's hammer, steady and without end.",
+     "name": "Unbending",
+     "description": "He takes the hit and does not move a step. Neither do the ones who stand with him.",
      "effects": [
       {
-       "effect": "wh_main_effect_character_stat_melee_attack",
+       "effect": "wh_main_effect_character_stat_physical_resistance",
        "scope": "character_to_character_own",
-       "value": 8
+       "value": 10
+      },
+      {
+       "effect": "wh_main_effect_character_stat_unit_health",
+       "scope": "character_to_character_own",
+       "value": 10
       }
      ]
     },
     "army_1": {
      "name": "Foundry Drill",
-     "description": "He works them like iron, heat and blow, until the line holds its shape.",
+     "description": "He works them like iron, heat and blow, and every fight teaches them twice as much.",
      "effects": [
-      {
-       "effect": "wh_main_effect_force_stat_melee_defence",
-       "scope": "agent_to_parent_army_own",
-       "value": 4
-      }
+      {"effect": "wh3_dlc20_effect_xp_gain_all_units", "scope": "agent_to_parent_army_own", "value": 15}
      ]
     },
     "army_2": {
      "name": "Tempered Ranks",
-     "description": "Quenched and hardened, they wear their armour like a second skin.",
+     "description": "Broken units are mended and sent back to the line, harder than before.",
      "effects": [
+      {
+       "effect": "wh_main_effect_force_all_campaign_replenishment_rate",
+       "scope": "agent_to_parent_army_own",
+       "value": 5
+      },
       {"effect": "wh_main_effect_force_stat_armour", "scope": "agent_to_parent_army_own", "value": 5}
      ]
     },
     "army_3": {
-     "name": "The Great Bastion",
-     "description": "Where he stands, the line stands like the wall in the north.",
+     "name": "Old Hands",
+     "description": "New recruits are put next to his veterans from the first day, and they learn fast.",
      "effects": [
-      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 8}
+      {
+       "effect": "wh_main_effect_force_all_campaign_experience_base_all",
+       "scope": "agent_to_parent_army_own",
+       "value": 1
+      },
+      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 6}
      ]
     },
     "army_4": {
      "name": "Cast in Iron",
-     "description": "He teaches them to take a blow the way metal takes the hammer.",
+     "description": "Every unit under him becomes the company he once led. They take a blow the way metal takes the hammer.",
      "effects": [
+      {
+       "effect": "wh_main_effect_force_all_campaign_experience_base_all",
+       "scope": "agent_to_parent_army_own",
+       "value": 1
+      },
+      {"effect": "wh3_dlc20_effect_xp_gain_all_units", "scope": "agent_to_parent_army_own", "value": 10},
       {
        "effect": "wh_main_effect_force_stat_physical_resistance",
        "scope": "agent_to_parent_army_own",
@@ -1300,24 +1332,47 @@
      ]
     },
     "apex": {
-     "name": "Heart of the Forge",
-     "description": "The iron Zhao Ming carries, as he remembers it.",
+     "name": "Company of Heroes",
+     "description": "He remembers the heroes who once fought at his side, and they come back to him. On foot he leads a company of them: each fights and shoots on his own. In dragon form he flies alone.",
      "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_leadership",
+       "scope": "character_to_character_own",
+       "value": 10
+      },
       {
        "effect": "wh_main_effect_character_stat_melee_defence",
        "scope": "character_to_character_own",
-       "value": 8
-      },
-      {
-       "effect": "wh_main_effect_character_stat_physical_resistance",
-       "scope": "character_to_character_own",
-       "value": 10
+       "value": 4
       }
      ]
     }
    },
    "grant_rank": 16,
-   "body": "advisor"
+   "body": "advisor",
+   "company": {
+    "name": "Company of Heroes",
+    "description": "He leads a company of remembered heroes. Each fights and shoots on his own.",
+    "slot": "apex",
+    "men": 5,
+    "stats": {"bonus_hit_points": 1300},
+    "squad": {
+     "variant": "wh_emp_ch_witch_hunter",
+     "man_animation": "hu1_empire_sword_and_pistol",
+     "man_entity": "wh2_main_infantry_standard_hero_360_blood_dismembers",
+     "ammo": 12,
+     "melee": {
+      "template": "wh_main_emp_sword_witchhunter",
+      "damage": "100",
+      "ap_damage": "50",
+      "splash_attack_max_attacks": "1"
+     },
+     "missile": {
+      "template": "wh_main_emp_witchhunter_pistol",
+      "projectile": {"damage": "12", "ap_damage": "48"}
+     }
+    }
+   }
   }
  },
  "mounts": {

@@ -427,6 +427,19 @@ local function has_unit(weapon, mount)
 	return rig_data().ancillaries[weapon .. "|" .. mount] ~= nil
 end
 
+--- The rig that gives the Advisor a pair's unit: the upgrade's rig (the Company of Heroes) once he owns its skill, else the pair's own.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @param weapon string Weapon key.
+--- @param mount string Mount key.
+--- @returns string|nil The ancillary key, or nil when the pair has no unit.
+local function pair_rig(character, weapon, mount)
+	local upgrade = (rig_data().upgrades or {})[weapon .. "|" .. mount]
+	if upgrade and character:has_skill(upgrade.skill) then
+		return upgrade.ancillary
+	end
+	return rig_data().ancillaries[weapon .. "|" .. mount]
+end
+
 --- The weapon and mount to use: the saved choices while still unlocked (a respec can take them away), else the defaults. A pair with no unit falls
 --- back first to the default weapon and then to the default mount.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
@@ -665,7 +678,8 @@ local function sync_pool(faction, why)
 			local weapon, mount = rig_pair(ancillary)
 			local unlocked = false
 			for _, advisor in ipairs(advisors) do
-				unlocked = unlocked or pair_unlocked(advisor, weapon, mount)
+				-- A pair's own rig stays out of the pool while his upgrade replaces it, and the upgrade's rig until then.
+				unlocked = unlocked or (pair_unlocked(advisor, weapon, mount) and pair_rig(advisor, weapon, mount) == ancillary)
 			end
 			local pooled = faction_owns(faction, ancillary)
 			if unlocked and not pooled then
@@ -690,7 +704,7 @@ local function apply_pair(character)
 	local cqi = character:command_queue_index()
 	local faction = character:faction()
 	save_pair(cqi, weapon, mount, false)
-	local wanted = rig_data().ancillaries[weapon .. "|" .. mount]
+	local wanted = pair_rig(character, weapon, mount)
 	apply_art_set(character, weapon)
 	sync_arts(character, weapon)
 	sync_polymath(character)
@@ -2070,7 +2084,7 @@ local function check_mount_pick()
 	local cqi = character:command_queue_index()
 	local worn = worn_rigs(character)
 	local weapon, mount = current_pair(character)
-	local wanted = rig_data().ancillaries[weapon .. "|" .. mount]
+	local wanted = pair_rig(character, weapon, mount)
 	if #worn == 1 and worn[1] == wanted then
 		log("Mount box check cqi " .. cqi .. ": wears " .. wanted .. ", which is his saved pair, nothing to do")
 		return
@@ -2417,14 +2431,9 @@ core:add_listener(
 		-- Any skill may change how many disciplines the Polymath counts.
 		local changed = sync_polymath(character)
 		if not unlocked then
-			-- An art slot skill puts on his held weapon's art at once.
-			local weapon = current_pair(character)
-			for _, art in ipairs((rig_data().arts or {})[weapon] or {}) do
-				if art.skill == skill then
-					log("cqi " .. character:command_queue_index() .. " learned art slot " .. skill .. ", holding " .. weapon)
-					changed = sync_arts(character, weapon) or changed
-				end
-			end
+			-- An art slot skill puts on his held weapon's art, and an upgrade skill (the Company of Heroes) swaps his rig, both at once.
+			changed = sync_arts(character, current_pair(character)) or changed
+			changed = reconcile(character, "skill " .. skill) or changed
 			if changed then
 				refresh_stats(character)
 				if is_local_advisor(character) then

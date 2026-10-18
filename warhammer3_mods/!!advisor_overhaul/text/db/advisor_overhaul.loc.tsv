@@ -44,11 +44,19 @@ ancillaries_colour_text_advisor_overhaul_rig_glaive_foot	A long Cathayan glaive 
 land_units_onscreen_name_advisor_overhaul_iron_hand_foot	The Advisor (Iron Hand, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_iron_hand_foot	Iron Hand, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_iron_hand_foot	No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way Zhao Ming fights before he takes his dragon form. He walks, as he always has.	true
+land_units_onscreen_name_advisor_overhaul_iron_hand_company	The Advisor (Iron Hand, Company of Heroes)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_iron_hand_company	Iron Hand, Company of Heroes	true
+ancillaries_colour_text_advisor_overhaul_rig_iron_hand_company	He leads a company of remembered heroes. Each fights and shoots on his own.	true
 land_units_onscreen_name_advisor_overhaul_iron_hand_foot_dragon	The Advisor (Iron Dragon)	true
-unit_abilities_onscreen_name_advisor_overhaul_iron_hand_dragon_form	Dragon Form	true
-unit_abilities_tooltip_text_advisor_overhaul_iron_hand_dragon_form	He lets the old shape take him: iron scales, a forge-hot breath, wings over the field. The Iron Dragon of Cathay, as he remembers it.	true
-unit_abilities_onscreen_name_advisor_overhaul_iron_hand_human_form	Human Form	true
-unit_abilities_tooltip_text_advisor_overhaul_iron_hand_human_form	He folds the dragon away and stands as a man again, open hands and an unbending stance.	true
+unit_abilities_onscreen_name_advisor_overhaul_iron_hand_foot_dragon_form	Dragon Form	true
+unit_abilities_tooltip_text_advisor_overhaul_iron_hand_foot_dragon_form	He lets the old shape take him: iron scales, a forge-hot breath, wings over the field. The Iron Dragon of Cathay, as he remembers it.	true
+unit_abilities_onscreen_name_advisor_overhaul_iron_hand_foot_human_form	Human Form	true
+unit_abilities_tooltip_text_advisor_overhaul_iron_hand_foot_human_form	He folds the dragon away and stands as a man again, open hands and an unbending stance.	true
+land_units_onscreen_name_advisor_overhaul_iron_hand_company_dragon	The Advisor (Iron Dragon)	true
+unit_abilities_onscreen_name_advisor_overhaul_iron_hand_company_dragon_form	Dragon Form	true
+unit_abilities_tooltip_text_advisor_overhaul_iron_hand_company_dragon_form	He lets the old shape take him: iron scales, a forge-hot breath, wings over the field. The Iron Dragon of Cathay, as he remembers it.	true
+unit_abilities_onscreen_name_advisor_overhaul_iron_hand_company_human_form	Human Form	true
+unit_abilities_tooltip_text_advisor_overhaul_iron_hand_company_human_form	He folds the dragon away and stands as a man again, open hands and an unbending stance.	true
 advisor_overhaul_ui_weapon_staff_and_sword	Staff and Sword	true
 advisor_overhaul_ui_weapon_sword_and_shield	Sword and Shield	true
 advisor_overhaul_ui_weapon_sword_and_bow	Sword and Bow	true
@@ -369,20 +377,20 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_art_1	Iron 
 effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_art_1	Blows ring off him like a hammer off an anvil.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_art_2	Forge Palm	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_art_2	An open hand that lands with the weight of a falling ingot.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_art_3	Unbending	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_art_3	He takes the hit and does not move a step.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_art_4	Hammer Hands	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_art_4	Each strike falls like the smith's hammer, steady and without end.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_art_3	Hammer Hands	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_art_3	Each strike falls like the smith's hammer, and the men around the one he hits feel it too.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_art_4	Unbending	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_art_4	He takes the hit and does not move a step. Neither do the ones who stand with him.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_army_1	Foundry Drill	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_1	He works them like iron, heat and blow, until the line holds its shape.	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_1	He works them like iron, heat and blow, and every fight teaches them twice as much.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_army_2	Tempered Ranks	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_2	Quenched and hardened, they wear their armour like a second skin.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_army_3	The Great Bastion	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_3	Where he stands, the line stands like the wall in the north.	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_2	Broken units are mended and sent back to the line, harder than before.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_army_3	Old Hands	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_3	New recruits are put next to his veterans from the first day, and they learn fast.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_army_4	Cast in Iron	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_4	He teaches them to take a blow the way metal takes the hammer.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_apex	Heart of the Forge	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_apex	The iron Zhao Ming carries, as he remembers it.	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_4	Every unit under him becomes the company he once led. They take a blow the way metal takes the hammer.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_apex	Company of Heroes	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_apex	He remembers the heroes who once fought at his side, and they come back to him. On foot he leads a company of them: each fights and shoots on his own. In dragon form he flies alone.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_1	Everything, Again (1 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_1	He draws on 1 of his disciplines at once.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_2	Everything, Again (2 of 4)	true

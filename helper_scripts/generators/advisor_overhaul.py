@@ -20,6 +20,11 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
   their mount's rider entity.
 - `attributes` adds unit attributes to every pair of the weapon, and `attributes_removed` takes them away. `abilities` and `abilities_removed` do
   the same for unit abilities.
+- `company`: a Company of Heroes, a copy of his foot unit with `men` men, given in place of his foot unit once he owns the skill of its art `slot`.
+  He is its officer with his own look, weapons and entity. The other men are the `squad`, with weaker copies of its `melee` and `missile` weapons.
+  `stats` are per man values. Health goes there too: the campaign counts every man with the squad's entity, so extra officer health started battles
+  hurt. With a `dragon`, the company gets its own dragon form that turns back into it.
+  Only one officer shows per unit, so the company cannot hold several different heroes.
 
 How a weapon looks on every one of its mounts (all optional, written by the workbench's Look tab): `body` picks his outfit from `model.bodies`,
 `hood` false takes his hood off (when his head has a hoodless model), and `pieces` adds models such as a hat: slot -> [model, metadata...], or
@@ -257,7 +262,8 @@ TABLES = [
     "campaign_character_uniform_ancillary_junctions_tables", "character_skill_node_sets_tables", "character_skills_tables",
     "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables", "missile_weapons_tables",
     "projectiles_tables", "projectiles_explosions_tables", "projectile_displays_tables", "unit_missile_weapon_junctions_tables", "effect_bonus_value_missile_weapon_junctions_tables",
-    "melee_weapons_tables", "battle_entities_tables", "unit_armour_types_tables", "character_skill_node_links_tables",
+    "melee_weapons_tables", "battle_entities_tables", "battle_personalities_tables", "battle_entity_stats_tables",
+    "land_units_to_battle_personalities_junctions_tables", "unit_armour_types_tables", "character_skill_node_links_tables",
     "character_skill_level_to_effects_junctions_tables", "character_skill_nodes_skill_locks_tables", "effects_tables", "effect_bundles_tables",
     "effect_bundles_to_effects_junctions_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables",
     "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables",
@@ -403,7 +409,8 @@ def refresh() -> None:
     data["culture_packs"] = sorted({r["culture_pack"] for r in culture_rows if r["culture_pack"]})
     data["culture_animations"] = sorted(f"{r['battle_animations_table']}|{r['culture_pack']}" for r in culture_rows)
     data["vanilla_names"] = sorted(r["id"] for r in loaded["names_tables"])
-    missiles = {w["missile"]["template"] for w in registry["weapons"].values() if "missile" in w}
+    squads = [w["company"]["squad"] for w in registry["weapons"].values() if "company" in w]
+    missiles = {w["missile"]["template"] for w in registry["weapons"].values() if "missile" in w} | {s["missile"]["template"] for s in squads}
     data["missile_weapons"] = {r["key"]: r for r in loaded["missile_weapons_tables"] if r["key"] in missiles}
     projectiles = {r["default_projectile"] for r in data["missile_weapons"].values()}
     data["projectiles"] = {r["key"]: r for r in loaded["projectiles_tables"] if r["key"] in projectiles}
@@ -411,7 +418,7 @@ def refresh() -> None:
         copied = {w["missile"]["upgrade"][field]["template"] for w in registry["weapons"].values() if field in w.get("missile", {}).get("upgrade", {})}
         data[kept] = {r["key"]: r for r in loaded[table] if r["key"] in copied}
     melees = {w["melee"]["template"] for w in registry["weapons"].values() if "melee" in w}
-    melees |= {r["primary_melee_weapon"] for r in data["templates"]["land_units_tables"]}
+    melees |= {r["primary_melee_weapon"] for r in data["templates"]["land_units_tables"]} | {s["melee"]["template"] for s in squads}
     data["melee_weapons"] = {r["key"]: r for r in loaded["melee_weapons_tables"] if r["key"] in melees}
     entities = {r["man_entity"] for r in data["templates"]["land_units_tables"]}
     data["entities"] = {r["key"]: r for r in loaded["battle_entities_tables"] if r["key"] in entities}
@@ -449,17 +456,17 @@ def unit_key(weapon: str, mount: str) -> str:
     return f"{PREFIX}_{weapon}_{mount}"
 
 
-def transform_key(weapon: str, form: str) -> str:
-    """The ability that turns a weapon's unit into one of its forms.
+def transform_key(human: str, form: str) -> str:
+    """The ability that turns a human unit or its dragon into one of the two forms.
 
     Args:
-        weapon (str): Weapon key.
+        human (str): The human unit key.
         form (str): The form it turns into, `dragon` or `human`.
 
     Returns:
         str: The ability key.
     """
-    return f"{PREFIX}_{weapon}_{form}_form"
+    return f"{human}_{form}_form"
 
 
 def rig_key(weapon: str, mount: str) -> str:
@@ -732,6 +739,27 @@ def entity_key(weapon_key: str) -> str:
     return f"{PREFIX}_{weapon_key}_entity"
 
 
+def copied_row(data: Dict, kept: str, template: str, key: str, values: Dict) -> Dict[str, str]:
+    """A copy of a kept vanilla row under his own key, with the given values.
+
+    Args:
+        data (Dict): The kept vanilla rows.
+        kept (str): The kept-data name, such as `melee_weapons`.
+        template (str): The vanilla key to copy.
+        key (str): The copy's key.
+        values (Dict): Column -> value set on the copy.
+
+    Returns:
+        Dict[str, str]: The row.
+
+    Raises:
+        SystemExit: When the template is not in the kept rows (run `--refresh`).
+    """
+    if template not in data.get(kept, {}):
+        raise SystemExit(f"{kept} template {template} is not kept, run with --refresh")
+    return dict(data[kept][template], key=key, **{k: table_value(v) for k, v in values.items()})
+
+
 def entity_rows(registry: Dict, data: Dict, advisor: Dict[str, str], rows: Dict[str, List[Dict[str, str]]]) -> None:
     """Adds a foot battle entity for every weapon with an `entity`: a copy of his vanilla foot entity under his own key, with the registry's values.
 
@@ -745,12 +773,8 @@ def entity_rows(registry: Dict, data: Dict, advisor: Dict[str, str], rows: Dict[
         SystemExit: When his foot entity is not in the kept rows (run `--refresh`).
     """
     for weapon_key, weapon in registry["weapons"].items():
-        if "entity" not in weapon:
-            continue
-        if advisor["man_entity"] not in data.get("entities", {}):
-            raise SystemExit(f"entity {advisor['man_entity']} is not kept, run with --refresh")
-        rows["battle_entities_tables"].append(dict(data["entities"][advisor["man_entity"]], key=entity_key(weapon_key),
-                                                   **{k: table_value(v) for k, v in weapon["entity"].items()}))
+        if "entity" in weapon:
+            rows["battle_entities_tables"].append(copied_row(data, "entities", advisor["man_entity"], entity_key(weapon_key), weapon["entity"]))
 
 
 def melee_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:
@@ -765,13 +789,9 @@ def melee_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]
         SystemExit: When a template is not in the kept rows (run `--refresh`).
     """
     for weapon_key, weapon in registry["weapons"].items():
-        if "melee" not in weapon:
-            continue
-        melee = dict(weapon["melee"])
-        template = melee.pop("template")
-        if template not in data.get("melee_weapons", {}):
-            raise SystemExit(f"melee template {template} is not kept, run with --refresh")
-        rows["melee_weapons_tables"].append(dict(data["melee_weapons"][template], key=melee_key(weapon_key), **{k: table_value(v) for k, v in melee.items()}))
+        if "melee" in weapon:
+            melee = dict(weapon["melee"])
+            rows["melee_weapons_tables"].append(copied_row(data, "melee_weapons", melee.pop("template"), melee_key(weapon_key), melee))
 
 
 def armour_row(row: Dict[str, str], weapon: Dict, mount_key: str, mount: Dict, templates: Dict, armour_types: Dict) -> Optional[Dict[str, str]]:
@@ -1155,6 +1175,18 @@ def bundle_rows(key: str, entry: Dict, rows: Dict[str, List[Dict[str, str]]], te
     texts.append((f"effect_bundles_localised_description_{key}", entry.get("description", "")))
 
 
+def slot_skills(registry: Dict) -> Dict[str, str]:
+    """The built skill of each art slot.
+
+    Args:
+        registry (Dict): The registry.
+
+    Returns:
+        Dict[str, str]: Art slot, such as `apex` -> its skill id in the registry's `skills`.
+    """
+    return {skill["slot"]: skill_id for skill_id, skill in registry.get("skills", {}).items() if skill.get("build") and skill.get("slot")}
+
+
 def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> Dict[str, List[Dict]]:
     """Adds every weapon's arts, one effect bundle per art slot.
 
@@ -1172,9 +1204,8 @@ def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts
         SystemExit: When a weapon leaves a built slot undefined.
     """
     skills = registry.get("skills", {})
-    slot_skills = {skill["slot"]: skill_id for skill_id, skill in skills.items() if skill.get("build") and skill.get("slot")}
     slots = {}
-    for slot, skill_id in slot_skills.items():
+    for slot, skill_id in slot_skills(registry).items():
         skill = skills[skill_id]
         # The art tooltip replaces the vanilla one, so the note pointing at Change Loadout is left out.
         flavour = "\n\n".join(p for p in skill.get("description", "").split("\\\\n\\\\n") if not p.startswith(ART_SLOT_NOTE))
@@ -1418,12 +1449,10 @@ def missile_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]
         if "missile" not in weapon:
             continue
         missile = weapon["missile"]
-        if missile["template"] not in data.get("missile_weapons", {}):
-            raise SystemExit(f"missile template {missile['template']} is not kept, run with --refresh")
-        template = data["missile_weapons"][missile["template"]]
         key = missile_key(weapon_key, weapon)
-        projectile = dict(data["projectiles"][template["default_projectile"]], key=key, **{k: table_value(v) for k, v in missile["projectile"].items()})
-        rows["missile_weapons_tables"].append(dict(template, key=key, default_projectile=key))
+        missile_weapon = copied_row(data, "missile_weapons", missile["template"], key, {"default_projectile": key})
+        projectile = copied_row(data, "projectiles", data["missile_weapons"][missile["template"]]["default_projectile"], key, missile["projectile"])
+        rows["missile_weapons_tables"].append(missile_weapon)
         rows["projectiles_tables"].append(projectile)
         if "upgrade" not in missile:
             continue
@@ -1438,7 +1467,7 @@ def missile_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]
                 raise SystemExit(f"{field} template {copied} is not kept, run with --refresh")
             upgraded[column] = upgrade["key"]
             rows[table].append(dict(data[kept][copied], key=upgrade["key"], **{k: table_value(v) for k, v in values.items()}))
-        rows["missile_weapons_tables"].append(dict(template, key=upgrade["key"], default_projectile=upgrade["key"]))
+        rows["missile_weapons_tables"].append(dict(missile_weapon, key=upgrade["key"], default_projectile=upgrade["key"]))
         rows["projectiles_tables"].append(upgraded)
         for unit in (unit_key(w, m) for w, m in pairs(registry) if w == weapon_key):
             junction = str(zlib.crc32(f"{unit}_{upgrade['key']}".encode()) & 0x7FFFFFFF)
@@ -1473,9 +1502,65 @@ def unit_rows(key: str, template: str, main: Dict[str, str], attributes: Iterabl
     texts.append((f"land_units_onscreen_name_{key}", name))
 
 
+def company_rows(weapon_key: str, weapon: Dict, foot: Dict, art_sets: List[str], unique_index: int, data: Dict, advisor: Dict[str, str],
+                 rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> str:
+    """Adds a weapon's Company of Heroes: a copy of its foot unit with more men, and the rig that gives it. He is the unit's officer, with his own
+    look, animations and weapons. The other men are the squad, with its own look, animations, entity and weapons.
+
+    Args:
+        weapon_key (str): The weapon key.
+        weapon (Dict): The registry weapon.
+        foot (Dict): The foot pair's `land`, `main`, `attributes`, `abilities`, `variant`, `uniform` and `ancillary_type`.
+        art_sets (List[str]): Every weapon's art set, for the rig's uniforms.
+        unique_index (int): Its main unit index.
+        data (Dict): The kept vanilla rows.
+        advisor (Dict[str, str]): His foot land unit.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+
+    Returns:
+        str: The rig ancillary key.
+
+    Raises:
+        SystemExit: When a squad weapon template is not in the kept rows (run `--refresh`).
+    """
+    company, squad = weapon["company"], weapon["company"]["squad"]
+    key = unit_key(weapon_key, "company")
+    officer, melee, missile = f"{key}_officer", f"{key}_melee", f"{key}_missile"
+    melee_values = dict(squad["melee"])
+    rows["melee_weapons_tables"].append(copied_row(data, "melee_weapons", melee_values.pop("template"), melee, melee_values))
+    template = squad["missile"]["template"]
+    rows["missile_weapons_tables"].append(copied_row(data, "missile_weapons", template, missile, {"default_projectile": missile}))
+    rows["projectiles_tables"].append(copied_row(data, "projectiles", data["missile_weapons"][template]["default_projectile"], missile, squad["missile"]["projectile"]))
+
+    # The squad fills the unit's own columns. He keeps his foot unit's look, set and weapons as its officer.
+    land = foot["land"]
+    rows["land_units_tables"].append(dict(land, key=key, attribute_group=key, man_animation=squad["man_animation"], man_entity=squad["man_entity"],
+                                          primary_melee_weapon=melee, primary_missile_weapon=missile, primary_ammo=str(squad["ammo"]),
+                                          **{c: table_value(v) for c, v in company.get("stats", {}).items() if c in STAT_COLUMNS}))
+    unit_rows(key, FOOT_TEMPLATE, dict(foot["main"], num_men=str(company["men"])), foot["attributes"], foot["abilities"], squad["variant"],
+              f"The Advisor ({weapon['name']}, {company['name']})", unique_index, data, rows, texts)
+    rows["battle_entities_tables"].append(copied_row(data, "entities", advisor["man_entity"], officer, weapon.get("entity", {})))
+    rows["battle_personalities_tables"].append({"key": officer, "man_animations_table": land["man_animation"], "variant": foot["variant"],
+                                                "battle_entity": officer, "battle_entity_stats": officer, "autonomous_rider_hero": "false",
+                                                "autonomous_rider_can_shoot_in_melee": "false", "can_only_be_used_by_draught": "false"})
+    rows["battle_entity_stats_tables"].append({"key": officer, "primary_melee_weapon": land["primary_melee_weapon"],
+                                               "primary_missile_weapon": land["primary_missile_weapon"]})
+    rows["land_units_to_battle_personalities_junctions_tables"].append({"battle_personality": officer, "land_unit": key, "attach": "officer",
+                                                                        "riders_attachment_point": "", "engine_articulation_index": "-1",
+                                                                        "jettison_rider": "false"})
+
+    ancillary = rig_key(weapon_key, "company")
+    ancillary_rows(rows, ancillary, foot["ancillary_type"], "mount", provided_bodyguard_unit=key)
+    rows["campaign_character_uniform_ancillary_junctions_tables"] += [{"ancillary": ancillary, "art_set": a, "uniform": foot["uniform"]} for a in art_sets]
+    texts.append((f"ancillaries_onscreen_name_{ancillary}", f"{weapon['name']}, {company['name']}"))
+    texts.append((f"ancillaries_colour_text_{ancillary}", company["description"]))
+    return ancillary
+
+
 def dragon_rows(registry: Dict, unique_index: int, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
     """Adds the dragon form of each foot pair whose weapon has one: a unit copied from the vanilla dragon with his stats and voice, and the two
-    abilities that swap forms.
+    abilities that swap forms. A weapon's company gets a dragon of its own, so it turns back into the company.
 
     Args:
         registry (Dict): The units registry.
@@ -1493,27 +1578,27 @@ def dragon_rows(registry: Dict, unique_index: int, data: Dict, rows: Dict[str, L
         if "dragon" not in weapon or "template" in mount:
             continue
         dragon, template = weapon["dragon"], weapon["dragon"]["template"]
-        human = unit_key(weapon_key, mount_key)
-        key = f"{human}_dragon"
         land = next(r for r in templates["land_units_tables"] if r["key"] == template)
         stats = {c: table_value(v) for c, v in dragon.get("stats", {}).items() if c in STAT_COLUMNS}
-        rows["land_units_tables"].append(dict(land, **stats, key=key, attribute_group=key, historical_description_text=DESCRIPTION,
-                                              short_description_text=DESCRIPTION))
         main = next(r for r in templates["main_units_tables"] if r["land_unit"] == template)
         attributes = [r["attribute"] for r in templates["unit_attributes_to_groups_junctions_tables"] if r["attribute_group"] == template]
-        abilities = ["wh3_main_unit_passive_single_entity", transform_key(weapon_key, "human")] + dragon.get("abilities", [])
-        unit_rows(key, template, dict(main, **voice, vo_is_dragon="false"), attributes, abilities, dragon["variant"], f"The Advisor ({dragon['name']})",
-                  unique_index, data, rows, texts)
-        unique_index += 1
-        rows["land_units_to_unit_abilites_junctions_tables"].append({"ability": transform_key(weapon_key, "dragon"), "land_unit": human, "culture": "*"})
-        for form, spawned in (("dragon", key), ("human", human)):
-            ability, vanilla = transform_key(weapon_key, form), dragon[f"to_{form}"]
-            unique_id = str(TRANSFORM_UNIQUE_ID + len(rows["unit_special_abilities_tables"]))
-            rows["unit_abilities_tables"].append(dict(data["transforms"]["unit_abilities_tables"][vanilla], key=ability))
-            rows["unit_special_abilities_tables"].append(dict(data["transforms"]["unit_special_abilities_tables"][vanilla], key=ability, spawned_unit=spawned,
-                                                              unique_id=unique_id))
-            texts.append((f"unit_abilities_onscreen_name_{ability}", dragon[form]["name"]))
-            texts.append((f"unit_abilities_tooltip_text_{ability}", dragon[form]["description"]))
+        for human in [unit_key(weapon_key, mount_key)] + ([unit_key(weapon_key, "company")] if "company" in weapon else []):
+            key = f"{human}_dragon"
+            rows["land_units_tables"].append(dict(land, **stats, key=key, attribute_group=key, historical_description_text=DESCRIPTION,
+                                                  short_description_text=DESCRIPTION))
+            abilities = ["wh3_main_unit_passive_single_entity", transform_key(human, "human")] + dragon.get("abilities", [])
+            unit_rows(key, template, dict(main, **voice, vo_is_dragon="false"), attributes, abilities, dragon["variant"], f"The Advisor ({dragon['name']})",
+                      unique_index, data, rows, texts)
+            unique_index += 1
+            rows["land_units_to_unit_abilites_junctions_tables"].append({"ability": transform_key(human, "dragon"), "land_unit": human, "culture": "*"})
+            for form, spawned in (("dragon", key), ("human", human)):
+                ability, vanilla = transform_key(human, form), dragon[f"to_{form}"]
+                unique_id = str(TRANSFORM_UNIQUE_ID + len(rows["unit_special_abilities_tables"]))
+                rows["unit_abilities_tables"].append(dict(data["transforms"]["unit_abilities_tables"][vanilla], key=ability))
+                rows["unit_special_abilities_tables"].append(dict(data["transforms"]["unit_special_abilities_tables"][vanilla], key=ability,
+                                                                  spawned_unit=spawned, unique_id=unique_id))
+                texts.append((f"unit_abilities_onscreen_name_{ability}", dragon[form]["name"]))
+                texts.append((f"unit_abilities_tooltip_text_{ability}", dragon[form]["description"]))
 
 
 def build() -> None:
@@ -1534,6 +1619,8 @@ def build() -> None:
     texts: List[Tuple[str, str]] = []
     variants: Dict[str, Dict] = {}
     combos: List[Tuple[str, str, str]] = []
+    upgrades: List[Tuple[str, str, str, str]] = []
+    art_sets = [weapon_art_set(w) for w in registry["weapons"]]
     unique_index = 1493349200
     agent_rows(data, rows, texts)
 
@@ -1565,7 +1652,7 @@ def build() -> None:
             rows["units_custom_battle_mounts_tables"].append({"base_unit": unit_key(weapon_key, DEFAULT_MOUNT), "mounted_unit": key, "icon_name": mount["icon"]})
 
         ancillary_rows(rows, ancillary, mount["ancillary_type"], "mount", provided_bodyguard_unit=key)
-        for art_set in (weapon_art_set(w) for w in registry["weapons"]):
+        for art_set in art_sets:
             rows["campaign_character_uniform_ancillary_junctions_tables"].append({"ancillary": ancillary, "art_set": art_set, "uniform": uniform})
         # The campaign map model and the character panel model show the weapon. Both use the weapon's foot variant, so mount props such as the disc
         # stay out of them.
@@ -1582,6 +1669,12 @@ def build() -> None:
         look = {"weapon": weapon_key, "hood": weapon.get("hood", registry["model"]["hood"]), "pieces": weapon.get("pieces", {}),
                 "piece_shapes": weapon.get("piece_shapes", {})}
         variants[variant] = (weapon.get("body", registry["model"]["body"]), dict(weapon["props"], **mount.get("variant_props", {}), **form_props), look)
+        if "company" in weapon and "template" not in mount:
+            foot = {"land": land, "main": main, "attributes": attributes, "abilities": abilities, "variant": variant, "uniform": uniform,
+                    "ancillary_type": mount["ancillary_type"]}
+            rig = company_rows(weapon_key, weapon, foot, art_sets, unique_index, data, advisor, rows, texts)
+            unique_index += 1
+            upgrades.append((weapon_key, mount_key, rig, planned_skill_key(slot_skills(registry)[weapon["company"]["slot"]])))
 
     dragon_rows(registry, unique_index, data, rows, texts)
     for variant in variants:
@@ -1622,7 +1715,7 @@ def build() -> None:
     write_portraits(data["portraits"], registry["portrait"], portrait_ids)
     write_portrait_images(registry["portrait"])
     write_skill_icons(rows["character_skills_tables"])
-    write_script(registry, combos, arts, [n["character_skill_key"] for n in rows["character_skill_nodes_tables"] if n["points_on_creation"] == "1"],
+    write_script(registry, combos, upgrades, arts, [n["character_skill_key"] for n in rows["character_skill_nodes_tables"] if n["points_on_creation"] == "1"],
                  polymath_data(registry))
     with open(os.path.join(MOD, "text", "db", f"{FILE}.loc.tsv"), "w", encoding="utf-8", newline="\n") as f:
         f.write(f"key\ttext\ttooltip\n#Loc;1;text/db/{FILE}.loc\t\t\n")
@@ -1962,13 +2055,16 @@ def write_skill_icons(skills: List[Dict[str, str]]) -> None:
         icon.save(os.path.join(out, name), optimize=True)
 
 
-def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[str, List[Dict]], learned: List[str], polymath: Optional[Dict]) -> None:
+def write_script(registry: Dict, combos: List[Tuple[str, str, str]], upgrades: List[Tuple[str, str, str, str]], arts: Dict[str, List[Dict]],
+                 learned: List[str], polymath: Optional[Dict]) -> None:
     """Writes the Lua data table the campaign scripts read: his subtype, the weapons and mounts with their unlock skills, names and picker icons,
-    the ancillary of every valid pair both ways, the skills he is made with, each weapon's arts and the Polymath.
+    the ancillary of every valid pair both ways, the rigs that replace a pair's once he owns a skill, the skills he is made with, each weapon's
+    arts and the Polymath.
 
     Args:
         registry (Dict): The registry.
         combos (List[Tuple[str, str, str]]): (weapon, mount, ancillary) per valid pair.
+        upgrades (List[Tuple[str, str, str, str]]): (weapon, mount, ancillary, skill) per pair whose rig is replaced once he owns the skill.
         arts (Dict[str, List[Dict]]): Weapon -> its arts, from `weapon_art_rows`.
         learned (List[str]): The skills he is made with.
         polymath (Optional[Dict]): The Polymath, from `polymath_data`, or None.
@@ -1997,7 +2093,9 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[
     lines += ['\t--- "weapon|mount" -> the mount ancillary that gives him that unit. Only pairs with a unit are listed.', "\tancillaries = {"]
     lines += [f'\t\t["{w}|{m}"] = "{a}",' for w, m, a in combos]
     lines += ["\t},", "\t--- Mount ancillary -> the weapon and mount of its pair.", "\trigs = {"]
-    lines += [f'\t\t["{a}"] = {{ weapon = "{w}", mount = "{m}" }},' for w, m, a in combos]
+    lines += [f'\t\t["{a}"] = {{ weapon = "{w}", mount = "{m}" }},' for w, m, a in combos + [u[:3] for u in upgrades]]
+    lines += ["\t},", '\t--- "weapon|mount" -> the skill that swaps that pair\'s rig for another (the Company of Heroes), and that rig.', "\tupgrades = {"]
+    lines += [f'\t\t["{w}|{m}"] = {{ skill = "{s}", ancillary = "{a}" }},' for w, m, a, s in upgrades]
     lines += ["\t},", "\t--- Forename loc key of his name.", f'\tname = "names_name_{name_id()}",']
     lines += ["\t--- Hidden skills he is made with. An Advisor from before they were added gets them from the spawn script.", "\tlearned_skills = {"]
     lines += [f'\t\t"{skill}",' for skill in learned]
