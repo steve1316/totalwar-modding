@@ -191,51 +191,55 @@
    "arts": {
     "art_1": {
      "name": "Spellguard",
-     "description": "He parries with the staff and lets the wards take the rest.",
+     "description": "He is slow and he is soft, and he has made his peace with both. The wards take what the staff cannot turn.",
      "effects": [
-      {
-       "effect": "wh_main_effect_character_stat_melee_defence",
-       "scope": "character_to_character_own",
-       "value": 8
-      },
       {
        "effect": "wh_main_effect_character_stat_magic_resistance",
        "scope": "character_to_character_own",
        "value": 15
       },
+      {
+       "effect": "wh_main_effect_character_stat_missile_resistance",
+       "scope": "character_to_character_own",
+       "value": 10
+      },
       {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5}
      ]
     },
     "art_2": {
-     "name": "Bolt and Blade",
-     "description": "A bolt to open the guard, a cut to close it.",
+     "name": "Focused Bolt",
+     "description": "He stops throwing the Winds and starts aiming them.",
      "effects": [
-      {
-       "effect": "wh_main_effect_character_stat_melee_attack",
-       "scope": "character_to_character_own",
-       "value": 8
-      },
       {
        "effect": "wh_main_effect_character_stat_missile_damage",
        "scope": "character_to_character_own",
+       "value": 20
+      },
+      {
+       "effect": "wh_main_effect_character_stat_ap_missile_damage",
+       "scope": "character_to_character_own",
        "value": 15
       },
-      {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 8}
+      {
+       "effect": "wh_main_effect_character_stat_reload_time_reduction",
+       "scope": "character_to_character_own",
+       "value": 15
+      }
      ]
     },
     "art_3": {
-     "name": "Winds in the Steel",
-     "description": "The sword carries what the staff gathers.",
+     "name": "Long Reach",
+     "description": "Every step he takes is slow, so he makes every step count from further away.",
      "effects": [
       {
-       "effect": "wh_main_effect_character_stat_enable_magic_attacks",
+       "effect": "wh_main_effect_character_stat_range",
        "scope": "character_to_character_own",
-       "value": 1
+       "value": 20
       },
       {
-       "effect": "wh_main_effect_character_stat_weapon_strength",
+       "effect": "wh_main_effect_character_stat_ammunition",
        "scope": "character_to_character_own",
-       "value": 12
+       "value": 50
       },
       {
        "effect": "wh2_main_effect_ability_cooldown_spells",
@@ -245,18 +249,23 @@
      ]
     },
     "art_4": {
-     "name": "Unbinding",
-     "description": "Blows that should land slide off a man who knows where they were going.",
+     "name": "Wind Blast",
+     "description": "When they reach him anyway, the staff throws them back where they came from.",
      "effects": [
+      {
+       "effect": "wh2_dlc11_effect_ability_enable_bound_wind_blast",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
       {
        "effect": "wh_main_effect_character_stat_ward_save",
        "scope": "character_to_character_own",
-       "value": 12
+       "value": 10
       },
       {
        "effect": "wh_main_effect_character_stat_miscast",
        "scope": "character_to_character_own",
-       "value": -15
+       "value": -10
       }
      ]
     },
@@ -277,13 +286,18 @@
      ]
     },
     "army_2": {
-     "name": "Patient Lines",
-     "description": "He teaches them to wait for the spell to land.",
+     "name": "Screen the Staff",
+     "description": "He cannot outrun anything, so they learn to stand where he cannot be reached.",
      "effects": [
       {
        "effect": "wh_main_effect_force_stat_melee_defence",
        "scope": "agent_to_parent_army_own",
-       "value": 5
+       "value": 6
+      },
+      {
+       "effect": "wh_main_effect_force_stat_missile_resistance",
+       "scope": "agent_to_parent_army_own",
+       "value": 8
       },
       {
        "effect": "wh3_main_effect_winds_of_magic_character",
@@ -293,10 +307,10 @@
      ]
     },
     "army_3": {
-     "name": "Calm in the Storm",
-     "description": "Magic does not frighten men who have seen him use it.",
+     "name": "Woven Wards",
+     "description": "He threads a ward through every rank before the first blow.",
      "effects": [
-      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 8},
+      {"effect": "wh_main_effect_force_stat_ward_save", "scope": "agent_to_parent_army_own", "value": 5},
       {
        "effect": "wh_main_effect_force_stat_magic_resistance",
        "scope": "agent_to_parent_army_own",
@@ -306,26 +320,36 @@
     },
     "apex": {
      "name": "Channelled Staff",
-     "description": "The staff drinks the Winds and gives them back to him.",
+     "description": "The staff drinks the Winds and gives them back to him, one bolt at a time.",
      "effects": [
       {
        "effect": "wh_main_effect_ability_enable_channelling_staff",
        "scope": "character_to_character_own",
        "value": 1
       },
+      {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10},
       {
-       "effect": "wh_main_effect_character_stat_melee_attack",
+       "effect": "wh_main_effect_character_stat_missile_damage",
        "scope": "character_to_character_own",
-       "value": 8
+       "value": 15
       },
-      {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10}
+      {
+       "effect": "wh_main_effect_character_stat_reload_time_reduction",
+       "scope": "character_to_character_own",
+       "value": 10
+      }
      ]
     },
     "army_4": {
-     "name": "Woven Wards",
-     "description": "He threads a ward through every rank before the first blow.",
+     "name": "Charged Steel",
+     "description": "Before the lines meet he walks along them and touches every blade.",
      "effects": [
-      {"effect": "wh_main_effect_force_stat_ward_save", "scope": "agent_to_parent_army_own", "value": 5}
+      {
+       "effect": "wh_main_effect_force_stat_enable_magic_attacks",
+       "scope": "agent_to_parent_army_own",
+       "value": 1
+      },
+      {"effect": "wh_main_effect_force_stat_leadership", "scope": "agent_to_parent_army_own", "value": 6}
      ]
     }
    },
