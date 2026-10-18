@@ -881,6 +881,11 @@
        "effect": "wh_main_effect_force_stat_ap_damage_mult",
        "scope": "agent_to_parent_army_own",
        "value": 10
+      },
+      {
+       "effect": "advisor_overhaul_effect_army_splash_power",
+       "scope": "agent_to_parent_army_own",
+       "value": 25
       }
      ]
     },
@@ -7088,6 +7093,14 @@
    "icon": "barrier.png",
    "good": true,
    "text": "Barrier: %+n for all units in the army except characters"
+  },
+  "advisor_overhaul_effect_army_splash_power": {
+   "priority": 475,
+   "bonus": "splash_attack_power_mod_add",
+   "unit_sets": ["all_units"],
+   "icon": "weapon_damage_character.png",
+   "good": true,
+   "text": "Splash attack power: %+n%"
   }
  },
  "action_overrides": {

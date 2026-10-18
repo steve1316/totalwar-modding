@@ -7,3 +7,4 @@ advisor_overhaul_effect_enable_spy_assist_army_increase_mobility		0		campaign	tr
 advisor_overhaul_effect_enable_spy_hinder_character_assassinate		0		campaign	true
 advisor_overhaul_effect_enable_champion_passive_spread_corruption_kho		0		campaign	true
 advisor_overhaul_effect_army_barrier	barrier.png	320	barrier.png	battle	true
+advisor_overhaul_effect_army_splash_power	weapon_damage_character.png	475	weapon_damage_character.png	battle	true
