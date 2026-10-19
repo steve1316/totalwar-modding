@@ -1354,10 +1354,11 @@
     "name": "Battering Ram",
     "description": "Nothing stops or knocks him down. He bowls men over and flings them aside, and every blow cracks the armour of what it hits.",
     "slot": "apex",
-    "entity": {"mass": "3000.0000", "hit_reactions_ignore_chance": "100", "knock_interrupts_ignore_chance": "100",
+    "entity": {"size": "large", "mass": "6000.0000", "radius": "1.0000", "run_speed": "4.6000", "acceleration": "3.0000", "charge_speed": "6.0000",
+               "hit_reactions_ignore_chance": "100", "knock_interrupts_ignore_chance": "100",
                "dealt_collision_knocked_flying_threshold_multiplier": "0.5000", "dealt_collision_knocked_down_threshold_multiplier": "0.2000",
                "dealt_collision_knocked_back_threshold_multiplier": "0.2200"},
-    "melee": {"collision_attack_max_targets": "5", "collision_attack_max_targets_cooldown": "5", "contact_phase": "wh2_dlc12_unit_contact_sundered_armour"}
+    "melee": {"collision_attack_max_targets": "6", "collision_attack_max_targets_cooldown": "3", "contact_phase": "wh2_dlc12_unit_contact_sundered_armour"}
    }
   }
  },
