@@ -427,7 +427,7 @@ local function has_unit(weapon, mount)
 	return rig_data().ancillaries[weapon .. "|" .. mount] ~= nil
 end
 
---- The rig that gives the Advisor a pair's unit: the upgrade's rig (the Company of Heroes) once he owns its skill, else the pair's own.
+--- The rig that gives the Advisor a pair's unit: the upgrade's rig (an apex form) once he owns its skill, else the pair's own.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
 --- @param weapon string Weapon key.
 --- @param mount string Mount key.
@@ -2431,7 +2431,7 @@ core:add_listener(
 		-- Any skill may change how many disciplines the Polymath counts.
 		local changed = sync_polymath(character)
 		if not unlocked then
-			-- An art slot skill puts on his held weapon's art, and an upgrade skill (the Company of Heroes) swaps his rig, both at once.
+			-- An art slot skill puts on his held weapon's art, and an upgrade skill (an apex form) swaps his rig, both at once.
 			changed = sync_arts(character, current_pair(character)) or changed
 			changed = reconcile(character, "skill " .. skill) or changed
 			if changed then

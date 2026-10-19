@@ -44,19 +44,19 @@ ancillaries_colour_text_advisor_overhaul_rig_glaive_foot	A long Cathayan glaive 
 land_units_onscreen_name_advisor_overhaul_iron_hand_foot	The Advisor (Iron Hand, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_iron_hand_foot	Iron Hand, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_iron_hand_foot	No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way Zhao Ming fights before he takes his dragon form. He walks, as he always has.	true
-land_units_onscreen_name_advisor_overhaul_iron_hand_company	The Advisor (Iron Hand, Company of Heroes)	true
-ancillaries_onscreen_name_advisor_overhaul_rig_iron_hand_company	Iron Hand, Company of Heroes	true
-ancillaries_colour_text_advisor_overhaul_rig_iron_hand_company	He leads a company of remembered heroes. Each fights and shoots on his own.	true
+land_units_onscreen_name_advisor_overhaul_iron_hand_apex	The Advisor (Iron Hand, Battering Ram)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_iron_hand_apex	Iron Hand, Battering Ram	true
+ancillaries_colour_text_advisor_overhaul_rig_iron_hand_apex	Nothing stops or knocks him down. He bowls men over and flings them aside, and every blow cracks the armour of what it hits.	true
 land_units_onscreen_name_advisor_overhaul_iron_hand_foot_dragon	The Advisor (Iron Dragon)	true
 unit_abilities_onscreen_name_advisor_overhaul_iron_hand_foot_dragon_form	Dragon Form	true
 unit_abilities_tooltip_text_advisor_overhaul_iron_hand_foot_dragon_form	He lets the old shape take him: iron scales, a forge-hot breath, wings over the field. The Iron Dragon of Cathay, as he remembers it.	true
 unit_abilities_onscreen_name_advisor_overhaul_iron_hand_foot_human_form	Human Form	true
 unit_abilities_tooltip_text_advisor_overhaul_iron_hand_foot_human_form	He folds the dragon away and stands as a man again, open hands and an unbending stance.	true
-land_units_onscreen_name_advisor_overhaul_iron_hand_company_dragon	The Advisor (Iron Dragon)	true
-unit_abilities_onscreen_name_advisor_overhaul_iron_hand_company_dragon_form	Dragon Form	true
-unit_abilities_tooltip_text_advisor_overhaul_iron_hand_company_dragon_form	He lets the old shape take him: iron scales, a forge-hot breath, wings over the field. The Iron Dragon of Cathay, as he remembers it.	true
-unit_abilities_onscreen_name_advisor_overhaul_iron_hand_company_human_form	Human Form	true
-unit_abilities_tooltip_text_advisor_overhaul_iron_hand_company_human_form	He folds the dragon away and stands as a man again, open hands and an unbending stance.	true
+land_units_onscreen_name_advisor_overhaul_iron_hand_apex_dragon	The Advisor (Iron Dragon)	true
+unit_abilities_onscreen_name_advisor_overhaul_iron_hand_apex_dragon_form	Dragon Form	true
+unit_abilities_tooltip_text_advisor_overhaul_iron_hand_apex_dragon_form	He lets the old shape take him: iron scales, a forge-hot breath, wings over the field. The Iron Dragon of Cathay, as he remembers it.	true
+unit_abilities_onscreen_name_advisor_overhaul_iron_hand_apex_human_form	Human Form	true
+unit_abilities_tooltip_text_advisor_overhaul_iron_hand_apex_human_form	He folds the dragon away and stands as a man again, open hands and an unbending stance.	true
 advisor_overhaul_ui_weapon_staff_and_sword	Staff and Sword	true
 advisor_overhaul_ui_weapon_sword_and_shield	Sword and Shield	true
 advisor_overhaul_ui_weapon_sword_and_bow	Sword and Bow	true
@@ -389,8 +389,8 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_army_3	Old 
 effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_3	New recruits are put next to his veterans from the first day, and they learn fast.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_army_4	Cast in Iron	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_4	Every unit under him becomes the company he once led. They take a blow the way metal takes the hammer.	true
-effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_apex	Company of Heroes	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_apex	He remembers the heroes who once fought at his side, and they come back to him. On foot he leads a company of them: each fights and shoots on his own. In dragon form he flies alone.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_apex	Battering Ram	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_apex	He stops fighting the line and walks through it. On foot nothing stops or knocks him down, his body bowls men over and flings them aside, and every blow cracks the armour of what it hits.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_1	Everything, Again (1 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_1	He draws on 1 of his disciplines at once.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_2	Everything, Again (2 of 4)	true

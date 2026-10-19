@@ -1332,46 +1332,32 @@
      ]
     },
     "apex": {
-     "name": "Company of Heroes",
-     "description": "He remembers the heroes who once fought at his side, and they come back to him. On foot he leads a company of them: each fights and shoots on his own. In dragon form he flies alone.",
+     "name": "Battering Ram",
+     "description": "He stops fighting the line and walks through it. On foot nothing stops or knocks him down, his body bowls men over and flings them aside, and every blow cracks the armour of what it hits.",
      "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_charge_bonus_add",
+       "scope": "character_to_character_own",
+       "value": 30
+      },
       {
        "effect": "wh_main_effect_character_stat_leadership",
        "scope": "character_to_character_own",
        "value": 10
-      },
-      {
-       "effect": "wh_main_effect_character_stat_melee_defence",
-       "scope": "character_to_character_own",
-       "value": 4
       }
      ]
     }
    },
    "grant_rank": 16,
    "body": "advisor",
-   "company": {
-    "name": "Company of Heroes",
-    "description": "He leads a company of remembered heroes. Each fights and shoots on his own.",
+   "apex_form": {
+    "name": "Battering Ram",
+    "description": "Nothing stops or knocks him down. He bowls men over and flings them aside, and every blow cracks the armour of what it hits.",
     "slot": "apex",
-    "men": 5,
-    "stats": {"bonus_hit_points": 1300},
-    "squad": {
-     "variant": "wh_emp_ch_witch_hunter",
-     "man_animation": "hu1_empire_sword_and_pistol",
-     "man_entity": "wh2_main_infantry_standard_hero_360_blood_dismembers",
-     "ammo": 12,
-     "melee": {
-      "template": "wh_main_emp_sword_witchhunter",
-      "damage": "100",
-      "ap_damage": "50",
-      "splash_attack_max_attacks": "1"
-     },
-     "missile": {
-      "template": "wh_main_emp_witchhunter_pistol",
-      "projectile": {"damage": "12", "ap_damage": "48"}
-     }
-    }
+    "entity": {"mass": "3000.0000", "hit_reactions_ignore_chance": "100", "knock_interrupts_ignore_chance": "100",
+               "dealt_collision_knocked_flying_threshold_multiplier": "0.5000", "dealt_collision_knocked_down_threshold_multiplier": "0.2000",
+               "dealt_collision_knocked_back_threshold_multiplier": "0.2200"},
+    "melee": {"collision_attack_max_targets": "5", "collision_attack_max_targets_cooldown": "5", "contact_phase": "wh2_dlc12_unit_contact_sundered_armour"}
    }
   }
  },

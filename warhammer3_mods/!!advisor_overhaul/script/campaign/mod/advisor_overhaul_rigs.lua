@@ -56,11 +56,11 @@ ADVISOR_OVERHAUL_RIGS = {
 		["advisor_overhaul_rig_greatsword_warhorse"] = { weapon = "greatsword", mount = "warhorse" },
 		["advisor_overhaul_rig_glaive_foot"] = { weapon = "glaive", mount = "foot" },
 		["advisor_overhaul_rig_iron_hand_foot"] = { weapon = "iron_hand", mount = "foot" },
-		["advisor_overhaul_rig_iron_hand_company"] = { weapon = "iron_hand", mount = "foot" },
+		["advisor_overhaul_rig_iron_hand_apex"] = { weapon = "iron_hand", mount = "foot" },
 	},
-	--- "weapon|mount" -> the skill that swaps that pair's rig for another (the Company of Heroes), and that rig.
+	--- "weapon|mount" -> the skill that swaps that pair's rig for another (an apex form), and that rig.
 	upgrades = {
-		["iron_hand|foot"] = { skill = "advisor_overhaul_skill_arts_apex", ancillary = "advisor_overhaul_rig_iron_hand_company" },
+		["iron_hand|foot"] = { skill = "advisor_overhaul_skill_arts_apex", ancillary = "advisor_overhaul_rig_iron_hand_apex" },
 	},
 	--- Forename loc key of his name.
 	name = "names_name_930556520",
@@ -136,7 +136,7 @@ ADVISOR_OVERHAUL_RIGS = {
 			{ skill = "advisor_overhaul_skill_arts_army_2", skill_name = "Army II: Formation", bundle = "advisor_overhaul_weapon_art_iron_hand_army_2", name = "Tempered Ranks", flavour = "He places men where he once saw them live.", about = "Broken units are mended and sent back to the line, harder than before.", requires = { { skill = "advisor_overhaul_skill_arts_army_1", name = "Army I: Drill" } } },
 			{ skill = "advisor_overhaul_skill_arts_army_3", skill_name = "Army III: Last Stand", bundle = "advisor_overhaul_weapon_art_iron_hand_army_3", name = "Old Hands", flavour = "He has seen how armies break. He does not let this one.", about = "New recruits are put next to his veterans from the first day, and they learn fast.", requires = { { skill = "advisor_overhaul_skill_arts_army_2", name = "Army II: Formation" } } },
 			{ skill = "advisor_overhaul_skill_arts_army_4", skill_name = "Army IV: Every Banner", bundle = "advisor_overhaul_weapon_art_iron_hand_army_4", name = "Cast in Iron", flavour = "Every army he ever marched with left him one trick. He hands them all on.", about = "Every unit under him becomes the company he once led. They take a blow the way metal takes the hammer.", requires = { { skill = "advisor_overhaul_skill_arts_army_3", name = "Army III: Last Stand" } } },
-			{ skill = "advisor_overhaul_skill_arts_apex", skill_name = "Master of Arms", bundle = "advisor_overhaul_weapon_art_iron_hand_apex", name = "Company of Heroes", flavour = "Every weapon he has ever held, in every ending, answers him at once.\n\nLocks the other Apexes and the Polymath.", about = "He remembers the heroes who once fought at his side, and they come back to him. On foot he leads a company of them: each fights and shoots on his own. In dragon form he flies alone.", requires = { { skill = "advisor_overhaul_skill_arts_gate", name = "A Style of His Own" } } },
+			{ skill = "advisor_overhaul_skill_arts_apex", skill_name = "Master of Arms", bundle = "advisor_overhaul_weapon_art_iron_hand_apex", name = "Battering Ram", flavour = "Every weapon he has ever held, in every ending, answers him at once.\n\nLocks the other Apexes and the Polymath.", about = "He stops fighting the line and walks through it. On foot nothing stops or knocks him down, his body bowls men over and flings them aside, and every blow cracks the armour of what it hits.", requires = { { skill = "advisor_overhaul_skill_arts_gate", name = "A Style of His Own" } } },
 		},
 	},
 	--- The Polymath: its skill, how many skills of a discipline make it count, each discipline's skills, and the bundle for each number
