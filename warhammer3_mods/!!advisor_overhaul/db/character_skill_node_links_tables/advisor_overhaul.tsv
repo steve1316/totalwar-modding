@@ -16,7 +16,6 @@ advisor_overhaul_skill_node_civic_6	advisor_overhaul_skill_node_civic_1	0	1	1	0.
 advisor_overhaul_skill_node_civic_7	advisor_overhaul_skill_node_civic_1	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_civic_8	advisor_overhaul_skill_node_civic_1	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_civic_9	advisor_overhaul_skill_node_civic_1	0	1	1	0.0000	0.0000	REQUIRED
-advisor_overhaul_skill_node_civic_apex	advisor_overhaul_skill_node_hero_lamp	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_combat_barrier	advisor_overhaul_skill_node_magic_steady	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_combat_barrier_line	advisor_overhaul_skill_node_magic_steady	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_combat_barrier_mend	advisor_overhaul_skill_node_magic_steady	0	1	1	0.0000	0.0000	REQUIRED
@@ -85,7 +84,6 @@ advisor_overhaul_skill_node_hero_lamp	advisor_overhaul_skill_node_hero_forager	0
 advisor_overhaul_skill_node_hero_pathfinder	advisor_overhaul_skill_node_civic_0	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_hero_students	advisor_overhaul_skill_node_civic_1	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_magic_arcane_ward	advisor_overhaul_skill_node_magic_steady	0	1	1	0.0000	0.0000	REQUIRED
-advisor_overhaul_skill_node_magic_archmage	advisor_overhaul_skill_node_magic_beyond_sight	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_magic_beyond_sight	advisor_overhaul_skill_node_magic_wider	0	1	1	0.0000	0.0000	SUBSET_REQUIRED
 advisor_overhaul_skill_node_magic_beyond_sight	advisor_overhaul_skill_node_magic_sharper	0	1	1	0.0000	0.0000	SUBSET_REQUIRED
 advisor_overhaul_skill_node_magic_beyond_sight	advisor_overhaul_skill_node_magic_ruinous	0	1	1	0.0000	0.0000	SUBSET_REQUIRED
@@ -113,7 +111,6 @@ advisor_overhaul_skill_node_martial_5	advisor_overhaul_skill_node_martial_1	0	1	
 advisor_overhaul_skill_node_martial_6	advisor_overhaul_skill_node_martial_1	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_martial_7	advisor_overhaul_skill_node_martial_1	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_martial_9	advisor_overhaul_skill_node_martial_1	0	1	1	0.0000	0.0000	REQUIRED
-advisor_overhaul_skill_node_martial_apex	advisor_overhaul_skill_node_combat_storm_needles	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_memory_calm_voice	advisor_overhaul_skill_node_memory_weight_of_years	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_memory_end_drowning	advisor_overhaul_skill_node_memory_old_lessons	0	1	1	0.0000	0.0000	REQUIRED
 advisor_overhaul_skill_node_memory_end_fire	advisor_overhaul_skill_node_memory_old_lessons	0	1	1	0.0000	0.0000	REQUIRED

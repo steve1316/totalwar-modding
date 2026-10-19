@@ -10,3 +10,6 @@ advisor_overhaul_effect_army_barrier	barrier.png	320	barrier.png	battle	true
 advisor_overhaul_effect_army_splash_power	weapon_damage_character.png	475	weapon_damage_character.png	battle	true
 advisor_overhaul_effect_staff_bolt_burst	archer.png	10	archer.png	battle	true
 advisor_overhaul_effect_bow_spread_arrow	archer.png	10	archer.png	battle	true
+advisor_overhaul_effect_army_fatigue	vigour.png	600	vigour.png	battle	false
+advisor_overhaul_effect_army_melee_defence_down	defence.png	610	defence.png	battle	true
+advisor_overhaul_effect_army_armour_down	armour.png	620	armour.png	battle	true

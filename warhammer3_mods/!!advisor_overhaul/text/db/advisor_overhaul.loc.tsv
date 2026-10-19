@@ -88,7 +88,7 @@ character_skills_localised_description_advisor_overhaul_choose_weapon_iron_hand	
 character_skills_localised_name_advisor_overhaul_skill_actions_default	Default Actions	true
 character_skills_localised_description_advisor_overhaul_skill_actions_default	The hero actions he always has: Scouting, Scout Settlement and Boost Income.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_apex	Master of Arms	true
-character_skills_localised_description_advisor_overhaul_skill_arts_apex	Every weapon he has ever held, in every ending, answers him at once.\\n\\nLocks the other Apexes and the Polymath.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
+character_skills_localised_description_advisor_overhaul_skill_arts_apex	Every weapon he has ever held, in every ending, answers him at once.\\n\\nStacks with any other Apex or the Polymath.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_army_1	Army I: Drill	true
 character_skills_localised_description_advisor_overhaul_skill_arts_army_1	Soldiers near him pick up his habits without knowing they have.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_army_2	Army II: Formation	true
@@ -132,7 +132,7 @@ character_skills_localised_description_advisor_overhaul_skill_civic_8	He knows w
 character_skills_localised_name_advisor_overhaul_skill_civic_9	Boost Income	true
 character_skills_localised_description_advisor_overhaul_skill_civic_9	Half the counting-houses in the Empire owe him money from a life they cannot remember.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_apex	Power Behind Thrones	true
-character_skills_localised_description_advisor_overhaul_skill_civic_apex	Kings come and go. He has advised most of them, in one world or another.\\n\\nLocks the other Apexes and the Polymath.	true
+character_skills_localised_description_advisor_overhaul_skill_civic_apex	Kings come and go. He has advised most of them, in one world or another.\\n\\nLocks the Polymath and every other Apex except Master of Arms.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_aim	Practised Aim	true
 character_skills_localised_description_advisor_overhaul_skill_combat_aim	He has loosed arrows at the end of every kind of world. The hand knows where to go.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_barrier	Shell of Light	true
@@ -202,7 +202,7 @@ character_skills_localised_description_advisor_overhaul_skill_hero_students	Half
 character_skills_localised_name_advisor_overhaul_skill_magic_arcane_ward	Arcane Ward	true
 character_skills_localised_description_advisor_overhaul_skill_magic_arcane_ward	A thin shimmer, taught to him by a mage whose name no one else recalls.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_archmage	Archmage	true
-character_skills_localised_description_advisor_overhaul_skill_magic_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\n\\nLocks the other Apexes and the Polymath.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\n\\nLocks the Polymath and every other Apex except Master of Arms.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_battle_caster	Spell and Steel	true
 character_skills_localised_description_advisor_overhaul_skill_magic_battle_caster	He casts with one hand and cuts with the other, and has never found the two work apart.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_beyond_sight	Weave Beyond Sight	true
@@ -258,7 +258,7 @@ character_skills_localised_description_advisor_overhaul_skill_martial_7	Their wo
 character_skills_localised_name_advisor_overhaul_skill_martial_9	Assault Units	true
 character_skills_localised_description_advisor_overhaul_skill_martial_9	The whole camp, the same night.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_apex	The Last Sword	true
-character_skills_localised_description_advisor_overhaul_skill_martial_apex	At the end of one world he was the last one standing. He intends to be again.\\n\\nLocks the other Apexes and the Polymath.	true
+character_skills_localised_description_advisor_overhaul_skill_martial_apex	At the end of one world he was the last one standing. He intends to be again.\\n\\nLocks the Polymath and every other Apex except Master of Arms.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_calm_voice	Calm Voice	true
 character_skills_localised_description_advisor_overhaul_skill_memory_calm_voice	Men stand firm around someone who is not afraid. He stopped being afraid a long time ago.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_end_drowning	The Ending of Drowning	true
@@ -278,7 +278,7 @@ character_skills_localised_description_advisor_overhaul_skill_memory_long_patien
 character_skills_localised_name_advisor_overhaul_skill_memory_old_lessons	Old Lessons	true
 character_skills_localised_description_advisor_overhaul_skill_memory_old_lessons	Everything he teaches, he learned the hard way. Several times.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_polymath	Everything, Again	true
-character_skills_localised_description_advisor_overhaul_skill_memory_polymath	He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\n\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Locks every Apex.	true
+character_skills_localised_description_advisor_overhaul_skill_memory_polymath	He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\n\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Locks every Apex except Master of Arms.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_seen_the_end	Seen the End	true
 character_skills_localised_description_advisor_overhaul_skill_memory_seen_the_end	He has watched this army walk into this ambush before. Not this time.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_weight_of_years	The Weight of Years	true
@@ -607,3 +607,6 @@ effects_description_advisor_overhaul_effect_army_barrier	Barrier: %+n for all un
 effects_description_advisor_overhaul_effect_army_splash_power	Splash attack power: %+n%	true
 effects_description_advisor_overhaul_effect_staff_bolt_burst	"Bursting Bolts" (each staff shot fires five bolts that burst in a wide blue blast, sparing his own side)	true
 effects_description_advisor_overhaul_effect_bow_spread_arrow	"Hunter's Spread" (each bow shot fires six lighter arrows in a glowing fan, each bursting in a small blast that spares his own side)	true
+effects_description_advisor_overhaul_effect_army_fatigue	Vigour loss: %+n%	true
+effects_description_advisor_overhaul_effect_army_melee_defence_down	Melee defence: %+n	true
+effects_description_advisor_overhaul_effect_army_armour_down	Armour: %+n	true
