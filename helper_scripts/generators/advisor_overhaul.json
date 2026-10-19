@@ -834,6 +834,16 @@
    "audio_type": "body",
    "key": "wh2_main_body_100"
   },
+  "wh2_main_body_20": {
+   "armour_value": "20",
+   "audio_type": "body",
+   "key": "wh2_main_body_20"
+  },
+  "wh2_main_body_70": {
+   "armour_value": "70",
+   "audio_type": "body",
+   "key": "wh2_main_body_70"
+  },
   "wh2_main_heavy_metal_80": {
    "armour_value": "80",
    "audio_type": "heavy_metal",
@@ -20278,6 +20288,66 @@
    "vfx_filter_id": "210",
    "walk_speed": "2.0000"
   },
+  "wh3_dlc25_emp_cha_elspeth_von_draken": {
+   "acceleration": "2.0000",
+   "allow_static_turn_anim": "true",
+   "allow_turn_to_move_anim": "true",
+   "anim_lod_distance_multiplier": "1.0000",
+   "audio_entity_type": "wh_human_male",
+   "aura_vfx": "wh_main_generic_character_aura",
+   "can_cast_projectile": "false",
+   "can_climb_ladder_and_stair_pipes": "true",
+   "can_dismember": "true",
+   "charge_distance_adopt_charge_pose": "25.0000",
+   "charge_distance_commence_run": "30.0000",
+   "charge_distance_pick_target": "25.0000",
+   "charge_speed": "4.3000",
+   "combat_camera_shake": "wh_main_unit_combat",
+   "combat_reaction_radius": "0.0000",
+   "dealt_collision_knocked_back_threshold_multiplier": "1.0000",
+   "dealt_collision_knocked_down_threshold_multiplier": "1.0000",
+   "dealt_collision_knocked_flying_threshold_multiplier": "1.0000",
+   "deceleration": "4.0000",
+   "dismember_arms_alive_hp_ratio": "-1.0000",
+   "dismember_head_alive_hp_ratio": "-1.0000",
+   "enable_engine_crew_turn_in_movement_direction": "false",
+   "entity_effects": "infantry_light_effects",
+   "fire_arc_close": "60.0000",
+   "fly_speed": "0.0000",
+   "flying_charge_speed": "0.0000",
+   "gradient_strategy": "ignore",
+   "has_blood": "true",
+   "height": "2.0000",
+   "hit_points": "8",
+   "hit_reactions_ignore_chance": "60",
+   "jump_attack_chance": "70",
+   "key": "wh3_dlc25_emp_cha_elspeth_von_draken",
+   "knock_interrupts_ignore_chance": "40",
+   "leaves_collision_when_dies": "false",
+   "locomotion_constants": "small_entity",
+   "mass": "500.0000",
+   "max_tracking_ratio": "1.6000",
+   "min_tracking_ratio": "0.5000",
+   "min_turning_speed": "0.0000",
+   "porthole_camera": "",
+   "porthole_composite_scene": "",
+   "projectile_intersection_radius_ratio": "1.0000",
+   "projectile_penetration_resistance": "1",
+   "projectile_penetration_speed_change": "0.9000",
+   "radii_ratio": "1.0000",
+   "radius": "0.6000",
+   "run_speed": "3.5000",
+   "shape": "circle",
+   "size": "small",
+   "size_for_animation_lod": "",
+   "soft_collision_offset_z": "0.0000",
+   "stop_before_turn": "false",
+   "strafe_speed": "1.0000",
+   "turn_speed": "120.0000",
+   "type": "man",
+   "vfx_filter_id": "123",
+   "walk_speed": "1.5000"
+  },
   "wh3_main_cth_mon_iron_dragon_blood": {
    "acceleration": "7.0000",
    "allow_static_turn_anim": "true",
@@ -22426,6 +22496,50 @@
    "splash_attack_target_size": "medium",
    "weapon_length": "3.0000"
   },
+  "wh3_dlc25_emp_carmine_dragon": {
+   "ap_damage": "350",
+   "audio_type": "creatures_claws",
+   "bonus_v_infantry": "0",
+   "bonus_v_large": "0",
+   "building_damage_multiplier": "1.0000",
+   "collision_attack_max_targets": "0",
+   "collision_attack_max_targets_cooldown": "10",
+   "contact_phase": "",
+   "damage": "150",
+   "ignition_amount": "0.0000",
+   "is_magical": "true",
+   "is_spell": "false",
+   "key": "wh3_dlc25_emp_carmine_dragon",
+   "melee_attack_interval": "3.8000",
+   "melee_weapon_type": "axe",
+   "scaling_damage": "",
+   "splash_attack_max_attacks": "6",
+   "splash_attack_power_multiplier": "1.0000",
+   "splash_attack_target_size": "large",
+   "weapon_length": "8.0000"
+  },
+  "wh3_dlc25_emp_cha_elspeth_scythe": {
+   "ap_damage": "220",
+   "audio_type": "halberd",
+   "bonus_v_infantry": "0",
+   "bonus_v_large": "0",
+   "building_damage_multiplier": "1.0000",
+   "collision_attack_max_targets": "0",
+   "collision_attack_max_targets_cooldown": "10",
+   "contact_phase": "",
+   "damage": "100",
+   "ignition_amount": "0.0000",
+   "is_magical": "true",
+   "is_spell": "false",
+   "key": "wh3_dlc25_emp_cha_elspeth_scythe",
+   "melee_attack_interval": "4.0000",
+   "melee_weapon_type": "axe",
+   "scaling_damage": "",
+   "splash_attack_max_attacks": "5",
+   "splash_attack_power_multiplier": "1.4000",
+   "splash_attack_target_size": "medium",
+   "weapon_length": "3.0000"
+  },
   "wh3_dlc29_vmp_walach_harkon_greatsword": {
    "ap_damage": "320",
    "audio_type": "sword",
@@ -22556,6 +22670,7 @@
   }
  },
  "mount_animations": {
+  "wh3_dlc25_emp_mnt_carmine_dragon": "dr1_dragon_carmine",
   "wh_main_emp_mnt_pegasus": "hr1_pegasus",
   "wh_main_emp_mnt_warhorse_barded_hero": "hr1_warhorse"
  },
@@ -22568,6 +22683,18 @@
   "for_navy": "false",
   "key": "wh2_pro07_skill_node_set_emp_amethyst_wizard",
   "subculture": ""
+ },
+ "personalities": {
+  "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon": {
+   "autonomous_rider_can_shoot_in_melee": "true",
+   "autonomous_rider_hero": "true",
+   "battle_entity": "wh3_dlc25_emp_cha_elspeth_von_draken",
+   "battle_entity_stats": "",
+   "can_only_be_used_by_draught": "false",
+   "key": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon",
+   "man_animations_table": "hu1j_dlc25_elspeth_dr1_dragon_wb_scythe",
+   "variant": "wh3_dlc25_emp_cha_elspeth_von_draken"
+  }
  },
  "portraits": {
   "portholes": {
@@ -22770,6 +22897,16 @@
    "trail_always_on": "true",
    "trajectory_sight": "dual_low_fixed",
    "vegetation_ignore_time": "0.5250"
+  }
+ },
+ "riders": {
+  "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon": {
+   "attach": "autonomous_rider",
+   "battle_personality": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon",
+   "engine_articulation_index": "-1",
+   "jettison_rider": "true",
+   "land_unit": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon",
+   "riders_attachment_point": "ap_def_riderposition_0"
   }
  },
  "scopes": [
@@ -23523,6 +23660,19 @@
    ],
    "version": "39"
   },
+  "battle_personalities_tables": {
+   "header": [
+    "key",
+    "man_animations_table",
+    "variant",
+    "battle_entity",
+    "battle_entity_stats",
+    "autonomous_rider_hero",
+    "autonomous_rider_can_shoot_in_melee",
+    "can_only_be_used_by_draught"
+   ],
+   "version": "12"
+  },
   "campaign_character_art_sets_tables": {
    "header": [
     "art_set_id",
@@ -23852,6 +24002,17 @@
     "default_guard_mode"
    ],
    "version": "54"
+  },
+  "land_units_to_battle_personalities_junctions_tables": {
+   "header": [
+    "battle_personality",
+    "land_unit",
+    "attach",
+    "riders_attachment_point",
+    "engine_articulation_index",
+    "jettison_rider"
+   ],
+   "version": "2"
   },
   "land_units_to_unit_abilites_junctions_tables": {
    "header": [
@@ -24338,6 +24499,14 @@
    },
    {
     "attrition": "non_vampire_territory",
+    "unit": "wh3_dlc25_emp_cha_elspeth_von_draken"
+   },
+   {
+    "attrition": "non_vampire_territory",
+    "unit": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
+   },
+   {
+    "attrition": "non_vampire_territory",
     "unit": "wh3_main_cth_cha_iron_dragon_1"
    },
    {
@@ -24382,6 +24551,16 @@
     "group_key": "wh3_default_land_characters",
     "quality": "tier_2_step_5_units",
     "unit_key": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc"
+   },
+   {
+    "group_key": "wh3_default_land_characters",
+    "quality": "tier_2_step_1_units",
+    "unit_key": "wh3_dlc25_emp_cha_elspeth_von_draken"
+   },
+   {
+    "group_key": "wh3_default_land_characters",
+    "quality": "tier_5_units",
+    "unit_key": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
    },
    {
     "group_key": "wh3_default_land_characters",
@@ -24702,6 +24881,130 @@
    },
    {
     "accuracy": "10",
+    "ai_usage_group": "mage_highvalue",
+    "ar_unit_category": "skirmish",
+    "armour": "wh2_main_body_20",
+    "articulated_record": "",
+    "attribute_group": "wh3_dlc25_emp_cha_elspeth_von_draken",
+    "bonus_hit_points": "3680",
+    "campaign_action_points": "2100",
+    "can_brace": "true",
+    "can_skirmish": "false",
+    "capture_tier": "default",
+    "category": "inf_melee",
+    "charge_bonus": "20",
+    "class": "com",
+    "damage_mod_all": "0",
+    "damage_mod_flame": "0",
+    "damage_mod_magic": "0",
+    "damage_mod_missile": "15",
+    "damage_mod_physical": "0",
+    "default_guard_mode": "false",
+    "engine": "",
+    "first_person": "",
+    "ground_stat_effect_group": "small",
+    "harmony_amplification_type": "",
+    "healing_power": "1.0000",
+    "hiding_scalar": "1.0000",
+    "historical_description_text": "wh3_dlc25_unit_long_text_emp_cha_elspeth_von_draken",
+    "infinite_secondary_ammo": "false",
+    "is_male": "false",
+    "key": "wh3_dlc25_emp_cha_elspeth_von_draken",
+    "key_building_capture_tier": "default",
+    "man_animation": "hu1j_dlc25_elspeth_scythe",
+    "man_entity": "wh3_dlc25_emp_cha_elspeth_von_draken",
+    "melee_attack": "38",
+    "melee_defence": "44",
+    "morale": "75",
+    "mount": "",
+    "mounted_draughts": "false",
+    "num_engines": "0",
+    "num_mounts": "0",
+    "primary_ammo": "0",
+    "primary_melee_weapon": "wh3_dlc25_emp_cha_elspeth_scythe",
+    "primary_missile_weapon": "",
+    "rank_depth": "1",
+    "reload": "0",
+    "score_capture_tier": "domination_characters",
+    "secondary_ammo": "0",
+    "selected_vo_secondary": "vo_sel_melee",
+    "selected_vo_tertiary": "vo_sel_culture",
+    "selection_vo": "vo_sel_default",
+    "shield": "none",
+    "short_description_text": "wh3_dlc25_unit_short_text_emp_cha_elspeth_von_draken",
+    "spacing": "wh_main_infantry",
+    "spell_mastery": "1.0000",
+    "spot_dist_scrub": "80",
+    "spot_dist_tree": "60",
+    "sync_locomotion": "false",
+    "training_level": "trained",
+    "visibility_spotting_range_max": "1500.0000",
+    "visibility_spotting_range_min": "40.0000"
+   },
+   {
+    "accuracy": "10",
+    "ai_usage_group": "flying_melee_mage_highvalue",
+    "ar_unit_category": "skirmish",
+    "armour": "wh2_main_body_70",
+    "articulated_record": "",
+    "attribute_group": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon",
+    "bonus_hit_points": "8214",
+    "campaign_action_points": "2100",
+    "can_brace": "false",
+    "can_skirmish": "false",
+    "capture_tier": "cant_capture",
+    "category": "war_beast",
+    "charge_bonus": "55",
+    "class": "com",
+    "damage_mod_all": "0",
+    "damage_mod_flame": "0",
+    "damage_mod_magic": "0",
+    "damage_mod_missile": "25",
+    "damage_mod_physical": "0",
+    "default_guard_mode": "false",
+    "engine": "",
+    "first_person": "",
+    "ground_stat_effect_group": "large",
+    "harmony_amplification_type": "",
+    "healing_power": "1.0000",
+    "hiding_scalar": "1.0000",
+    "historical_description_text": "wh3_dlc25_unit_long_text_emp_cha_elspeth_von_draken",
+    "infinite_secondary_ammo": "false",
+    "is_male": "false",
+    "key": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon",
+    "key_building_capture_tier": "cant_capture",
+    "man_animation": "hu1j_dlc25_elspeth_dr1_dragon_wb_scythe",
+    "man_entity": "wh3_dlc25_emp_cha_elspeth_von_draken",
+    "melee_attack": "50",
+    "melee_defence": "44",
+    "morale": "75",
+    "mount": "wh3_dlc25_emp_mnt_carmine_dragon",
+    "mounted_draughts": "false",
+    "num_engines": "0",
+    "num_mounts": "1",
+    "primary_ammo": "0",
+    "primary_melee_weapon": "wh3_dlc25_emp_carmine_dragon",
+    "primary_missile_weapon": "",
+    "rank_depth": "1",
+    "reload": "0",
+    "score_capture_tier": "cant_capture",
+    "secondary_ammo": "0",
+    "selected_vo_secondary": "vo_sel_default",
+    "selected_vo_tertiary": "vo_sel_culture",
+    "selection_vo": "vo_sel_empire_carmine_dragon",
+    "shield": "none",
+    "short_description_text": "wh3_dlc25_unit_short_text_emp_cha_elspeth_von_draken",
+    "spacing": "wh_main_monster",
+    "spell_mastery": "1.0000",
+    "spot_dist_scrub": "80",
+    "spot_dist_tree": "60",
+    "sync_locomotion": "false",
+    "training_level": "trained",
+    "visibility_spotting_range_max": "1500.0000",
+    "visibility_spotting_range_min": "40.0000"
+   },
+   {
+    "accuracy": "10",
     "ai_usage_group": "flying_melee_highvalue",
     "ar_unit_category": "melee",
     "armour": "wh2_main_body_100",
@@ -25001,6 +25304,100 @@
    },
    {
     "additional_building_requirement": "",
+    "audio_voiceover_actor_group": "wh3_dlc25_vo_actor_Empire_Elspeth_Von_Draken",
+    "audio_voiceover_culture": "wh_main_vo_culture_Empire",
+    "audio_voiceover_culture_override": "vo_culture_None",
+    "barrier_health": "0.0000",
+    "campaign_cap": "-1",
+    "can_be_bribed": "false",
+    "can_siege": "true",
+    "caste": "lord",
+    "create_time": "1",
+    "food_cost": "0",
+    "has_spoken_vo": "true",
+    "in_encyclopedia": "true",
+    "is_high_threat": "true",
+    "is_monstrous": "false",
+    "is_naval": "false",
+    "is_renown": "false",
+    "land_unit": "wh3_dlc25_emp_cha_elspeth_von_draken",
+    "max_men_per_ship": "1",
+    "melee_cp": "550.0000",
+    "min_men_per_ship": "1",
+    "missile_cp": "0.0000",
+    "mount": "",
+    "multiplayer_cap": "0",
+    "multiplayer_cost": "550",
+    "multiplayer_qb_cap": "0",
+    "naval_unit": "wh_main_shp_transport",
+    "num_men": "1",
+    "num_ships": "1",
+    "optional_ui_element": "",
+    "point_allowance_weight": "1",
+    "porthole_camera": "emp_general_foot",
+    "porthole_composite_scene": "",
+    "recruitment_cost": "1000",
+    "resource_requirement": "",
+    "restrict_xp_gain_in_campaign": "true",
+    "special_edition_mask": "0",
+    "tier": "0",
+    "ui_unit_group_land": "lord_wizard_death",
+    "unit": "wh3_dlc25_emp_cha_elspeth_von_draken",
+    "upkeep_cost": "250",
+    "use_hitpoints_in_campaign": "true",
+    "vo_is_dinosaur": "false",
+    "vo_is_dragon": "false",
+    "weight": "medium"
+   },
+   {
+    "additional_building_requirement": "",
+    "audio_voiceover_actor_group": "wh3_dlc25_vo_actor_Empire_Elspeth_Von_Draken",
+    "audio_voiceover_culture": "wh_main_vo_culture_Empire",
+    "audio_voiceover_culture_override": "vo_culture_None",
+    "barrier_health": "0.0000",
+    "campaign_cap": "-1",
+    "can_be_bribed": "false",
+    "can_siege": "true",
+    "caste": "lord",
+    "create_time": "1",
+    "food_cost": "0",
+    "has_spoken_vo": "true",
+    "in_encyclopedia": "false",
+    "is_high_threat": "true",
+    "is_monstrous": "true",
+    "is_naval": "false",
+    "is_renown": "false",
+    "land_unit": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon",
+    "max_men_per_ship": "1",
+    "melee_cp": "2550.0000",
+    "min_men_per_ship": "1",
+    "missile_cp": "0.0000",
+    "mount": "wh3_dlc25_cam_mnt_carmine_dragon",
+    "multiplayer_cap": "0",
+    "multiplayer_cost": "2550",
+    "multiplayer_qb_cap": "0",
+    "naval_unit": "wh_main_shp_transport",
+    "num_men": "1",
+    "num_ships": "1",
+    "optional_ui_element": "",
+    "point_allowance_weight": "1",
+    "porthole_camera": "emp_general_foot",
+    "porthole_composite_scene": "",
+    "recruitment_cost": "2300",
+    "resource_requirement": "",
+    "restrict_xp_gain_in_campaign": "true",
+    "special_edition_mask": "0",
+    "tier": "0",
+    "ui_unit_group_land": "lord_wizard_death",
+    "unit": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon",
+    "upkeep_cost": "575",
+    "use_hitpoints_in_campaign": "true",
+    "vo_is_dinosaur": "false",
+    "vo_is_dragon": "true",
+    "weight": "heavy"
+   },
+   {
+    "additional_building_requirement": "",
     "audio_voiceover_actor_group": "wh3_main_vo_actor_Cathay_Zhao_Ming_Dragon",
     "audio_voiceover_culture": "wh3_main_vo_culture_Cathay",
     "audio_voiceover_culture_override": "vo_culture_None",
@@ -25094,6 +25491,30 @@
    },
    {
     "bullet_point": "armour_piercing",
+    "unit_key": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
+   },
+   {
+    "bullet_point": "dragon_breath_carmine",
+    "unit_key": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
+   },
+   {
+    "bullet_point": "spellcaster",
+    "unit_key": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
+   },
+   {
+    "bullet_point": "terror",
+    "unit_key": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
+   },
+   {
+    "bullet_point": "armour_piercing",
+    "unit_key": "wh3_dlc25_emp_cha_elspeth_von_draken"
+   },
+   {
+    "bullet_point": "spellcaster",
+    "unit_key": "wh3_dlc25_emp_cha_elspeth_von_draken"
+   },
+   {
+    "bullet_point": "armour_piercing",
     "unit_key": "wh3_main_cth_cha_iron_dragon_1"
    },
    {
@@ -25108,7 +25529,15 @@
   "unit_attributes_to_groups_junctions_tables": [
    {
     "attribute": "causes_fear",
+    "attribute_group": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
+   },
+   {
+    "attribute": "causes_fear",
     "attribute_group": "wh3_main_cth_cha_iron_dragon_1"
+   },
+   {
+    "attribute": "causes_terror",
+    "attribute_group": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
    },
    {
     "attribute": "causes_terror",
@@ -25136,6 +25565,14 @@
    },
    {
     "attribute": "encourages",
+    "attribute_group": "wh3_dlc25_emp_cha_elspeth_von_draken"
+   },
+   {
+    "attribute": "encourages",
+    "attribute_group": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
+   },
+   {
+    "attribute": "encourages",
     "attribute_group": "wh3_main_cth_cha_iron_dragon_1"
    },
    {
@@ -25145,6 +25582,10 @@
    {
     "attribute": "flying",
     "attribute_group": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc"
+   },
+   {
+    "attribute": "flying",
+    "attribute_group": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
    },
    {
     "attribute": "flying",
@@ -25161,6 +25602,14 @@
    {
     "attribute": "hide_forest",
     "attribute_group": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze"
+   },
+   {
+    "attribute": "hide_forest",
+    "attribute_group": "wh3_dlc25_emp_cha_elspeth_von_draken"
+   },
+   {
+    "attribute": "immune_to_psychology",
+    "attribute_group": "wh3_dlc25_emp_cha_elspeth_von_draken"
    },
    {
     "attribute": "mark_tzeentch",
@@ -25270,6 +25719,32 @@
     "siege_unit_defender": "true",
     "supports_upgrades": "false",
     "unit": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze"
+   },
+   {
+    "armory_item_set": "",
+    "campaign_exclusive": "false",
+    "faction": "wh_main_emp_empire",
+    "general_portrait": "ui/portraits/portholes/no_culture/emp_elspeth_von_draken_0.png",
+    "general_uniform": "",
+    "general_unit": "true",
+    "set_piece_character": "wh3_dlc25_emp_cha_elspeth_von_draken",
+    "siege_unit_attacker": "true",
+    "siege_unit_defender": "true",
+    "supports_upgrades": "false",
+    "unit": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
+   },
+   {
+    "armory_item_set": "",
+    "campaign_exclusive": "false",
+    "faction": "wh_main_emp_empire",
+    "general_portrait": "ui/portraits/portholes/no_culture/emp_elspeth_von_draken_0.png",
+    "general_uniform": "",
+    "general_unit": "true",
+    "set_piece_character": "wh3_dlc25_emp_cha_elspeth_von_draken",
+    "siege_unit_attacker": "true",
+    "siege_unit_defender": "true",
+    "supports_upgrades": "false",
+    "unit": "wh3_dlc25_emp_cha_elspeth_von_draken"
    }
   ]
  },

@@ -6,11 +6,14 @@ has no humanoid01 disc rider, so the Chaos Sorcerer Lord's humanoid01c disc set 
 the retargeted copy, or the game layers the source skeleton's animation over the advisor (his staff then stops spinning while he casts).
 Metas with no spliced animation keep their vanilla path. The second is the Glaive, Taoyan's humanoid01e trident set. `FILL_SLOTS` gives it
 Settra's casts, which she lacks, `PROP_PINS` holds her sword, scabbard and glaive where her docking would have them, and `BAKED_DOCKING` bakes
-the docks into the tracks. The third is the Iron Hand, Zhao Ming's unarmed humanoid01e human form set with his own casts.
+the docks into the tracks. The third is the Iron Hand, Zhao Ming's unarmed humanoid01e human form set with his own casts. The fourth is the
+bow on the Carmine Dragon, the High Elf princess's humanoid01b dragon set, and the staff on it. `MOUNTS` points the dragon sets at the carmine
+dragon's animations. The rest give the Glaive Boris Todbringer's horse set, and the Greatsword, Glaive and bow the disc, with `PROP_PINS` holding
+each weapon where his own sets hold it.
 
-Derived sets copy a vanilla `humanoid01` set under a new name with up to two fixes. Named slots take their animations from another vanilla set
-(several vanilla horse sets play foot casts in their rider cast slots, so the rider sinks into the mount, and the Huntsmarshal's short casts are bow
-tricks). And for the shield sets, the cast animations, which are staff-and-sword ones that put the shield on his back, get copies that hold the
+Derived sets copy a vanilla `humanoid01` set, or one built before, under a new name with up to two fixes. Named slots take their animations from
+another vanilla set (several vanilla horse sets play foot casts in their rider cast slots, so the rider sinks into the mount, and the Huntsmarshal's
+short casts are bow tricks). And for the shield sets, the cast animations, which are staff-and-sword ones that put the shield on his back, get copies that hold the
 shield on his left hand the way his stand does.
 
 `ADDED_SLOTS` then gives the staff sets the fire slots of his staff bolt, GLF Battle Mage style: each fire slot copies a forward-facing cast whose
@@ -69,6 +72,19 @@ SETS = {
     "hu1_advisor_overhaul_glaive": ("hu1e_cp1_taoyan_trident", "humanoid01e", f"{DERIVED_FOLDER}/glaive", "aog"),
     # Zhao Ming's human form. He fights unarmed and has his own casts, so the set copies as it is.
     "hu1_advisor_overhaul_iron_hand": ("hu1e_mage_iron_dragon", "humanoid01e", f"{DERIVED_FOLDER}/iron_hand", "aoz"),
+    # The High Elf princess's dragon set. It holds the bow and arrow in the same props as his bow kit (`be_prop_3` left, `be_prop_4` right).
+    "hu1_advisor_overhaul_dr1_dragon_sword_and_bow": ("hu1b_elf_dr1_dragon_wb_sword_and_bow", "humanoid01b", f"{DERIVED_FOLDER}/dr1_dragon_sword_and_bow",
+                                                      "aodb"),
+    # The High Elf staff dragon set. It holds the sword and staff in the same props as his staff kit (`be_prop_1` right, `be_prop_5` left).
+    "hu1_advisor_overhaul_dr1_dragon_staff_and_sword": ("hu1b_elf_dr1_dragon_wb_staff_and_sword", "humanoid01b", f"{DERIVED_FOLDER}/dr1_dragon_staff_and_sword",
+                                                        "aodz"),
+    # Boris Todbringer's Kislev glaive horse set. It holds the glaive in `be_prop_1`, as his Glaive kit does.
+    "hu1_advisor_overhaul_hr1_warhorse_glaive": ("hu1c_wh3_boris_hr1_warhorse_glaive", "humanoid01c", f"{DERIVED_FOLDER}/hr1_warhorse_glaive", "aogh"),
+    # The Tzeentch Exalted Hero's two-handed halberd disc set, for the Greatsword and the Glaive on the disc. Vanilla has no other two-handed disc rider.
+    "hu1_advisor_overhaul_disc01_two_handed": ("hu1m_dlc24_exalted_hero_tzeentch_wm_disc01_2h_halberd", "humanoid01m", f"{DERIVED_FOLDER}/disc_two_handed", "aodt"),
+    # A second copy of the sorcerer's disc set for the bow. Vanilla has no disc archer, so the bow is held in his left hand and shot like the staff bolt.
+    "hu1_advisor_overhaul_disc01_sword_and_bow": ("hu1c_wh3_dlc20_tzeentch_sorcerer_wm_disc01_staff_sword", "humanoid01c", f"{DERIVED_FOLDER}/disc_sword_and_bow",
+                                                  "aodw"),
 }
 
 # Source skeleton -> its bones that humanoid01 names differently. Humanoid01e's `weapon_1` to `weapon_6` are humanoid01's `be_prop_0` to `be_prop_5`,
@@ -82,25 +98,62 @@ BONE_RENAMES = {
 FOOT_CASTS = r"^CAST_SPELL_"
 RIDER_CASTS = r"^RIDER_CAST_SPELL_"
 
-# Retargeted set -> (the vanilla humanoid01 set that gives it the slots it lacks, regex of the slots it gives). Taoyan casts no spells, so her set
-# has no casts, and Settra's halberd set gives them. Chosen 2026-10-17: the rest of the Glaive stays pure Taoyan, so only the casts come over.
+# The staff-and-sword horse set. Its rider casts are proper seated ones (`hu1_hr1_sfsw_rider1_cast_*`), unlike the foot casts several vanilla
+# rider sets play, so it donates them to every derived horse set.
+HORSE_CAST_DONOR = "hu1_empire_hr1_warhorse_staff_and_sword"
+
+# Every vanilla humanoid01 pegasus rider flies with the same `hu1_hr1_sps_rider1_fly_*` animations whatever he holds, and the rest of a pegasus set
+# is its horse set. So a pegasus set is his horse set for that weapon plus these flying slots.
+PEGASUS_FLY_DONOR = "hu1_empire_hr1_pegasus_staff_and_sword"
+PEGASUS_FLY = r"^RIDER_FLY_"
+
+# Set name -> (the set that gives it the slots it lacks, regex of the slots it gives). The giving set is a vanilla humanoid01 set or one
+# built before it. Taoyan casts no spells, so her set has no casts, and Settra's halberd set gives them. Chosen 2026-10-17: the rest of the Glaive
+# stays pure Taoyan, so only the casts come over.
 FILL_SLOTS = {
     "hu1_advisor_overhaul_glaive": ("hu1_settra_2handed_halberd", FOOT_CASTS),
+    # The princess's dragon set has only two rider casts, both a seated horse cast, so the other four are his seated horse casts too.
+    "hu1_advisor_overhaul_dr1_dragon_sword_and_bow": (HORSE_CAST_DONOR, RIDER_CASTS),
+    # Boris casts no spells.
+    "hu1_advisor_overhaul_hr1_warhorse_glaive": (HORSE_CAST_DONOR, RIDER_CASTS),
+    # The Exalted Hero has only the three forward casts, so the up casts are the sorcerer's disc ones.
+    "hu1_advisor_overhaul_disc01_two_handed": ("hu1_advisor_overhaul_disc01_staff_and_sword", FOOT_CASTS),
+    "hu1_advisor_overhaul_hr1_pegasus_sword_and_bow": (PEGASUS_FLY_DONOR, PEGASUS_FLY),
+    "hu1_advisor_overhaul_hr1_pegasus_greatsword": (PEGASUS_FLY_DONOR, PEGASUS_FLY),
+    "hu1_advisor_overhaul_hr1_pegasus_glaive": (PEGASUS_FLY_DONOR, PEGASUS_FLY),
+}
+
+# Set name -> the mount animation it rides with, for a set copied from a rider of another mount. Each vanilla dragon rider set names its own dragon.
+MOUNTS = {
+    "hu1_advisor_overhaul_dr1_dragon_sword_and_shield": "dr1_dragon_carmine",
+    "hu1_advisor_overhaul_dr1_dragon_sword_and_bow": "dr1_dragon_carmine",
+    "hu1_advisor_overhaul_dr1_dragon_staff_and_sword": "dr1_dragon_carmine",
+    "hu1_advisor_overhaul_hr1_pegasus_sword_and_bow": "hr1_pegasus",
+    "hu1_advisor_overhaul_hr1_pegasus_greatsword": "hr1_pegasus",
+    "hu1_advisor_overhaul_hr1_pegasus_glaive": "hr1_pegasus",
 }
 
 # Taoyan's sword and scabbard, held to the hip where her right waist dock has them.
 TAOYAN_HIP = {prop: DOCK_POINTS["RWAIST"] for prop in ("be_prop_2", "be_prop_3")}
+# The same, for sets of other riders: the offsets come from his Glaive set's own right waist dock pose.
+GLAIVE_HIP = {prop: (f"hu1_advisor_overhaul_glaive:{pose}", anchor) for prop, (pose, anchor) in TAOYAN_HIP.items()}
+
+# Every slot but the dock poses and the persistent metadata.
+ALL_POSES = r"^(?!DOCK_EQUIPMENT_|PERSISTENT_METADATA_)"
 
 # Set name -> list of (slot regex, `grips`, `pins`, folder, file name prefix). Each matching slot plays a copy of its animation with props held, and a
 # copy of its meta pointed at the copy:
 # - `grips`: prop -> (the bone whose place it takes in the first frame, the bone it is then held to).
-# - `pins`: prop -> (the slot of the same set whose first frame gives its offset, the bone it is held to).
+# - `pins`: prop -> (the slot whose first frame gives its offset, the bone it is held to). A slot of another set is named `set:SLOT`.
 # Settra's casts are the staff-and-sword ones with his halberd slung on his back. The Glaive's copies put the polearm where the staff starts, in his
 # left hand, and keep it there: the staff twirls in his fingers, which a long blade turns into a jitter. Both models lie centred along the same axis.
 # His casts also turn the persistent docks off, which would leave Taoyan's sword and scabbard on his props, so they stay at the hip.
 # Taoyan's ladder dismount (shared with the Jade Warriors) leaves the polearm's track behind and relies on her persistent right hand dock, which
 # holds her own polearm bone, so the copy holds the glaive to the right hand as that dock would.
 # Every disc cast throws the staff up to spin above him, which suits a spell but not a bolt from the staff, so `FIRE_LEVEL` keeps it in his hand.
+# Boris holds his sword and scabbard in his left hand, so on the Glaive's horse they stay at the hip too.
+# The Exalted Hero's halberd sits far from his hand, so each two-handed weapon is held to his right hand as in its own stand, and the bow on the
+# disc to his left hand as in his bow's shooting stance.
 PROP_PINS = {
     "hu1_advisor_overhaul_glaive": [
         (r"^CAST_SPELL_", {"be_prop_1": ("be_prop_5", "hand_left")}, TAOYAN_HIP, f"{DERIVED_FOLDER}/glaive/casts", "aogc"),
@@ -108,6 +161,14 @@ PROP_PINS = {
     ],
     "hu1_advisor_overhaul_disc01_staff_and_sword": [
         (r"^FIRE_LEVEL$", {}, {"be_prop_5": ("STAND", "hand_left")}, f"{DERIVED_FOLDER}/disc_staff_and_sword/fire", "aodf"),
+    ],
+    "hu1_advisor_overhaul_hr1_warhorse_glaive": [(ALL_POSES, {}, GLAIVE_HIP, f"{DERIVED_FOLDER}/hr1_warhorse_glaive/held", "aoghh")],
+    "hu1_advisor_overhaul_disc01_two_handed": [
+        (ALL_POSES, {}, {"be_prop_0": ("hu1_dlc29_walach_harkon_2handed_sword:STAND", "hand_right"), "be_prop_1": ("hu1_advisor_overhaul_glaive:STAND", "hand_right"),
+                         **GLAIVE_HIP}, f"{DERIVED_FOLDER}/disc_two_handed/held", "aodth"),
+    ],
+    "hu1_advisor_overhaul_disc01_sword_and_bow": [
+        (ALL_POSES, {}, {"be_prop_3": ("hu1_huntsmarshal_sword_bow:SHOOT_READY", "hand_left")}, f"{DERIVED_FOLDER}/disc_sword_and_bow/held", "aodwh"),
     ],
 }
 
@@ -123,20 +184,19 @@ CAMPAIGN_SET_FOLDER = "animations/campaign/database/bin"
 CAMPAIGN_SETS = {
     "cam_hu1_advisor_overhaul_glaive": ("cam_hero_hu1e_cp1_taoyan_trident", "humanoid01e", f"{DERIVED_FOLDER}/glaive_campaign", "aogm"),
     "cam_hu1_advisor_overhaul_iron_hand": ("cam_hu1e_mage_iron_dragon", "humanoid01e", f"{DERIVED_FOLDER}/iron_hand_campaign", "aozm"),
+    "cam_hu1_advisor_overhaul_dr1_dragon_staff_and_sword": ("cam_lord_hu1b_elf_dr1_dragon_wb_staff_and_sword", "humanoid01b",
+                                                            f"{DERIVED_FOLDER}/dr1_dragon_staff_and_sword_campaign", "aodc"),
 }
-
-# The staff-and-sword horse set. Its rider casts are proper seated ones (`hu1_hr1_sfsw_rider1_cast_*`), unlike the foot casts several vanilla
-# rider sets play, so it donates them to every derived horse set.
-HORSE_CAST_DONOR = "hu1_empire_hr1_warhorse_staff_and_sword"
 
 # The shield and the bone it is held to. In vanilla shield animations the shield moves with this bone to within 2 mm.
 SHIELD_PIN = {"be_prop_2": "hand_left"}
 
 # New set name -> how it is made:
-# - `base`: the vanilla set it copies.
+# - `base`: the vanilla set it copies, or one built before it.
 # - `donor` and `donor_slots`: a vanilla set and a regex of the slot names it replaces.
 # - `pins`: prop bone -> the bone it is held to in the cast slots (`PIN_SLOTS`).
 # - `folder` and `prefix`: where the pinned animations go and the prefix marking them. Sets that pin nothing need neither.
+# - `stand`: the slot whose first frame gives the pin offsets, when it is not `RIDER_STAND` (mounted) or `STAND` (on foot).
 DERIVED_SETS = {
     "hu1_advisor_overhaul_sword_and_shield": {"base": "hu1_empire_sword_and_shield", "pins": SHIELD_PIN, "folder": f"{DERIVED_FOLDER}/sword_and_shield",
                                               "prefix": "aos"},
@@ -156,25 +216,41 @@ DERIVED_SETS = {
     # The staff-and-sword horse sets as they are, plus the fire slots in `ADDED_SLOTS`.
     "hu1_advisor_overhaul_hr1_warhorse_staff_and_sword": {"base": "hu1_empire_hr1_warhorse_staff_and_sword"},
     "hu1_advisor_overhaul_hr1_pegasus_staff_and_sword": {"base": "hu1_empire_hr1_pegasus_staff_and_sword"},
+    # Every vanilla pegasus rider set is its horse set plus the generic `RIDER_FLY_*` slots, so these copy his own horse sets and `FILL_SLOTS` adds those.
+    "hu1_advisor_overhaul_hr1_pegasus_sword_and_bow": {"base": "hu1_advisor_overhaul_hr1_warhorse_sword_and_bow"},
+    "hu1_advisor_overhaul_hr1_pegasus_greatsword": {"base": "hu1_advisor_overhaul_hr1_warhorse_greatsword"},
+    "hu1_advisor_overhaul_hr1_pegasus_glaive": {"base": "hu1_advisor_overhaul_hr1_warhorse_glaive"},
+    # Mannfred's zombie dragon set plays standing foot casts in its rider cast slots, which Elspeth's own dragon set does not, so all six are his seated
+    # horse casts. Its `RIDER_STAND` is empty and it sits in `STAND`.
+    "hu1_advisor_overhaul_dr1_dragon_sword_and_shield": {"base": "hu1_vampire_counts_dr1_zombie_dragon_wb_sword_and_shield", "donor": HORSE_CAST_DONOR,
+                                                         "donor_slots": RIDER_CASTS, "pins": SHIELD_PIN, "stand": "STAND",
+                                                         "folder": f"{DERIVED_FOLDER}/dr1_dragon_sword_and_shield", "prefix": "aosd"},
 }
 
 # The staff bolt's rider fire slots, all playing his seated staff cast `hu1_hr1_sfsw_rider1_cast_up_short` with its vanilla meta (`FIRE_POS` at 1.0 s
 # of 4.0 s). GLF Battle Mage fires from the same horse sets with this cast. The slot list is GLF's: the four `RIDER_FIRE_*` directions and the two
 # turns. The combat-ready stance is added in case the set lacks one.
-RIDER_FIRE = [(slot, "RIDER_CAST_SPELL_UP_SHORT") for slot in ("RIDER_FIRE_FORWARD_LEVEL", "RIDER_FIRE_LEFT_LEVEL", "RIDER_FIRE_RIGHT_LEVEL",
-                                                               "RIDER_FIRE_BACK_LEVEL", "RIDER_SHOOT_TURN_LEFT_90", "RIDER_SHOOT_TURN_RIGHT_90")]
-RIDER_FIRE += [("RIDER_COMBAT_READY", "RIDER_STAND")]
+RIDER_SHOTS = [(slot, "RIDER_CAST_SPELL_UP_SHORT") for slot in ("RIDER_FIRE_FORWARD_LEVEL", "RIDER_FIRE_LEFT_LEVEL", "RIDER_FIRE_RIGHT_LEVEL",
+                                                                "RIDER_FIRE_BACK_LEVEL", "RIDER_SHOOT_TURN_LEFT_90", "RIDER_SHOOT_TURN_RIGHT_90")]
+RIDER_FIRE = RIDER_SHOTS + [("RIDER_COMBAT_READY", "RIDER_STAND")]
 
 # The staff bolt on the disc: `FIRE_LEVEL` plays his forward short cast (its retargeted meta has `FIRE_POS` at 1.0 s of 4.0 s), as GLF does for the
 # vanilla disc sorcerer. The disc set has no combat-ready stance, and a fire slot without one leaves him in a T-pose after the shot.
 DISC_FIRE = [("FIRE_LEVEL", "CAST_SPELL_FORWARD_SHORT"), ("COMBAT_READY", "STAND"), ("FLY_COMBAT_READY", "FLY_STAND")]
 
+# The staff bolt on the dragon fires from the rider slots, as the High Elf dragon bow set does. The staff dragon set sits in `STAND` and has no
+# combat-ready stance of either kind.
+DRAGON_FIRE = RIDER_SHOTS + [("COMBAT_READY", "STAND"), ("RIDER_COMBAT_READY", "STAND")]
+
 # Set name -> (new slot, the slot of the same set it copies), added when the set lacks the new slot. The on-foot staff set needs none: vanilla
 # `hu1_pr8_amethyst_staff_and_sword` already has `FIRE_LEVEL` (`hu1_sfsw_aim_fire_stand_01`, `FIRE_POS` at 0.9 s of 2.2 s) and `COMBAT_READY`.
+# The bow on the disc has no vanilla shot to copy, so it fires like the staff bolt.
 ADDED_SLOTS = {
     "hu1_advisor_overhaul_disc01_staff_and_sword": DISC_FIRE,
+    "hu1_advisor_overhaul_disc01_sword_and_bow": DISC_FIRE,
     "hu1_advisor_overhaul_hr1_warhorse_staff_and_sword": RIDER_FIRE,
     "hu1_advisor_overhaul_hr1_pegasus_staff_and_sword": RIDER_FIRE,
+    "hu1_advisor_overhaul_dr1_dragon_staff_and_sword": DRAGON_FIRE,
 }
 
 # Fire slots play in every weapon state, as GLF's do.
@@ -370,7 +446,7 @@ def build_derived(name: str, spec: Dict, sets: Dict[str, bytes], assets: AssetSo
         return write_set(new)
 
     # Each prop's offset from its anchor in the first frame of the stand animation.
-    stand = "RIDER_STAND" if new.mount else "STAND"
+    stand = spec.get("stand") or ("RIDER_STAND" if new.mount else "STAND")
     reference = next((s.refs[0].anim for s in new.slots if slot_name(s) == stand and s.refs), None)
     if reference is None:
         raise SystemExit(f"{name}: no {stand} animation")
@@ -468,39 +544,46 @@ def read_files(paths: List[str], assets: AssetSource) -> Callable[[str], Optiona
 
 
 def pin_props(data: bytes, pattern: str, grips: Dict[str, Tuple[str, str]], pins: Dict[str, Tuple[str, str]], folder: str, prefix: str, names: Dict[int, str],
-              assets: AssetSource) -> bytes:
+              sets: Dict[str, bytes], assets: AssetSource) -> bytes:
     """Points the matching slots at copies of their animations with props held, and at copies of their metas pointed at them.
 
     Args:
         data (bytes): The set `.bin`.
         pattern (str): Regex of the slot names to change.
         grips (Dict[str, Tuple[str, str]]): Prop bone -> (the bone whose place it takes in the first frame, the bone it is held to).
-        pins (Dict[str, Tuple[str, str]]): Prop bone -> (the slot whose first frame gives its offset, the bone it is held to).
+        pins (Dict[str, Tuple[str, str]]): Prop bone -> (the slot whose first frame gives its offset, the bone it is held to). `set:SLOT` names another set's slot.
         folder (str): Output folder for the copies, relative to the mod folder.
         prefix (str): Short prefix marking the copies.
         names (Dict[int, str]): Slot names by id.
+        sets (Dict[str, bytes]): Set `.bin` files by set name, for poses of other sets.
         assets (AssetSource): The vanilla packs, for files the mod folder lacks.
 
     Returns:
         bytes: The changed set `.bin`.
 
     Raises:
-        SystemExit: When no slot matches or the set lacks a slot giving an offset.
+        SystemExit: When no slot matches or a slot giving an offset is missing.
     """
     anim_set = parse_set(data)
     slots = [slot for slot in anim_set.slots if slot.refs and re.match(pattern, names.get(slot.slot_id, ""))]
-    poses = {names.get(s.slot_id): s.refs[0].anim for s in anim_set.slots if s.refs}
-    needed = {pose for pose, _ in pins.values()}
-    if not slots or needed - set(poses):
-        raise SystemExit(f"{anim_set.name}: no {pattern} slot or no {', '.join(sorted(needed - set(poses)))} to pin to")
+
+    def first_anim(pose: str) -> Optional[str]:
+        set_name, _, slot = pose.rpartition(":")
+        source = parse_set(sets[set_name]).slots if set_name else anim_set.slots
+        return next((s.refs[0].anim for s in source if s.refs and names.get(s.slot_id) == slot), None)
+
+    poses = {pose: first_anim(pose) for pose, _ in pins.values()}
+    missing = sorted(pose for pose, anim in poses.items() if anim is None)
+    if not slots or missing:
+        raise SystemExit(f"{anim_set.name}: no {pattern} slot or no {', '.join(missing)} to pin to")
 
     skeleton_path = f"animations/skeletons/{TARGET_SKELETON}.anim"
     anims = sorted({r.anim for slot in slots for r in slot.refs if r.anim})
     metas = sorted({r.meta for slot in slots for r in slot.refs if r.meta})
-    read = read_files([skeleton_path, *anims, *metas, *(poses[pose] for pose in needed)], assets)
+    read = read_files([skeleton_path, *anims, *metas, *poses.values()], assets)
     skeleton = read_anim(read(skeleton_path))
     index = {bone.name: i for i, bone in enumerate(skeleton.bones)}
-    pose_worlds = {pose: world_pose(read_anim(read(poses[pose])), skeleton, 0) for pose in needed}
+    pose_worlds = {pose: world_pose(read_anim(read(anim)), skeleton, 0) for pose, anim in poses.items()}
     pinned = {prop: (anchor, relative(pose_worlds[pose][index[anchor]], pose_worlds[pose][index[prop]])) for prop, (pose, anchor) in pins.items()}
     moved: Dict[str, bytes] = {}
     for path in anims:
@@ -624,32 +707,52 @@ def build_campaign_set(name: str, source: str, source_skeleton: str, folder: str
     print(f"{name}: {len(anims)} animations of {source} retargeted")
 
 
+def with_mount(name: str, data: bytes) -> bytes:
+    """Points a set at the mount animation `MOUNTS` gives it. Sets with none are returned as they are.
+
+    Args:
+        name (str): The set's name.
+        data (bytes): The set `.bin`.
+
+    Returns:
+        bytes: The set `.bin`.
+    """
+    if name not in MOUNTS:
+        return data
+    anim_set = parse_set(data)
+    anim_set.mount = MOUNTS[name]
+    return write_set(anim_set)
+
+
 def build() -> None:
     """Builds every set in `SETS` and `DERIVED_SETS` into the mod's animpack, and every set in `CAMPAIGN_SETS`."""
     vanilla = {os.path.basename(path)[:-4]: data for path, data in load_vanilla_sets().items() if path.startswith(SET_FOLDER) and path.endswith(".bin")}
     names = load_slot_ids(open(f"{SCHEMAS_DIR}/{SLOT_IDS_FILE}", encoding="utf-8").read())
     assets = AssetSource([], [], VANILLA_PACKS)
+    # Sets built so far, so later sets can copy, fill from or pin to them.
+    sets = dict(vanilla)
     entries = []
-    for name, (source, skeleton, folder, prefix) in SETS.items():
-        shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
-        data = build_set(name, vanilla[source], skeleton, folder, prefix, assets)
+
+    def finish(name: str, data: bytes) -> None:
         if name in FILL_SLOTS:
             donor, pattern = FILL_SLOTS[name]
-            data = fill_slots(data, vanilla[donor], pattern, names)
+            data = fill_slots(data, sets[donor], pattern, names)
         if name in ADDED_SLOTS:
             data = add_slots(data, ADDED_SLOTS[name], names)
         for spec in PROP_PINS.get(name, []):
-            data = pin_props(data, *spec, names, assets)
+            data = pin_props(data, *spec, names, sets, assets)
         if name in BAKED_DOCKING:
             data = bake_docking(data, *BAKED_DOCKING[name], names, assets)
-        entries.append((f"{SET_FOLDER}/{name}.bin", data))
+        sets[name] = with_mount(name, data)
+        entries.append((f"{SET_FOLDER}/{name}.bin", sets[name]))
+
+    for name, (source, skeleton, folder, prefix) in SETS.items():
+        shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
+        finish(name, build_set(name, vanilla[source], skeleton, folder, prefix, assets))
     for name, spec in DERIVED_SETS.items():
         if spec.get("folder"):
             shutil.rmtree(os.path.join(MOD, spec["folder"]), ignore_errors=True)
-        data = build_derived(name, spec, vanilla, assets, names)
-        if name in ADDED_SLOTS:
-            data = add_slots(data, ADDED_SLOTS[name], names)
-        entries.append((f"{SET_FOLDER}/{name}.bin", data))
+        finish(name, build_derived(name, spec, sets, assets, names))
     os.makedirs(os.path.dirname(os.path.join(MOD, ANIMPACK)), exist_ok=True)
     with open(os.path.join(MOD, ANIMPACK), "wb") as f:
         f.write(write_animpack(entries))

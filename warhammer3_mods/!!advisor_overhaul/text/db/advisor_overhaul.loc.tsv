@@ -17,6 +17,9 @@ ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_pegasus	A walking s
 land_units_onscreen_name_advisor_overhaul_staff_and_sword_disc	The Advisor (Staff and Sword, Disc of Tzeentch)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_disc	Staff and Sword, Disc of Tzeentch	true
 ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_disc	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
+land_units_onscreen_name_advisor_overhaul_staff_and_sword_carmine_dragon	The Advisor (Staff and Sword, Carmine Dragon)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_carmine_dragon	Staff and Sword, Carmine Dragon	true
+ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_carmine_dragon	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_foot	The Advisor (Sword and Shield, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_foot	Sword and Shield, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_foot	He leaves the staff behind and takes up a knight's shield. He walks, as he always has.	true
@@ -26,21 +29,48 @@ ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_warhorse	He leaves
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_pegasus	The Advisor (Sword and Shield, Imperial Pegasus)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_pegasus	Sword and Shield, Imperial Pegasus	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_pegasus	He leaves the staff behind and takes up a knight's shield. A winged Imperial steed that lifts him over the battle line.	true
+land_units_onscreen_name_advisor_overhaul_sword_and_shield_carmine_dragon	The Advisor (Sword and Shield, Carmine Dragon)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_carmine_dragon	Sword and Shield, Carmine Dragon	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_carmine_dragon	He leaves the staff behind and takes up a knight's shield. A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_bow_foot	The Advisor (Sword and Bow, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_foot	Sword and Bow, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_foot	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_bow_warhorse	The Advisor (Sword and Bow, Barded Warhorse)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_warhorse	Sword and Bow, Barded Warhorse	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_warhorse	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. An armoured Imperial charger, steady under spellfire.	true
+land_units_onscreen_name_advisor_overhaul_sword_and_bow_pegasus	The Advisor (Sword and Bow, Imperial Pegasus)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_pegasus	Sword and Bow, Imperial Pegasus	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_pegasus	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. A winged Imperial steed that lifts him over the battle line.	true
+land_units_onscreen_name_advisor_overhaul_sword_and_bow_disc	The Advisor (Sword and Bow, Disc of Tzeentch)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_disc	Sword and Bow, Disc of Tzeentch	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_disc	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
+land_units_onscreen_name_advisor_overhaul_sword_and_bow_carmine_dragon	The Advisor (Sword and Bow, Carmine Dragon)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_carmine_dragon	Sword and Bow, Carmine Dragon	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_carmine_dragon	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.	true
 land_units_onscreen_name_advisor_overhaul_greatsword_foot	The Advisor (Greatsword, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_foot	Greatsword, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_greatsword_foot	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_greatsword_warhorse	The Advisor (Greatsword, Barded Warhorse)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_warhorse	Greatsword, Barded Warhorse	true
 ancillaries_colour_text_advisor_overhaul_rig_greatsword_warhorse	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. An armoured Imperial charger, steady under spellfire.	true
+land_units_onscreen_name_advisor_overhaul_greatsword_pegasus	The Advisor (Greatsword, Imperial Pegasus)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_pegasus	Greatsword, Imperial Pegasus	true
+ancillaries_colour_text_advisor_overhaul_rig_greatsword_pegasus	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. A winged Imperial steed that lifts him over the battle line.	true
+land_units_onscreen_name_advisor_overhaul_greatsword_disc	The Advisor (Greatsword, Disc of Tzeentch)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_disc	Greatsword, Disc of Tzeentch	true
+ancillaries_colour_text_advisor_overhaul_rig_greatsword_disc	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 land_units_onscreen_name_advisor_overhaul_glaive_foot	The Advisor (Glaive, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_glaive_foot	Glaive, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_glaive_foot	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes. He walks, as he always has.	true
+land_units_onscreen_name_advisor_overhaul_glaive_warhorse	The Advisor (Glaive, Barded Warhorse)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_glaive_warhorse	Glaive, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_rig_glaive_warhorse	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes. An armoured Imperial charger, steady under spellfire.	true
+land_units_onscreen_name_advisor_overhaul_glaive_pegasus	The Advisor (Glaive, Imperial Pegasus)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_glaive_pegasus	Glaive, Imperial Pegasus	true
+ancillaries_colour_text_advisor_overhaul_rig_glaive_pegasus	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes. A winged Imperial steed that lifts him over the battle line.	true
+land_units_onscreen_name_advisor_overhaul_glaive_disc	The Advisor (Glaive, Disc of Tzeentch)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_glaive_disc	Glaive, Disc of Tzeentch	true
+ancillaries_colour_text_advisor_overhaul_rig_glaive_disc	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 land_units_onscreen_name_advisor_overhaul_iron_hand_foot	The Advisor (Iron Hand, On Foot)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_iron_hand_foot	Iron Hand, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_iron_hand_foot	No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way Zhao Ming fights before he takes his dragon form. He walks, as he always has.	true
@@ -67,12 +97,15 @@ advisor_overhaul_ui_mount_foot	On Foot	true
 advisor_overhaul_ui_mount_warhorse	Barded Warhorse	true
 advisor_overhaul_ui_mount_pegasus	Imperial Pegasus	true
 advisor_overhaul_ui_mount_disc	Disc of Tzeentch	true
+advisor_overhaul_ui_mount_carmine_dragon	Carmine Dragon	true
 character_skills_localised_name_advisor_overhaul_choose_mount_warhorse	Barded Warhorse	true
 character_skills_localised_description_advisor_overhaul_choose_mount_warhorse	An armoured Imperial charger, steady under spellfire.	true
 character_skills_localised_name_advisor_overhaul_choose_mount_pegasus	Imperial Pegasus	true
 character_skills_localised_description_advisor_overhaul_choose_mount_pegasus	A winged Imperial steed that lifts him over the battle line.	true
 character_skills_localised_name_advisor_overhaul_choose_mount_disc	Disc of Tzeentch	true
 character_skills_localised_description_advisor_overhaul_choose_mount_disc	A floating daemon-disc, bound to him by a bargain he does not talk about.	true
+character_skills_localised_name_advisor_overhaul_choose_mount_carmine_dragon	Carmine Dragon	true
+character_skills_localised_description_advisor_overhaul_choose_mount_carmine_dragon	A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_staff_and_sword	Staff and Sword	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_staff_and_sword	A walking staff for his spells and a plain Imperial blade for anything that gets too close.\\n\\nHis default weapon, which he always has. Switch back to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_shield	Sword and Shield	true

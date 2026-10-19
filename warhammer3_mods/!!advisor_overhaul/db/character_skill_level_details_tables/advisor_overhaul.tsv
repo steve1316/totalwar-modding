@@ -2,24 +2,25 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 #character_skill_level_details_tables;1;db/character_skill_level_details_tables/advisor_overhaul						
 		1	advisor_overhaul_choose_mount_warhorse		x	3
 		1	advisor_overhaul_choose_mount_pegasus		x	11
-		1	advisor_overhaul_choose_mount_disc		x	1
+		1	advisor_overhaul_choose_mount_disc		x	18
+		1	advisor_overhaul_choose_mount_carmine_dragon		x	25
 		1	advisor_overhaul_choose_weapon_sword_and_shield		x	3
 		1	advisor_overhaul_choose_weapon_sword_and_bow		x	6
 		1	advisor_overhaul_choose_weapon_greatsword		x	9
 		1	advisor_overhaul_choose_weapon_glaive		x	12
 		1	advisor_overhaul_choose_weapon_iron_hand		x	15
 		1	advisor_overhaul_skill_actions_default		x	1
-		1	advisor_overhaul_skill_arts_apex		x	44
+		1	advisor_overhaul_skill_arts_apex		x	29
 		1	advisor_overhaul_skill_arts_army_1		x	4
 		1	advisor_overhaul_skill_arts_army_2		x	9
 		1	advisor_overhaul_skill_arts_army_3		x	14
-		1	advisor_overhaul_skill_arts_army_4		x	16
-		1	advisor_overhaul_skill_arts_army_gate		x	44
-		1	advisor_overhaul_skill_arts_art_1		x	2
-		1	advisor_overhaul_skill_arts_art_2		x	6
-		1	advisor_overhaul_skill_arts_art_3		x	11
-		1	advisor_overhaul_skill_arts_art_4		x	14
-		1	advisor_overhaul_skill_arts_gate		x	44
+		1	advisor_overhaul_skill_arts_army_4		x	19
+		1	advisor_overhaul_skill_arts_army_gate		x	24
+		1	advisor_overhaul_skill_arts_art_1		x	4
+		1	advisor_overhaul_skill_arts_art_2		x	9
+		1	advisor_overhaul_skill_arts_art_3		x	14
+		1	advisor_overhaul_skill_arts_art_4		x	19
+		1	advisor_overhaul_skill_arts_gate		x	24
 		1	advisor_overhaul_skill_civic_0		x	1
 		2	advisor_overhaul_skill_civic_0		x	1
 		3	advisor_overhaul_skill_civic_0		x	1
@@ -53,7 +54,7 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_civic_9		x	3
 		2	advisor_overhaul_skill_civic_9		x	3
 		3	advisor_overhaul_skill_civic_9		x	3
-		1	advisor_overhaul_skill_civic_apex		x	44
+		1	advisor_overhaul_skill_civic_apex		x	29
 		1	advisor_overhaul_skill_combat_aim		x	0
 		2	advisor_overhaul_skill_combat_aim		x	9
 		1	advisor_overhaul_skill_combat_barrier		x	0
@@ -135,7 +136,7 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		3	advisor_overhaul_skill_hero_students		x	0
 		1	advisor_overhaul_skill_magic_arcane_ward		x	0
 		2	advisor_overhaul_skill_magic_arcane_ward		x	9
-		1	advisor_overhaul_skill_magic_archmage		x	44
+		1	advisor_overhaul_skill_magic_archmage		x	29
 		1	advisor_overhaul_skill_magic_battle_caster		x	0
 		2	advisor_overhaul_skill_magic_battle_caster		x	9
 		1	advisor_overhaul_skill_magic_beyond_sight		x	19
@@ -197,7 +198,7 @@ campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_r
 		1	advisor_overhaul_skill_martial_9		x	0
 		2	advisor_overhaul_skill_martial_9		x	0
 		3	advisor_overhaul_skill_martial_9		x	0
-		1	advisor_overhaul_skill_martial_apex		x	44
+		1	advisor_overhaul_skill_martial_apex		x	29
 		1	advisor_overhaul_skill_memory_calm_voice		x	0
 		2	advisor_overhaul_skill_memory_calm_voice		x	9
 		3	advisor_overhaul_skill_memory_calm_voice		x	19

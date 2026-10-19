@@ -114,6 +114,7 @@
   "staff_and_sword": {
    "name": "Staff and Sword",
    "description": "A walking staff for his spells and a plain Imperial blade for anything that gets too close.",
+   "campaign_rider_sets": {"carmine_dragon": "cam_hu1_advisor_overhaul_dr1_dragon_staff_and_sword"},
    "icon": "wh3_dlc27_item_abilities_staff_of_the_masque.png",
    "picker_icon": "ui/campaign ui/skills/item_weapon.png",
    "shield": "none",
@@ -159,13 +160,15 @@
     "foot": "hu1_pr8_amethyst_staff_and_sword",
     "warhorse": "hu1_advisor_overhaul_hr1_warhorse_staff_and_sword",
     "pegasus": "hu1_advisor_overhaul_hr1_pegasus_staff_and_sword",
-    "disc": "hu1_advisor_overhaul_disc01_staff_and_sword"
+    "disc": "hu1_advisor_overhaul_disc01_staff_and_sword",
+    "carmine_dragon": "hu1_advisor_overhaul_dr1_dragon_staff_and_sword"
    },
    "vanilla": {
     "foot": "wh2_pro07_emp_cha_wizard_death_0",
     "warhorse": "wh2_pro07_emp_cha_wizard_death_3",
     "pegasus": "wh2_pro07_emp_cha_wizard_death_2",
-    "disc": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc"
+    "disc": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc",
+    "carmine_dragon": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
    },
    "stats": {
     "melee_attack": 25,
@@ -383,7 +386,8 @@
    "campaign_set": "cam_hu1_empire_sword_and_shield",
    "campaign_rider_sets": {
     "warhorse": "cam_hu1_empire_hr1_warhorse_lance_sword_shield",
-    "pegasus": "cam_hu1_empire_hr1_warhorse_lance_sword_shield"
+    "pegasus": "cam_hu1_empire_hr1_warhorse_lance_sword_shield",
+    "carmine_dragon": "cam_hu1_empire_dr1_dragon_wb_sword_and_shield"
    },
    "icon": "wh_dlc07_lord_abilities_lions_shield.png",
    "picker_icon": "ui/campaign ui/skills/wh_dlc07_lord_abilities_lions_shield.png",
@@ -396,12 +400,14 @@
    "sets": {
     "foot": "hu1_advisor_overhaul_sword_and_shield",
     "warhorse": "hu1_advisor_overhaul_hr1_warhorse_sword_and_shield",
-    "pegasus": "hu1_advisor_overhaul_hr1_pegasus_sword_and_shield"
+    "pegasus": "hu1_advisor_overhaul_hr1_pegasus_sword_and_shield",
+    "carmine_dragon": "hu1_advisor_overhaul_dr1_dragon_sword_and_shield"
    },
    "vanilla": {
     "foot": "wh_main_emp_cha_captain_0",
     "warhorse": "wh_main_emp_cha_captain_2",
-    "pegasus": "wh_main_emp_cha_captain_3"
+    "pegasus": "wh_main_emp_cha_captain_3",
+    "carmine_dragon": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"
    },
    "stats": {
     "melee_attack": 50,
@@ -428,7 +434,8 @@
      "morale": 65,
      "armour": 85,
      "bonus_hit_points": 4448
-    }
+    },
+    "carmine_dragon": {"armour": 100}
    },
    "hood": false,
    "pieces": {
@@ -579,7 +586,8 @@
    "name": "Sword and Bow",
    "description": "A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten.",
    "campaign_set": "cam_lord_hu1_dlc13_huntsmarshal_sword_bow",
-   "campaign_rider_sets": {"warhorse": "cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow"},
+   "campaign_rider_sets": {"warhorse": "cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow", "pegasus": "cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow",
+                           "disc": "cam_lord_hu1_dlc13_huntsmarshal_sword_bow", "carmine_dragon": "cam_hu1_empire_dr1_dragon_wb_sword_and_shield"},
    "icon": "wh_dlc05_weapon_abilities_the_bow_of_loren.png",
    "picker_icon": "ui/campaign ui/skills/wh_dlc05_weapon_abilities_the_bow_of_loren.png",
    "shield": "none",
@@ -623,9 +631,13 @@
    "attributes": ["mounted_fire_move"],
    "sets": {
     "foot": "hu1_advisor_overhaul_sword_and_bow",
-    "warhorse": "hu1_advisor_overhaul_hr1_warhorse_sword_and_bow"
+    "warhorse": "hu1_advisor_overhaul_hr1_warhorse_sword_and_bow",
+    "pegasus": "hu1_advisor_overhaul_hr1_pegasus_sword_and_bow",
+    "disc": "hu1_advisor_overhaul_disc01_sword_and_bow",
+    "carmine_dragon": "hu1_advisor_overhaul_dr1_dragon_sword_and_bow"
    },
-   "vanilla": {"foot": "wh2_dlc13_emp_cha_huntsmarshal_0", "warhorse": "wh3_dlc23_neu_cha_ulrika_warhorse"},
+   "vanilla": {"foot": "wh2_dlc13_emp_cha_huntsmarshal_0", "warhorse": "wh3_dlc23_neu_cha_ulrika_warhorse", "pegasus": "wh_main_emp_cha_captain_3",
+               "disc": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc", "carmine_dragon": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon"},
    "stats": {
     "melee_attack": 43,
     "melee_defence": 40,
@@ -643,7 +655,16 @@
      "morale": 80,
      "armour": 80,
      "bonus_hit_points": 4564
-    }
+    },
+    "pegasus": {
+     "melee_attack": 50,
+     "melee_defence": 46,
+     "charge_bonus": 65,
+     "morale": 80,
+     "armour": 60,
+     "bonus_hit_points": 4852
+    },
+    "carmine_dragon": {"armour": 70}
    },
    "hood": false,
    "arts": {
@@ -800,7 +821,8 @@
    "name": "Greatsword",
    "description": "A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough.",
    "campaign_set": "cam_hero_hu1_dlc29_walach_harkon_2handed_sword",
-   "campaign_rider_sets": {"warhorse": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword"},
+   "campaign_rider_sets": {"warhorse": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword", "pegasus": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword",
+                           "disc": "cam_hero_hu1_dlc29_walach_harkon_2handed_sword"},
    "icon": "wh2_dlc11_strength_of_steel.png",
    "picker_icon": "ui/campaign ui/skills/wh2_dlc11_strength_of_steel.png",
    "shield": "none",
@@ -810,11 +832,15 @@
    },
    "sets": {
     "foot": "hu1_dlc29_walach_harkon_2handed_sword",
-    "warhorse": "hu1_advisor_overhaul_hr1_warhorse_greatsword"
+    "warhorse": "hu1_advisor_overhaul_hr1_warhorse_greatsword",
+    "pegasus": "hu1_advisor_overhaul_hr1_pegasus_greatsword",
+    "disc": "hu1_advisor_overhaul_disc01_two_handed"
    },
    "vanilla": {
     "foot": "wh3_dlc29_vmp_cha_walach_harkon",
-    "warhorse": "wh3_dlc29_vmp_cha_walach_harkon_barded_nightmare"
+    "warhorse": "wh3_dlc29_vmp_cha_walach_harkon_barded_nightmare",
+    "pegasus": "wh_main_emp_cha_captain_3",
+    "disc": "wh3_dlc24_chs_cha_exalted_hero_mtze_disc"
    },
    "stats": {
     "melee_attack": 65,
@@ -833,6 +859,14 @@
      "morale": 80,
      "armour": 110,
      "bonus_hit_points": 5660
+    },
+    "pegasus": {
+     "melee_attack": 65,
+     "melee_defence": 45,
+     "charge_bonus": 75,
+     "morale": 80,
+     "armour": 90,
+     "bonus_hit_points": 5948
     },
     "foot": {
      "props": {
@@ -1015,6 +1049,8 @@
    "name": "Glaive",
    "description": "A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes.",
    "campaign_set": "cam_hu1_advisor_overhaul_glaive",
+   "campaign_rider_sets": {"warhorse": "cam_lord_hu1_tomb_hr1_tomb_steed_halberd", "pegasus": "cam_lord_hu1_tomb_hr1_tomb_steed_halberd",
+                           "disc": "cam_hu1_advisor_overhaul_glaive"},
    "icon": "wh3_dlc29_item_abilities_doom_glaive.png",
    "picker_icon": "ui/campaign ui/skills/wh3_dlc29_item_abilities_doom_glaive.png",
    "shield": "none",
@@ -1023,8 +1059,9 @@
     "shield": ["be_prop_2", "VariantMeshes/wh_variantmodels/hu1e/cth/cth_props/cth_taoyan_sword_1h_01.wsmodel", "audio_melee_weapon_type:sword"],
     "weapon_3": ["be_prop_3", "VariantMeshes/wh_variantmodels/hu1e/cth/cth_props/cth_taoyan_scabard_1h_01.wsmodel", ""]
    },
-   "sets": {"foot": "hu1_advisor_overhaul_glaive"},
-   "vanilla": {"foot": "wh3_cp1_cth_cha_taoyan"},
+   "sets": {"foot": "hu1_advisor_overhaul_glaive", "warhorse": "hu1_advisor_overhaul_hr1_warhorse_glaive", "pegasus": "hu1_advisor_overhaul_hr1_pegasus_glaive",
+            "disc": "hu1_advisor_overhaul_disc01_two_handed"},
+   "vanilla": {"foot": "wh3_cp1_cth_cha_taoyan", "warhorse": "wh3_main_ksl_cha_boris_1", "pegasus": "wh_main_emp_cha_captain_3", "disc": "wh3_dlc24_chs_cha_exalted_hero_mtze_disc"},
    "stats": {
     "melee_attack": 58,
     "melee_defence": 55,
@@ -1034,6 +1071,7 @@
     "armour": 95
    },
    "melee": {"template": "wh3_cp1_cth_taoyan_trident", "melee_attack_interval": "1.7000", "damage": "90", "ap_damage": "210", "bonus_v_large": "50", "splash_attack_max_attacks": "10"},
+   "forms": {"pegasus": {"charge_bonus": 65, "armour": 105}},
    "hood": false,
    "arts": {
     "art_1": {
@@ -1411,7 +1449,21 @@
    "variant_props": {
     "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel", "equipment"]
    },
-   "unlock": "script"
+   "grant_rank": 19,
+   "unlock_rank": 18
+  },
+  "carmine_dragon": {
+   "name": "Carmine Dragon",
+   "description": "A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.",
+   "template": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon",
+   "template_foot": "wh3_dlc25_emp_cha_elspeth_von_draken",
+   "icon": "ui/campaign ui/mounts/mount_carmine_dragon.png",
+   "picker_icon": "ui/campaign ui/skills/mount_carmine_dragon.png",
+   "ancillary_type": "wh3_dlc25_anc_mount_carmine_dragon",
+   "campaign_rider_set": "cam_hu1_empire_dr1_dragon_wb_sword_and_shield",
+   "abilities": ["wh3_dlc25_unit_abilities_coruscating_blast"],
+   "grant_rank": 26,
+   "unlock_rank": 25
   }
  },
  "skills": {
@@ -1421,7 +1473,7 @@
    "icon": "character_defence.png",
    "row": 1,
    "tier": 6,
-   "rank": 2,
+   "rank": 4,
    "levels": [
     []
    ],
@@ -1435,7 +1487,7 @@
    "icon": "character_attack.png",
    "row": 1,
    "tier": 7,
-   "rank": 6,
+   "rank": 9,
    "levels": [
     []
    ],
@@ -1449,7 +1501,7 @@
    "icon": "character_charge.png",
    "row": 1,
    "tier": 8,
-   "rank": 11,
+   "rank": 14,
    "levels": [
     []
    ],
@@ -1463,7 +1515,7 @@
    "icon": "character_armour.png",
    "row": 1,
    "tier": 9,
-   "rank": 14,
+   "rank": 19,
    "levels": [
     []
    ],
@@ -1517,9 +1569,9 @@
    "name": "Master of Arms",
    "description": "Every weapon he has ever held, in every ending, answers him at once.\\\\n\\\\nStacks with any other Apex or the Polymath.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "spell_mastery.png",
-   "row": 0,
-   "tier": 8,
-   "rank": 44,
+   "row": 1,
+   "tier": 11,
+   "rank": 29,
    "levels": [
     []
    ],
@@ -1598,8 +1650,8 @@
    "name": "Archmage",
    "icon": "character_magic.png",
    "row": 0,
-   "tier": 9,
-   "rank": 44,
+   "tier": 10,
+   "rank": 29,
    "build": true,
    "role": "apex",
    "requires": [],
@@ -2636,8 +2688,8 @@
    "name": "The Last Sword",
    "icon": "character_attack.png",
    "row": 0,
-   "tier": 10,
-   "rank": 44,
+   "tier": 11,
+   "rank": 29,
    "build": true,
    "role": "apex",
    "requires": [],
@@ -2677,8 +2729,8 @@
    "name": "Power Behind Thrones",
    "icon": "campaign_public_order.png",
    "row": 0,
-   "tier": 11,
-   "rank": 44,
+   "tier": 12,
+   "rank": 29,
    "build": true,
    "role": "apex",
    "requires": [],
@@ -2980,7 +3032,7 @@
    "name": "Everything, Again",
    "icon": "character_general_ability.png",
    "row": 0,
-   "tier": 12,
+   "tier": 13,
    "rank": 29,
    "build": true,
    "role": "polymath",
@@ -3017,7 +3069,7 @@
    "name": "The Long Patience",
    "icon": "character_damage.png",
    "row": 0,
-   "tier": 13,
+   "tier": 14,
    "rank": 30,
    "build": true,
    "requires": [],
@@ -5155,9 +5207,9 @@
    "icon": "character_attack.png",
    "row": 1,
    "tier": 10,
-   "rank": 44,
+   "rank": 24,
    "build": true,
-   "requires": [],
+   "requires": ["arts_art_4"],
    "role": "gate",
    "description": "Seven teachers, seven endings, and he took the best of each. What comes out is nobody's but his.",
    "levels": [
@@ -6979,7 +7031,7 @@
    "icon": "character_army.png",
    "row": 1,
    "tier": 3,
-   "rank": 16,
+   "rank": 19,
    "requires": ["arts_army_3"],
    "slot": "army_4",
    "build": true,
@@ -6990,9 +7042,9 @@
    "icon": "campaign_army.png",
    "row": 1,
    "tier": 4,
-   "rank": 44,
+   "rank": 24,
    "build": true,
-   "requires": [],
+   "requires": ["arts_army_4"],
    "role": "gate",
    "description": "The men around him fight the way he taught them, whatever he holds.",
    "levels": [

@@ -40,8 +40,8 @@ of skills it needs: all of them, or any `needs` of them), `exclusive` (ids of sk
 one way, such as a pact choice), `hidden` (no node shown, for skills a script gives him, with `learned` giving it to him when he is made), `slot`
 (an art slot, whose effect is the held weapon's art for that slot), `grant_rank` (the rank at which the game gives it to him by itself) and
 `build`. Only skills with `build` (In game in the workbench) are written.
-Drafts stay in the workbench. A weapon or mount with `unlock` "script" gets a hidden skill too: only a script unlocks it (the Disc, from the pact). With `grant_rank` the loadout script gives
-it by itself once he reaches that rank (the Warhorse, the Pegasus and every weapon). Without an `unlock_rank` it can never be bought first.
+Drafts stay in the workbench. A weapon or mount with `unlock` "script" gets a hidden skill too: only a script unlocks it. With `grant_rank` the loadout script gives
+it by itself once he reaches that rank (every mount and weapon). Without an `unlock_rank` it can never be bought first.
 
 The rest of his kit, also in the registry:
 - `weapons.<w>.arts`: slot -> `name`, `description`, `effects` (each `effect`, `scope`, `value`). Each is an effect bundle, which the loadout
@@ -65,6 +65,9 @@ Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
 portrait camera) follows the vanilla Grey Wizard. His 2D portrait, unit card and info picture are cut from the vanilla Advisor bust (the registry's
 `portrait`). The stats are placeholders until they are tuned.
+
+A monster mount (the dragon) fights with its template's melee weapon, not his, and gets the mount's `abilities` (its breath). When the template
+has a vanilla rider personality, each pair gets a copy that plays his own rider set and variant.
 
 The weapons, mounts and model pieces are in advisor_overhaul_registry.json. The vanilla rows this reads are kept in advisor_overhaul.json. Refresh
 it after a game patch. It reads the vanilla tables from db.pack and the vanilla portrait settings from ui.pack, both through the extract cache:
@@ -265,7 +268,8 @@ TABLES = [
     "effect_bundles_to_effects_junctions_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables",
     "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables",
     "effect_bonus_value_special_ability_group_junctions_tables", "effect_bonus_value_ids_unit_sets_tables", "special_ability_groups_to_units_junctions_tables",
-    "unit_abilities_tables", "unit_special_abilities_tables", *UNIT_ROW_TABLES,
+    "unit_abilities_tables", "unit_special_abilities_tables", "battle_personalities_tables", "land_units_to_battle_personalities_junctions_tables",
+    *UNIT_ROW_TABLES,
 ]
 
 # Vanilla rows a missile `upgrade` can copy: registry field, kept-data name, table, and the projectile column pointed at the copy.
@@ -416,6 +420,10 @@ def refresh() -> None:
     melees = {w["melee"]["template"] for w in registry["weapons"].values() if "melee" in w}
     melees |= {r["primary_melee_weapon"] for r in data["templates"]["land_units_tables"]}
     data["melee_weapons"] = {r["key"]: r for r in loaded["melee_weapons_tables"] if r["key"] in melees}
+    # Template riders of a monster mount (the dragon): each template's junction row, and the personality rows they name.
+    data["riders"] = {r["land_unit"]: r for r in loaded["land_units_to_battle_personalities_junctions_tables"] if r["land_unit"] in units}
+    named = {r["battle_personality"] for r in data["riders"].values()}
+    data["personalities"] = {r["key"]: r for r in loaded["battle_personalities_tables"] if r["key"] in named}
     entities = {r["man_entity"] for r in data["templates"]["land_units_tables"]}
     data["entities"] = {r["key"]: r for r in loaded["battle_entities_tables"] if r["key"] in entities}
     armours = {r["armour"] for r in data["templates"]["land_units_tables"]}
@@ -838,10 +846,11 @@ def land_unit(key: str, weapon_key: str, weapon: Dict, set_name: str, mount_key:
     # The weapon's base stats replace his foot unit's before the mount's difference is added.
     advisor = dict(advisor, **{c: table_value(v) for c, v in weapon.get("stats", {}).items() if c in STAT_COLUMNS})
     if "template" not in mount:
-        row = dict(advisor, key=key, man_animation=set_name, shield=weapon["shield"], attribute_group=key)
+        row = dict(advisor, key=key, man_animation=set_name, shield=weapon["shield"], attribute_group=key,
+                   primary_melee_weapon=weapon_melee(weapon_key, weapon, advisor))
         if "entity" in weapon:
             row["man_entity"] = entity_key(weapon_key)
-        return with_form(with_missile(row, weapon_key, weapon), weapon_key, weapon, mount_key)
+        return with_form(with_missile(row, weapon_key, weapon), weapon, mount_key)
     mounted, foot = templates[mount["template"]], templates[mount["template_foot"]]
     row = dict(mounted)
     for column in IDENTITY_COLUMNS + ["historical_description_text", "short_description_text"]:
@@ -850,28 +859,40 @@ def land_unit(key: str, weapon_key: str, weapon: Dict, set_name: str, mount_key:
         row[column] = str(int(number(advisor[column]) + number(mounted[column]) - number(foot[column])))
     if mounted["armour"] == foot["armour"]:
         row["armour"] = advisor["armour"]
+    # A monster mount fights with its own melee weapon (the dragon's bites and claws), so only a ridden horse takes his.
     if mounted["primary_melee_weapon"] == foot["primary_melee_weapon"]:
-        row["primary_melee_weapon"] = advisor["primary_melee_weapon"]
+        row["primary_melee_weapon"] = weapon_melee(weapon_key, weapon, advisor)
     if mounted["mount"]:
         row["man_entity"] = RIDER_ENTITY
     row.update({"key": key, "man_animation": set_name, "shield": weapon["shield"], "attribute_group": key})
-    return with_form(with_missile(row, weapon_key, weapon), weapon_key, weapon, mount_key)
+    return with_form(with_missile(row, weapon_key, weapon), weapon, mount_key)
 
 
-def with_form(row: Dict[str, str], weapon_key: str, weapon: Dict, mount_key: str) -> Dict[str, str]:
-    """Gives a land unit row its weapon's own melee weapon and the values its form sets for this one pair.
+def weapon_melee(weapon_key: str, weapon: Dict, advisor: Dict[str, str]) -> str:
+    """The melee weapon he fights with when the weapon decides it: its own, or else his foot unit's.
+
+    Args:
+        weapon_key (str): The weapon key.
+        weapon (Dict): The registry weapon.
+        advisor (Dict[str, str]): His foot land unit.
+
+    Returns:
+        str: The melee weapon key.
+    """
+    return melee_key(weapon_key) if "melee" in weapon else advisor["primary_melee_weapon"]
+
+
+def with_form(row: Dict[str, str], weapon: Dict, mount_key: str) -> Dict[str, str]:
+    """Gives a land unit row the values its weapon's form sets for this one pair.
 
     Args:
         row (Dict[str, str]): The land unit row, changed in place.
-        weapon_key (str): The weapon key.
         weapon (Dict): The registry weapon.
         mount_key (str): The mount key.
 
     Returns:
         Dict[str, str]: The row.
     """
-    if "melee" in weapon:
-        row["primary_melee_weapon"] = melee_key(weapon_key)
     row.update({c: table_value(v) for c, v in weapon.get("forms", {}).get(mount_key, {}).items() if c in STAT_COLUMNS})
     return row
 
@@ -1622,7 +1643,8 @@ def build() -> None:
         # Voice, campaign cap and portrait camera stay his own on every mount, since the disc template is a Chaos Sorcerer.
         main = dict(template_main[template], **{k: template_main[FOOT_TEMPLATE][k] for k in MAIN_IDENTITY_COLUMNS})
         attributes = (set(template_attributes.get(template, [])) | set(weapon.get("attributes", []))) - set(weapon.get("attributes_removed", []))
-        abilities = [a for a in ["wh3_main_unit_passive_single_entity"] + weapon.get("abilities", []) if a not in weapon.get("abilities_removed", [])]
+        abilities = [a for a in ["wh3_main_unit_passive_single_entity"] + mount.get("abilities", []) + weapon.get("abilities", [])
+                     if a not in weapon.get("abilities_removed", [])]
         name = "The Advisor" if key == unit_key(DEFAULT_WEAPON, DEFAULT_MOUNT) else f"The Advisor ({weapon['name']}, {mount['name']})"
         unit_rows(key, template, main, attributes, abilities, variant, name, unique_index, data, rows, texts)
         unique_index += 1
@@ -1630,6 +1652,11 @@ def build() -> None:
                                                                    set_piece_character=""))
         if mount_key != DEFAULT_MOUNT:
             rows["units_custom_battle_mounts_tables"].append({"base_unit": unit_key(weapon_key, DEFAULT_MOUNT), "mounted_unit": key, "icon_name": mount["icon"]})
+        if junction := data["riders"].get(template):
+            # His rider on a monster mount plays his set and wears his variant, held where the template's rider sits.
+            rows["battle_personalities_tables"].append(copied_row(data, "personalities", junction["battle_personality"], key, {
+                "man_animations_table": land["man_animation"], "variant": variant, "battle_entity": land["man_entity"]}))
+            rows["land_units_to_battle_personalities_junctions_tables"].append(dict(junction, battle_personality=key, land_unit=key))
 
         ancillary_rows(rows, ancillary, mount["ancillary_type"], "mount", provided_bodyguard_unit=key)
         for art_set in art_sets:
