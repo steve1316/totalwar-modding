@@ -1333,7 +1333,7 @@
     },
     "apex": {
      "name": "Battering Ram",
-     "description": "He stops fighting the line and walks through it. On foot nothing stops or knocks him down, his body bowls men over and flings them aside, and every blow cracks the armour of what it hits.",
+     "description": "He stops fighting the line and walks through it. On foot nothing stops or knocks him down, his body bowls men over and flings them aside, and every blow cracks the armour of what it hits. On foot he counts as a large target.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_charge_bonus_add",
@@ -1352,7 +1352,7 @@
    "body": "advisor",
    "apex_form": {
     "name": "Battering Ram",
-    "description": "Nothing stops or knocks him down. He bowls men over and flings them aside, and every blow cracks the armour of what it hits.",
+    "description": "Nothing stops or knocks him down. He bowls men over and flings them aside, and every blow cracks the armour of what it hits. He counts as a large target.",
     "slot": "apex",
     "entity": {"size": "large", "mass": "6000.0000", "radius": "1.0000", "run_speed": "4.6000", "acceleration": "3.0000", "charge_speed": "6.0000",
                "hit_reactions_ignore_chance": "100", "knock_interrupts_ignore_chance": "100",

@@ -46,7 +46,7 @@ ancillaries_onscreen_name_advisor_overhaul_rig_iron_hand_foot	Iron Hand, On Foot
 ancillaries_colour_text_advisor_overhaul_rig_iron_hand_foot	No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way Zhao Ming fights before he takes his dragon form. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_iron_hand_apex	The Advisor (Iron Hand, Battering Ram)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_iron_hand_apex	Iron Hand, Battering Ram	true
-ancillaries_colour_text_advisor_overhaul_rig_iron_hand_apex	Nothing stops or knocks him down. He bowls men over and flings them aside, and every blow cracks the armour of what it hits.	true
+ancillaries_colour_text_advisor_overhaul_rig_iron_hand_apex	Nothing stops or knocks him down. He bowls men over and flings them aside, and every blow cracks the armour of what it hits. He counts as a large target.	true
 land_units_onscreen_name_advisor_overhaul_iron_hand_foot_dragon	The Advisor (Iron Dragon)	true
 unit_abilities_onscreen_name_advisor_overhaul_iron_hand_foot_dragon_form	Dragon Form	true
 unit_abilities_tooltip_text_advisor_overhaul_iron_hand_foot_dragon_form	He lets the old shape take him: iron scales, a forge-hot breath, wings over the field. The Iron Dragon of Cathay, as he remembers it.	true
@@ -390,7 +390,7 @@ effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_
 effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_army_4	Cast in Iron	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_4	Every unit under him becomes the company he once led. They take a blow the way metal takes the hammer.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_apex	Battering Ram	true
-effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_apex	He stops fighting the line and walks through it. On foot nothing stops or knocks him down, his body bowls men over and flings them aside, and every blow cracks the armour of what it hits.	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_apex	He stops fighting the line and walks through it. On foot nothing stops or knocks him down, his body bowls men over and flings them aside, and every blow cracks the armour of what it hits. On foot he counts as a large target.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_1	Everything, Again (1 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_1	He draws on 1 of his disciplines at once.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_2	Everything, Again (2 of 4)	true
