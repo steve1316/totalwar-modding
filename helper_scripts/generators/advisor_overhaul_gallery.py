@@ -300,7 +300,7 @@ def unit_entry(exporter: Exporter, name: str, rider_set: AnimSet, rider_variant:
     if mount_set:
         sides.append({"key": "mount", "label": "Mount", "color": MOUNT_COLOUR, "model": exporter.model(mount_variant, mount_set.skeleton) if mount_variant else None})
     if versus:
-        v_key, v_rider_set, v_rider_variant, v_mount_set, v_mount_variant = versus
+        _, v_rider_set, v_rider_variant, v_mount_set, v_mount_variant = versus
         v_skeleton = next((exporter.anims[s["anims"]["v_rider"]]["skeleton"] for s in slots if "v_rider" in s["anims"]), v_rider_set.skeleton)
         sides.append({"key": "v_rider", "label": "Vanilla", "color": VANILLA_RIDER_COLOUR, "group": "vanilla", "model": exporter.model(v_rider_variant, v_skeleton)})
         if v_mount_set:

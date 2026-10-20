@@ -8,8 +8,8 @@ Metas that name bones are copied with the bones renumbered for `humanoid01`. Met
 Settra's casts, which she lacks, `PROP_PINS` holds her sword, scabbard and glaive where her docking would have them, and `BAKED_DOCKING` bakes
 the docks into the tracks. The third is the Iron Hand, Zhao Ming's unarmed humanoid01e human form set with his own casts. The fourth is the
 bow on the Carmine Dragon, the High Elf princess's humanoid01b dragon set, and the staff on it. `MOUNTS` points the dragon sets at the carmine
-dragon's animations. The rest give the Glaive Boris Todbringer's horse set, and the Greatsword, Glaive and bow the disc, with `PROP_PINS` holding
-each weapon where his own sets hold it.
+dragon's animations. The rest give the Glaive the High Elf halberd horse set, and the Greatsword and Glaive the Tzeentch Exalted Hero's disc set,
+with `PROP_PINS` holding each weapon where his own sets hold it. `BOW_DISCS` builds the bow on the disc from his disc moves and his bow shots.
 
 Derived sets copy a vanilla `humanoid01` set, or one built before, under a new name with up to two fixes. Named slots take their animations from
 another vanilla set (several vanilla horse sets play foot casts in their rider cast slots, so the rider sinks into the mount, and the Huntsmarshal's
@@ -1372,7 +1372,7 @@ def seat_riders(data: bytes, names: Dict[int, str], sets: Dict[str, bytes], asse
 
 
 def build() -> None:
-    """Builds every set in `SETS` and `DERIVED_SETS` into the mod's animpack, and every set in `CAMPAIGN_SETS`."""
+    """Builds every set in `SETS`, `DERIVED_SETS` and `BOW_DISCS` into the mod's animpack, and every set in `CAMPAIGN_SETS`."""
     vanilla = {os.path.basename(path)[:-4]: data for path, data in load_vanilla_sets().items() if path.startswith(SET_FOLDER) and path.endswith(".bin")}
     names = load_slot_ids(open(f"{SCHEMAS_DIR}/{SLOT_IDS_FILE}", encoding="utf-8").read())
     assets = AssetSource([], [], VANILLA_PACKS)

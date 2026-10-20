@@ -125,7 +125,6 @@
    },
    "missile": {
     "description": "His staff bolt, a plain arcane bolt for now. Its element is meant to follow his first lore later, so the key names no element. `template` is the vanilla Hag Witch's staff bolt, with one bolt per shot instead of two, and `projectile` replacing the template's values. `ammo` is a little under the Hag Witch's 28.",
-    "key": "advisor_overhaul_staff_and_sword_missile",
     "template": "wh3_dlc24_ksl_hag_witch_hags",
     "ammo": 20,
     "projectile": {

@@ -192,7 +192,7 @@ RIDER_ENTITY = "wh_main_infantry_standard_wizard_rider_blood_dismembers"
 DEFAULT_WEAPON = "staff_and_sword"
 DEFAULT_MOUNT = "foot"
 
-# Skill tree rows of the weapon and the mount skills. Two of the six vanilla rows.
+# Skill tree rows of the weapon and the mount skills. Both share the top row.
 WEAPON_ROW = 0
 MOUNT_ROW = 0
 
@@ -486,7 +486,7 @@ def transform_key(human: str, form: str) -> str:
     return f"{human}_{form}_form"
 
 
-def rig_key(weapon: str, mount: str) -> str:
+def loadout_key(weapon: str, mount: str) -> str:
     """The hidden mount ancillary that gives him a pair's unit.
 
     Args:
@@ -542,7 +542,7 @@ def pair_props(registry: Dict, weapon_key: str, mount_key: str) -> Dict[str, Lis
 
 
 def missile_key(weapon_key: str, weapon: Dict) -> str:
-    """The missile weapon of a weapon with a `missile`, also its projectile's key: the missile's own `key`, or one named after the weapon.
+    """The missile weapon of a weapon with a `missile`, also its projectile's key, named after the weapon.
 
     Args:
         weapon_key (str): The weapon key.
@@ -551,7 +551,7 @@ def missile_key(weapon_key: str, weapon: Dict) -> str:
     Returns:
         str: The missile weapon key.
     """
-    return weapon["missile"].get("key", f"{PREFIX}_{weapon_key}_missile")
+    return f"{PREFIX}_{weapon_key}_missile"
 
 
 def weapon_art_set(weapon: str) -> str:
@@ -652,7 +652,7 @@ def lore_short(lore: str) -> str:
     return lore.split("_lore_", 1)[-1]
 
 
-def lore_skill_key(lore: str, slot: int = 0) -> str:
+def lore_skill_key(lore: str, slot: int) -> str:
     """The skill of one lore of magic in one pick slot.
 
     Args:
@@ -1659,7 +1659,7 @@ def apex_rows(weapon_key: str, weapon: Dict, foot: Dict, art_sets: List[str], un
     unit_rows(key, FOOT_TEMPLATE, foot["main"], foot["attributes"], foot["abilities"], foot["variant"], f"The Advisor ({weapon['name']}, {apex['name']})",
               unique_index, data, rows, texts)
 
-    ancillary = rig_key(weapon_key, "apex")
+    ancillary = loadout_key(weapon_key, "apex")
     ancillary_rows(rows, ancillary, foot["ancillary_type"], "mount", provided_bodyguard_unit=key)
     rows["campaign_character_uniform_ancillary_junctions_tables"] += [{"ancillary": ancillary, "art_set": a, "uniform": foot["uniform"]} for a in art_sets]
     texts.append((f"ancillaries_onscreen_name_{ancillary}", f"{weapon['name']}, {apex['name']}"))
@@ -1739,7 +1739,7 @@ def build() -> None:
         weapon, mount = registry["weapons"][weapon_key], registry["mounts"][mount_key]
         key = unit_key(weapon_key, mount_key)
         template = mount.get("template", FOOT_TEMPLATE)
-        ancillary = rig_key(weapon_key, mount_key)
+        ancillary = loadout_key(weapon_key, mount_key)
         uniform = uniform_key(weapon_key, mount_key)
         form_props = weapon.get("forms", {}).get(mount_key, {}).get("props", {})
         variant = foot_variant(weapon_key) + ("_" + mount_key if "variant_props" in mount or form_props else "")
