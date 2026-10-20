@@ -1674,7 +1674,11 @@ def build() -> None:
         rows["units_custom_battle_permissions_tables"].append(dict(template_perm, unit=key, general_uniform=uniform, general_portrait=portrait_png,
                                                                    set_piece_character=""))
         if mount_key != DEFAULT_MOUNT:
-            rows["units_custom_battle_mounts_tables"].append({"base_unit": unit_key(weapon_key, DEFAULT_MOUNT), "mounted_unit": key, "icon_name": mount["icon"]})
+            base = unit_key(weapon_key, DEFAULT_MOUNT)
+            rows["units_custom_battle_mounts_tables"].append({"base_unit": base, "mounted_unit": key, "icon_name": mount["icon"]})
+            # Custom Battle's mount list reads these, keyed by both units run together.
+            texts.append((f"units_custom_battle_mounts_mount_name_{base}{key}", mount["name"]))
+            texts.append((f"units_custom_battle_mounts_localised_description_{base}{key}", mount["description"]))
         if junction := data["riders"].get(template):
             # His rider on a monster mount plays his set and wears his variant, held where the template's rider sits.
             rows["battle_personalities_tables"].append(copied_row(data, "personalities", junction["battle_personality"], key, {

@@ -9,66 +9,100 @@ land_units_onscreen_name_advisor_overhaul_staff_and_sword_foot	The Advisor	true
 ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_foot	Staff and Sword, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_foot	A walking staff for his spells and a plain Imperial blade for anything that gets too close. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_staff_and_sword_warhorse	The Advisor	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_staff_and_sword_footadvisor_overhaul_staff_and_sword_warhorse	Barded Warhorse	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_staff_and_sword_footadvisor_overhaul_staff_and_sword_warhorse	An armoured Imperial charger, steady under spellfire.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_warhorse	Staff and Sword, Barded Warhorse	true
 ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_warhorse	A walking staff for his spells and a plain Imperial blade for anything that gets too close. An armoured Imperial charger, steady under spellfire.	true
 land_units_onscreen_name_advisor_overhaul_staff_and_sword_pegasus	The Advisor	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_staff_and_sword_footadvisor_overhaul_staff_and_sword_pegasus	Imperial Pegasus	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_staff_and_sword_footadvisor_overhaul_staff_and_sword_pegasus	A winged Imperial steed that lifts him over the battle line.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_pegasus	Staff and Sword, Imperial Pegasus	true
 ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_pegasus	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A winged Imperial steed that lifts him over the battle line.	true
 land_units_onscreen_name_advisor_overhaul_staff_and_sword_disc	The Advisor	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_staff_and_sword_footadvisor_overhaul_staff_and_sword_disc	Disc of Tzeentch	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_staff_and_sword_footadvisor_overhaul_staff_and_sword_disc	A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_disc	Staff and Sword, Disc of Tzeentch	true
 ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_disc	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 land_units_onscreen_name_advisor_overhaul_staff_and_sword_carmine_dragon	The Advisor	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_staff_and_sword_footadvisor_overhaul_staff_and_sword_carmine_dragon	Carmine Dragon	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_staff_and_sword_footadvisor_overhaul_staff_and_sword_carmine_dragon	A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_carmine_dragon	Staff and Sword, Carmine Dragon	true
 ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_carmine_dragon	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_foot	The Advisor (Sword and Shield)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_foot	Sword and Shield, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_foot	He leaves the staff behind and takes up a knight's shield. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_warhorse	The Advisor (Sword and Shield)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_sword_and_shield_footadvisor_overhaul_sword_and_shield_warhorse	Barded Warhorse	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_sword_and_shield_footadvisor_overhaul_sword_and_shield_warhorse	An armoured Imperial charger, steady under spellfire.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_warhorse	Sword and Shield, Barded Warhorse	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_warhorse	He leaves the staff behind and takes up a knight's shield. An armoured Imperial charger, steady under spellfire.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_pegasus	The Advisor (Sword and Shield)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_sword_and_shield_footadvisor_overhaul_sword_and_shield_pegasus	Imperial Pegasus	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_sword_and_shield_footadvisor_overhaul_sword_and_shield_pegasus	A winged Imperial steed that lifts him over the battle line.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_pegasus	Sword and Shield, Imperial Pegasus	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_pegasus	He leaves the staff behind and takes up a knight's shield. A winged Imperial steed that lifts him over the battle line.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_carmine_dragon	The Advisor (Sword and Shield)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_sword_and_shield_footadvisor_overhaul_sword_and_shield_carmine_dragon	Carmine Dragon	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_sword_and_shield_footadvisor_overhaul_sword_and_shield_carmine_dragon	A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_carmine_dragon	Sword and Shield, Carmine Dragon	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_carmine_dragon	He leaves the staff behind and takes up a knight's shield. A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_bow_foot	The Advisor (Sword and Bow)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_foot	Sword and Bow, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_foot	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_bow_warhorse	The Advisor (Sword and Bow)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_sword_and_bow_footadvisor_overhaul_sword_and_bow_warhorse	Barded Warhorse	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_sword_and_bow_footadvisor_overhaul_sword_and_bow_warhorse	An armoured Imperial charger, steady under spellfire.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_warhorse	Sword and Bow, Barded Warhorse	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_warhorse	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. An armoured Imperial charger, steady under spellfire.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_bow_pegasus	The Advisor (Sword and Bow)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_sword_and_bow_footadvisor_overhaul_sword_and_bow_pegasus	Imperial Pegasus	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_sword_and_bow_footadvisor_overhaul_sword_and_bow_pegasus	A winged Imperial steed that lifts him over the battle line.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_pegasus	Sword and Bow, Imperial Pegasus	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_pegasus	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. A winged Imperial steed that lifts him over the battle line.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_bow_disc	The Advisor (Sword and Bow)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_sword_and_bow_footadvisor_overhaul_sword_and_bow_disc	Disc of Tzeentch	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_sword_and_bow_footadvisor_overhaul_sword_and_bow_disc	A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_disc	Sword and Bow, Disc of Tzeentch	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_disc	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 land_units_onscreen_name_advisor_overhaul_sword_and_bow_carmine_dragon	The Advisor (Sword and Bow)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_sword_and_bow_footadvisor_overhaul_sword_and_bow_carmine_dragon	Carmine Dragon	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_sword_and_bow_footadvisor_overhaul_sword_and_bow_carmine_dragon	A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_carmine_dragon	Sword and Bow, Carmine Dragon	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_carmine_dragon	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.	true
 land_units_onscreen_name_advisor_overhaul_greatsword_foot	The Advisor (Greatsword)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_foot	Greatsword, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_greatsword_foot	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_greatsword_warhorse	The Advisor (Greatsword)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_greatsword_footadvisor_overhaul_greatsword_warhorse	Barded Warhorse	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_greatsword_footadvisor_overhaul_greatsword_warhorse	An armoured Imperial charger, steady under spellfire.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_warhorse	Greatsword, Barded Warhorse	true
 ancillaries_colour_text_advisor_overhaul_rig_greatsword_warhorse	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. An armoured Imperial charger, steady under spellfire.	true
 land_units_onscreen_name_advisor_overhaul_greatsword_pegasus	The Advisor (Greatsword)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_greatsword_footadvisor_overhaul_greatsword_pegasus	Imperial Pegasus	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_greatsword_footadvisor_overhaul_greatsword_pegasus	A winged Imperial steed that lifts him over the battle line.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_pegasus	Greatsword, Imperial Pegasus	true
 ancillaries_colour_text_advisor_overhaul_rig_greatsword_pegasus	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. A winged Imperial steed that lifts him over the battle line.	true
 land_units_onscreen_name_advisor_overhaul_greatsword_disc	The Advisor (Greatsword)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_greatsword_footadvisor_overhaul_greatsword_disc	Disc of Tzeentch	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_greatsword_footadvisor_overhaul_greatsword_disc	A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_disc	Greatsword, Disc of Tzeentch	true
 ancillaries_colour_text_advisor_overhaul_rig_greatsword_disc	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 land_units_onscreen_name_advisor_overhaul_glaive_foot	The Advisor (Glaive)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_glaive_foot	Glaive, On Foot	true
 ancillaries_colour_text_advisor_overhaul_rig_glaive_foot	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_glaive_warhorse	The Advisor (Glaive)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_glaive_footadvisor_overhaul_glaive_warhorse	Barded Warhorse	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_glaive_footadvisor_overhaul_glaive_warhorse	An armoured Imperial charger, steady under spellfire.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_glaive_warhorse	Glaive, Barded Warhorse	true
 ancillaries_colour_text_advisor_overhaul_rig_glaive_warhorse	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes. An armoured Imperial charger, steady under spellfire.	true
 land_units_onscreen_name_advisor_overhaul_glaive_pegasus	The Advisor (Glaive)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_glaive_footadvisor_overhaul_glaive_pegasus	Imperial Pegasus	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_glaive_footadvisor_overhaul_glaive_pegasus	A winged Imperial steed that lifts him over the battle line.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_glaive_pegasus	Glaive, Imperial Pegasus	true
 ancillaries_colour_text_advisor_overhaul_rig_glaive_pegasus	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes. A winged Imperial steed that lifts him over the battle line.	true
 land_units_onscreen_name_advisor_overhaul_glaive_disc	The Advisor (Glaive)	true
+units_custom_battle_mounts_mount_name_advisor_overhaul_glaive_footadvisor_overhaul_glaive_disc	Disc of Tzeentch	true
+units_custom_battle_mounts_localised_description_advisor_overhaul_glaive_footadvisor_overhaul_glaive_disc	A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 ancillaries_onscreen_name_advisor_overhaul_rig_glaive_disc	Glaive, Disc of Tzeentch	true
 ancillaries_colour_text_advisor_overhaul_rig_glaive_disc	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 land_units_onscreen_name_advisor_overhaul_iron_hand_foot	The Advisor (Iron Hand)	true
