@@ -272,7 +272,7 @@ TABLES = [
     "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables",
     "effect_bonus_value_special_ability_group_junctions_tables", "effect_bonus_value_ids_unit_sets_tables", "special_ability_groups_to_units_junctions_tables",
     "unit_abilities_tables", "unit_special_abilities_tables", "battle_personalities_tables", "land_units_to_battle_personalities_junctions_tables",
-    *UNIT_ROW_TABLES,
+    "units_custom_battle_types_tables", *UNIT_ROW_TABLES,
 ]
 
 # Vanilla rows a missile `upgrade` can copy: registry field, kept-data name, table, and the projectile column pointed at the copy.
@@ -290,6 +290,15 @@ STAT_COLUMNS = ["melee_attack", "melee_defence", "charge_bonus", "morale", "bonu
 # Template tables -> the column naming the template unit.
 TEMPLATE_TABLES = {"land_units_tables": "key", "main_units_tables": "land_unit", "units_custom_battle_permissions_tables": "unit",
                    "unit_attributes_to_groups_junctions_tables": "attribute_group", **UNIT_ROW_TABLES}
+
+# Tables a Custom Battle lore copy repeats from its unit -> the columns naming the unit. Campaign-only rows stay with the unit.
+LORE_COPY_TABLES = {
+    "land_units_tables": ["key", "attribute_group"], "main_units_tables": ["unit", "land_unit"], "unit_attributes_groups_tables": ["group_name"],
+    "unit_attributes_to_groups_junctions_tables": ["attribute_group"], "land_units_to_unit_abilites_junctions_tables": ["land_unit"],
+    "unit_variants_tables": ["unit"], "ui_unit_bullet_point_unit_overrides_tables": ["unit_key"], "battle_currency_units_cost_values_tables": ["item_type"],
+    "land_units_to_battle_personalities_junctions_tables": ["land_unit"],
+    "units_custom_battle_permissions_tables": ["unit"],
+}
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -630,6 +639,18 @@ def action_effect_key(action: str) -> str:
     return f"{PREFIX}_effect_enable_{action_short(action)}"
 
 
+def lore_short(lore: str) -> str:
+    """The short name of a lore of magic, the part after `_lore_`.
+
+    Args:
+        lore (str): The vanilla lore key, such as `wh_main_lore_death`.
+
+    Returns:
+        str: The short name, such as `death`.
+    """
+    return lore.split("_lore_", 1)[-1]
+
+
 def lore_skill_key(lore: str, slot: int = 0) -> str:
     """The skill of one lore of magic in one pick slot.
 
@@ -640,7 +661,7 @@ def lore_skill_key(lore: str, slot: int = 0) -> str:
     Returns:
         str: The skill key, such as `advisor_overhaul_lore_death`, with `_2` for the second slot and so on.
     """
-    return f"{PREFIX}_lore_{lore.split('_lore_', 1)[-1]}" + (f"_{slot + 1}" if slot else "")
+    return f"{PREFIX}_lore_{lore_short(lore)}" + (f"_{slot + 1}" if slot else "")
 
 
 def item_key(item_id: str) -> str:
@@ -1356,7 +1377,7 @@ def lore_node_key(lore: str, slot: int) -> str:
     Returns:
         str: The node key.
     """
-    return f"{PREFIX}_lore_node_{lore.split('_lore_', 1)[-1]}" + (f"_{slot + 1}" if slot else "")
+    return f"{PREFIX}_lore_node_{lore_short(lore)}" + (f"_{slot + 1}" if slot else "")
 
 
 def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
@@ -1408,6 +1429,58 @@ def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
             rows["character_skill_nodes_skill_locks_tables"] += [
                 {"character_skill": key, "character_skill_node": lore_node_key(other, other_slot), "level": "1"}
                 for other in built for other_slot in range(len(lore_slots(registry))) if (other, other_slot) != (lore, slot) and (other_slot == slot or other == lore)]
+
+
+def custom_battle_lore_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
+    """Gives Custom Battle a Spell Lore pick, the way vanilla does it for the Bright Wizard: one copy of each of his units per built lore, linked to that
+    lore only. His campaign units keep every lore page and leave Custom Battle. Each foot copy lists the other lores of its weapon, and its mounts are
+    the copies of the same lore. The first built lore is the one picked by default.
+
+    Args:
+        registry (Dict): The registry.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, changed in place.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+    """
+    built = [lore for lore, entry in registry.get("lores", {}).items() if entry.get("build")]
+    if not built:
+        return
+    units = [r["unit"] for r in rows["units_custom_battle_permissions_tables"]]
+    mounts = rows["units_custom_battle_mounts_tables"]
+    mount_of = {unit_key(w, m): registry["mounts"][m] for w, m in pairs(registry)}
+    feet = [u for u in units if u not in {m["mounted_unit"] for m in mounts}]
+    names = {key: text for key, text in texts}
+    unique_index = max(int(r["unique_index"]) for r in rows["main_units_tables"])
+    sources: Dict[str, Dict[str, List[Dict[str, str]]]] = {table: {} for table in LORE_COPY_TABLES}
+    for table, columns in LORE_COPY_TABLES.items():
+        for r in rows[table]:
+            sources[table].setdefault(r[columns[0]], []).append(r)
+    rows["units_custom_battle_permissions_tables"], rows["units_custom_battle_mounts_tables"] = [], []
+
+    def copy_key(unit: str, lore: str) -> str:
+        return f"{unit}_{lore_short(lore)}"
+
+    for order, lore in enumerate(built):
+        for unit in units:
+            key = copy_key(unit, lore)
+            unique_index += 1
+            for table, columns in LORE_COPY_TABLES.items():
+                extra = {"unique_index": str(unique_index)} if table == "main_units_tables" else {}
+                rows[table] += [dict(r, **extra, **{c: key for c in columns if r[c] == unit}) for r in sources[table].get(unit, [])]
+            rows["special_ability_groups_to_units_junctions_tables"].append({"ability_group": lore, "unit": key, "group_page_order": "0"})
+            texts.append((f"land_units_onscreen_name_{key}", names[f"land_units_onscreen_name_{unit}"]))
+        for m in mounts:
+            base, mounted = copy_key(m["base_unit"], lore), copy_key(m["mounted_unit"], lore)
+            rows["units_custom_battle_mounts_tables"].append(dict(m, base_unit=base, mounted_unit=mounted))
+            mount = mount_of[m["mounted_unit"]]
+            # Custom Battle's mount list reads these, keyed by both units run together.
+            texts.append((f"units_custom_battle_mounts_mount_name_{base}{mounted}", mount["name"]))
+            texts.append((f"units_custom_battle_mounts_localised_description_{base}{mounted}", mount["description"]))
+        for foot in feet:
+            key = copy_key(foot, lore)
+            rows["units_custom_battle_types_tables"].append({
+                "alternate_unit": key, "base_unit": copy_key(foot, built[0]), "type_category": "type_spell_lore", "type_icon": "",
+                "show_base_in_unit_list": "true" if order == 0 else "false", "id": str(zlib.crc32(key.encode()) & 0x7FFFFFFF), "colour": "FFFFFF",
+                "sort_order": str(order * 10)})
 
 
 def category_rows(rows: Dict[str, List[Dict[str, str]]]) -> None:
@@ -1674,11 +1747,7 @@ def build() -> None:
         rows["units_custom_battle_permissions_tables"].append(dict(template_perm, unit=key, general_uniform=uniform, general_portrait=portrait_png,
                                                                    set_piece_character=""))
         if mount_key != DEFAULT_MOUNT:
-            base = unit_key(weapon_key, DEFAULT_MOUNT)
-            rows["units_custom_battle_mounts_tables"].append({"base_unit": base, "mounted_unit": key, "icon_name": mount["icon"]})
-            # Custom Battle's mount list reads these, keyed by both units run together.
-            texts.append((f"units_custom_battle_mounts_mount_name_{base}{key}", mount["name"]))
-            texts.append((f"units_custom_battle_mounts_localised_description_{base}{key}", mount["description"]))
+            rows["units_custom_battle_mounts_tables"].append({"base_unit": unit_key(weapon_key, DEFAULT_MOUNT), "mounted_unit": key, "icon_name": mount["icon"]})
         if junction := data["riders"].get(template):
             # His rider on a monster mount plays his set and wears his variant, held where the template's rider sits.
             rows["battle_personalities_tables"].append(copied_row(data, "personalities", junction["battle_personality"], key, {
@@ -1734,6 +1803,8 @@ def build() -> None:
     story_bundle_rows(registry, rows, texts)
     item_rows(registry, data, rows, texts)
     lore_rows(registry, data, rows, texts)
+    # After `lore_rows`, so the copies link to one lore and not every lore.
+    custom_battle_lore_rows(registry, rows, texts)
     category_rows(rows)
     art_rows(registry, data, rows)
     missile_rows(registry, data, rows)

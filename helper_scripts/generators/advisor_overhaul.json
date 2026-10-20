@@ -24415,6 +24415,19 @@
    ],
    "version": "11"
   },
+  "units_custom_battle_types_tables": {
+   "header": [
+    "alternate_unit",
+    "base_unit",
+    "type_category",
+    "type_icon",
+    "show_base_in_unit_list",
+    "id",
+    "colour",
+    "sort_order"
+   ],
+   "version": "3"
+  },
   "variants_tables": {
    "header": [
     "variant_name",
