@@ -1481,7 +1481,7 @@
   }
  },
  "skills": {
-  "arts_art_1": {
+  "arts_art_1_stance": {
    "name": "Art I: Stance",
    "description": "The first thing he learned with every weapon he ever held, in every world that ended.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_defence.png",
@@ -1495,7 +1495,7 @@
    "slot": "art_1",
    "build": true
   },
-  "arts_art_2": {
+  "arts_art_2_edge": {
    "name": "Art II: Edge",
    "description": "He has fought this fight before. His hands remember how it went.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_attack.png",
@@ -1505,11 +1505,11 @@
    "levels": [
     []
    ],
-   "requires": ["arts_art_1"],
+   "requires": ["arts_art_1_stance"],
    "slot": "art_2",
    "build": true
   },
-  "arts_art_3": {
+  "arts_art_3_flow": {
    "name": "Art III: Flow",
    "description": "The weapon stops being a tool and starts being an argument.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_charge.png",
@@ -1519,11 +1519,11 @@
    "levels": [
     []
    ],
-   "requires": ["arts_art_2"],
+   "requires": ["arts_art_2_edge"],
    "slot": "art_3",
    "build": true
   },
-  "arts_art_4": {
+  "arts_art_4_ending": {
    "name": "Art IV: Ending",
    "description": "How he finished it last time. And the time before that.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_armour.png",
@@ -1533,11 +1533,11 @@
    "levels": [
     []
    ],
-   "requires": ["arts_art_3"],
+   "requires": ["arts_art_3_flow"],
    "slot": "art_4",
    "build": true
   },
-  "arts_army_1": {
+  "arts_army_1_drill": {
    "name": "Army I: Drill",
    "description": "Soldiers near him pick up his habits without knowing they have.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_army.png",
@@ -1551,7 +1551,7 @@
    "slot": "army_1",
    "build": true
   },
-  "arts_army_2": {
+  "arts_army_2_formation": {
    "name": "Army II: Formation",
    "description": "He places men where he once saw them live.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "campaign_army.png",
@@ -1561,11 +1561,11 @@
    "levels": [
     []
    ],
-   "requires": ["arts_army_1"],
+   "requires": ["arts_army_1_drill"],
    "slot": "army_2",
    "build": true
   },
-  "arts_army_3": {
+  "arts_army_3_last_stand": {
    "name": "Army III: Last Stand",
    "description": "He has seen how armies break. He does not let this one.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "battle_defence.png",
@@ -1575,11 +1575,11 @@
    "levels": [
     []
    ],
-   "requires": ["arts_army_2"],
+   "requires": ["arts_army_2_formation"],
    "slot": "army_3",
    "build": true
   },
-  "arts_apex": {
+  "apex_master_of_arms": {
    "name": "Master of Arms",
    "description": "Every weapon he has ever held, in every ending, answers him at once.\\\\n\\\\nStacks with any other Apex or the Polymath.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "spell_mastery.png",
@@ -1589,19 +1589,19 @@
    "levels": [
     []
    ],
-   "requires": ["arts_gate"],
+   "requires": ["arts_final_style_of_his_own"],
    "slot": "apex",
    "build": true,
    "role": "apex"
   },
-  "magic_reserves": {
+  "magic_deep_reserves": {
    "name": "Deep Reserves",
    "icon": "character_magic.png",
    "row": 3,
    "tier": 1,
    "rank": 0,
    "build": true,
-   "requires": ["magic_channel"],
+   "requires": ["magic_open_channel"],
    "description": "He has learned to hold more of the Winds than a body should.",
    "levels": [
     [
@@ -1631,7 +1631,7 @@
    ],
    "level_ranks": [9]
   },
-  "magic_steady": {
+  "combat_steady_hands": {
    "name": "Steady Hands",
    "icon": "character_magic.png",
    "row": 2,
@@ -1660,7 +1660,7 @@
    ],
    "level_ranks": [9]
   },
-  "magic_archmage": {
+  "apex_archmage": {
    "name": "Apex: Archmage",
    "icon": "character_magic.png",
    "row": 0,
@@ -1690,16 +1690,16 @@
      }
     ]
    ],
-   "exclusive": ["civic_apex", "martial_apex", "memory_polymath"]
+   "exclusive": ["apex_power_behind_thrones", "apex_last_sword", "polymath"]
   },
-  "martial_0": {
+  "hero_assassinate": {
    "name": "Assassinate",
    "icon": "campaign_subterfuge.png",
    "row": 8,
    "tier": 1,
    "rank": 0,
    "build": true,
-   "requires": ["martial_1"],
+   "requires": ["hero_wound"],
    "description": "He knows which of them will matter later. He settles it now.",
    "levels": [
     [
@@ -1740,7 +1740,7 @@
     ]
    ]
   },
-  "martial_1": {
+  "hero_wound": {
    "name": "Wound",
    "icon": "campaign_wound_time.png",
    "row": 8,
@@ -1788,14 +1788,14 @@
     ]
    ]
   },
-  "martial_2": {
+  "hero_assassinate_lord": {
    "name": "Assassinate Lord",
    "icon": "campaign_subterfuge.png",
    "row": 8,
    "tier": 2,
    "rank": 19,
    "build": true,
-   "requires": ["martial_1"],
+   "requires": ["hero_wound"],
    "description": "Generals die too. He has watched it happen in every ending.",
    "levels": [
     [
@@ -1807,14 +1807,14 @@
     ]
    ]
   },
-  "martial_3": {
+  "hero_damage_walls": {
    "name": "Damage Walls",
    "icon": "campaign_siege_attack.png",
    "row": 8,
    "tier": 6,
    "rank": 0,
    "build": true,
-   "requires": ["martial_1"],
+   "requires": ["hero_wound"],
    "description": "Every wall falls eventually. He only hurries it along.",
    "levels": [
     [
@@ -1855,14 +1855,14 @@
     ]
    ]
   },
-  "martial_4": {
+  "hero_assault_garrison": {
    "name": "Assault Garrison",
    "icon": "campaign_siege_defence.png",
    "row": 8,
    "tier": 8,
    "rank": 0,
    "build": true,
-   "requires": ["martial_1"],
+   "requires": ["hero_wound"],
    "description": "He walks in through the gate they forgot to watch.",
    "levels": [
     [
@@ -1903,14 +1903,14 @@
     ]
    ]
   },
-  "martial_5": {
+  "hero_damage_building": {
    "name": "Damage Building",
    "icon": "campaign_siege_attack.png",
    "row": 8,
    "tier": 7,
    "rank": 0,
    "build": true,
-   "requires": ["martial_1"],
+   "requires": ["hero_wound"],
    "description": "A fire in the right storehouse ends a siege early.",
    "levels": [
     [
@@ -1951,14 +1951,14 @@
     ]
    ]
   },
-  "martial_6": {
+  "hero_block_army": {
    "name": "Block Army",
    "icon": "campaign_movement.png",
    "row": 8,
    "tier": 4,
    "rank": 0,
    "build": true,
-   "requires": ["martial_1"],
+   "requires": ["hero_wound"],
    "description": "A cut rope, a spooked horse, a missing quartermaster.",
    "levels": [
     [
@@ -1999,14 +1999,14 @@
     ]
    ]
   },
-  "martial_7": {
+  "hero_hinder_replenishment": {
    "name": "Hinder Replenishment",
    "icon": "campaign_replenishment.png",
    "row": 8,
    "tier": 3,
    "rank": 0,
    "build": true,
-   "requires": ["martial_1"],
+   "requires": ["hero_wound"],
    "description": "Their wounded do not come back to the line.",
    "levels": [
     [
@@ -2047,14 +2047,14 @@
     ]
    ]
   },
-  "martial_9": {
+  "hero_assault_units": {
    "name": "Assault Units",
    "icon": "campaign_disaster.png",
    "row": 8,
    "tier": 9,
    "rank": 0,
    "build": true,
-   "requires": ["martial_1"],
+   "requires": ["hero_wound"],
    "description": "The whole camp, the same night.",
    "levels": [
     [
@@ -2095,7 +2095,7 @@
     ]
    ]
   },
-  "civic_0": {
+  "hero_scouting": {
    "name": "Scouting",
    "icon": "campaign_item.png",
    "row": 8,
@@ -2128,7 +2128,7 @@
     ]
    ]
   },
-  "civic_1": {
+  "hero_training": {
    "name": "Training",
    "icon": "campaign_experience.png",
    "row": 8,
@@ -2176,14 +2176,14 @@
     ]
    ]
   },
-  "civic_2": {
+  "hero_replenish_troops": {
    "name": "Replenish Troops",
    "icon": "campaign_replenishment.png",
    "row": 8,
    "tier": 13,
    "rank": 2,
    "build": true,
-   "requires": ["civic_1"],
+   "requires": ["hero_training"],
    "description": "He finds men to fill the gaps. He knows where they hide.",
    "levels": [
     [
@@ -2224,14 +2224,14 @@
     ]
    ]
   },
-  "civic_3": {
+  "hero_increase_mobility": {
    "name": "Increase Mobility",
    "icon": "campaign_movement.png",
    "row": 8,
    "tier": 24,
    "rank": 4,
    "build": true,
-   "requires": ["civic_0"],
+   "requires": ["hero_scouting"],
    "description": "He knows the shortcut. He has walked it in three other lives.",
    "levels": [
     [
@@ -2272,14 +2272,14 @@
     ]
    ]
   },
-  "civic_4": {
+  "hero_scavenge": {
    "name": "Scavenge",
    "icon": "campaign_military_spending.png",
    "row": 8,
    "tier": 23,
    "rank": 3,
    "build": true,
-   "requires": ["civic_0"],
+   "requires": ["hero_scouting"],
    "description": "Nothing on a battlefield is wasted while he is there.",
    "levels": [
     [
@@ -2320,14 +2320,14 @@
     ]
    ]
   },
-  "civic_5": {
+  "hero_spread_public_order": {
    "name": "Spread Public Order",
    "icon": "campaign_public_order.png",
    "row": 8,
    "tier": 16,
    "rank": 6,
    "build": true,
-   "requires": ["civic_1"],
+   "requires": ["hero_training"],
    "description": "He reminds the people what the alternative looks like.",
    "levels": [
     [
@@ -2398,14 +2398,14 @@
     ]
    ]
   },
-  "civic_6": {
+  "hero_cleanse_corruption": {
    "name": "Cleanse Corruption",
    "icon": "campaign_untainted.png",
    "row": 8,
    "tier": 18,
    "rank": 8,
    "build": true,
-   "requires": ["civic_1"],
+   "requires": ["hero_training"],
    "description": "He has seen what the taint becomes. He burns it out early.",
    "levels": [
     [
@@ -2461,14 +2461,14 @@
     ]
    ]
   },
-  "civic_7": {
+  "hero_stimulate_growth": {
    "name": "Stimulate Growth",
    "icon": "campaign_growth.png",
    "row": 8,
    "tier": 17,
    "rank": 7,
    "build": true,
-   "requires": ["civic_1"],
+   "requires": ["hero_training"],
    "description": "He remembers which years the crops failed, and plants for them.",
    "levels": [
     [
@@ -2539,14 +2539,14 @@
     ]
    ]
   },
-  "civic_8": {
+  "hero_increase_trade": {
    "name": "Increase Trade",
    "icon": "campaign_trade.png",
    "row": 8,
    "tier": 15,
    "rank": 5,
    "build": true,
-   "requires": ["civic_1"],
+   "requires": ["hero_training"],
    "description": "He knows which roads will close, and which ships will sink.",
    "levels": [
     [
@@ -2587,14 +2587,14 @@
     ]
    ]
   },
-  "civic_9": {
+  "hero_boost_income": {
    "name": "Boost Income",
    "icon": "campaign_military_spending.png",
    "row": 8,
    "tier": 14,
    "rank": 3,
    "build": true,
-   "requires": ["civic_1"],
+   "requires": ["hero_training"],
    "description": "Half the counting-houses in the Empire owe him money from a life they cannot remember.",
    "levels": [
     [
@@ -2650,14 +2650,14 @@
     ]
    ]
   },
-  "civic_10": {
+  "hero_steal_technology": {
    "name": "Steal Technology",
    "icon": "campaign_technology.png",
    "row": 8,
    "tier": 5,
    "rank": 0,
    "build": true,
-   "requires": ["martial_1"],
+   "requires": ["hero_wound"],
    "description": "He has read books that have not been written yet. Theirs are easier.",
    "levels": [
     [
@@ -2698,7 +2698,7 @@
     ]
    ]
   },
-  "martial_apex": {
+  "apex_last_sword": {
    "name": "Apex: The Last Sword",
    "icon": "character_attack.png",
    "row": 0,
@@ -2737,9 +2737,9 @@
      }
     ]
    ],
-   "exclusive": ["civic_apex", "magic_archmage", "memory_polymath"]
+   "exclusive": ["apex_power_behind_thrones", "apex_archmage", "polymath"]
   },
-  "civic_apex": {
+  "apex_power_behind_thrones": {
    "name": "Apex: Power Behind Thrones",
    "icon": "campaign_public_order.png",
    "row": 0,
@@ -2778,7 +2778,7 @@
      }
     ]
    ],
-   "exclusive": ["magic_archmage", "martial_apex", "memory_polymath"]
+   "exclusive": ["apex_archmage", "apex_last_sword", "polymath"]
   },
   "actions_default": {
    "name": "Default Actions",
@@ -2877,7 +2877,7 @@
    "tier": 4,
    "rank": 14,
    "build": true,
-   "requires": ["memory_seen_the_end", "memory_calm_voice", "memory_every_mistake"],
+   "requires": ["memory_seen_the_end", "memory_calm_voice", "memory_every_mistake_already_made"],
    "description": "Everything he teaches, he learned the hard way. Several times.",
    "levels": [
     [
@@ -2993,7 +2993,7 @@
    ],
    "level_ranks": [9]
   },
-  "memory_every_mistake": {
+  "memory_every_mistake_already_made": {
    "name": "Memory: Every Mistake Already Made",
    "icon": "character_agent.png",
    "row": 4,
@@ -3042,7 +3042,7 @@
    ],
    "level_ranks": [9, 19]
   },
-  "memory_polymath": {
+  "polymath": {
    "name": "Polymath: Everything, Again",
    "icon": "character_general_ability.png",
    "row": 0,
@@ -3055,9 +3055,9 @@
    "levels": [
     []
    ],
-   "exclusive": ["civic_apex", "magic_archmage", "martial_apex"]
+   "exclusive": ["apex_power_behind_thrones", "apex_archmage", "apex_last_sword"]
   },
-  "memory_long_patience": {
+  "long_patience_skill_dump": {
    "name": "The Long Patience",
    "icon": "character_damage.png",
    "row": 0,
@@ -4369,7 +4369,7 @@
     ]
    ]
   },
-  "memory_end_fire": {
+  "memory_ending_of_fire": {
    "name": "Memory: The Ending of Fire",
    "icon": "wh3_main_unit_contact_warpflame.png",
    "row": 4,
@@ -4494,9 +4494,9 @@
      }
     ]
    ],
-   "exclusive": ["memory_end_plague", "memory_end_silence", "memory_end_drowning", "memory_end_hunger"]
+   "exclusive": ["memory_ending_of_plague", "memory_ending_of_silence", "memory_ending_of_drowning", "memory_ending_of_hunger"]
   },
-  "memory_end_plague": {
+  "memory_ending_of_plague": {
    "name": "Memory: The Ending of Plague",
    "icon": "wh_main_unit_contact_poison.png",
    "row": 4,
@@ -4621,9 +4621,9 @@
      }
     ]
    ],
-   "exclusive": ["memory_end_fire", "memory_end_silence", "memory_end_drowning", "memory_end_hunger"]
+   "exclusive": ["memory_ending_of_fire", "memory_ending_of_silence", "memory_ending_of_drowning", "memory_ending_of_hunger"]
   },
-  "memory_end_silence": {
+  "memory_ending_of_silence": {
    "name": "Memory: The Ending of Silence",
    "icon": "wh3_main_unit_contact_disrupted.png",
    "row": 4,
@@ -4760,9 +4760,9 @@
      }
     ]
    ],
-   "exclusive": ["memory_end_fire", "memory_end_plague", "memory_end_drowning", "memory_end_hunger"]
+   "exclusive": ["memory_ending_of_fire", "memory_ending_of_plague", "memory_ending_of_drowning", "memory_ending_of_hunger"]
   },
-  "memory_end_drowning": {
+  "memory_ending_of_drowning": {
    "name": "Memory: The Ending of Drowning",
    "icon": "wh3_dlc27_character_skill_dampen.png",
    "row": 4,
@@ -4887,9 +4887,9 @@
      }
     ]
    ],
-   "exclusive": ["memory_end_fire", "memory_end_plague", "memory_end_silence", "memory_end_hunger"]
+   "exclusive": ["memory_ending_of_fire", "memory_ending_of_plague", "memory_ending_of_silence", "memory_ending_of_hunger"]
   },
-  "memory_end_hunger": {
+  "memory_ending_of_hunger": {
    "name": "Memory: The Ending of Hunger",
    "icon": "wh_dlc03_spell_beasts_the_curse_of_anraheir.png",
    "row": 4,
@@ -5002,9 +5002,9 @@
      }
     ]
    ],
-   "exclusive": ["memory_end_fire", "memory_end_plague", "memory_end_silence", "memory_end_drowning"]
+   "exclusive": ["memory_ending_of_fire", "memory_ending_of_plague", "memory_ending_of_silence", "memory_ending_of_drowning"]
   },
-  "magic_focus": {
+  "magic_spellweavers_focus": {
    "name": "Spellweaver's Focus",
    "icon": "spell_mastery.png",
    "row": 3,
@@ -5023,7 +5023,7 @@
    ],
    "level_ranks": [9]
   },
-  "magic_recitation": {
+  "magic_quick_recitation": {
    "name": "Quick Recitation",
    "icon": "character_cooldown.png",
    "row": 3,
@@ -5050,14 +5050,14 @@
    ],
    "level_ranks": [9]
   },
-  "magic_warded_mind": {
+  "combat_warded_mind": {
    "name": "Warded Mind",
    "icon": "resistance_magic.png",
    "row": 2,
    "tier": 9,
    "rank": 0,
    "build": true,
-   "requires": ["magic_steady"],
+   "requires": ["combat_steady_hands"],
    "description": "He has been unmade by sorcery before. He remembers the shape of the hole.",
    "levels": [
     [
@@ -5084,7 +5084,7 @@
    ],
    "level_ranks": [9, 19]
   },
-  "magic_channel": {
+  "magic_open_channel": {
    "name": "Open Channel",
    "icon": "character_magic.png",
    "row": 3,
@@ -5111,14 +5111,14 @@
    ],
    "level_ranks": [9]
   },
-  "magic_overcast": {
+  "magic_overcast_discipline": {
    "name": "Overcast Discipline",
    "icon": "character_cooldown.png",
    "row": 3,
    "tier": 7,
    "rank": 0,
    "build": true,
-   "requires": ["magic_recitation"],
+   "requires": ["magic_quick_recitation"],
    "description": "Anyone can pour more power in. He knows when to stop.",
    "levels": [
     [
@@ -5138,14 +5138,14 @@
    ],
    "level_ranks": [9]
   },
-  "magic_arcane_ward": {
+  "combat_arcane_ward": {
    "name": "Arcane Ward",
    "icon": "character_ward_save.png",
    "row": 2,
    "tier": 10,
    "rank": 0,
    "build": true,
-   "requires": ["magic_steady"],
+   "requires": ["combat_steady_hands"],
    "description": "A thin shimmer, taught to him by a mage whose name no one else recalls.",
    "levels": [
     [
@@ -5165,7 +5165,7 @@
    ],
    "level_ranks": [9]
   },
-  "magic_battle_caster": {
+  "combat_spell_and_steel": {
    "name": "Spell and Steel",
    "icon": "character_damage.png",
    "row": 2,
@@ -5194,14 +5194,14 @@
    ],
    "level_ranks": [9]
   },
-  "arts_gate": {
+  "arts_final_style_of_his_own": {
    "name": "A Style of His Own",
    "icon": "character_attack.png",
    "row": 1,
    "tier": 10,
    "rank": 44,
    "build": true,
-   "requires": ["arts_art_4"],
+   "requires": ["arts_art_4_ending"],
    "role": "gate",
    "description": "Seven teachers, seven endings, and he took the best of each. What comes out is nobody's but his.",
    "levels": [
@@ -5270,14 +5270,14 @@
     ]
    ]
   },
-  "combat_sleeves": {
+  "combat_ironbound_sleeves": {
    "name": "Ironbound Sleeves",
    "icon": "character_attack.png",
    "row": 2,
    "tier": 1,
    "rank": 0,
    "build": true,
-   "requires": ["magic_battle_caster"],
+   "requires": ["combat_spell_and_steel"],
    "description": "Leather, steel, and a lesson from a swordsman who did not live to see the sequel.",
    "levels": [
     [
@@ -5304,14 +5304,14 @@
    ],
    "level_ranks": [9, 19]
   },
-  "combat_wards": {
+  "combat_duelling_wards": {
    "name": "Duelling Wards",
    "icon": "character_ward_save.png",
    "row": 2,
    "tier": 2,
    "rank": 0,
    "build": true,
-   "requires": ["magic_battle_caster"],
+   "requires": ["combat_spell_and_steel"],
    "description": "A flick of the wrist and the blade glances aside. He has practised it on worse than swords.",
    "levels": [
     [
@@ -5331,14 +5331,14 @@
    ],
    "level_ranks": [9]
   },
-  "combat_steel_weave": {
+  "combat_steel_in_the_weave": {
    "name": "Steel in the Weave",
    "icon": "character_damage.png",
    "row": 2,
    "tier": 3,
    "rank": 0,
    "build": true,
-   "requires": ["magic_battle_caster"],
+   "requires": ["combat_spell_and_steel"],
    "description": "Every cut carries a little of the spell that guided it.",
    "levels": [
     [
@@ -5365,14 +5365,14 @@
    ],
    "level_ranks": [9, 19]
   },
-  "combat_blade_winds": {
+  "combat_final_blade_of_the_winds": {
    "name": "Blade of the Winds",
    "icon": "character_attack.png",
    "row": 2,
    "tier": 6,
    "rank": 19,
    "build": true,
-   "requires": ["combat_sleeves", "combat_wards", "combat_steel_weave", "combat_momentum", "combat_long_breath"],
+   "requires": ["combat_ironbound_sleeves", "combat_duelling_wards", "combat_steel_in_the_weave", "combat_weight_of_the_charge", "combat_long_breath"],
    "description": "At the end of one world the Winds themselves held his sword arm. He remembers the grip.",
    "levels": [
     [
@@ -5402,14 +5402,14 @@
    "role": "gate",
    "needs": 7
   },
-  "combat_veteran_hide": {
+  "combat_veterans_hide": {
    "name": "Veteran's Hide",
    "icon": "character_armour.png",
    "row": 2,
    "tier": 11,
    "rank": 0,
    "build": true,
-   "requires": ["magic_steady"],
+   "requires": ["combat_steady_hands"],
    "description": "Scar over scar over scar. Little finds soft skin to bite.",
    "levels": [
     [
@@ -5436,14 +5436,14 @@
    ],
    "level_ranks": [9, 19]
   },
-  "combat_unbroken": {
+  "combat_final_unbroken": {
    "name": "Unbroken",
    "icon": "unbreakable.png",
    "row": 2,
    "tier": 17,
    "rank": 19,
    "build": true,
-   "requires": ["magic_warded_mind", "magic_arcane_ward", "combat_veteran_hide", "combat_barrier", "combat_barrier_mend", "combat_shell_aura", "combat_mending", "combat_barrier_line"],
+   "requires": ["combat_warded_mind", "combat_arcane_ward", "combat_veterans_hide", "combat_shell_of_light", "combat_mended_shell", "combat_warden_of_the_shell", "combat_flesh_remembers", "combat_light_along_the_line"],
    "description": "He has been the last man standing. It taught him how to be the first one back up.",
    "levels": [
     [
@@ -5473,7 +5473,7 @@
    "role": "gate",
    "needs": 10
   },
-  "combat_aim": {
+  "combat_practised_aim": {
    "name": "Practised Aim",
    "icon": "character_ranged_damage.png",
    "row": 2,
@@ -5510,14 +5510,14 @@
    ],
    "level_ranks": [9]
   },
-  "combat_piercing": {
+  "combat_piercing_shot": {
    "name": "Piercing Shot",
    "icon": "character_ranged_damage.png",
    "row": 2,
    "tier": 20,
    "rank": 0,
    "build": true,
-   "requires": ["combat_aim"],
+   "requires": ["combat_practised_aim"],
    "description": "Aim for the buckle. The buckle is where armour ends.",
    "levels": [
     [
@@ -5551,7 +5551,7 @@
    "tier": 21,
    "rank": 0,
    "build": true,
-   "requires": ["combat_aim"],
+   "requires": ["combat_practised_aim"],
    "description": "A target seen sooner is a target already lost.",
    "levels": [
     [
@@ -5581,7 +5581,7 @@
    "tier": 22,
    "rank": 0,
    "build": true,
-   "requires": ["combat_aim"],
+   "requires": ["combat_practised_aim"],
    "description": "The last arrow is always the one he saved for himself. He stopped saving it.",
    "levels": [
     [
@@ -5608,14 +5608,14 @@
    ],
    "level_ranks": [9, 19]
   },
-  "combat_storm_needles": {
+  "combat_final_storm_of_needles": {
    "name": "Storm of Needles",
    "icon": "character_ranged_damage.png",
    "row": 2,
    "tier": 23,
    "rank": 19,
    "build": true,
-   "requires": ["combat_piercing", "combat_long_sight", "combat_deep_quiver"],
+   "requires": ["combat_piercing_shot", "combat_long_sight", "combat_deep_quiver"],
    "description": "One shot, then a hundred, then the sky goes dark with them.",
    "levels": [
     [
@@ -5656,7 +5656,7 @@
    "tier": 2,
    "rank": 0,
    "build": true,
-   "requires": ["magic_channel"],
+   "requires": ["magic_open_channel"],
    "description": "The Winds come easier to a mind with no fear left in it.",
    "levels": [
     [
@@ -5690,7 +5690,7 @@
    "tier": 3,
    "rank": 0,
    "build": true,
-   "requires": ["magic_channel"],
+   "requires": ["magic_open_channel"],
    "description": "Just when the pool runs dry, he finds another cup behind it.",
    "levels": [
     [
@@ -5717,14 +5717,14 @@
    ],
    "level_ranks": [9, 19]
   },
-  "magic_well_remembers": {
+  "magic_final_well_remembers": {
    "name": "The Well Remembers",
    "icon": "character_magic.png",
    "row": 3,
    "tier": 4,
    "rank": 19,
    "build": true,
-   "requires": ["magic_reserves", "magic_quiet_mind", "magic_second_wind"],
+   "requires": ["magic_deep_reserves", "magic_quiet_mind", "magic_second_wind"],
    "description": "He has drunk from this well in lives that never were. The well recalls him kindly.",
    "levels": [
     [
@@ -5748,14 +5748,14 @@
    "role": "gate",
    "needs": 5
   },
-  "magic_cadence": {
+  "magic_steady_cadence": {
    "name": "Steady Cadence",
    "icon": "spell_mastery.png",
    "row": 3,
    "tier": 8,
    "rank": 0,
    "build": true,
-   "requires": ["magic_recitation"],
+   "requires": ["magic_quick_recitation"],
    "description": "The same words, the same breath, every time. The Winds learn to expect it.",
    "levels": [
     [
@@ -5767,14 +5767,14 @@
    ],
    "level_ranks": [9]
   },
-  "magic_conduit": {
+  "magic_final_conduit_unbound": {
    "name": "Conduit Unbound",
    "icon": "wh_main_character_abilities_arcane_conduit.png",
    "row": 3,
    "tier": 10,
    "rank": 19,
    "build": true,
-   "requires": ["magic_overcast", "magic_cadence", "magic_standing_conduit"],
+   "requires": ["magic_overcast_discipline", "magic_steady_cadence", "magic_arcane_conduit"],
    "description": "He stopped asking the Winds for power. Now he simply lets them through.",
    "levels": [
     [
@@ -5793,14 +5793,14 @@
    "role": "gate",
    "needs": 4
   },
-  "magic_wider": {
+  "magic_wider_weave": {
    "name": "Wider Weave",
    "icon": "spell_mastery.png",
    "row": 3,
    "tier": 13,
    "rank": 0,
    "build": true,
-   "requires": ["magic_focus"],
+   "requires": ["magic_spellweavers_focus"],
    "description": "He learned to let the thread spread before it settles.",
    "levels": [
     [
@@ -5812,14 +5812,14 @@
    ],
    "level_ranks": [9]
   },
-  "magic_sharper": {
+  "magic_sharper_weave": {
    "name": "Sharper Weave",
    "icon": "character_magic.png",
    "row": 3,
    "tier": 14,
    "rank": 0,
    "build": true,
-   "requires": ["magic_focus"],
+   "requires": ["magic_spellweavers_focus"],
    "description": "And then to pull it tight, to a point.",
    "levels": [
     [
@@ -5839,14 +5839,14 @@
    ],
    "level_ranks": [9]
   },
-  "magic_beyond_sight": {
+  "magic_final_weave_beyond_sight": {
    "name": "Weave Beyond Sight",
    "icon": "character_magic.png",
    "row": 3,
    "tier": 16,
    "rank": 19,
    "build": true,
-   "requires": ["magic_wider", "magic_sharper", "magic_ruinous"],
+   "requires": ["magic_wider_weave", "magic_sharper_weave", "magic_hex_of_misfire"],
    "description": "There is a pattern behind the pattern. He has seen it from the far side.",
    "levels": [
     [
@@ -5873,7 +5873,7 @@
    "tier": 25,
    "rank": 6,
    "build": true,
-   "requires": ["civic_0"],
+   "requires": ["hero_scouting"],
    "description": "He has walked this road in four endings. It never got shorter by itself.",
    "levels": [
     [
@@ -5899,14 +5899,14 @@
     ]
    ]
   },
-  "hero_forager": {
+  "hero_foragers_eye": {
    "name": "Forager's Eye",
    "icon": "campaign_military_spending.png",
    "row": 8,
    "tier": 26,
    "rank": 8,
    "build": true,
-   "requires": ["civic_0"],
+   "requires": ["hero_scouting"],
    "description": "Where others see scrub, he sees supper.",
    "levels": [
     [
@@ -5932,14 +5932,14 @@
     ]
    ]
   },
-  "hero_hand_pocket": {
+  "hero_final_hand_in_every_pocket": {
    "name": "A Hand in Every Pocket",
    "icon": "campaign_subterfuge.png",
    "row": 8,
    "tier": 10,
    "rank": 19,
    "build": true,
-   "requires": ["martial_0", "martial_2", "martial_7", "martial_6", "civic_10", "martial_3", "martial_5", "martial_4", "martial_9"],
+   "requires": ["hero_assassinate", "hero_assassinate_lord", "hero_hinder_replenishment", "hero_block_army", "hero_steal_technology", "hero_damage_walls", "hero_damage_building", "hero_assault_garrison", "hero_assault_units"],
    "description": "Every door in the world has a friend on the inside, and he has met all of them.",
    "levels": [
     [
@@ -5974,14 +5974,14 @@
    "role": "gate",
    "needs": 11
   },
-  "hero_banner": {
+  "hero_final_banner_remembered": {
    "name": "The Banner Remembered",
    "icon": "campaign_army.png",
    "row": 8,
    "tier": 20,
    "rank": 19,
    "build": true,
-   "requires": ["civic_2", "civic_9", "civic_8", "civic_5", "civic_7", "civic_6", "hero_students"],
+   "requires": ["hero_replenish_troops", "hero_boost_income", "hero_increase_trade", "hero_spread_public_order", "hero_stimulate_growth", "hero_cleanse_corruption", "hero_students_in_every_court"],
    "description": "A banner remembered is a banner that does not fall. Every army he has ever stood with fights harder for it.",
    "levels": [
     [
@@ -6015,14 +6015,14 @@
    "role": "gate",
    "needs": 9
   },
-  "hero_lamp": {
+  "hero_final_lamp_in_the_window": {
    "name": "The Lamp in the Window",
    "icon": "campaign_public_order.png",
    "row": 8,
    "tier": 27,
    "rank": 19,
    "build": true,
-   "requires": ["civic_4", "civic_3", "hero_pathfinder", "hero_forager"],
+   "requires": ["hero_scavenge", "hero_increase_mobility", "hero_pathfinder", "hero_foragers_eye"],
    "description": "Wherever he rests, someone leaves a light on. He has never asked them to.",
    "levels": [
     [
@@ -6066,14 +6066,14 @@
    "role": "gate",
    "needs": 6
   },
-  "combat_barrier": {
+  "combat_shell_of_light": {
    "name": "Shell of Light",
    "icon": "character_barrier.png",
    "row": 2,
    "tier": 12,
    "rank": 0,
    "build": true,
-   "requires": ["magic_steady"],
+   "requires": ["combat_steady_hands"],
    "description": "A thin shimmer of the Winds holds in front of him.",
    "levels": [
     [
@@ -6100,14 +6100,14 @@
    ],
    "level_ranks": [9, 19]
   },
-  "combat_barrier_mend": {
+  "combat_mended_shell": {
    "name": "Mended Shell",
    "icon": "character_barrier.png",
    "row": 2,
    "tier": 14,
    "rank": 0,
    "build": true,
-   "requires": ["magic_steady"],
+   "requires": ["combat_steady_hands"],
    "description": "A broken shell is a lesson. He has learned to stitch it faster.",
    "levels": [
     [
@@ -6164,14 +6164,14 @@
    ],
    "level_ranks": [9, 19]
   },
-  "magic_ruinous": {
+  "magic_hex_of_misfire": {
    "name": "Hex of Misfire",
    "icon": "battle_magic.png",
    "row": 3,
    "tier": 15,
    "rank": 0,
    "build": true,
-   "requires": ["magic_focus"],
+   "requires": ["magic_spellweavers_focus"],
    "description": "He knows exactly how a spell goes wrong, because he has watched it go wrong.",
    "levels": [
     [
@@ -6213,14 +6213,14 @@
    ],
    "level_ranks": [9, 19]
   },
-  "magic_standing_conduit": {
+  "magic_arcane_conduit": {
    "name": "Arcane Conduit",
    "icon": "wh_main_character_abilities_arcane_conduit.png",
    "row": 3,
    "tier": 9,
    "rank": 0,
    "build": true,
-   "requires": ["magic_recitation"],
+   "requires": ["magic_quick_recitation"],
    "description": "The Winds do not rush through him anymore. They wait in him, patient, like water in a cistern.",
    "levels": [
     [
@@ -6232,14 +6232,14 @@
     ]
    ]
   },
-  "combat_shell_aura": {
+  "combat_warden_of_the_shell": {
    "name": "Warden of the Shell",
    "icon": "character_barrier.png",
    "row": 2,
    "tier": 15,
    "rank": 0,
    "build": true,
-   "requires": ["magic_steady"],
+   "requires": ["combat_steady_hands"],
    "description": "Where he stands, broken shells knit again. The men near him feel it before they understand it.",
    "levels": [
     [
@@ -6256,14 +6256,14 @@
     ]
    ]
   },
-  "corruption_chs": {
+  "corruption_spread_chaos": {
    "name": "Spread Chaos Corruption",
    "icon": "campaign_chaos_corruption.png",
    "row": 9,
    "tier": 1,
    "rank": 0,
    "build": true,
-   "requires": ["corruption_lead"],
+   "requires": ["corruption_taint_remembered"],
    "description": "He has watched Chaos corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -6319,14 +6319,14 @@
     ]
    ]
   },
-  "corruption_kho": {
+  "corruption_spread_khorne": {
    "name": "Spread Khorne Corruption",
    "icon": "campaign_khorne_corruption.png",
    "row": 9,
    "tier": 2,
    "rank": 0,
    "build": true,
-   "requires": ["corruption_lead"],
+   "requires": ["corruption_taint_remembered"],
    "description": "He has watched Khorne corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -6382,14 +6382,14 @@
     ]
    ]
   },
-  "corruption_nur": {
+  "corruption_spread_nurgle": {
    "name": "Spread Nurgle Corruption",
    "icon": "campaign_nurgle_corruption.png",
    "row": 9,
    "tier": 3,
    "rank": 0,
    "build": true,
-   "requires": ["corruption_lead"],
+   "requires": ["corruption_taint_remembered"],
    "description": "He has watched Nurgle corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -6445,14 +6445,14 @@
     ]
    ]
   },
-  "corruption_sla": {
+  "corruption_spread_slaanesh": {
    "name": "Spread Slaanesh Corruption",
    "icon": "campaign_slaanesh_corruption.png",
    "row": 9,
    "tier": 4,
    "rank": 0,
    "build": true,
-   "requires": ["corruption_lead"],
+   "requires": ["corruption_taint_remembered"],
    "description": "He has watched Slaanesh corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -6508,14 +6508,14 @@
     ]
    ]
   },
-  "corruption_tze": {
+  "corruption_spread_tzeentch": {
    "name": "Spread Tzeentch Corruption",
    "icon": "campaign_tzeentch_corruption.png",
    "row": 9,
    "tier": 5,
    "rank": 0,
    "build": true,
-   "requires": ["corruption_lead"],
+   "requires": ["corruption_taint_remembered"],
    "description": "He has watched Tzeentch corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -6571,14 +6571,14 @@
     ]
    ]
   },
-  "corruption_skv": {
+  "corruption_spread_skaven": {
    "name": "Spread Skaven Corruption",
    "icon": "campaign_skaven_corruption.png",
    "row": 9,
    "tier": 6,
    "rank": 0,
    "build": true,
-   "requires": ["corruption_lead"],
+   "requires": ["corruption_taint_remembered"],
    "description": "He has watched Skaven corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -6634,14 +6634,14 @@
     ]
    ]
   },
-  "corruption_vmp": {
+  "corruption_spread_vampiric": {
    "name": "Spread Vampiric Corruption",
    "icon": "campaign_vampiric_corruption.png",
    "row": 9,
    "tier": 7,
    "rank": 0,
    "build": true,
-   "requires": ["corruption_lead"],
+   "requires": ["corruption_taint_remembered"],
    "description": "He has watched Vampiric corruption eat a world. He knows exactly where to plant it.",
    "levels": [
     [
@@ -6697,14 +6697,14 @@
     ]
    ]
   },
-  "corruption_final": {
+  "corruption_final_corrupting_presence": {
    "name": "A Corrupting Presence",
    "icon": "campaign_chaos_corruption.png",
    "row": 9,
    "tier": 8,
    "rank": 14,
    "build": true,
-   "requires": ["corruption_chs", "corruption_kho", "corruption_nur", "corruption_sla", "corruption_tze", "corruption_skv", "corruption_vmp"],
+   "requires": ["corruption_spread_chaos", "corruption_spread_khorne", "corruption_spread_nurgle", "corruption_spread_slaanesh", "corruption_spread_tzeentch", "corruption_spread_skaven", "corruption_spread_vampiric"],
    "description": "Three kinds of rot are not enough.",
    "levels": [
     [
@@ -6748,7 +6748,7 @@
    "role": "gate",
    "needs": 3
   },
-  "corruption_lead": {
+  "corruption_taint_remembered": {
    "name": "The Taint Remembered",
    "icon": "campaign_chaos_corruption.png",
    "row": 9,
@@ -6797,14 +6797,14 @@
     ]
    ]
   },
-  "combat_momentum": {
+  "combat_weight_of_the_charge": {
    "name": "Weight of the Charge",
    "icon": "character_charge.png",
    "row": 2,
    "tier": 4,
    "rank": 0,
    "build": true,
-   "requires": ["magic_battle_caster"],
+   "requires": ["combat_spell_and_steel"],
    "description": "He learned to charge from a knight who rode into the last sunset of a dying world.",
    "levels": [
     [
@@ -6864,7 +6864,7 @@
    "tier": 5,
    "rank": 0,
    "build": true,
-   "requires": ["magic_battle_caster"],
+   "requires": ["combat_spell_and_steel"],
    "description": "He has fought for days at the end of the world. One afternoon does not tire him.",
    "levels": [
     [
@@ -6906,14 +6906,14 @@
    ],
    "level_ranks": [9, 19]
   },
-  "combat_mending": {
+  "combat_flesh_remembers": {
    "name": "Flesh Remembers",
    "icon": "character_health.png",
    "row": 2,
    "tier": 16,
    "rank": 0,
    "build": true,
-   "requires": ["magic_steady"],
+   "requires": ["combat_steady_hands"],
    "description": "His body has healed from worse, many times. It still knows how.",
    "levels": [
     [
@@ -6951,14 +6951,14 @@
    ],
    "level_ranks": [9, 19]
   },
-  "hero_students": {
+  "hero_students_in_every_court": {
    "name": "Students in Every Court",
    "icon": "campaign_agent.png",
    "row": 8,
    "tier": 19,
    "rank": 0,
    "build": true,
-   "requires": ["civic_1"],
+   "requires": ["hero_training"],
    "description": "Half the captains of the world once sat at his table and listened.",
    "levels": [
     [
@@ -6984,14 +6984,14 @@
     ]
    ]
   },
-  "combat_barrier_line": {
+  "combat_light_along_the_line": {
    "name": "Light Along the Line",
    "icon": "character_barrier.png",
    "row": 2,
    "tier": 13,
    "rank": 0,
    "build": true,
-   "requires": ["magic_steady"],
+   "requires": ["combat_steady_hands"],
    "description": "He has learned to stretch the shimmer thin, across every rank that stands with him.",
    "levels": [
     [
@@ -7018,25 +7018,25 @@
    ],
    "level_ranks": [9, 19]
   },
-  "arts_army_4": {
+  "arts_army_4_every_banner": {
    "name": "Army IV: Every Banner",
    "icon": "character_army.png",
    "row": 1,
    "tier": 3,
    "rank": 19,
-   "requires": ["arts_army_3"],
+   "requires": ["arts_army_3_last_stand"],
    "slot": "army_4",
    "build": true,
    "description": "Every army he ever marched with left him one trick. He hands them all on.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects."
   },
-  "arts_army_gate": {
+  "arts_final_host_of_his_own": {
    "name": "A Host of His Own",
    "icon": "campaign_army.png",
    "row": 1,
    "tier": 4,
    "rank": 44,
    "build": true,
-   "requires": ["arts_army_4"],
+   "requires": ["arts_army_4_every_banner"],
    "role": "gate",
    "description": "The men around him fight the way he taught them, whatever he holds.",
    "levels": [
