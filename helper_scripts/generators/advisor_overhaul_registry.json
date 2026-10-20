@@ -1668,19 +1668,28 @@
    "build": true,
    "role": "apex",
    "requires": [],
-   "description": "Every lore he ever learned, in every world, answers him now.\\\\n\\\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\\\n\\\\nLocks the Polymath and every other Apex.",
+   "description": "He has studied every lore there is across many lives, and all of it is within reach now.\\\\n\\\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\\\n\\\\nLocks the Polymath and every other Apex.",
    "levels": [
     [
-     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 15},
+     {
+      "effect": "wh2_dlc14_effect_magic_cost_all_lores_percentage",
+      "scope": "character_to_character_own_factionwide",
+      "value": -30
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own_factionwide",
+      "value": 15
+     },
      {
       "effect": "wh_main_effect_character_stat_miscast",
-      "scope": "character_to_character_own",
+      "scope": "character_to_character_own_factionwide",
       "value": -25
      },
      {
       "effect": "wh3_main_effect_winds_of_magic_pool_cap",
-      "scope": "character_to_force_own_alt_text",
-      "value": 15
+      "scope": "character_to_force_own_factionwide",
+      "value": 50
      },
      {
       "effect": "wh3_dlc24_effect_scripted_scribes_random_cataclysm",
@@ -2706,33 +2715,33 @@
    "build": true,
    "role": "apex",
    "requires": [],
-   "description": "At the end of one world he was the last one standing. He intends to be again.\\\\n\\\\nLocks the Polymath and every other Apex.",
+   "description": "In one ending he was the last man still fighting. He trains as if it will happen again.\\\\n\\\\nLocks the Polymath and every other Apex.",
    "levels": [
     [
      {
-      "effect": "wh_main_effect_character_stat_melee_attack",
+      "effect": "wh_main_effect_character_stat_unit_health",
       "scope": "character_to_character_own",
-      "value": 15
-     },
-     {
-      "effect": "wh_main_effect_character_stat_melee_defence",
-      "scope": "character_to_character_own",
-      "value": 15
-     },
-     {
-      "effect": "wh_main_effect_character_stat_weapon_strength",
-      "scope": "character_to_character_own",
-      "value": 15
+      "value": 25
      },
      {
       "effect": "wh_main_effect_character_stat_ward_save",
       "scope": "character_to_character_own",
-      "value": 10
+      "value": 25
      },
      {
-      "effect": "wh_main_effect_character_stat_unit_health",
+      "effect": "wh_main_effect_character_stat_magic_resistance",
       "scope": "character_to_character_own",
-      "value": 10
+      "value": 25
+     },
+     {
+      "effect": "wh_main_effect_character_stat_missile_resistance",
+      "scope": "character_to_character_own",
+      "value": 25
+     },
+     {
+      "effect": "wh_main_effect_character_stat_weapon_strength",
+      "scope": "character_to_character_own",
+      "value": 50
      }
     ]
    ],
@@ -2747,33 +2756,38 @@
    "build": true,
    "role": "apex",
    "requires": [],
-   "description": "Kings come and go. He has advised most of them, in one world or another.\\\\n\\\\nLocks the Polymath and every other Apex.",
+   "description": "Across many lives he has advised kings, emperors and warlords. Every court he serves runs better for it.\\\\n\\\\nLocks the Polymath and every other Apex.",
    "levels": [
     [
      {
-      "effect": "wh_main_effect_public_order_characters",
-      "scope": "character_to_province_own",
+      "effect": "wh_main_faction_political_diplomacy_mod",
+      "scope": "character_to_faction_unseen",
+      "value": 25
+     },
+     {
+      "effect": "wh2_main_effect_public_order_characters_factionwide",
+      "scope": "character_to_province_own_factionwide",
       "value": 10
      },
      {
-      "effect": "wh_main_effect_province_growth_characters",
-      "scope": "character_to_province_own",
-      "value": 50
-     },
-     {
-      "effect": "wh_main_effect_economy_gdp_mod_all",
-      "scope": "character_to_region_own_provincewide",
+      "effect": "wh2_main_effect_province_growth_characters_factionwide",
+      "scope": "character_to_province_own_factionwide",
       "value": 25
      },
      {
       "effect": "wh_main_effect_building_construction_cost_mod",
-      "scope": "character_to_region_own_provincewide",
+      "scope": "character_to_region_own_factionwide",
       "value": -25
      },
      {
-      "effect": "wh_main_faction_political_diplomacy_mod",
+      "effect": "wh_main_effect_economy_gdp_mod_all",
+      "scope": "character_to_region_own_factionwide",
+      "value": 25
+     },
+     {
+      "effect": "wh_main_effect_technology_research_rate_mod",
       "scope": "character_to_faction_unseen",
-      "value": 10
+      "value": 25
      }
     ]
    ],
@@ -2889,6 +2903,11 @@
       "effect": "wh3_main_effect_character_xp_share_generic_herotext",
       "scope": "character_to_character_own",
       "value": 25
+     },
+     {
+      "effect": "wh_main_effect_technology_research_rate_mod",
+      "scope": "character_to_faction_unseen",
+      "value": 10
      }
     ],
     [
@@ -2901,6 +2920,11 @@
       "effect": "wh3_main_effect_character_xp_share_generic_herotext",
       "scope": "character_to_character_own",
       "value": 50
+     },
+     {
+      "effect": "wh_main_effect_technology_research_rate_mod",
+      "scope": "character_to_faction_unseen",
+      "value": 20
      }
     ]
    ],
@@ -3050,7 +3074,7 @@
    "build": true,
    "role": "polymath",
    "requires": [],
-   "description": "He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he is all of them at once.\\\\n\\\\nA discipline counts once he knows 5 of its skills: Arts, Memory, Magic (learned spells count) and Hero work. Every discipline that counts makes him stronger, and all four make him the strongest he can be.\\\\n\\\\nLocks every Apex.",
+   "description": "In different lives he was a swordsman, a sorcerer, a spy and a steward. This time he means to be all four.\\\\n\\\\nA discipline counts once he knows 5 of its skills: Arts, Memory, Magic (learned spells count) and Hero work. Every discipline that counts makes every lord and hero in his faction stronger, and all four make them the strongest they can be.\\\\n\\\\nLocks every Apex.",
    "levels": [
     []
    ],
@@ -5749,19 +5773,19 @@
   },
   "magic_steady_cadence": {
    "name": "Steady Cadence",
-   "icon": "spell_mastery.png",
+   "icon": "character_magic.png",
    "row": 3,
    "tier": 8,
    "rank": 0,
    "build": true,
    "requires": ["magic_quick_recitation"],
-   "description": "The same words, the same breath, every time. The Winds learn to expect it.",
+   "description": "He casts to a steady rhythm of word and breath, and wastes less of the Winds on each spell.",
    "levels": [
     [
-     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5}
+     {"effect": "wh2_dlc14_effect_magic_cost_all_lores_percentage", "scope": "character_to_character_own", "value": -5}
     ],
     [
-     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10}
+     {"effect": "wh2_dlc14_effect_magic_cost_all_lores_percentage", "scope": "character_to_character_own", "value": -10}
     ]
    ],
    "level_ranks": [9]
@@ -5800,13 +5824,13 @@
    "rank": 0,
    "build": true,
    "requires": ["magic_spellweavers_focus"],
-   "description": "He learned to let the thread spread before it settles.",
+   "description": "He learns to stretch the same Winds further, so each spell costs him less.",
    "levels": [
     [
-     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5}
+     {"effect": "wh2_dlc14_effect_magic_cost_all_lores_percentage", "scope": "character_to_character_own", "value": -5}
     ],
     [
-     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10}
+     {"effect": "wh2_dlc14_effect_magic_cost_all_lores_percentage", "scope": "character_to_character_own", "value": -10}
     ]
    ],
    "level_ranks": [9]
@@ -5849,7 +5873,11 @@
    "description": "Lifetimes of study let him read the Winds more clearly than any living mage, and see further by them.",
    "levels": [
     [
-     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10},
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 10
+     },
      {
       "effect": "wh_main_effect_character_stat_miscast",
       "scope": "character_to_character_own",
@@ -5859,6 +5887,11 @@
       "effect": "wh_main_effect_agent_field_line_of_sight_mod",
       "scope": "character_to_character_own",
       "value": 10
+     },
+     {
+      "effect": "wh_main_effect_technology_research_rate_mod",
+      "scope": "character_to_faction_unseen",
+      "value": 15
      }
     ]
    ],
@@ -5958,16 +5991,20 @@
       "value": 20
      },
      {
-      "effect": "wh_main_effect_technology_research_rate_mod",
-      "scope": "character_to_faction_unseen",
-      "value": 15
-     },
-     {
       "effect": "wh_main_effect_force_army_campaign_ambush_attack_success_chance",
       "scope": "agent_to_parent_army_own",
       "value": 25
      },
-     {"effect": "wh_main_effect_force_stat_speed", "scope": "agent_to_parent_army_own", "value": 5}
+     {
+      "effect": "wh_main_effect_force_stat_speed",
+      "scope": "agent_to_parent_army_own",
+      "value": 5
+     },
+     {
+      "effect": "wh_main_effect_technology_research_rate_mod",
+      "scope": "character_to_faction_unseen",
+      "value": 25
+     }
     ]
    ],
    "role": "gate",
@@ -6965,6 +7002,11 @@
       "effect": "wh2_main_effect_agent_recruitment_xp_all_agents_and_lords",
       "scope": "faction_to_province_own_factionwide",
       "value": 1
+     },
+     {
+      "effect": "wh_main_effect_technology_research_rate_mod",
+      "scope": "character_to_faction_unseen",
+      "value": 5
      }
     ],
     [
@@ -6972,6 +7014,11 @@
       "effect": "wh2_main_effect_agent_recruitment_xp_all_agents_and_lords",
       "scope": "faction_to_province_own_factionwide",
       "value": 2
+     },
+     {
+      "effect": "wh_main_effect_technology_research_rate_mod",
+      "scope": "character_to_faction_unseen",
+      "value": 10
      }
     ],
     [
@@ -6979,6 +7026,11 @@
       "effect": "wh2_main_effect_agent_recruitment_xp_all_agents_and_lords",
       "scope": "faction_to_province_own_factionwide",
       "value": 3
+     },
+     {
+      "effect": "wh_main_effect_technology_research_rate_mod",
+      "scope": "character_to_faction_unseen",
+      "value": 15
      }
     ]
    ]
@@ -7310,33 +7362,7 @@
    "icon": "public_order.png",
    "hidden": true,
    "description": "He draws on none of his 4 disciplines yet. Each discipline counts once he knows 5 of its skills.",
-   "effects": [
-    {
-     "effect": "wh_main_effect_character_stat_melee_attack",
-     "scope": "character_to_character_own",
-     "value": 10
-    },
-    {
-     "effect": "wh_main_effect_character_stat_melee_defence",
-     "scope": "character_to_character_own",
-     "value": 10
-    },
-    {
-     "effect": "wh3_main_effect_spell_mastery",
-     "scope": "character_to_character_own",
-     "value": 10
-    },
-    {
-     "effect": "wh_main_effect_agent_action_success_chance",
-     "scope": "character_to_character_own",
-     "value": 10
-    },
-    {
-     "effect": "wh_main_effect_character_stat_leadership",
-     "scope": "character_to_character_own",
-     "value": 10
-    }
-   ]
+   "effects": []
   },
   "polymath_1": {
    "name": "Polymath: Everything, Again (1 of 4)",
@@ -7345,29 +7371,39 @@
    "description": "He draws on 1 of his 4 disciplines. Each discipline counts once he knows 5 of its skills.",
    "effects": [
     {
-     "effect": "wh_main_effect_character_stat_melee_attack",
-     "scope": "character_to_character_own",
-     "value": 15
-    },
-    {
-     "effect": "wh_main_effect_character_stat_melee_defence",
-     "scope": "character_to_character_own",
-     "value": 15
-    },
-    {
      "effect": "wh3_main_effect_spell_mastery",
-     "scope": "character_to_character_own",
-     "value": 15
+     "scope": "character_to_character_own_factionwide",
+     "value": 5
+    },
+    {
+     "effect": "wh2_main_effect_ability_cooldown_spells",
+     "scope": "character_to_character_own_factionwide",
+     "value": -5
     },
     {
      "effect": "wh_main_effect_agent_action_success_chance",
-     "scope": "character_to_character_own",
-     "value": 15
+     "scope": "character_to_character_own_factionwide_heroes",
+     "value": 5
     },
     {
-     "effect": "wh_main_effect_character_stat_leadership",
-     "scope": "character_to_character_own",
-     "value": 15
+     "effect": "wh_main_effect_character_stat_melee_attack",
+     "scope": "character_to_character_own_factionwide",
+     "value": 5
+    },
+    {
+     "effect": "wh_main_effect_character_stat_weapon_strength",
+     "scope": "character_to_character_own_factionwide",
+     "value": 5
+    },
+    {
+     "effect": "wh_main_effect_character_stat_missile_damage",
+     "scope": "character_to_character_own_factionwide",
+     "value": 5
+    },
+    {
+     "effect": "wh_main_effect_character_stat_speed",
+     "scope": "character_to_character_own_factionwide",
+     "value": 5
     }
    ]
   },
@@ -7378,34 +7414,39 @@
    "description": "He draws on 2 of his 4 disciplines. Each discipline counts once he knows 5 of its skills.",
    "effects": [
     {
-     "effect": "wh_main_effect_character_stat_melee_attack",
-     "scope": "character_to_character_own",
-     "value": 20
-    },
-    {
-     "effect": "wh_main_effect_character_stat_melee_defence",
-     "scope": "character_to_character_own",
-     "value": 20
-    },
-    {
      "effect": "wh3_main_effect_spell_mastery",
-     "scope": "character_to_character_own",
-     "value": 20
+     "scope": "character_to_character_own_factionwide",
+     "value": 10
+    },
+    {
+     "effect": "wh2_main_effect_ability_cooldown_spells",
+     "scope": "character_to_character_own_factionwide",
+     "value": -10
     },
     {
      "effect": "wh_main_effect_agent_action_success_chance",
-     "scope": "character_to_character_own",
-     "value": 20
+     "scope": "character_to_character_own_factionwide_heroes",
+     "value": 10
     },
     {
-     "effect": "wh_main_effect_character_stat_leadership",
-     "scope": "character_to_character_own",
-     "value": 15
+     "effect": "wh_main_effect_character_stat_melee_attack",
+     "scope": "character_to_character_own_factionwide",
+     "value": 10
     },
     {
-     "effect": "wh_main_effect_character_stat_ward_save",
-     "scope": "character_to_character_own",
-     "value": 5
+     "effect": "wh_main_effect_character_stat_weapon_strength",
+     "scope": "character_to_character_own_factionwide",
+     "value": 10
+    },
+    {
+     "effect": "wh_main_effect_character_stat_missile_damage",
+     "scope": "character_to_character_own_factionwide",
+     "value": 10
+    },
+    {
+     "effect": "wh_main_effect_character_stat_speed",
+     "scope": "character_to_character_own_factionwide",
+     "value": 10
     }
    ]
   },
@@ -7416,39 +7457,39 @@
    "description": "He draws on 3 of his 4 disciplines. Each discipline counts once he knows 5 of its skills.",
    "effects": [
     {
-     "effect": "wh_main_effect_character_stat_melee_attack",
-     "scope": "character_to_character_own",
-     "value": 20
-    },
-    {
-     "effect": "wh_main_effect_character_stat_melee_defence",
-     "scope": "character_to_character_own",
-     "value": 20
-    },
-    {
      "effect": "wh3_main_effect_spell_mastery",
-     "scope": "character_to_character_own",
-     "value": 20
-    },
-    {
-     "effect": "wh_main_effect_agent_action_success_chance",
-     "scope": "character_to_character_own",
-     "value": 25
-    },
-    {
-     "effect": "wh_main_effect_character_stat_leadership",
-     "scope": "character_to_character_own",
-     "value": 20
-    },
-    {
-     "effect": "wh_main_effect_character_stat_ward_save",
-     "scope": "character_to_character_own",
-     "value": 5
+     "scope": "character_to_character_own_factionwide",
+     "value": 15
     },
     {
      "effect": "wh2_main_effect_ability_cooldown_spells",
-     "scope": "character_to_character_own",
-     "value": -10
+     "scope": "character_to_character_own_factionwide",
+     "value": -15
+    },
+    {
+     "effect": "wh_main_effect_agent_action_success_chance",
+     "scope": "character_to_character_own_factionwide_heroes",
+     "value": 15
+    },
+    {
+     "effect": "wh_main_effect_character_stat_melee_attack",
+     "scope": "character_to_character_own_factionwide",
+     "value": 15
+    },
+    {
+     "effect": "wh_main_effect_character_stat_weapon_strength",
+     "scope": "character_to_character_own_factionwide",
+     "value": 15
+    },
+    {
+     "effect": "wh_main_effect_character_stat_missile_damage",
+     "scope": "character_to_character_own_factionwide",
+     "value": 15
+    },
+    {
+     "effect": "wh_main_effect_character_stat_speed",
+     "scope": "character_to_character_own_factionwide",
+     "value": 15
     }
    ]
   },
@@ -7459,44 +7500,39 @@
    "description": "He draws on all 4 of his disciplines at once.",
    "effects": [
     {
-     "effect": "wh_main_effect_character_stat_melee_attack",
-     "scope": "character_to_character_own",
-     "value": 25
-    },
-    {
-     "effect": "wh_main_effect_character_stat_melee_defence",
-     "scope": "character_to_character_own",
-     "value": 25
-    },
-    {
      "effect": "wh3_main_effect_spell_mastery",
-     "scope": "character_to_character_own",
-     "value": 25
-    },
-    {
-     "effect": "wh_main_effect_agent_action_success_chance",
-     "scope": "character_to_character_own",
-     "value": 30
-    },
-    {
-     "effect": "wh_main_effect_character_stat_leadership",
-     "scope": "character_to_character_own",
+     "scope": "character_to_character_own_factionwide",
      "value": 20
     },
     {
-     "effect": "wh_main_effect_character_stat_ward_save",
-     "scope": "character_to_character_own",
-     "value": 10
+     "effect": "wh2_main_effect_ability_cooldown_spells",
+     "scope": "character_to_character_own_factionwide",
+     "value": -20
     },
     {
-     "effect": "wh2_main_effect_ability_cooldown_spells",
-     "scope": "character_to_character_own",
-     "value": -15
+     "effect": "wh_main_effect_agent_action_success_chance",
+     "scope": "character_to_character_own_factionwide_heroes",
+     "value": 20
+    },
+    {
+     "effect": "wh_main_effect_character_stat_melee_attack",
+     "scope": "character_to_character_own_factionwide",
+     "value": 20
     },
     {
      "effect": "wh_main_effect_character_stat_weapon_strength",
-     "scope": "character_to_character_own",
-     "value": 10
+     "scope": "character_to_character_own_factionwide",
+     "value": 20
+    },
+    {
+     "effect": "wh_main_effect_character_stat_missile_damage",
+     "scope": "character_to_character_own_factionwide",
+     "value": 20
+    },
+    {
+     "effect": "wh_main_effect_character_stat_speed",
+     "scope": "character_to_character_own_factionwide",
+     "value": 20
     }
    ]
   }

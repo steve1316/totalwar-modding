@@ -121,13 +121,13 @@ character_skills_localised_description_advisor_overhaul_skill_weapon_iron_hand	N
 character_skills_localised_name_advisor_overhaul_skill_actions_default	Default Actions	true
 character_skills_localised_description_advisor_overhaul_skill_actions_default	The hero actions he always has: Scouting, Scout Settlement and Boost Income.	true
 character_skills_localised_name_advisor_overhaul_skill_apex_archmage	Apex: Archmage	true
-character_skills_localised_description_advisor_overhaul_skill_apex_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\n\\nLocks the Polymath and every other Apex.	true
+character_skills_localised_description_advisor_overhaul_skill_apex_archmage	He has studied every lore there is across many lives, and all of it is within reach now.\\n\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\n\\nLocks the Polymath and every other Apex.	true
 character_skills_localised_name_advisor_overhaul_skill_apex_last_sword	Apex: The Last Sword	true
-character_skills_localised_description_advisor_overhaul_skill_apex_last_sword	At the end of one world he was the last one standing. He intends to be again.\\n\\nLocks the Polymath and every other Apex.	true
+character_skills_localised_description_advisor_overhaul_skill_apex_last_sword	In one ending he was the last man still fighting. He trains as if it will happen again.\\n\\nLocks the Polymath and every other Apex.	true
 character_skills_localised_name_advisor_overhaul_skill_apex_master_of_arms	Master of Arms	true
 character_skills_localised_description_advisor_overhaul_skill_apex_master_of_arms	In other lives he mastered each of these weapons in turn. Now he no longer has to choose.\\n\\nStacks with any other Apex or the Polymath.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_apex_power_behind_thrones	Apex: Power Behind Thrones	true
-character_skills_localised_description_advisor_overhaul_skill_apex_power_behind_thrones	Kings come and go. He has advised most of them, in one world or another.\\n\\nLocks the Polymath and every other Apex.	true
+character_skills_localised_description_advisor_overhaul_skill_apex_power_behind_thrones	Across many lives he has advised kings, emperors and warlords. Every court he serves runs better for it.\\n\\nLocks the Polymath and every other Apex.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_army_1_drill	Army I: Drill	true
 character_skills_localised_description_advisor_overhaul_skill_arts_army_1_drill	The soldiers near him copy how he stands and moves, and fight better for it.\\n\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_army_2_formation	Army II: Formation	true
@@ -291,9 +291,9 @@ character_skills_localised_description_advisor_overhaul_skill_magic_sharper_weav
 character_skills_localised_name_advisor_overhaul_skill_magic_spellweavers_focus	Spellweaver's Focus	true
 character_skills_localised_description_advisor_overhaul_skill_magic_spellweavers_focus	He keeps his mind on the spell, whatever is happening around him.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_steady_cadence	Steady Cadence	true
-character_skills_localised_description_advisor_overhaul_skill_magic_steady_cadence	The same words, the same breath, every time. The Winds learn to expect it.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_steady_cadence	He casts to a steady rhythm of word and breath, and wastes less of the Winds on each spell.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_wider_weave	Wider Weave	true
-character_skills_localised_description_advisor_overhaul_skill_magic_wider_weave	He learned to let the thread spread before it settles.	true
+character_skills_localised_description_advisor_overhaul_skill_magic_wider_weave	He learns to stretch the same Winds further, so each spell costs him less.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_calm_voice	Memory: Calm Voice	true
 character_skills_localised_description_advisor_overhaul_skill_memory_calm_voice	He stopped being afraid of anything a long time ago, and the soldiers near him can tell.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_ending_of_drowning	Memory: The Ending of Drowning	true
@@ -315,7 +315,7 @@ character_skills_localised_description_advisor_overhaul_skill_memory_seen_the_en
 character_skills_localised_name_advisor_overhaul_skill_memory_weight_of_years	Memory: The Weight of Years	true
 character_skills_localised_description_advisor_overhaul_skill_memory_weight_of_years	He has died before. He did not care for it, and he takes more killing now.	true
 character_skills_localised_name_advisor_overhaul_skill_polymath	Polymath: Everything, Again	true
-character_skills_localised_description_advisor_overhaul_skill_polymath	He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he is all of them at once.\\n\\nA discipline counts once he knows 5 of its skills: Arts, Memory, Magic (learned spells count) and Hero work. Every discipline that counts makes him stronger, and all four make him the strongest he can be.\\n\\nLocks every Apex.	true
+character_skills_localised_description_advisor_overhaul_skill_polymath	In different lives he was a swordsman, a sorcerer, a spy and a steward. This time he means to be all four.\\n\\nA discipline counts once he knows 5 of its skills: Arts, Memory, Magic (learned spells count) and Hero work. Every discipline that counts makes every lord and hero in his faction stronger, and all four make them the strongest they can be.\\n\\nLocks every Apex.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_art_1	Spellguard	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_art_1	He is slow and lightly armoured, so his wards do the work. Spells and arrows land softer on him.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_art_2	Focused Bolt	true
