@@ -123,7 +123,8 @@ local MOUNT_PICK_MS = 500
 --- The vanilla tooltip the game builds inside a hovered skill card. The card's `layout_path` is ui3.pack ui/campaign ui/edict_tooltip.
 local SKILL_TOOLTIP = "edict_tooltip"
 
---- Our own box shown in place of an art card's vanilla tooltip, with the layout it is made from and its title and text children.
+--- Our own box shown in place of the vanilla tooltip of an art card or the Polymath card, with the layout it is made from and its title and text
+--- children.
 local ART_BOX = TAG .. "_art_box"
 local ART_BOX_LAYOUT = "ui/common ui/tooltip_centred_title_and_text"
 local ART_BOX_TITLE = "dy_title"
@@ -193,6 +194,17 @@ local TEXT = {
 	--- Start of the line an art slot skill's tooltip gets for the weapon he holds, followed by the weapon's name.
 	art_with = { "advisor_overhaul_ui_art_with", "With" },
 	art_locked = { "advisor_overhaul_ui_art_locked", "Available after unlocking" },
+	--- Line of the Polymath box before the disciplines that count, once he has the Polymath and before he has it.
+	polymath_counted = { "advisor_overhaul_ui_polymath_counted", "Disciplines counted:" },
+	polymath_counted_unlearned = { "advisor_overhaul_ui_polymath_counted_unlearned", "Disciplines counted if learned now:" },
+	--- Words of a discipline's line in the Polymath box: "Memory: 1 of 3 skills".
+	polymath_of = { "advisor_overhaul_ui_polymath_of", "of" },
+	polymath_skills = { "advisor_overhaul_ui_polymath_skills", "skills" },
+	--- Name of each Polymath discipline, by `discipline_` and its key in `ADVISOR_OVERHAUL_RIGS.polymath.disciplines`.
+	discipline_arts = { "advisor_overhaul_ui_discipline_arts", "Arts" },
+	discipline_memory = { "advisor_overhaul_ui_discipline_memory", "Memory" },
+	discipline_magic = { "advisor_overhaul_ui_discipline_magic", "Magic" },
+	discipline_hero_work = { "advisor_overhaul_ui_discipline_hero_work", "Hero work" },
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,7 +234,8 @@ local topmost = {}
 --- Whether the character panel is open, from `PanelOpenedCampaign` and `PanelClosedCampaign`.
 local panel_open = false
 
---- What each art card's box shows, by skill key, from `art_card_tooltip`. Cleared when the panel opens.
+--- What each art card's box shows, by skill key, from `art_card_tooltip`, and the Polymath card's from `polymath_card_tooltip`. Cleared when the
+--- panel opens.
 local art_card_tips = {}
 
 --- Our art box: the component, false when it could not be made while this panel is open, or nil when it is not made yet.
@@ -525,6 +538,28 @@ local function sync_arts(character, weapon)
 	return #added > 0 or #removed > 0
 end
 
+--- How many skills the Advisor knows in each Polymath discipline, and the disciplines in which he knows enough for them to count.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @param data table The Polymath, from `ADVISOR_OVERHAUL_RIGS.polymath`.
+--- @returns table Each discipline's `name` and `owned` skills, in tree order.
+--- @returns table Names of the disciplines that count, in tree order.
+local function polymath_progress(character, data)
+	local progress, counted = {}, {}
+	for _, discipline in ipairs(data.disciplines) do
+		local owned = 0
+		for _, key in ipairs(discipline.skills) do
+			if character:has_skill(key) then
+				owned = owned + 1
+			end
+		end
+		table.insert(progress, { name = discipline.name, owned = owned })
+		if owned >= data.needed then
+			table.insert(counted, discipline.name)
+		end
+	end
+	return progress, counted
+end
+
 --- Puts on the Advisor the Polymath bundle for the number of disciplines in which he has enough skills, while he owns the Polymath, and takes every
 --- other Polymath bundle off. Runs with `sync_arts`, and on every skill point.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
@@ -536,19 +571,9 @@ local function sync_polymath(character)
 	end
 	local counted, wanted = {}, nil
 	if character:has_skill(data.skill) then
-		for name, keys in pairs(data.disciplines) do
-			local owned = 0
-			for _, key in ipairs(keys) do
-				if character:has_skill(key) then
-					owned = owned + 1
-				end
-			end
-			if owned >= data.needed then
-				table.insert(counted, name)
-			end
-		end
+		local _, owned = polymath_progress(character, data)
 		-- The first bundle is for no disciplines, so he has one whenever he owns the Polymath.
-		wanted = data.bundles[#counted + 1]
+		counted, wanted = owned, data.bundles[#owned + 1]
 	end
 	local changed = false
 	for _, bundle in ipairs(data.bundles) do
@@ -562,7 +587,6 @@ local function sync_polymath(character)
 		end
 	end
 	if changed then
-		table.sort(counted)
 		log("cqi " .. character:command_queue_index() .. " Polymath counts " .. #counted .. " disciplines (" .. table.concat(counted, ", ") .. "), bundle "
 			.. tostring(wanted))
 	end
@@ -1699,16 +1723,58 @@ local function art_card_tooltip(art, weapon, character)
 	return tip
 end
 
---- Rebuilds the box of each art slot skill from the art of the weapon the Advisor holds, so a weapon switch or a learned skill shows up.
+--- What the Polymath card's box shows, in the game's text markup: its name as the title, its flavour, then how many skills he knows in each
+--- discipline. The effect list draws the Polymath bundle he has now, or the one he would get if he learned it now.
+--- @param data table The Polymath, from `ADVISOR_OVERHAUL_RIGS.polymath`.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @returns table `title`, `text`, `foot` (always ""), `bundle` and `whole`, like `art_card_tooltip`.
+local function polymath_card_tooltip(data, character)
+	local progress, counted = polymath_progress(character, data)
+	local head = { "[[i]]" .. data.flavour .. "[[/i]]", "" }
+	for _, discipline in ipairs(progress) do
+		local name = ui_text("discipline_" .. discipline.name)
+		if discipline.owned >= data.needed then
+			table.insert(head, "[[col:green]]" .. name .. ": " .. discipline.owned .. " " .. ui_text("polymath_skills") .. "[[/col]]")
+		else
+			table.insert(head, name .. ": " .. discipline.owned .. " " .. ui_text("polymath_of") .. " " .. data.needed .. " " .. ui_text("polymath_skills"))
+		end
+	end
+	local line = character:has_skill(data.skill) and "polymath_counted" or "polymath_counted_unlearned"
+	table.insert(head, "")
+	table.insert(head, "[[col:yellow]]" .. ui_text(line) .. " " .. #counted .. " " .. ui_text("polymath_of") .. " " .. #data.disciplines .. "[[/col]]")
+	local tip = {
+		title = localised("character_skills_localised_name_" .. data.skill, data.name),
+		text = table.concat(head, "\n"),
+		foot = "",
+		bundle = data.bundles[#counted + 1],
+	}
+	tip.whole = tip.title .. "||" .. tip.text .. "\n" .. tip.bundle
+	return tip
+end
+
+--- Rebuilds the box of each art slot skill from the art of the weapon the Advisor holds, and the Polymath's box from his skills, so a weapon switch
+--- or a learned skill shows up.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
 local function update_art_card_tips(character)
 	local weapon = current_pair(character)
 	local tips = {}
-	for _, art in ipairs((rig_data().arts or {})[weapon] or {}) do
-		tips[art.skill] = art_card_tooltip(art, weapon, character)
-		if not art_card_tips[art.skill] or art_card_tips[art.skill].whole ~= tips[art.skill].whole then
-			log("art tooltip: " .. art.skill .. " shows art " .. art.name .. " of " .. weapon)
+	--- Keeps a card's box and logs it when it differs from the one shown so far.
+	--- @param skill string The card's skill key.
+	--- @param tip table What the box shows.
+	--- @param what string What it shows, for the log.
+	local function keep(skill, tip, what)
+		tips[skill] = tip
+		if not art_card_tips[skill] or art_card_tips[skill].whole ~= tip.whole then
+			log("art tooltip: " .. skill .. " shows " .. what)
 		end
+	end
+	for _, art in ipairs((rig_data().arts or {})[weapon] or {}) do
+		keep(art.skill, art_card_tooltip(art, weapon, character), "art " .. art.name .. " of " .. weapon)
+	end
+	local polymath = rig_data().polymath
+	if polymath then
+		local tip = polymath_card_tooltip(polymath, character)
+		keep(polymath.skill, tip, tip.bundle)
 	end
 	art_card_tips = tips
 end

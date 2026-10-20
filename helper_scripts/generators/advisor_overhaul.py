@@ -60,7 +60,7 @@ Each tree row's cards take that row's colour from `ROW_COLOURS`, through a skill
 
 The Polymath (the skill with `role` "polymath") grows with every discipline of `DISCIPLINES` in which he has `POLYMATH_SKILLS` skills: the
 loadout script puts the bundle `bundles.polymath_<n>` on him for n such disciplines, so the registry needs one from 0 up to every discipline. Each
-bundle holds the whole bonus, so the skill itself has no effects.
+bundle holds the whole bonus, so the skill itself has no effects and the Polymath box on its card shows the bundle he has now.
 
 Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_TEMPLATE`), mounted pairs start from a vanilla hero on the same
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
@@ -1234,6 +1234,19 @@ def bundle_rows(key: str, entry: Dict, rows: Dict[str, List[Dict[str, str]]], te
     texts.append((f"effect_bundles_localised_description_{key}", entry.get("description", "")))
 
 
+def box_flavour(skill: Dict, skip: Optional[str] = None) -> str:
+    """A skill's description for a script-made box, its loc line breaks turned into real ones.
+
+    Args:
+        skill (Dict): The registry skill.
+        skip (Optional[str]): Leaves out every paragraph that starts with this, or None to keep them all.
+
+    Returns:
+        str: The description, its paragraphs split by a blank line.
+    """
+    return "\n\n".join(p for p in skill.get("description", "").split("\\\\n\\\\n") if not (skip and p.startswith(skip)))
+
+
 def slot_skills(registry: Dict) -> Dict[str, str]:
     """The built skill of each art slot.
 
@@ -1267,7 +1280,7 @@ def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts
     for slot, skill_id in slot_skills(registry).items():
         skill = skills[skill_id]
         # The art tooltip replaces the vanilla one, so the note pointing at Change Loadout is left out.
-        flavour = "\n\n".join(p for p in skill.get("description", "").split("\\\\n\\\\n") if not p.startswith(ART_SLOT_NOTE))
+        flavour = box_flavour(skill, ART_SLOT_NOTE)
         requires = [{"skill": planned_skill_key(r), "name": skills[r].get("name", r)} for r in skill.get("requires", []) if r in skills]
         slots[slot] = (planned_skill_key(skill_id), skill["name"], flavour, requires)
     arts: Dict[str, List[Dict]] = {}
@@ -1501,8 +1514,8 @@ def polymath_data(registry: Dict) -> Optional[Dict]:
         registry (Dict): The registry.
 
     Returns:
-        Optional[Dict]: `skill`, `needed`, `disciplines` (name -> skill keys, lores included) and `bundles` (one per number of disciplines, from 0), or
-        None when no Polymath is built.
+        Optional[Dict]: `skill`, `name`, `flavour` (its description for the Polymath box), `needed`, `disciplines` (in `DISCIPLINES` order, each
+        `name` and `skills`, lores included) and `bundles` (one per number of disciplines, from 0), or None when no Polymath is built.
 
     Raises:
         SystemExit: When a Polymath bundle is missing from the registry's `bundles`.
@@ -1514,14 +1527,15 @@ def polymath_data(registry: Dict) -> Optional[Dict]:
     missing = [f"polymath_{n}" for n in range(len(DISCIPLINES) + 1) if f"polymath_{n}" not in registry.get("bundles", {})]
     if missing:
         raise SystemExit(f"the Polymath needs the bundles {', '.join(missing)}")
-    disciplines = {}
+    disciplines = []
     for name, rows in DISCIPLINES.items():
         keys = [planned_skill_key(k) for k, s in skills.items() if s.get("build") and not s.get("hidden") and s.get("row") in rows and k not in polymaths]
         keys += [lore_skill_key(lore, slot) for lore, e in registry.get("lores", {}).items() if e.get("build")
                  for slot, (slot_row, _) in enumerate(lore_slots(registry)) if slot_row in rows]
-        disciplines[name] = sorted(keys)
-    return {"skill": planned_skill_key(polymaths[0]), "needed": POLYMATH_SKILLS, "disciplines": disciplines,
-            "bundles": [bundle_key(f"polymath_{n}") for n in range(len(DISCIPLINES) + 1)]}
+        disciplines.append({"name": name, "skills": sorted(keys)})
+    skill = skills[polymaths[0]]
+    return {"skill": planned_skill_key(polymaths[0]), "name": skill["name"], "flavour": box_flavour(skill),
+            "needed": POLYMATH_SKILLS, "disciplines": disciplines, "bundles": [bundle_key(f"polymath_{n}") for n in range(len(DISCIPLINES) + 1)]}
 
 
 def art_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:
@@ -2222,9 +2236,10 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], upgrades: L
         lines += ["\t\t},"]
     lines += ["\t},"]
     if polymath:
-        lines += ["\t--- The Polymath: its skill, how many skills of a discipline make it count, each discipline's skills, and the bundle for each number",
-                  "\t--- of disciplines that count.", "\tpolymath = {", f'\t\tskill = "{polymath["skill"]}",', f'\t\tneeded = {polymath["needed"]},', "\t\tdisciplines = {"]
-        lines += [f'\t\t\t{name} = {{ ' + ", ".join(f'"{k}"' for k in keys) + " }," for name, keys in polymath["disciplines"].items()]
+        lines += ["\t--- The Polymath: its skill, name and flavour, how many skills of a discipline make it count, each discipline's skills in tree order,",
+                  "\t--- and the bundle for each number of disciplines that count, from 0.", "\tpolymath = {", f'\t\tskill = "{polymath["skill"]}",',
+                  f'\t\tname = "{quote(polymath["name"])}",', f'\t\tflavour = "{quote(polymath["flavour"])}",', f'\t\tneeded = {polymath["needed"]},', "\t\tdisciplines = {"]
+        lines += [f'\t\t\t{{ name = "{d["name"]}", skills = {{ ' + ", ".join(f'"{k}"' for k in d["skills"]) + " } }," for d in polymath["disciplines"]]
         lines += ["\t\t},", "\t\tbundles = { " + ", ".join(f'"{b}"' for b in polymath["bundles"]) + " },", "\t},"]
     lines += ["}"]
     with open(os.path.join(folder, f"{FILE}_rigs.lua"), "w", encoding="utf-8", newline="\n") as f:
