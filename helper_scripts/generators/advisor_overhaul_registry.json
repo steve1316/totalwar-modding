@@ -1661,7 +1661,7 @@
    "level_ranks": [9]
   },
   "magic_archmage": {
-   "name": "Archmage",
+   "name": "Apex: Archmage",
    "icon": "character_magic.png",
    "row": 0,
    "tier": 10,
@@ -1669,7 +1669,7 @@
    "build": true,
    "role": "apex",
    "requires": [],
-   "description": "Every lore he ever learned, in every world, answers him now.\\\\n\\\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\\\n\\\\nLocks the Polymath and every other Apex except Master of Arms.",
+   "description": "Every lore he ever learned, in every world, answers him now.\\\\n\\\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\\\n\\\\nLocks the Polymath and every other Apex.",
    "levels": [
     [
      {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 15},
@@ -2699,7 +2699,7 @@
    ]
   },
   "martial_apex": {
-   "name": "The Last Sword",
+   "name": "Apex: The Last Sword",
    "icon": "character_attack.png",
    "row": 0,
    "tier": 11,
@@ -2707,7 +2707,7 @@
    "build": true,
    "role": "apex",
    "requires": [],
-   "description": "At the end of one world he was the last one standing. He intends to be again.\\\\n\\\\nLocks the Polymath and every other Apex except Master of Arms.",
+   "description": "At the end of one world he was the last one standing. He intends to be again.\\\\n\\\\nLocks the Polymath and every other Apex.",
    "levels": [
     [
      {
@@ -2740,7 +2740,7 @@
    "exclusive": ["civic_apex", "magic_archmage", "memory_polymath"]
   },
   "civic_apex": {
-   "name": "Power Behind Thrones",
+   "name": "Apex: Power Behind Thrones",
    "icon": "campaign_public_order.png",
    "row": 0,
    "tier": 12,
@@ -2748,7 +2748,7 @@
    "build": true,
    "role": "apex",
    "requires": [],
-   "description": "Kings come and go. He has advised most of them, in one world or another.\\\\n\\\\nLocks the Polymath and every other Apex except Master of Arms.",
+   "description": "Kings come and go. He has advised most of them, in one world or another.\\\\n\\\\nLocks the Polymath and every other Apex.",
    "levels": [
     [
      {
@@ -2822,7 +2822,7 @@
    ]
   },
   "memory_seen_the_end": {
-   "name": "Seen the End",
+   "name": "Memory: Seen the End",
    "icon": "campaign_ambush.png",
    "row": 4,
    "tier": 1,
@@ -2871,7 +2871,7 @@
    "level_ranks": [9, 19]
   },
   "memory_old_lessons": {
-   "name": "Old Lessons",
+   "name": "Memory: Old Lessons",
    "icon": "character_experience.png",
    "row": 4,
    "tier": 4,
@@ -2908,7 +2908,7 @@
    "needs": 5
   },
   "memory_calm_voice": {
-   "name": "Calm Voice",
+   "name": "Memory: Calm Voice",
    "icon": "character_morale.png",
    "row": 4,
    "tier": 2,
@@ -2957,7 +2957,7 @@
    "level_ranks": [9, 19]
   },
   "memory_weight_of_years": {
-   "name": "The Weight of Years",
+   "name": "Memory: The Weight of Years",
    "icon": "character_health.png",
    "row": 4,
    "tier": 0,
@@ -2994,7 +2994,7 @@
    "level_ranks": [9]
   },
   "memory_every_mistake": {
-   "name": "Every Mistake Already Made",
+   "name": "Memory: Every Mistake Already Made",
    "icon": "character_agent.png",
    "row": 4,
    "tier": 3,
@@ -3043,7 +3043,7 @@
    "level_ranks": [9, 19]
   },
   "memory_polymath": {
-   "name": "Everything, Again",
+   "name": "Polymath: Everything, Again",
    "icon": "character_general_ability.png",
    "row": 0,
    "tier": 13,
@@ -4392,7 +4392,7 @@
    ]
   },
   "memory_end_fire": {
-   "name": "The Ending of Fire",
+   "name": "Memory: The Ending of Fire",
    "icon": "wh3_main_unit_contact_warpflame.png",
    "row": 4,
    "tier": 5,
@@ -4519,7 +4519,7 @@
    "exclusive": ["memory_end_plague", "memory_end_silence", "memory_end_drowning", "memory_end_hunger"]
   },
   "memory_end_plague": {
-   "name": "The Ending of Plague",
+   "name": "Memory: The Ending of Plague",
    "icon": "wh_main_unit_contact_poison.png",
    "row": 4,
    "tier": 6,
@@ -4646,7 +4646,7 @@
    "exclusive": ["memory_end_fire", "memory_end_silence", "memory_end_drowning", "memory_end_hunger"]
   },
   "memory_end_silence": {
-   "name": "The Ending of Silence",
+   "name": "Memory: The Ending of Silence",
    "icon": "wh3_main_unit_contact_disrupted.png",
    "row": 4,
    "tier": 7,
@@ -4785,7 +4785,7 @@
    "exclusive": ["memory_end_fire", "memory_end_plague", "memory_end_drowning", "memory_end_hunger"]
   },
   "memory_end_drowning": {
-   "name": "The Ending of Drowning",
+   "name": "Memory: The Ending of Drowning",
    "icon": "wh3_dlc27_character_skill_dampen.png",
    "row": 4,
    "tier": 8,
@@ -4912,7 +4912,7 @@
    "exclusive": ["memory_end_fire", "memory_end_plague", "memory_end_silence", "memory_end_hunger"]
   },
   "memory_end_hunger": {
-   "name": "The Ending of Hunger",
+   "name": "Memory: The Ending of Hunger",
    "icon": "wh_dlc03_spell_beasts_the_curse_of_anraheir.png",
    "row": 4,
    "tier": 9,
@@ -7329,7 +7329,7 @@
  "actions": ["wh2_main_agent_action_champion_assist_army_scavenge", "wh2_main_agent_action_champion_passive_increase_trade", "wh2_main_agent_action_champion_passive_stimulate_growth", "wh2_main_agent_action_spy_assist_army_increase_mobility", "wh2_main_agent_action_spy_hinder_character_assassinate", "wh3_dlc26_agent_action_champion_passive_spread_corruption_kho"],
  "bundles": {
   "polymath_1": {
-   "name": "Everything, Again (1 of 4)",
+   "name": "Polymath: Everything, Again (1 of 4)",
    "icon": "public_order.png",
    "description": "He draws on 1 of his disciplines at once.",
    "effects": [
@@ -7341,7 +7341,7 @@
    ]
   },
   "polymath_2": {
-   "name": "Everything, Again (2 of 4)",
+   "name": "Polymath: Everything, Again (2 of 4)",
    "icon": "public_order.png",
    "description": "He draws on 2 of his disciplines at once.",
    "effects": [
@@ -7369,7 +7369,7 @@
    ]
   },
   "polymath_3": {
-   "name": "Everything, Again (3 of 4)",
+   "name": "Polymath: Everything, Again (3 of 4)",
    "icon": "public_order.png",
    "description": "He draws on 3 of his disciplines at once.",
    "effects": [
@@ -7397,7 +7397,7 @@
    ]
   },
   "polymath_4": {
-   "name": "Everything, Again (4 of 4)",
+   "name": "Polymath: Everything, Again (4 of 4)",
    "icon": "public_order.png",
    "description": "He draws on 4 of his disciplines at once.",
    "effects": [

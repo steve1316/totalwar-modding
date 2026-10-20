@@ -164,8 +164,8 @@ character_skills_localised_name_advisor_overhaul_skill_civic_8	Increase Trade	tr
 character_skills_localised_description_advisor_overhaul_skill_civic_8	He knows which roads will close, and which ships will sink.	true
 character_skills_localised_name_advisor_overhaul_skill_civic_9	Boost Income	true
 character_skills_localised_description_advisor_overhaul_skill_civic_9	Half the counting-houses in the Empire owe him money from a life they cannot remember.	true
-character_skills_localised_name_advisor_overhaul_skill_civic_apex	Power Behind Thrones	true
-character_skills_localised_description_advisor_overhaul_skill_civic_apex	Kings come and go. He has advised most of them, in one world or another.\\n\\nLocks the Polymath and every other Apex except Master of Arms.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_apex	Apex: Power Behind Thrones	true
+character_skills_localised_description_advisor_overhaul_skill_civic_apex	Kings come and go. He has advised most of them, in one world or another.\\n\\nLocks the Polymath and every other Apex.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_aim	Practised Aim	true
 character_skills_localised_description_advisor_overhaul_skill_combat_aim	He has loosed arrows at the end of every kind of world. The hand knows where to go.	true
 character_skills_localised_name_advisor_overhaul_skill_combat_barrier	Shell of Light	true
@@ -234,8 +234,8 @@ character_skills_localised_name_advisor_overhaul_skill_hero_students	Students in
 character_skills_localised_description_advisor_overhaul_skill_hero_students	Half the captains of the world once sat at his table and listened.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_arcane_ward	Arcane Ward	true
 character_skills_localised_description_advisor_overhaul_skill_magic_arcane_ward	A thin shimmer, taught to him by a mage whose name no one else recalls.	true
-character_skills_localised_name_advisor_overhaul_skill_magic_archmage	Archmage	true
-character_skills_localised_description_advisor_overhaul_skill_magic_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\n\\nLocks the Polymath and every other Apex except Master of Arms.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_archmage	Apex: Archmage	true
+character_skills_localised_description_advisor_overhaul_skill_magic_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nEach turn his army gains one random cataclysm spell, a memory of how some world ended.\\n\\nLocks the Polymath and every other Apex.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_battle_caster	Spell and Steel	true
 character_skills_localised_description_advisor_overhaul_skill_magic_battle_caster	He casts with one hand and cuts with the other, and has never found the two work apart.	true
 character_skills_localised_name_advisor_overhaul_skill_magic_beyond_sight	Weave Beyond Sight	true
@@ -290,31 +290,31 @@ character_skills_localised_name_advisor_overhaul_skill_martial_7	Hinder Replenis
 character_skills_localised_description_advisor_overhaul_skill_martial_7	Their wounded do not come back to the line.	true
 character_skills_localised_name_advisor_overhaul_skill_martial_9	Assault Units	true
 character_skills_localised_description_advisor_overhaul_skill_martial_9	The whole camp, the same night.	true
-character_skills_localised_name_advisor_overhaul_skill_martial_apex	The Last Sword	true
-character_skills_localised_description_advisor_overhaul_skill_martial_apex	At the end of one world he was the last one standing. He intends to be again.\\n\\nLocks the Polymath and every other Apex except Master of Arms.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_calm_voice	Calm Voice	true
+character_skills_localised_name_advisor_overhaul_skill_martial_apex	Apex: The Last Sword	true
+character_skills_localised_description_advisor_overhaul_skill_martial_apex	At the end of one world he was the last one standing. He intends to be again.\\n\\nLocks the Polymath and every other Apex.	true
+character_skills_localised_name_advisor_overhaul_skill_memory_calm_voice	Memory: Calm Voice	true
 character_skills_localised_description_advisor_overhaul_skill_memory_calm_voice	Men stand firm around someone who is not afraid. He stopped being afraid a long time ago.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_end_drowning	The Ending of Drowning	true
+character_skills_localised_name_advisor_overhaul_skill_memory_end_drowning	Memory: The Ending of Drowning	true
 character_skills_localised_description_advisor_overhaul_skill_memory_end_drowning	The sea came in over the walls. He held a shield above his head for a long time.\\n\\nLocks the other Endings.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_end_fire	The Ending of Fire	true
+character_skills_localised_name_advisor_overhaul_skill_memory_end_fire	Memory: The Ending of Fire	true
 character_skills_localised_description_advisor_overhaul_skill_memory_end_fire	The sky burned for nine days and he watched it from the last tower. His blade remembers the heat.\\n\\nLocks the other Endings.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_end_hunger	The Ending of Hunger	true
+character_skills_localised_name_advisor_overhaul_skill_memory_end_hunger	Memory: The Ending of Hunger	true
 character_skills_localised_description_advisor_overhaul_skill_memory_end_hunger	The granaries were empty before the first battle. He remembers what was worth taking.\\n\\nLocks the other Endings.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_end_plague	The Ending of Plague	true
+character_skills_localised_name_advisor_overhaul_skill_memory_end_plague	Memory: The Ending of Plague	true
 character_skills_localised_description_advisor_overhaul_skill_memory_end_plague	The cities emptied quietly. He learned what a slow death tastes like.\\n\\nLocks the other Endings.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_end_silence	The Ending of Silence	true
+character_skills_localised_name_advisor_overhaul_skill_memory_end_silence	Memory: The Ending of Silence	true
 character_skills_localised_description_advisor_overhaul_skill_memory_end_silence	Nobody screamed. The army simply stopped arriving. He keeps his own march quiet now.\\n\\nLocks the other Endings.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_every_mistake	Every Mistake Already Made	true
+character_skills_localised_name_advisor_overhaul_skill_memory_every_mistake	Memory: Every Mistake Already Made	true
 character_skills_localised_description_advisor_overhaul_skill_memory_every_mistake	There is no error left for him to make. He made them all in other lives.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_long_patience	The Long Patience	true
 character_skills_localised_description_advisor_overhaul_skill_memory_long_patience	He has all the time in the world. He has had it before.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_old_lessons	Old Lessons	true
+character_skills_localised_name_advisor_overhaul_skill_memory_old_lessons	Memory: Old Lessons	true
 character_skills_localised_description_advisor_overhaul_skill_memory_old_lessons	Everything he teaches, he learned the hard way. Several times.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_polymath	Everything, Again	true
+character_skills_localised_name_advisor_overhaul_skill_memory_polymath	Polymath: Everything, Again	true
 character_skills_localised_description_advisor_overhaul_skill_memory_polymath	He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\n\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Locks every Apex except Master of Arms.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_seen_the_end	Seen the End	true
+character_skills_localised_name_advisor_overhaul_skill_memory_seen_the_end	Memory: Seen the End	true
 character_skills_localised_description_advisor_overhaul_skill_memory_seen_the_end	He has watched this army walk into this ambush before. Not this time.	true
-character_skills_localised_name_advisor_overhaul_skill_memory_weight_of_years	The Weight of Years	true
+character_skills_localised_name_advisor_overhaul_skill_memory_weight_of_years	Memory: The Weight of Years	true
 character_skills_localised_description_advisor_overhaul_skill_memory_weight_of_years	He has died before. He did not care for it, and he takes more killing now.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_art_1	Spellguard	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_art_1	He is slow and he is soft, and he has made his peace with both. The wards take what the staff cannot turn.	true
@@ -424,13 +424,13 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_army_4	Cast
 effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_4	Every unit under him becomes the company he once led. They take a blow the way metal takes the hammer.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_apex	Battering Ram	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_apex	He stops fighting the line and walks through it. On foot nothing stops or knocks him down, his body bowls men over and flings them aside, and every blow cracks the armour of what it hits. On foot he counts as a large target.	true
-effect_bundles_localised_title_advisor_overhaul_bundle_polymath_1	Everything, Again (1 of 4)	true
+effect_bundles_localised_title_advisor_overhaul_bundle_polymath_1	Polymath: Everything, Again (1 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_1	He draws on 1 of his disciplines at once.	true
-effect_bundles_localised_title_advisor_overhaul_bundle_polymath_2	Everything, Again (2 of 4)	true
+effect_bundles_localised_title_advisor_overhaul_bundle_polymath_2	Polymath: Everything, Again (2 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_2	He draws on 2 of his disciplines at once.	true
-effect_bundles_localised_title_advisor_overhaul_bundle_polymath_3	Everything, Again (3 of 4)	true
+effect_bundles_localised_title_advisor_overhaul_bundle_polymath_3	Polymath: Everything, Again (3 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_3	He draws on 3 of his disciplines at once.	true
-effect_bundles_localised_title_advisor_overhaul_bundle_polymath_4	Everything, Again (4 of 4)	true
+effect_bundles_localised_title_advisor_overhaul_bundle_polymath_4	Polymath: Everything, Again (4 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_4	He draws on 4 of his disciplines at once.	true
 character_skills_localised_name_advisor_overhaul_lore_fire	First Tome: Lore of Fire	true
 character_skills_localised_description_advisor_overhaul_lore_fire	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
