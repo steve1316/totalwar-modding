@@ -209,7 +209,7 @@ character_skills_localised_description_advisor_overhaul_skill_corruption_spread_
 character_skills_localised_name_advisor_overhaul_skill_corruption_spread_vampiric	Spread Vampiric Corruption	true
 character_skills_localised_description_advisor_overhaul_skill_corruption_spread_vampiric	Graves stir and the nights grow longer where he stays. The taint of undeath spreads from him.	true
 character_skills_localised_name_advisor_overhaul_skill_corruption_taint_remembered	The Taint Remembered	true
-character_skills_localised_description_advisor_overhaul_skill_corruption_taint_remembered	He has seen every kind of corruption take hold of a land, and knows how each one spreads.	true
+character_skills_localised_description_advisor_overhaul_skill_corruption_taint_remembered	He has watched every kind of corruption take hold of a land, and learned how to keep it out. In his own provinces it takes hold more slowly.	true
 character_skills_localised_name_advisor_overhaul_skill_hero_assassinate	Assassinate	true
 character_skills_localised_description_advisor_overhaul_skill_hero_assassinate	He picks out the enemy agent who will cause the most trouble later, and deals with them now.	true
 character_skills_localised_name_advisor_overhaul_skill_hero_assassinate_lord	Assassinate Lord	true

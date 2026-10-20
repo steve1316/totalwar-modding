@@ -6786,49 +6786,19 @@
   },
   "corruption_taint_remembered": {
    "name": "The Taint Remembered",
-   "icon": "campaign_chaos_corruption.png",
+   "icon": "campaign_untainted.png",
    "row": 9,
    "tier": 0,
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "He has seen every kind of corruption take hold of a land, and knows how each one spreads.",
+   "description": "He has watched every kind of corruption take hold of a land, and learned how to keep it out. In his own provinces it takes hold more slowly.",
    "levels": [
     [
      {
-      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_chs",
-      "scope": "character_to_character_own",
-      "value": 1.0
-     },
-     {
-      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_kho",
-      "scope": "character_to_character_own",
-      "value": 1.0
-     },
-     {
-      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_nur",
-      "scope": "character_to_character_own",
-      "value": 1.0
-     },
-     {
-      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_sla",
-      "scope": "character_to_character_own",
-      "value": 1.0
-     },
-     {
-      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_tze",
-      "scope": "character_to_character_own",
-      "value": 1.0
-     },
-     {
-      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_skv",
-      "scope": "character_to_character_own",
-      "value": 1.0
-     },
-     {
-      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff_vmp",
-      "scope": "character_to_character_own",
-      "value": 1.0
+      "effect": "wh3_main_effect_corruption_reduction_characters",
+      "scope": "character_to_province_own",
+      "value": -1.0
      }
     ]
    ]

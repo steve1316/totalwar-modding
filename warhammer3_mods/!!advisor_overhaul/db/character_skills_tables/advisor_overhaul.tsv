@@ -55,7 +55,7 @@ advisor_overhaul_skill_corruption_spread_skaven	campaign_skaven_corruption.png		
 advisor_overhaul_skill_corruption_spread_slaanesh	campaign_slaanesh_corruption.png			0	false	false	false	0.0000	0
 advisor_overhaul_skill_corruption_spread_tzeentch	campaign_tzeentch_corruption.png			0	false	false	false	0.0000	0
 advisor_overhaul_skill_corruption_spread_vampiric	campaign_vampiric_corruption.png			0	false	false	false	0.0000	0
-advisor_overhaul_skill_corruption_taint_remembered	campaign_chaos_corruption.png			0	false	false	false	0.0000	0
+advisor_overhaul_skill_corruption_taint_remembered	campaign_untainted.png			0	false	false	false	0.0000	0
 advisor_overhaul_skill_hero_assassinate	campaign_subterfuge.png			0	false	false	false	0.0000	0
 advisor_overhaul_skill_hero_assassinate_lord	campaign_subterfuge.png			19	false	false	false	0.0000	0
 advisor_overhaul_skill_hero_assault_garrison	campaign_siege_defence.png			0	false	false	false	0.0000	0
