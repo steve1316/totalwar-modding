@@ -5,6 +5,9 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { loadModel } from "../viewer_common.js";
 
+// The close-up looks this far over the root bone.
+const LOOK_UP = new THREE.Vector3(0, 0.25, 0);
+
 // Shown when nothing has been measured yet.
 const DEFAULT_BOX = { cx: 0, cy: 1, cz: 0, w: 1.4, h: 2, d: 1 };
 
@@ -57,11 +60,14 @@ class Rig {
   }
   // Map model bones to animation bones by name.
   bind() { this.map = this.model && this.anim ? this.model.bones.map(b => this.anim.index.get(b.name) ?? -1) : null; }
-  // Poses the rig at a time in seconds. Each side loops on its own length, so a mount idle keeps going under a longer rider cast.
+  // Poses the rig at a time in seconds. Each side loops on its own length, so a mount idle keeps going under a longer rider cast. A rider placed
+  // from his mount's rider bone (`seat`, the bone's place per frame of the mount's animation) is carried on that bone.
   pose(seconds, offsetX) {
     const a = this.anim, view = this.stage.view; if (!a) return;
     const f = Math.floor(seconds * a.fps) % a.frames, n = a.bones.length, d = a.data, at = (i, k) => d[(f * n + i) * 7 + k];
-    this.group.position.x = offsetX;
+    const s = this.seat && this.seat.frames[Math.floor(seconds * this.seat.fps) % this.seat.frames.length];
+    this.group.position.set(offsetX + (s ? s[0] : 0), s ? s[1] : 0, s ? s[2] : 0);
+    if (s) this.group.quaternion.set(s[3], s[4], s[5], s[6]); else this.group.quaternion.identity();
     for (const [i, parent, geo] of this.segs) {
       const p = geo.attributes.position.array;
       for (let k = 0; k < 3; k++) { p[k] = at(parent, k); p[3 + k] = at(i, k); }
@@ -167,7 +173,7 @@ export class BattleStage {
     this.slot = slot;
     const list = await Promise.all(this.entry.sides.map(side => this.loads(side) ? this.getAnim(slot.anims[side.key]) : null));
     if (this.slot !== slot) return false;
-    this.rigs.forEach((r, i) => r.load(list[i]));
+    this.rigs.forEach((r, i) => { r.load(list[i]); r.seat = slot.seats ? slot.seats[r.side.key] : null; });
     const main = list.find(a => a);
     this.frames = main ? main.frames : 1; this.fps = main ? main.fps : 20;
     this.lengths = list.map(a => a ? a.frames : 0);
@@ -189,9 +195,11 @@ export class BattleStage {
   follow(time) {
     const r = this.rigs[0], a = r && r.anim; if (!a || !a.index.has("root")) return;
     const i = a.index.get("root"), n = a.bones.length, rootAt = (f, k) => a.data[(f * n + i) * 7 + k];
-    if (this.followed.lengthSq() === 0) this.followed.set(rootAt(0, 0) + r.group.position.x, rootAt(0, 1) + 0.25, rootAt(0, 2));
-    const f = Math.floor(time * a.fps) % a.frames;
-    this.seen.set(rootAt(f, 0) + r.group.position.x, rootAt(f, 1) + 0.25, rootAt(f, 2));
+    // The root's place in the scene, through the rig's own place (its offset, or the seat it rides).
+    r.group.updateMatrixWorld();
+    const rootSeen = (f, v) => r.group.localToWorld(v.set(rootAt(f, 0), rootAt(f, 1), rootAt(f, 2))).add(LOOK_UP);
+    if (this.followed.lengthSq() === 0) rootSeen(0, this.followed);
+    rootSeen(Math.floor(time * a.fps) % a.frames, this.seen);
     const delta = this.seen.clone().sub(this.followed); this.camera.position.add(delta); this.controls.target.add(delta);
     this.followed.copy(this.seen);
   }

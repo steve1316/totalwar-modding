@@ -26,9 +26,11 @@ from typing import Dict, List, Optional, Tuple
 from core.asset_source import VANILLA_DATA_DIR, AssetSource
 from core.utilities import extract_tsv_data, load_tsv_data
 from generators import advisor_overhaul_anims as anims
-from generators.advisor_overhaul import DATA, DEFAULT_MOUNT, DEFAULT_WEAPON, MOD, PROP_CHANGES, load_registry, pairs, uniform_key, unit_key
+from generators.advisor_overhaul import DATA, DEFAULT_MOUNT, DEFAULT_WEAPON, MOD, PROP_CHANGES, load_registry, pairs, ridden, uniform_key, unit_key
 from generators.advisor_overhaul_model import PREVIEWS
 from generators.advisor_overhaul_panels import build_panels
+from tools.anim_file import read_anim
+from tools.anim_retarget import Transform, compose, world_pose
 from tools.anim_viewer.exporter import Exporter, compare_entry, first_refs
 from tools.glf_rebuild_animpack import AnimSet, load_vanilla_sets, parse_set, read_animpack
 
@@ -45,9 +47,14 @@ SET_FOLDER = anims.SET_FOLDER
 # Vanilla packs holding the `.anim` files and skeletons.
 ANIM_PACKS = ("anim.pack", "anim2.pack", "anim_3.pack")
 
-# Vanilla tables read for mounts, variants and the reference units.
-VANILLA_TABLES = ("land_units_tables", "mounts_tables", "variants_tables", "unit_variants_tables")
+# The table naming the mount bone a monster's rider sits on.
+JUNCTIONS = "land_units_to_battle_personalities_junctions_tables"
 
+# Vanilla tables read for mounts, variants, rider bones and the reference units.
+VANILLA_TABLES = ("land_units_tables", "mounts_tables", "variants_tables", "unit_variants_tables", JUNCTIONS)
+
+# The mount side each rider side sits on.
+MOUNT_SIDES = {"rider": "mount", "v_rider": "v_mount"}
 # Slots exported for every unit. A mounted rider plays `RIDER_<slot>`. A slot the set lacks is left out, so the fire slots only show for archers
 # (`FIRE_LEVEL` on foot, `RIDER_FIRE_FORWARD_LEVEL` mounted).
 SLOTS = ["STAND", "WALK_1", "RUN_1", "CHARGE", "ATTACK_1", "ATTACK_2", "ATTACK_3", "ATTACK_4", "CAST_SPELL_FORWARD_SHORT", "CAST_SPELL_FORWARD_MEDIUM",
@@ -160,26 +167,79 @@ def variant_path(filename: str) -> str:
 # Entries
 
 
-def matching_slot(slot: str, mounted: bool, refs: Dict[str, str]) -> Optional[str]:
-    """The slot a rider or foot unit plays for a gallery slot: `RIDER_<slot>` when mounted, falling back to its stand (or fly stand).
+def matching_slot(slot: str, mounted: bool, refs: Dict[str, str], saddled: bool = False) -> Optional[str]:
+    """The slot a rider or foot unit plays for a gallery slot: `RIDER_<slot>` when mounted, else the slot itself, falling back to its stand (or fly
+    stand). A rider in the saddle (`anims.SADDLE_SPACE`, as on the dragons) sits through his mount's moves and attacks: the foot slots his set also
+    holds never play on the mount, so he plays only his `RIDER_` slots and his seated stand (`RIDER_STAND` in Elspeth's set, `STAND` in most).
 
     Args:
         slot (str): The gallery slot, e.g. `ATTACK_1`.
         mounted (bool): Whether the unit rides.
         refs (Dict[str, str]): The set's slots.
+        saddled (bool): Whether the rider sits in the saddle.
 
     Returns:
         Optional[str]: The slot, or None when the set has neither it nor a stand.
     """
-    prefix = "RIDER_" if mounted else ""
-    for name in (slot, "FLY_STAND" if slot.startswith("FLY_") else "STAND", "STAND"):
-        if prefix + name in refs:
-            return prefix + name
+    stands = ("FLY_STAND" if slot.startswith("FLY_") else "STAND", "STAND")
+    if saddled:
+        names = ["RIDER_" + slot, *("RIDER_" + stand for stand in stands), *stands]
+    else:
+        names = [prefix + name for name in (slot, *stands) for prefix in (("RIDER_", "") if mounted else ("",))]
+    return next((name for name in names if name in refs), None)
+
+
+def rider_seat(exporter: Exporter, unit: str, rider_set: AnimSet, mount_key: str, tables: Dict[str, List[Dict[str, str]]]) -> Optional[Tuple[int, Transform]]:
+    """Where a rider set placed from the mount's rider bone (`anims.SADDLE_SPACE`, as on the dragons) sits: the bone the unit's rider row names, as
+    the mount's tech skeleton holds it. Other rider sets carry the mount's height and stand on its origin.
+
+    Args:
+        exporter (Exporter): The exporter, for the tech skeleton.
+        unit (str): The land unit key.
+        rider_set (AnimSet): The rider's set.
+        mount_key (str): The `mounts_tables` key.
+        tables (Dict[str, List[Dict[str, str]]]): Vanilla tables, with his own mount, variant and rider rows.
+
+    Returns:
+        Optional[Tuple[int, Transform]]: The bone's parent on the mount's skeleton and its offset from that parent, or None when the rider stands on
+        the mount's origin or no tech skeleton has the bone.
+    """
+    if not rider_set.flag & anims.SADDLE_SPACE:
+        return None
+    bone = next((r["riders_attachment_point"] for r in tables[JUNCTIONS] if r["land_unit"] == unit), "")
+    mount = next(r for r in tables["mounts_tables"] if r["key"] == mount_key)
+    variant = next(r for r in tables["variants_tables"] if r["variant_name"] == mount["variant"])
+    folder = variant.get("tech_folder", "").replace("\\", "/").lower()
+    for path in sorted(p for p in exporter.assets.index if bone and folder and p.startswith(folder) and p.endswith(".anim")):
+        tech = read_anim(exporter.read(path))
+        found = next((i for i, b in enumerate(tech.bones) if b.name == bone), None)
+        if found is not None:
+            return tech.bones[found].parent, (tech.rotations[0][found], tech.translations[0][found])
+    print(f"warning: {unit} sits on {bone or 'no rider bone'} of {mount_key}, which no tech skeleton has, so it stands on the mount's origin")
     return None
 
 
+def seat_track(exporter: Exporter, path: str, parent: int, offset: Transform) -> Dict:
+    """The world place of a mount's rider bone in each frame of one of its animations.
+
+    Args:
+        exporter (Exporter): The exporter.
+        path (str): The mount animation.
+        parent (int): The rider bone's parent on the mount's skeleton.
+        offset (Transform): The rider bone's offset from that parent.
+
+    Returns:
+        Dict: `fps` and `frames`, each frame the position then the quaternion (x, y, z, w), as the viewer's animations hold bones.
+    """
+    anim = read_anim(exporter.read(path))
+    skeleton = exporter.skeleton(anim.skeleton)
+    seats = [compose(world_pose(anim, skeleton, frame)[parent], offset) for frame in range(len(anim.rotations))]
+    return {"fps": anim.frame_rate, "frames": [[round(v, 4) for v in (*position, *rotation)] for rotation, position in seats]}
+
+
 def unit_entry(exporter: Exporter, name: str, rider_set: AnimSet, rider_variant: str, mount_set: Optional[AnimSet], mount_variant: Optional[str],
-               info: List[str], slot_names: Optional[List[str]] = None, versus: Optional[Tuple[str, AnimSet, str, Optional[AnimSet], Optional[str]]] = None) -> Dict:
+               info: List[str], slot_names: Optional[List[str]] = None, versus: Optional[Tuple[str, AnimSet, str, Optional[AnimSet], Optional[str]]] = None,
+               rider_prefix: str = "RIDER_", seats: Optional[Dict[str, Tuple[int, Transform]]] = None) -> Dict:
     """Adds one unit: the rider and, when mounted, the mount, playing matching slots together. With `versus`, the vanilla equivalent is added as two
     more sides (`v_rider`, `v_mount`) playing the same slots, or its stand where its sets lack one.
 
@@ -194,6 +254,10 @@ def unit_entry(exporter: Exporter, name: str, rider_set: AnimSet, rider_variant:
         slot_names (Optional[List[str]]): Slots to export, `SLOTS` (plus `FLY_SLOTS` for flyers) when None.
         versus (Optional[Tuple[str, AnimSet, str, Optional[AnimSet], Optional[str]]]): The vanilla equivalent's unit key, rider set, rider variant,
             mount set and mount variant.
+        rider_prefix (str): Prefix of the rider's slots when mounted, where the set has them. A rider on a ridden mount (the disc) plays his foot
+            slots, so his is empty.
+        seats (Optional[Dict[str, Tuple[int, Transform]]]): Rider side -> its rider bone (see `rider_seat`). That side then follows the bone in
+            each slot's animation of its mount side.
 
     Returns:
         Dict: The entry, already added to the exporter.
@@ -203,9 +267,14 @@ def unit_entry(exporter: Exporter, name: str, rider_set: AnimSet, rider_variant:
     # Props docked by a set's metadata are held where the game holds them, as in the retarget comparisons.
     rider_docking, mount_docking = exporter.docking(rider_set), exporter.docking(mount_set) if mount_set else None
     flyer = "FLY_STAND" in (mount_refs or rider_refs)
+    saddled = bool(mount_set) and bool(rider_set.flag & anims.SADDLE_SPACE)
     slots = []
     for slot in slot_names or SLOTS + (FLY_SLOTS if flyer else []):
-        rider_slot = f"RIDER_{slot}" if mount_set else slot
+        if saddled:
+            # He sits in the saddle, so a slot only his mount plays is shown with him in his stand.
+            rider_slot = matching_slot(slot, True, rider_refs, saddled) if "RIDER_" + slot in rider_refs or slot in mount_refs else None
+        else:
+            rider_slot = rider_prefix + slot if mount_set and rider_prefix + slot in rider_refs else slot
         if rider_slot not in rider_refs:
             continue
         entry = {"slot": slot, "anims": {"rider": exporter.anim(rider_refs[rider_slot], rider_docking)}, "paths": {"rider": rider_refs[rider_slot]}, "slots": {"rider": rider_slot}}
@@ -219,11 +288,14 @@ def unit_entry(exporter: Exporter, name: str, rider_set: AnimSet, rider_variant:
             _, v_rider_set, _, v_mount_set, _ = versus
             for side, anim_set, mounted in (("v_rider", v_rider_set, bool(v_mount_set)), ("v_mount", v_mount_set, False)):
                 refs = first_refs(anim_set, exporter.names) if anim_set else {}
-                played = matching_slot(slot, mounted, refs)
+                played = matching_slot(slot, mounted, refs, mounted and bool(anim_set.flag & anims.SADDLE_SPACE))
                 if played:
                     entry["anims"][side] = exporter.anim(refs[played], exporter.docking(anim_set))
                     entry["paths"][side] = refs[played]
                     entry["slots"][side] = played
+        for side, seat in (seats or {}).items():
+            if MOUNT_SIDES[side] in entry["paths"] and side in entry["paths"]:
+                entry.setdefault("seats", {})[side] = seat_track(exporter, entry["paths"][MOUNT_SIDES[side]], *seat)
         slots.append(entry)
     sides = [{"key": "rider", "label": "Rider" if mount_set else "Unit", "color": RIDER_COLOUR,
               "model": exporter.model(rider_variant, exporter.anims[slots[0]["anims"]["rider"]]["skeleton"])}]
@@ -249,7 +321,7 @@ def mount_parts(mount_key: str, tables: Dict[str, List[Dict[str, str]]], sets: D
 
     Args:
         mount_key (str): Mount key, e.g. `wh_main_emp_mnt_pegasus`.
-        tables (Dict[str, List[Dict[str, str]]]): Vanilla tables.
+        tables (Dict[str, List[Dict[str, str]]]): Vanilla tables, with his own mount and variant rows.
         sets (Dict[str, AnimSet]): Animation sets by name.
 
     Returns:
@@ -353,10 +425,13 @@ def build(out: str) -> Exporter:
     """
     registry = load_registry()
     tables = vanilla_tables()
+    # His ridden mounts, such as the disc, are mount and variant rows of his own, and his dragon riders have rider rows of his own.
+    for table in ("mounts_tables", "variants_tables", JUNCTIONS):
+        tables[table] = read_table(MOD, table) + tables[table]
     sets = load_sets()
     land_units = {r["key"]: r for r in read_table(MOD, "land_units_tables")}
     uniforms = {r["uniform_name"]: r for r in read_table(MOD, "agent_uniforms_tables")}
-    variants = {r["variant_name"]: r for r in read_table(MOD, "variants_tables") + tables["variants_tables"]}
+    variants = {r["variant_name"]: r for r in tables["variants_tables"]}
     packs = [os.path.join(VANILLA_DATA_DIR, p) for p in ANIM_PACKS]
     exporter = Exporter(out, AssetSource([MOD] + ([PREVIEWS] if os.path.isdir(PREVIEWS) else []), packs))
     exporter.panels, versus, editor = build_panels(registry, out, sets)
@@ -381,9 +456,15 @@ def build(out: str) -> Exporter:
         mount_set, mount_variant = mount_parts(row["mount"], tables, sets) if row["mount"] else (None, None)
         name = f"{registry['weapons'][weapon]['name']} - {registry['mounts'][mount]['name']}"
         info = [f"unit {key}", f"rider set {set_name}", f"variant {variant}"] + ([f"mount {row['mount']} ({mount_set.name})"] if mount_set else [])
-        v_key = versus.get(key)
-        v_parts = (v_key, *vanilla_parts(v_key, tables, sets, variants)[1:]) if v_key else None
-        unit_entry(exporter, name, sets[set_name], variant_path(variant), mount_set, mount_variant, info, versus=v_parts)["unit"] = key
+        seats = {"rider": rider_seat(exporter, key, sets[set_name], row["mount"], tables)} if mount_set else {}
+        v_key, v_parts = versus.get(key), None
+        if v_key:
+            v_row, *v_sides = vanilla_parts(v_key, tables, sets, variants)
+            v_parts = (v_key, *v_sides)
+            seats["v_rider"] = rider_seat(exporter, v_key, v_sides[0], v_row["mount"], tables) if v_row["mount"] else None
+        prefix = "" if ridden(registry["weapons"][weapon], mount) else "RIDER_"
+        unit_entry(exporter, name, sets[set_name], variant_path(variant), mount_set, mount_variant, info, versus=v_parts, rider_prefix=prefix,
+                   seats={side: seat for side, seat in seats.items() if seat})["unit"] = key
 
     advisor_entry(exporter)
     exporter.tuning = {name: registry["model"].get(name, {}) for name in PROP_CHANGES}

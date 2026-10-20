@@ -15,7 +15,8 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
 - `stats`: its base land unit values on foot (`STAT_COLUMNS`, plus `armour` as an armour value, written as its own armour type). Mounted pairs add
   the vanilla mounted-minus-foot difference to them, as for the default stats.
 - `forms`: mount -> values that replace the computed ones for that one pair, and `props`: prop slots whose model that pair uses instead (its own
-  variant then).
+  variant then). `ridden` true puts him on the mount's `ridden` mount (a separate entity with its own `animation` and skinned `body`) instead of
+  carrying the mount as a prop, so he plays his weapon's foot set on it.
 - `entity`: its own foot battle entity, a copy of his vanilla foot entity with the given values (`run_speed`, `charge_speed`, ...). Mounted pairs keep
   their mount's rider entity.
 - `attributes` adds unit attributes to every pair of the weapon, and `attributes_removed` takes them away. `abilities` and `abilities_removed` do
@@ -111,6 +112,9 @@ PROP_FOLDER = "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/props"
 # Folder of the outfit copies `model.unpainted` makes, their materials in its `materials` folder (written by `generators.advisor_overhaul_model`).
 UNPAINTED_FOLDER = "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/unpainted"
 
+# Folder of the ridden mounts' skinned bodies (written by `generators.advisor_overhaul_model`).
+RIDDEN_FOLDER = "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/mounts"
+
 # The kept vanilla rows and table headers.
 DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "advisor_overhaul.json")
 
@@ -184,7 +188,7 @@ LOOK_ART_SET = "wh_dlc05_art_set_emp_grey_wizard_01"
 # settings. His points at his own card and info picture anyway, so no screen can fall back to a vanilla one.
 UNIT_CARD = f"{PREFIX}_advisor"
 
-# The rider entity for ordinary mounts. Mounts whose template uses another entity (the disc) keep the template's.
+# The rider entity for ordinary mounts. Mounts whose template uses another entity (the disc) keep the template's, unless he rides them.
 RIDER_ENTITY = "wh_main_infantry_standard_wizard_rider_blood_dismembers"
 
 # The default pair. Both are always unlocked, so they get no skill.
@@ -258,7 +262,7 @@ TABLES = [
     "campaign_character_arts_tables", "agent_uniforms_tables", "variants_tables", "unit_variants_tables", "land_units_tables", "main_units_tables",
     "unit_description_historical_texts_tables", "unit_description_short_texts_tables", "unit_attributes_groups_tables",
     "unit_attributes_to_groups_junctions_tables", "land_units_to_unit_abilites_junctions_tables", "units_custom_battle_permissions_tables",
-    "units_custom_battle_mounts_tables", "battle_animations_table_tables", "culture_to_battle_animation_tables_tables",
+    "units_custom_battle_mounts_tables", "mounts_tables", "battle_animations_table_tables", "culture_to_battle_animation_tables_tables",
     "campaign_mount_animation_set_overrides_tables", "ancillaries_tables", "ancillary_info_tables", "ancillaries_included_agent_subtypes_tables",
     "campaign_character_uniform_ancillary_junctions_tables", "character_skill_node_sets_tables", "character_skills_tables",
     "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables", "missile_weapons_tables",
@@ -405,7 +409,7 @@ def refresh() -> None:
     data["art"] = next(r for r in loaded["campaign_character_arts_tables"] if r["art_set_id"] == LOOK_ART_SET)
     data["factions"] = sorted({r["faction"] for r in loaded["faction_agent_permitted_subtypes_tables"]})
     mounts = {r["mount"] for r in data["templates"]["land_units_tables"] if r["mount"]}
-    data["mount_animations"] = {r["key"]: r["animation"] for r in read_vanilla("mounts_tables")[0] if r["key"] in mounts}
+    data["mount_animations"] = {r["key"]: r["animation"] for r in loaded["mounts_tables"] if r["key"] in mounts}
     culture_rows = loaded["culture_to_battle_animation_tables_tables"]
     data["culture_packs"] = sorted({r["culture_pack"] for r in culture_rows if r["culture_pack"]})
     data["culture_animations"] = sorted(f"{r['battle_animations_table']}|{r['culture_pack']}" for r in culture_rows)
@@ -509,6 +513,49 @@ def foot_variant(weapon: str) -> str:
         str: The variant name, also its variant mesh definition's file name.
     """
     return f"{PREFIX}_{weapon}"
+
+
+def ridden(weapon: Dict, mount_key: str) -> bool:
+    """Whether he rides the mount as its own entity on this weapon's pair, rather than carrying it as a prop.
+
+    Args:
+        weapon (Dict): The registry weapon.
+        mount_key (str): The mount key.
+
+    Returns:
+        bool: True when the pair's form is `ridden`.
+    """
+    return bool(weapon.get("forms", {}).get(mount_key, {}).get("ridden"))
+
+
+def ridden_mount_key(mount_key: str) -> str:
+    """The key of a mount's `ridden` mount row, also its variant.
+
+    Args:
+        mount_key (str): The mount key.
+
+    Returns:
+        str: The key.
+    """
+    return f"{PREFIX}_mnt_{mount_key}"
+
+
+def pair_props(registry: Dict, weapon_key: str, mount_key: str) -> Dict[str, List[str]]:
+    """The prop slots of a weapon on a mount: the weapon's, the mount's `variant_props` unless he rides it, then the pair's form `props`. A form slot
+    set to null is left empty.
+
+    Args:
+        registry (Dict): The registry.
+        weapon_key (str): Weapon key.
+        mount_key (str): Mount key.
+
+    Returns:
+        Dict[str, List[str]]: Slot -> [attach bone, model, meta].
+    """
+    weapon = registry["weapons"][weapon_key]
+    mount_props = {} if ridden(weapon, mount_key) else registry["mounts"][mount_key].get("variant_props", {})
+    props = {**weapon["props"], **mount_props, **weapon.get("forms", {}).get(mount_key, {}).get("props", {})}
+    return {slot: prop for slot, prop in props.items() if prop}
 
 
 def missile_key(weapon_key: str, weapon: Dict) -> str:
@@ -864,6 +911,9 @@ def land_unit(key: str, weapon_key: str, weapon: Dict, set_name: str, mount_key:
         row["primary_melee_weapon"] = weapon_melee(weapon_key, weapon, advisor)
     if mounted["mount"]:
         row["man_entity"] = RIDER_ENTITY
+    elif ridden(weapon, mount_key):
+        # The template is a single entity carrying the mount as a prop, so its entity becomes the mount's.
+        row.update(mount=ridden_mount_key(mount_key), num_mounts="1", man_entity=RIDER_ENTITY)
     row.update({"key": key, "man_animation": set_name, "shield": weapon["shield"], "attribute_group": key})
     return with_form(with_missile(row, weapon_key, weapon), weapon, mount_key)
 
@@ -1619,6 +1669,8 @@ def build() -> None:
     rows: Dict[str, List[Dict[str, str]]] = {table: [] for table in TABLES}
     texts: List[Tuple[str, str]] = []
     variants: Dict[str, Dict] = {}
+    # Mount key -> the entity of its ridden mount, for each mount some pair rides.
+    ridden_mounts: Dict[str, str] = {}
     combos: List[Tuple[str, str, str]] = []
     upgrades: List[Tuple[str, str, str, str]] = []
     art_sets = [weapon_art_set(w) for w in registry["weapons"]]
@@ -1632,7 +1684,7 @@ def build() -> None:
         ancillary = rig_key(weapon_key, mount_key)
         uniform = uniform_key(weapon_key, mount_key)
         form_props = weapon.get("forms", {}).get(mount_key, {}).get("props", {})
-        variant = foot_variant(weapon_key) + ("_" + mount_key if "variant_props" in mount or form_props else "")
+        variant = foot_variant(weapon_key) + ("_" + mount_key if ("variant_props" in mount and not ridden(weapon, mount_key)) or form_props else "")
         combos.append((weapon_key, mount_key, ancillary))
 
         land = land_unit(key, weapon_key, weapon, weapon["sets"][mount_key], mount_key, mount, template_units, advisor)
@@ -1675,7 +1727,9 @@ def build() -> None:
         texts.append((f"ancillaries_colour_text_{ancillary}", f"{weapon['description']} {mount['description']}"))
         look = {"weapon": weapon_key, "hood": weapon.get("hood", registry["model"]["hood"]), "pieces": weapon.get("pieces", {}),
                 "piece_shapes": weapon.get("piece_shapes", {})}
-        variants[variant] = (weapon.get("body", registry["model"]["body"]), dict(weapon["props"], **mount.get("variant_props", {}), **form_props), look)
+        variants[variant] = (weapon.get("body", registry["model"]["body"]), pair_props(registry, weapon_key, mount_key), look)
+        if ridden(weapon, mount_key):
+            ridden_mounts[mount_key] = template_units[mount["template"]]["man_entity"]
         if "apex_form" in weapon and "template" not in mount:
             foot = {"land": land, "main": main, "attributes": attributes, "abilities": abilities, "variant": variant, "uniform": uniform,
                     "ancillary_type": mount["ancillary_type"]}
@@ -1686,11 +1740,22 @@ def build() -> None:
     dragon_rows(registry, unique_index, data, rows, texts)
     for variant in variants:
         rows["variants_tables"].append({"variant_name": variant, "variant_filename": variant, "mount_scale": "1.0000", "scale": "1.1500", "scale_variation": "0.0000"})
-    for set_name in [*anims.SETS, *anims.DERIVED_SETS]:
-        rows["battle_animations_table_tables"].append({"key": set_name, "skeleton": anims.TARGET_SKELETON})
+    # A ridden mount is his template's entity wearing the mount's own body, as Zerooz's Skyfire Archers ride their Doom Knight disc.
+    for mount_key, entity in ridden_mounts.items():
+        key, mount = ridden_mount_key(mount_key), registry["mounts"][mount_key]["ridden"]
+        rows["mounts_tables"].append({"key": key, "animation": mount["animation"], "entity": entity, "audio_armour_type": "body", "variant": key,
+                                      "voiceover": "vo_culture_None"})
+        rows["variants_tables"].append({"variant_name": key, "variant_filename": key, "mount_scale": "1.0000", "scale": "1.0000", "scale_variation": "0.0000"})
+        write_mount_variant(key, ridden_body_path(mount_key))
+    for set_name in [*anims.SETS, *anims.DERIVED_SETS, *anims.BOW_DISCS]:
+        rows["battle_animations_table_tables"].append({"key": set_name, "skeleton": anims.DERIVED_SETS.get(set_name, {}).get("skeleton", anims.TARGET_SKELETON)})
     # Every culture pack loads every animation set he or his mounts play, unless vanilla already does.
-    battle_sets = {r["man_animation"] for r in rows["land_units_tables"]} | set(data["mount_animations"].values())
+    battle_sets = {r["man_animation"] for r in rows["land_units_tables"]} | set(data["mount_animations"].values()) | {r["animation"] for r in rows["mounts_tables"]}
     vanilla_pairs = set(data["culture_animations"])
+    # A set missing from `battle_animations_table` loads nothing, so the unit stands in its bind pose in battle.
+    unknown = battle_sets - set(data["mount_animations"].values()) - {r["key"] for r in rows["battle_animations_table_tables"]} - {pair.split("|")[0] for pair in vanilla_pairs}
+    if unknown:
+        raise SystemExit(f"animation sets played but not in battle_animations_table: {', '.join(sorted(unknown))}")
     rows["culture_to_battle_animation_tables_tables"] += [{"battle_animations_table": s, "culture_pack": c} for s in sorted(battle_sets)
                                                           for c in data["culture_packs"] if f"{s}|{c}" not in vanilla_pairs]
     # Text copied from vanilla keeps its `%n%` value markers, so it skips `check_loc`. No script reads it.
@@ -1866,6 +1931,33 @@ def unpainted_copy_path(path: str) -> str:
         str: The copy's path.
     """
     return f"{UNPAINTED_FOLDER}/{os.path.basename(path).lower()}"
+
+
+def ridden_body_path(mount_key: str) -> str:
+    """Game path of a ridden mount's skinned body `.wsmodel`: the mount's `ridden.body` model tied to its bone.
+
+    Args:
+        mount_key (str): The mount's registry key.
+
+    Returns:
+        str: The body's path.
+    """
+    return f"{RIDDEN_FOLDER}/{mount_key}_body.wsmodel"
+
+
+def write_mount_variant(name: str, body: str) -> None:
+    """Writes a ridden mount's variant mesh definition: only its skinned body. On a mount a rigid prop ignores its bone and stands upright at the
+    mount's feet, in the body slot and in a prop slot alike (tested 2026-10-19), so the disc is skinned to its bone instead.
+
+    Args:
+        name (str): The variant name.
+        body (str): The body `.wsmodel`.
+    """
+    lines = ["<VARIANT_MESH>", '\t<SLOT name="body" >', f'\t\t<VARIANT_MESH model="{body}" />', "\t</SLOT>", "</VARIANT_MESH>"]
+    folder = os.path.join(MOD, "variantmeshes", "variantmeshdefinitions")
+    os.makedirs(folder, exist_ok=True)
+    with open(os.path.join(folder, f"{name}.variantmeshdefinition"), "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(lines) + "\n")
 
 
 def write_variants(model: Dict, variants: Dict[str, Tuple[str, Dict, Dict]]) -> None:

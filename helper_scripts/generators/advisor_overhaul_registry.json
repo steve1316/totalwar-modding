@@ -664,6 +664,12 @@
      "armour": 60,
      "bonus_hit_points": 4852
     },
+    "disc": {
+     "props": {
+      "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_arrow_01.wsmodel", ""],
+      "weapon_5": ["be_prop_5", "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel", "equipment"]
+     }
+    },
     "carmine_dragon": {"armour": 70}
    },
    "hood": false,
@@ -1060,7 +1066,7 @@
     "weapon_3": ["be_prop_3", "VariantMeshes/wh_variantmodels/hu1e/cth/cth_props/cth_taoyan_scabard_1h_01.wsmodel", ""]
    },
    "sets": {"foot": "hu1_advisor_overhaul_glaive", "warhorse": "hu1_advisor_overhaul_hr1_warhorse_glaive", "pegasus": "hu1_advisor_overhaul_hr1_pegasus_glaive",
-            "disc": "hu1_advisor_overhaul_disc01_two_handed"},
+            "disc": "hu1_advisor_overhaul_disc01_glaive"},
    "vanilla": {"foot": "wh3_cp1_cth_cha_taoyan", "warhorse": "wh3_main_ksl_cha_boris_1", "pegasus": "wh_main_emp_cha_captain_3", "disc": "wh3_dlc24_chs_cha_exalted_hero_mtze_disc"},
    "stats": {
     "melee_attack": 58,
@@ -1071,7 +1077,15 @@
     "armour": 95
    },
    "melee": {"template": "wh3_cp1_cth_taoyan_trident", "melee_attack_interval": "1.7000", "damage": "90", "ap_damage": "210", "bonus_v_large": "50", "splash_attack_max_attacks": "10"},
-   "forms": {"pegasus": {"charge_bonus": 65, "armour": 105}},
+   "forms": {
+    "pegasus": {"charge_bonus": 65, "armour": 105},
+    "disc": {
+     "props": {
+      "weapon_1": ["be_prop_0", "variantmeshes/wh_variantmodels/hu23/cth/cth_props/cth_tiger_iron_claw_guandao_2h_01.wsmodel", "audio_melee_weapon_type:spear_medium"],
+      "weapon_2": null
+     }
+    }
+   },
    "hood": false,
    "arts": {
     "art_1": {
@@ -1449,6 +1463,8 @@
    "variant_props": {
     "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel", "equipment"]
    },
+   "ridden": {"animation": "hu1c_advisor_overhaul_disc",
+              "body": {"model": "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_cam_01.wsmodel", "skeleton": "humanoid01c", "bone": "be_prop_4"}},
    "grant_rank": 19,
    "unlock_rank": 18
   },

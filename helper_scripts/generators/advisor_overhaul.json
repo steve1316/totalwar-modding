@@ -24108,6 +24108,17 @@
    ],
    "version": "12"
   },
+  "mounts_tables": {
+   "header": [
+    "key",
+    "animation",
+    "entity",
+    "audio_armour_type",
+    "variant",
+    "voiceover"
+   ],
+   "version": "10"
+  },
   "names_tables": {
    "header": [
     "id",
