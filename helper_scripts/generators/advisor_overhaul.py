@@ -1667,7 +1667,8 @@ def build() -> None:
         attributes = (set(template_attributes.get(template, [])) | set(weapon.get("attributes", []))) - set(weapon.get("attributes_removed", []))
         abilities = [a for a in ["wh3_main_unit_passive_single_entity"] + mount.get("abilities", []) + weapon.get("abilities", [])
                      if a not in weapon.get("abilities_removed", [])]
-        name = "The Advisor" if key == unit_key(DEFAULT_WEAPON, DEFAULT_MOUNT) else f"The Advisor ({weapon['name']}, {mount['name']})"
+        # Only the weapon names him, so a mount swap keeps his name. The default weapon is plain "The Advisor".
+        name = "The Advisor" if weapon_key == DEFAULT_WEAPON else f"The Advisor ({weapon['name']})"
         unit_rows(key, template, main, attributes, abilities, variant, name, unique_index, data, rows, texts)
         unique_index += 1
         rows["units_custom_battle_permissions_tables"].append(dict(template_perm, unit=key, general_uniform=uniform, general_portrait=portrait_png,
