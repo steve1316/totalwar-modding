@@ -943,6 +943,17 @@ local function ui_text(id)
 	return localised(entry[1], entry[2])
 end
 
+--- A box's flavour text with only its first paragraph in italics, so the notes after it read as plain text like a vanilla skill's.
+--- @param text string The flavour text, its paragraphs split by a blank line.
+--- @returns string The text in the game's markup.
+local function italic_lead(text)
+	local lead, notes = text:match("^(.-)(\n\n.*)$")
+	if not lead then
+		return "[[i]]" .. text .. "[[/i]]"
+	end
+	return "[[i]]" .. lead .. "[[/i]]" .. notes
+end
+
 --- An item's display name, localised when its key resolves.
 --- @param item table The item row.
 --- @returns string The name.
@@ -1672,7 +1683,7 @@ end
 local function art_card_tooltip(art, weapon, character)
 	local item = find_item("weapon", weapon)
 	local head = {
-		"[[i]]" .. art.flavour .. "[[/i]]",
+		italic_lead(art.flavour),
 		"",
 		"[[col:yellow]]" .. ui_text("art_with") .. " " .. (item and item_name(item) or weapon) .. ": "
 			.. localised("effect_bundles_localised_title_" .. art.bundle, art.name) .. "[[/col]]",
@@ -1703,7 +1714,7 @@ end
 --- @returns table `title`, `text`, `foot` (always ""), `bundle` and `whole`, like `art_card_tooltip`.
 local function polymath_card_tooltip(data, character)
 	local progress, counted = polymath_progress(character, data)
-	local head = { "[[i]]" .. data.flavour .. "[[/i]]", "" }
+	local head = { italic_lead(data.flavour), "" }
 	for _, discipline in ipairs(progress) do
 		local name = ui_text("discipline_" .. discipline.name)
 		if discipline.owned >= data.needed then

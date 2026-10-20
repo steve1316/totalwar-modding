@@ -150,9 +150,6 @@ BORROWED_ICON_FOLDERS = ("ui/battle ui/ability_icons", "ui/campaign ui/effect_bu
 # Vanilla packs holding the ui icons.
 UI_PACKS = re.compile(r"^ui")
 
-# Start of the last paragraph of each art slot skill's description, which points at Change Loadout.
-ART_SLOT_NOTE = "What it does follows the weapon"
-
 # Every key of the mod starts with this.
 PREFIX = "advisor_overhaul"
 
@@ -1234,17 +1231,16 @@ def bundle_rows(key: str, entry: Dict, rows: Dict[str, List[Dict[str, str]]], te
     texts.append((f"effect_bundles_localised_description_{key}", entry.get("description", "")))
 
 
-def box_flavour(skill: Dict, skip: Optional[str] = None) -> str:
+def box_flavour(skill: Dict) -> str:
     """A skill's description for a script-made box, its loc line breaks turned into real ones.
 
     Args:
         skill (Dict): The registry skill.
-        skip (Optional[str]): Leaves out every paragraph that starts with this, or None to keep them all.
 
     Returns:
         str: The description, its paragraphs split by a blank line.
     """
-    return "\n\n".join(p for p in skill.get("description", "").split("\\\\n\\\\n") if not (skip and p.startswith(skip)))
+    return "\n\n".join(skill.get("description", "").split("\\\\n\\\\n"))
 
 
 def slot_skills(registry: Dict) -> Dict[str, str]:
@@ -1279,8 +1275,7 @@ def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts
     slots = {}
     for slot, skill_id in slot_skills(registry).items():
         skill = skills[skill_id]
-        # The art tooltip replaces the vanilla one, so the note pointing at Change Loadout is left out.
-        flavour = box_flavour(skill, ART_SLOT_NOTE)
+        flavour = box_flavour(skill)
         requires = [{"skill": planned_skill_key(r), "name": skills[r].get("name", r)} for r in skill.get("requires", []) if r in skills]
         slots[slot] = (planned_skill_key(skill_id), skill["name"], flavour, requires)
     arts: Dict[str, List[Dict]] = {}
@@ -1438,8 +1433,8 @@ def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
                                                                                "effect_scope": me, "value": "1.0000"} for e in effects]
             texts.append((f"character_skills_localised_name_{key}", f"{TOME_ORDINALS[slot]} Tome: {entry['name']}"))
             texts.append((f"character_skills_localised_description_{key}", entry.get("description", "He learned this lore in a world that no longer exists.")
-                          + f"\\\\n\\\\nLevel 1: {'its passive and ' if passives else ''}{first} of its {len(spells)} spells. Level 2: every spell. "
-                          "Level 3: every spell can be overcast."))
+                          + f"\\\\n\\\\nLevel 1: {'its passive and ' if passives else ''}{first} of its {len(spells)} spells.\\\\nLevel 2: every spell."
+                          "\\\\nLevel 3: every spell can be overcast."))
             rows["character_skill_nodes_skill_locks_tables"] += [
                 {"character_skill": key, "character_skill_node": lore_node_key(other, other_slot), "level": "1"}
                 for other in built for other_slot in range(len(lore_slots(registry))) if (other, other_slot) != (lore, slot) and (other_slot == slot or other == lore)]

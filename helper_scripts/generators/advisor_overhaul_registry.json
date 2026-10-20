@@ -210,7 +210,7 @@
    "arts": {
     "art_1": {
      "name": "Spellguard",
-     "description": "He is slow and he is soft, and he has made his peace with both. The wards take what the staff cannot turn.",
+     "description": "He is slow and lightly armoured, so his wards do the work. Spells and arrows land softer on him.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_magic_resistance",
@@ -248,7 +248,7 @@
     },
     "art_3": {
      "name": "Long Reach",
-     "description": "Every step he takes is slow, so he makes every step count from further away.",
+     "description": "He casts from further back and carries more charges for the staff.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_range",
@@ -269,7 +269,7 @@
     },
     "art_4": {
      "name": "Wind Blast",
-     "description": "When they reach him anyway, the staff throws them back where they came from.",
+     "description": "When the enemy reaches him anyway, the staff blasts them back.",
      "effects": [
       {
        "effect": "wh2_dlc11_effect_ability_enable_bound_wind_blast",
@@ -290,7 +290,7 @@
     },
     "army_1": {
      "name": "Hedge Wards",
-     "description": "Small charms on every banner pole.",
+     "description": "Small charms tied to every banner pole, against hostile magic.",
      "effects": [
       {
        "effect": "wh_main_effect_force_stat_magic_resistance",
@@ -306,7 +306,7 @@
     },
     "army_2": {
      "name": "Screen the Staff",
-     "description": "He cannot outrun anything, so they learn to stand where he cannot be reached.",
+     "description": "His soldiers learn to stand between him and the enemy, and he keeps them covered in return.",
      "effects": [
       {
        "effect": "wh_main_effect_force_stat_melee_defence",
@@ -339,7 +339,7 @@
     },
     "apex": {
      "name": "Channelled Staff",
-     "description": "The staff drinks the Winds and gives them back to him, five bolts at a time.",
+     "description": "The staff draws in the Winds and fires them back as five bolts at once.",
      "effects": [
       {
        "effect": "advisor_overhaul_effect_staff_and_sword_apex_missile",
@@ -381,7 +381,7 @@
   },
   "sword_and_shield": {
    "name": "Sword and Shield",
-   "description": "He leaves the staff behind and takes up a knight's shield.",
+   "description": "A sword and a knight's shield. He leaves the staff behind to stand in the front line.",
    "campaign_set": "cam_hu1_empire_sword_and_shield",
    "campaign_rider_sets": {
     "warhorse": "cam_hu1_empire_hr1_warhorse_lance_sword_shield",
@@ -459,7 +459,7 @@
     },
     "art_2": {
      "name": "Turn the Arrow",
-     "description": "He has watched too many men die to arrows to let it happen to him.",
+     "description": "He keeps the shield high, and arrows find wood instead of him.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_missile_resistance",
@@ -491,7 +491,7 @@
     },
     "art_4": {
      "name": "Bulwark",
-     "description": "He does not move, and nothing moves him.",
+     "description": "He plants his feet, and nothing on the field can shift him.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_physical_resistance",
@@ -534,7 +534,7 @@
      ]
     },
     "army_3": {
-     "name": "Shield Wall",
+     "name": "Locked Shields",
      "description": "Every shield overlaps the next, the way he showed them.",
      "effects": [
       {"effect": "wh_main_effect_force_stat_armour", "scope": "agent_to_parent_army_own", "value": 10},
@@ -547,7 +547,7 @@
     },
     "apex": {
      "name": "Shield of Faith",
-     "description": "Not his god's faith. His own, that this time will be different.",
+     "description": "His faith is not in any god. It is in the hope that this time will end differently.",
      "effects": [
       {
        "effect": "wh_main_effect_ability_enable_shield_of_faith",
@@ -568,7 +568,7 @@
     },
     "army_4": {
      "name": "Guardian",
-     "description": "Whoever stands behind him is out of reach. He has made sure of it in every world that ended.",
+     "description": "Whoever stands behind him is out of reach. He makes sure of it.",
      "effects": [
       {
        "effect": "wh2_dlc10_effect_ability_enable_guardian",
@@ -583,7 +583,7 @@
   },
   "sword_and_bow": {
    "name": "Sword and Bow",
-   "description": "A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten.",
+   "description": "A hunting bow and a short blade. He was a fair shot long before he became a wizard.",
    "campaign_set": "cam_lord_hu1_dlc13_huntsmarshal_sword_bow",
    "campaign_rider_sets": {"warhorse": "cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow", "pegasus": "cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow",
                            "disc": "cam_lord_hu1_dlc13_huntsmarshal_sword_bow", "carmine_dragon": "cam_hu1_empire_dr1_dragon_wb_sword_and_shield"},
@@ -691,7 +691,7 @@
     },
     "art_2": {
      "name": "Hunter's Blade",
-     "description": "Sometimes the beast reaches him anyway. The knife was always for that.",
+     "description": "When something big gets close, the short blade is ready.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_melee_attack",
@@ -712,7 +712,7 @@
     },
     "art_3": {
      "name": "Long Eye",
-     "description": "He sees the shot before he takes it, and he packed for a long hunt.",
+     "description": "He shoots from further out and faster, and carries extra arrows for a long hunt.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_range",
@@ -784,7 +784,7 @@
     },
     "apex": {
      "name": "Hunter's Spread",
-     "description": "He nocks six arrows at once. He learned it from a world where there was never time for one.",
+     "description": "He nocks six arrows at once and looses them all.",
      "effects": [
       {
        "effect": "advisor_overhaul_effect_sword_and_bow_apex_missile",
@@ -824,7 +824,7 @@
   },
   "greatsword": {
    "name": "Greatsword",
-   "description": "A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough.",
+   "description": "A two-handed Imperial greatsword, far heavier than a wizard should carry. He swings it well enough.",
    "campaign_set": "cam_hero_hu1_dlc29_walach_harkon_2handed_sword",
    "campaign_rider_sets": {"warhorse": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword", "pegasus": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword",
                            "disc": "cam_hero_hu1_dlc29_walach_harkon_2handed_sword"},
@@ -915,7 +915,7 @@
     },
     "art_2": {
      "name": "Wide Arc",
-     "description": "He stopped aiming at one man a long time ago.",
+     "description": "He swings to hit several men at once, not just one.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_weapon_splash_power_mult",
@@ -952,7 +952,7 @@
     },
     "art_4": {
      "name": "Headsman",
-     "description": "Every man in the arc gets the same chance. None of them like it.",
+     "description": "A killing blow for anyone who stands in front of him too long.",
      "effects": [
       {
        "effect": "wh_main_effect_ability_enable_heroic_killing_blow",
@@ -1037,7 +1037,7 @@
     },
     "army_4": {
      "name": "Butcher's Bill",
-     "description": "He knows what this battle will cost and pays it early.",
+     "description": "He knows what this battle will cost, and makes the enemy pay it first.",
      "effects": [
       {
        "effect": "wh3_dlc27_effect_ability_enable_frenzy_all",
@@ -1052,7 +1052,7 @@
   },
   "glaive": {
    "name": "Glaive",
-   "description": "A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes.",
+   "description": "A long Cathayan glaive built to cut a horse out from under its rider, with a short sword at his hip for close work.",
    "campaign_set": "cam_hu1_advisor_overhaul_glaive",
    "campaign_rider_sets": {"warhorse": "cam_lord_hu1_tomb_hr1_tomb_steed_halberd", "pegasus": "cam_lord_hu1_tomb_hr1_tomb_steed_halberd",
                            "disc": "cam_hu1_advisor_overhaul_glaive"},
@@ -1089,7 +1089,7 @@
    "arts": {
     "art_1": {
      "name": "Horse Cutter",
-     "description": "The blade was made for one job: rider and horse, one stroke.",
+     "description": "The glaive was made for one job: rider and horse, in one stroke.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_bonus_vs_large",
@@ -1137,7 +1137,7 @@
     },
     "art_4": {
      "name": "Beastslayer",
-     "description": "Monsters are only large men. He has the reach for them.",
+     "description": "To him, monsters are just very large men. The glaive has the reach for them.",
      "effects": [
       {
        "effect": "wh2_dlc14_effect_ability_enable_beastslaver",
@@ -1176,7 +1176,7 @@
     },
     "army_3": {
      "name": "Find the Gap",
-     "description": "Every plate has a seam. He shows them all of them.",
+     "description": "Every plate has a seam, and he shows his men where to find it.",
      "effects": [
       {
        "effect": "wh_main_effect_force_stat_ap_damage_mult",
@@ -1192,7 +1192,7 @@
     },
     "army_4": {
      "name": "Wall of Blades",
-     "description": "He has seen this charge before, in a war nobody else remembers. It breaks on them.",
+     "description": "He has seen this kind of charge before. He sets his line so it breaks on them.",
      "effects": [
       {
        "effect": "wh3_dlc29_effect_force_stat_bonus_vs_large",
@@ -1209,7 +1209,7 @@
     },
     "apex": {
      "name": "Ten Thousand Blades",
-     "description": "The glaive line that stopped an empire's cavalry, as he remembers it, in one pair of hands.",
+     "description": "He fights like the glaive lines that once stopped an empire's cavalry, all on his own.",
      "effects": [
       {
        "effect": "wh3_dlc29_effect_ability_enable_doom_glaive",
@@ -1239,7 +1239,7 @@
   },
   "iron_hand": {
    "name": "Iron Hand",
-   "description": "No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way the dragon-blooded lords of Cathay fight before they take their dragon form.",
+   "description": "No weapon at all. He fights with open hands and the weight of a forge behind every blow, the way the dragon-blooded lords of Cathay do.",
    "campaign_set": "cam_hu1_advisor_overhaul_iron_hand",
    "icon": "wh3_main_lord_abilities_iron_dragon_human_form.png",
    "picker_icon": "ui/campaign ui/skills/wh3_main_lord_abilities_iron_dragon_human_form.png",
@@ -1340,7 +1340,7 @@
     },
     "army_1": {
      "name": "Foundry Drill",
-     "description": "He works them like iron, heat and blow, and every fight teaches them twice as much.",
+     "description": "He works his soldiers like iron, heat and hammer, and they learn faster from every fight.",
      "effects": [
       {"effect": "wh3_dlc20_effect_xp_gain_all_units", "scope": "agent_to_parent_army_own", "value": 15}
      ]
@@ -1371,7 +1371,7 @@
     },
     "army_4": {
      "name": "Cast in Iron",
-     "description": "Every unit under him becomes the company he once led. They take a blow the way metal takes the hammer.",
+     "description": "He drills every unit like the company he once led. They take a blow the way iron takes the hammer.",
      "effects": [
       {
        "effect": "wh_main_effect_force_all_campaign_experience_base_all",
@@ -1388,7 +1388,7 @@
     },
     "apex": {
      "name": "Battering Ram",
-     "description": "He stops fighting the line and walks through it. On foot nothing stops or knocks him down, his body bowls men over and flings them aside, and every blow cracks the armour of what it hits. On foot he counts as a large target.",
+     "description": "He stops fighting the line and walks through it. Nothing knocks him down, men are thrown aside, and every blow cracks armour. On foot he counts as a large target.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_charge_bonus_add",
@@ -1428,7 +1428,7 @@
   },
   "warhorse": {
    "name": "Barded Warhorse",
-   "description": "An armoured Imperial charger, steady under spellfire.",
+   "description": "An armoured Imperial charger, trained not to shy at spellfire.",
    "template": "wh2_pro07_emp_cha_wizard_death_3",
    "template_foot": "wh2_pro07_emp_cha_wizard_death_0",
    "icon": "ui/campaign ui/mounts/mount_barded_warhorse.png",
@@ -1440,7 +1440,7 @@
   },
   "pegasus": {
    "name": "Imperial Pegasus",
-   "description": "A winged Imperial steed that lifts him over the battle line.",
+   "description": "A winged Imperial steed that carries him over the enemy line.",
    "template": "wh2_pro07_emp_cha_wizard_death_2",
    "template_foot": "wh2_pro07_emp_cha_wizard_death_0",
    "icon": "ui/campaign ui/mounts/mount_imperial_pegasus.png",
@@ -1452,7 +1452,7 @@
   },
   "disc": {
    "name": "Disc of Tzeentch",
-   "description": "A floating daemon-disc, bound to him by a bargain he does not talk about.",
+   "description": "A floating daemon disc of Tzeentch. He does not talk about what he paid for it.",
    "template": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc",
    "template_foot": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze",
    "icon": "ui/campaign ui/mounts/mount_disc_of_tzeentch.png",
@@ -1467,7 +1467,7 @@
   },
   "carmine_dragon": {
    "name": "Carmine Dragon",
-   "description": "A blood-red dragon of the old Empire, wakeful and patient. It remembers more endings than he does.",
+   "description": "A blood-red dragon of the old Empire. It has seen more endings than he has.",
    "template": "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon",
    "template_foot": "wh3_dlc25_emp_cha_elspeth_von_draken",
    "icon": "ui/campaign ui/mounts/mount_carmine_dragon.png",
@@ -1482,7 +1482,7 @@
  "skills": {
   "arts_art_1_stance": {
    "name": "Art I: Stance",
-   "description": "The first thing he learned with every weapon he ever held, in every world that ended.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
+   "description": "\"Get your feet right. Everything else follows from the feet.\"\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_defence.png",
    "row": 1,
    "tier": 6,
@@ -1496,7 +1496,7 @@
   },
   "arts_art_2_edge": {
    "name": "Art II: Edge",
-   "description": "He has fought this fight before. His hands remember how it went.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
+   "description": "With his footing settled, he learns where each blow does the most harm.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_attack.png",
    "row": 1,
    "tier": 7,
@@ -1510,7 +1510,7 @@
   },
   "arts_art_3_flow": {
    "name": "Art III: Flow",
-   "description": "The weapon stops being a tool and starts being an argument.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
+   "description": "Attack and guard stop being separate moves. Each one runs straight into the next.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_charge.png",
    "row": 1,
    "tier": 8,
@@ -1524,7 +1524,7 @@
   },
   "arts_art_4_ending": {
    "name": "Art IV: Ending",
-   "description": "How he finished it last time. And the time before that.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
+   "description": "\"Every fight has a last blow. Make sure it is yours.\"\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_armour.png",
    "row": 1,
    "tier": 9,
@@ -1538,7 +1538,7 @@
   },
   "arts_army_1_drill": {
    "name": "Army I: Drill",
-   "description": "Soldiers near him pick up his habits without knowing they have.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
+   "description": "The soldiers near him copy how he stands and moves, and fight better for it.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "character_army.png",
    "row": 1,
    "tier": 0,
@@ -1552,7 +1552,7 @@
   },
   "arts_army_2_formation": {
    "name": "Army II: Formation",
-   "description": "He places men where he once saw them live.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
+   "description": "He sets out the line to suit the way he fights.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "campaign_army.png",
    "row": 1,
    "tier": 1,
@@ -1566,7 +1566,7 @@
   },
   "arts_army_3_last_stand": {
    "name": "Army III: Last Stand",
-   "description": "He has seen how armies break. He does not let this one.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
+   "description": "\"Hold here. I have seen what happens to the ones who run.\"\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "battle_defence.png",
    "row": 1,
    "tier": 2,
@@ -1580,7 +1580,7 @@
   },
   "apex_master_of_arms": {
    "name": "Master of Arms",
-   "description": "Every weapon he has ever held, in every ending, answers him at once.\\\\n\\\\nStacks with any other Apex or the Polymath.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
+   "description": "In other lives he mastered each of these weapons in turn. Now he no longer has to choose.\\\\n\\\\nStacks with any other Apex or the Polymath.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects.",
    "icon": "spell_mastery.png",
    "row": 1,
    "tier": 11,
@@ -1601,7 +1601,7 @@
    "rank": 0,
    "build": true,
    "requires": ["magic_open_channel"],
-   "description": "He has learned to hold more of the Winds than a body should.",
+   "description": "Long practice lets him gather and hold more of the Winds than most wizards can.",
    "levels": [
     [
      {
@@ -1638,7 +1638,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "He miscast once, at the worst possible moment, and the world ended a little early.",
+   "description": "\"Slowly. A rushed spell is how the world ended last time.\"",
    "levels": [
     [
      {
@@ -1699,7 +1699,7 @@
    "rank": 0,
    "build": true,
    "requires": ["hero_wound"],
-   "description": "He knows which of them will matter later. He settles it now.",
+   "description": "He picks out the enemy agent who will cause the most trouble later, and deals with them now.",
    "levels": [
     [
      {
@@ -1747,7 +1747,7 @@
    "rank": 1,
    "build": true,
    "requires": [],
-   "description": "Not a killing blow. A reminder.",
+   "description": "\"I do not need him dead. I need him out of the way for a while.\"",
    "levels": [
     [
      {
@@ -1795,7 +1795,7 @@
    "rank": 19,
    "build": true,
    "requires": ["hero_wound"],
-   "description": "Generals die too. He has watched it happen in every ending.",
+   "description": "Even generals have to sleep somewhere. He knows where.",
    "levels": [
     [
      {
@@ -1814,7 +1814,7 @@
    "rank": 0,
    "build": true,
    "requires": ["hero_wound"],
-   "description": "Every wall falls eventually. He only hurries it along.",
+   "description": "He weakens the mortar and cracks the stone, so the walls come down faster when the siege starts.",
    "levels": [
     [
      {
@@ -1862,7 +1862,7 @@
    "rank": 0,
    "build": true,
    "requires": ["hero_wound"],
-   "description": "He walks in through the gate they forgot to watch.",
+   "description": "He slips into the settlement and strikes at the garrison before it can form up.",
    "levels": [
     [
      {
@@ -1910,7 +1910,7 @@
    "rank": 0,
    "build": true,
    "requires": ["hero_wound"],
-   "description": "A fire in the right storehouse ends a siege early.",
+   "description": "A fire in the right storehouse can do more damage than a whole army.",
    "levels": [
     [
      {
@@ -1958,7 +1958,7 @@
    "rank": 0,
    "build": true,
    "requires": ["hero_wound"],
-   "description": "A cut rope, a spooked horse, a missing quartermaster.",
+   "description": "Cut ropes, lamed horses and lost orders. The enemy army goes nowhere.",
    "levels": [
     [
      {
@@ -2006,7 +2006,7 @@
    "rank": 0,
    "build": true,
    "requires": ["hero_wound"],
-   "description": "Their wounded do not come back to the line.",
+   "description": "He spoils their supplies and turns away their recruits, so their losses stay unfilled.",
    "levels": [
     [
      {
@@ -2054,7 +2054,7 @@
    "rank": 0,
    "build": true,
    "requires": ["hero_wound"],
-   "description": "The whole camp, the same night.",
+   "description": "He strikes the enemy camp at night and leaves several units bloodied by morning.",
    "levels": [
     [
      {
@@ -2102,7 +2102,7 @@
    "rank": 1,
    "build": true,
    "requires": [],
-   "description": "He knows where they are. He usually knows where they will be.",
+   "description": "He goes ahead of the army and comes back with what is waiting there.",
    "levels": [
     [
      {
@@ -2135,7 +2135,7 @@
    "rank": 2,
    "build": true,
    "requires": [],
-   "description": "He trains them for the war after this one.",
+   "description": "He drills the troops himself, and they learn faster for it.",
    "levels": [
     [
      {
@@ -2183,7 +2183,7 @@
    "rank": 2,
    "build": true,
    "requires": ["hero_training"],
-   "description": "He finds men to fill the gaps. He knows where they hide.",
+   "description": "He knows where to find fresh recruits and how to bring them into the ranks quickly.",
    "levels": [
     [
      {
@@ -2231,7 +2231,7 @@
    "rank": 4,
    "build": true,
    "requires": ["hero_scouting"],
-   "description": "He knows the shortcut. He has walked it in three other lives.",
+   "description": "He clears the road ahead and finds the quickest route for the army.",
    "levels": [
     [
      {
@@ -2279,7 +2279,7 @@
    "rank": 3,
    "build": true,
    "requires": ["hero_scouting"],
-   "description": "Nothing on a battlefield is wasted while he is there.",
+   "description": "After the battle he makes sure nothing useful is left lying on the field.",
    "levels": [
     [
      {
@@ -2327,7 +2327,7 @@
    "rank": 6,
    "build": true,
    "requires": ["hero_training"],
-   "description": "He reminds the people what the alternative looks like.",
+   "description": "\"Be glad of what you have. I have seen the alternative.\"",
    "levels": [
     [
      {
@@ -2405,7 +2405,7 @@
    "rank": 8,
    "build": true,
    "requires": ["hero_training"],
-   "description": "He has seen what the taint becomes. He burns it out early.",
+   "description": "He finds the taint early and burns it out before it can take hold.",
    "levels": [
     [
      {
@@ -2468,7 +2468,7 @@
    "rank": 7,
    "build": true,
    "requires": ["hero_training"],
-   "description": "He remembers which years the crops failed, and plants for them.",
+   "description": "He knows which crops will fail and which fields will yield, and the province grows.",
    "levels": [
     [
      {
@@ -2546,7 +2546,7 @@
    "rank": 5,
    "build": true,
    "requires": ["hero_training"],
-   "description": "He knows which roads will close, and which ships will sink.",
+   "description": "He knows which roads will stay safe and which ships will come home.",
    "levels": [
     [
      {
@@ -2594,7 +2594,7 @@
    "rank": 3,
    "build": true,
    "requires": ["hero_training"],
-   "description": "Half the counting-houses in the Empire owe him money from a life they cannot remember.",
+   "description": "His advice on taxes and trade puts more gold in the treasury.",
    "levels": [
     [
      {
@@ -2657,7 +2657,7 @@
    "rank": 0,
    "build": true,
    "requires": ["hero_wound"],
-   "description": "He has read books that have not been written yet. Theirs are easier.",
+   "description": "He reads their scholars' notes and brings home the parts worth having.",
    "levels": [
     [
      {
@@ -2828,7 +2828,7 @@
    "rank": 0,
    "build": true,
    "requires": ["memory_weight_of_years"],
-   "description": "He has watched this army walk into this ambush before. Not this time.",
+   "description": "In another life he watched this army walk into an ambush. He reads the ground ahead much more closely now.",
    "levels": [
     [
      {
@@ -2877,7 +2877,7 @@
    "rank": 14,
    "build": true,
    "requires": ["memory_seen_the_end", "memory_calm_voice", "memory_every_mistake_already_made"],
-   "description": "Everything he teaches, he learned the hard way. Several times.",
+   "description": "He learned every lesson the hard way, many times over. Teaching them, and picking up new ones, comes easily.",
    "levels": [
     [
      {
@@ -2914,7 +2914,7 @@
    "rank": 0,
    "build": true,
    "requires": ["memory_weight_of_years"],
-   "description": "Men stand firm around someone who is not afraid. He stopped being afraid a long time ago.",
+   "description": "He stopped being afraid of anything a long time ago, and the soldiers near him can tell.",
    "levels": [
     [
      {
@@ -3000,7 +3000,7 @@
    "rank": 0,
    "build": true,
    "requires": ["memory_weight_of_years"],
-   "description": "There is no error left for him to make. He made them all in other lives.",
+   "description": "\"I have made every mistake there is to make. I do not plan to make them twice.\"",
    "levels": [
     [
      {
@@ -3064,7 +3064,7 @@
    "rank": 30,
    "build": true,
    "requires": [],
-   "description": "He has all the time in the world. He has had it before.",
+   "description": "Once every other skill is learned, the rest of his time goes into slow, steady practice.",
    "levels": [
     [
      {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 1},
@@ -4376,7 +4376,7 @@
    "rank": 19,
    "build": true,
    "requires": ["memory_old_lessons"],
-   "description": "The sky burned for nine days and he watched it from the last tower. His blade remembers the heat.\\\\n\\\\nLocks the other Endings.",
+   "description": "In one ending the sky burned for nine days. His blade still carries the heat.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
      {"effect": "wh2_dlc15_enable_inflammable_attacks", "scope": "agent_to_parent_army_own", "value": 1},
@@ -4503,7 +4503,7 @@
    "rank": 19,
    "build": true,
    "requires": ["memory_old_lessons"],
-   "description": "The cities emptied quietly. He learned what a slow death tastes like.\\\\n\\\\nLocks the other Endings.",
+   "description": "In one ending the cities emptied one by one from sickness. Some of it stayed with him.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
      {
@@ -4630,7 +4630,7 @@
    "rank": 19,
    "build": true,
    "requires": ["memory_old_lessons"],
-   "description": "Nobody screamed. The army simply stopped arriving. He keeps his own march quiet now.\\\\n\\\\nLocks the other Endings.",
+   "description": "In one ending the enemy came without a sound, and whole armies vanished. He learned to shake men before the blow lands.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
      {
@@ -4769,7 +4769,7 @@
    "rank": 19,
    "build": true,
    "requires": ["memory_old_lessons"],
-   "description": "The sea came in over the walls. He held a shield above his head for a long time.\\\\n\\\\nLocks the other Endings.",
+   "description": "In one ending the sea rose over the walls. He learned to keep his head and his shield up while everything else went under.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
      {"effect": "wh2_dlc16_enable_charmed_attacks", "scope": "agent_to_parent_army_own", "value": 1},
@@ -4896,7 +4896,7 @@
    "rank": 19,
    "build": true,
    "requires": ["memory_old_lessons"],
-   "description": "The granaries were empty before the first battle. He remembers what was worth taking.\\\\n\\\\nLocks the other Endings.",
+   "description": "In one ending the granaries were empty before the first battle. He learned to wear his enemies down the way hunger wears down a city.\\\\n\\\\nLocks the other Endings.",
    "levels": [
     [
      {
@@ -5011,7 +5011,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "Every ending, the first thing he learned was to hold one thought steady while the world shook.",
+   "description": "He keeps his mind on the spell, whatever is happening around him.",
    "levels": [
     [
      {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5}
@@ -5030,7 +5030,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "The words come faster each time. He has said them in every tongue that ever ended.",
+   "description": "He has spoken these incantations so often that the words come without thought.",
    "levels": [
     [
      {
@@ -5057,7 +5057,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_steady_hands"],
-   "description": "He has been unmade by sorcery before. He remembers the shape of the hole.",
+   "description": "He has been on the wrong end of enough spells to know how to shrug one off.",
    "levels": [
     [
      {
@@ -5091,7 +5091,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "The Winds find him now. They have learned where he stands.",
+   "description": "The Winds of Magic gather around him faster than around most wizards.",
    "levels": [
     [
      {
@@ -5118,7 +5118,7 @@
    "rank": 0,
    "build": true,
    "requires": ["magic_quick_recitation"],
-   "description": "Anyone can pour more power in. He knows when to stop.",
+   "description": "\"Push a spell past its limit, then let go before it bites back.\"",
    "levels": [
     [
      {
@@ -5145,7 +5145,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_steady_hands"],
-   "description": "A thin shimmer, taught to him by a mage whose name no one else recalls.",
+   "description": "A standing ward he renews each morning. Blows that should land often slide off.",
    "levels": [
     [
      {
@@ -5172,7 +5172,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "He casts with one hand and cuts with the other, and has never found the two work apart.",
+   "description": "He fights with a sword in one hand and casts with the other, and each makes the other stronger.",
    "levels": [
     [
      {
@@ -5202,7 +5202,7 @@
    "build": true,
    "requires": ["arts_art_4_ending"],
    "role": "gate",
-   "description": "Seven teachers, seven endings, and he took the best of each. What comes out is nobody's but his.",
+   "description": "Six weapons, six teachers, and a lifetime with each. He has taken the best of all of them and made it his own.",
    "levels": [
     [
      {
@@ -5277,7 +5277,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_spell_and_steel"],
-   "description": "Leather, steel, and a lesson from a swordsman who did not live to see the sequel.",
+   "description": "Iron bands sewn into his sleeves let him beat a blade aside and strike back in the same move.",
    "levels": [
     [
      {
@@ -5311,7 +5311,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_spell_and_steel"],
-   "description": "A flick of the wrist and the blade glances aside. He has practised it on worse than swords.",
+   "description": "A small ward on his blade and wrist turns aside blows that would otherwise land.",
    "levels": [
     [
      {
@@ -5338,7 +5338,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_spell_and_steel"],
-   "description": "Every cut carries a little of the spell that guided it.",
+   "description": "He puts a little of the Winds behind every cut, and it bites deeper.",
    "levels": [
     [
      {
@@ -5372,7 +5372,7 @@
    "rank": 19,
    "build": true,
    "requires": ["combat_ironbound_sleeves", "combat_duelling_wards", "combat_steel_in_the_weave", "combat_weight_of_the_charge", "combat_long_breath"],
-   "description": "At the end of one world the Winds themselves held his sword arm. He remembers the grip.",
+   "description": "In another life the Winds themselves guided his sword. He still fights that way, and the men near him fight better for it.",
    "levels": [
     [
      {
@@ -5409,7 +5409,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_steady_hands"],
-   "description": "Scar over scar over scar. Little finds soft skin to bite.",
+   "description": "Old scars and well-worn armour. Blows that would cut a younger man leave him bruised.",
    "levels": [
     [
      {
@@ -5443,7 +5443,7 @@
    "rank": 19,
    "build": true,
    "requires": ["combat_warded_mind", "combat_arcane_ward", "combat_veterans_hide", "combat_shell_of_light", "combat_mended_shell", "combat_warden_of_the_shell", "combat_flesh_remembers", "combat_light_along_the_line"],
-   "description": "He has been the last man standing. It taught him how to be the first one back up.",
+   "description": "He has been the last man left on the field more than once. He no longer knows how to run, and the men near him take heart from it.",
    "levels": [
     [
      {
@@ -5480,7 +5480,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "He has loosed arrows at the end of every kind of world. The hand knows where to go.",
+   "description": "Endless practice with the bow. He shoots harder and nocks the next arrow sooner.",
    "levels": [
     [
      {
@@ -5517,7 +5517,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_practised_aim"],
-   "description": "Aim for the buckle. The buckle is where armour ends.",
+   "description": "\"Aim for the buckle. That is where the armour ends.\"",
    "levels": [
     [
      {
@@ -5551,7 +5551,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_practised_aim"],
-   "description": "A target seen sooner is a target already lost.",
+   "description": "He picks out targets at ranges where most archers would not bother to draw.",
    "levels": [
     [
      {"effect": "wh_main_effect_character_stat_range", "scope": "character_to_character_own", "value": 5}
@@ -5581,7 +5581,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_practised_aim"],
-   "description": "The last arrow is always the one he saved for himself. He stopped saving it.",
+   "description": "He carries more arrows than most archers think worth the weight.",
    "levels": [
     [
      {
@@ -5615,7 +5615,7 @@
    "rank": 19,
    "build": true,
    "requires": ["combat_piercing_shot", "combat_long_sight", "combat_deep_quiver"],
-   "description": "One shot, then a hundred, then the sky goes dark with them.",
+   "description": "He shoots faster and further than ever, and the archers near him learn to keep up.",
    "levels": [
     [
      {
@@ -5656,7 +5656,7 @@
    "rank": 0,
    "build": true,
    "requires": ["magic_open_channel"],
-   "description": "The Winds come easier to a mind with no fear left in it.",
+   "description": "With a calm mind, he can ready his next spell sooner.",
    "levels": [
     [
      {
@@ -5690,7 +5690,7 @@
    "rank": 0,
    "build": true,
    "requires": ["magic_open_channel"],
-   "description": "Just when the pool runs dry, he finds another cup behind it.",
+   "description": "He has learned to store more of the Winds for the long fights.",
    "levels": [
     [
      {
@@ -5724,7 +5724,7 @@
    "rank": 19,
    "build": true,
    "requires": ["magic_deep_reserves", "magic_quiet_mind", "magic_second_wind"],
-   "description": "He has drunk from this well in lives that never were. The well recalls him kindly.",
+   "description": "Across many lives he has drawn on the same deep well of magic. It comes to him easily now.",
    "levels": [
     [
      {
@@ -5774,7 +5774,7 @@
    "rank": 19,
    "build": true,
    "requires": ["magic_overcast_discipline", "magic_steady_cadence", "magic_arcane_conduit"],
-   "description": "He stopped asking the Winds for power. Now he simply lets them through.",
+   "description": "He no longer fights the Winds for every drop of power. He lets them flow through him and spends them freely.",
    "levels": [
     [
      {
@@ -5819,7 +5819,7 @@
    "rank": 0,
    "build": true,
    "requires": ["magic_spellweavers_focus"],
-   "description": "And then to pull it tight, to a point.",
+   "description": "He keeps tight hold of every thread of a spell, so very little goes wrong.",
    "levels": [
     [
      {
@@ -5846,7 +5846,7 @@
    "rank": 19,
    "build": true,
    "requires": ["magic_wider_weave", "magic_sharper_weave", "magic_hex_of_misfire"],
-   "description": "There is a pattern behind the pattern. He has seen it from the far side.",
+   "description": "Lifetimes of study let him read the Winds more clearly than any living mage, and see further by them.",
    "levels": [
     [
      {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10},
@@ -5873,7 +5873,7 @@
    "rank": 6,
    "build": true,
    "requires": ["hero_scouting"],
-   "description": "He has walked this road in four endings. It never got shorter by itself.",
+   "description": "He leads the army by paths the maps do not show.",
    "levels": [
     [
      {
@@ -5906,7 +5906,7 @@
    "rank": 8,
    "build": true,
    "requires": ["hero_scouting"],
-   "description": "Where others see scrub, he sees supper.",
+   "description": "He knows what is worth taking from a beaten army, and where they hid it.",
    "levels": [
     [
      {
@@ -5939,7 +5939,7 @@
    "rank": 19,
    "build": true,
    "requires": ["hero_assassinate", "hero_assassinate_lord", "hero_hinder_replenishment", "hero_block_army", "hero_steal_technology", "hero_damage_walls", "hero_damage_building", "hero_assault_garrison", "hero_assault_units"],
-   "description": "Every door in the world has a friend on the inside, and he has met all of them.",
+   "description": "He has run spy networks across many lives. Doors open for him, secrets reach him, and enemies walk into his ambushes.",
    "levels": [
     [
      {
@@ -5981,7 +5981,7 @@
    "rank": 19,
    "build": true,
    "requires": ["hero_replenish_troops", "hero_boost_income", "hero_increase_trade", "hero_spread_public_order", "hero_stimulate_growth", "hero_cleanse_corruption", "hero_students_in_every_court"],
-   "description": "A banner remembered is a banner that does not fall. Every army he has ever stood with fights harder for it.",
+   "description": "He has watched armies fall apart in other lives and learned why. His stay fed, paid and in good heart.",
    "levels": [
     [
      {
@@ -6022,7 +6022,7 @@
    "rank": 19,
    "build": true,
    "requires": ["hero_scavenge", "hero_increase_mobility", "hero_pathfinder", "hero_foragers_eye"],
-   "description": "Wherever he rests, someone leaves a light on. He has never asked them to.",
+   "description": "Across many lives he has helped so many people that his name is welcome everywhere. Towns grow calmer and richer where he passes.",
    "levels": [
     [
      {
@@ -6073,7 +6073,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_steady_hands"],
-   "description": "A thin shimmer of the Winds holds in front of him.",
+   "description": "A shield of pure magic hangs in the air around him and soaks up blows.",
    "levels": [
     [
      {
@@ -6107,7 +6107,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_steady_hands"],
-   "description": "A broken shell is a lesson. He has learned to stitch it faster.",
+   "description": "When his magic shield breaks, it comes back sooner and stronger.",
    "levels": [
     [
      {
@@ -6171,7 +6171,7 @@
    "rank": 0,
    "build": true,
    "requires": ["magic_spellweavers_focus"],
-   "description": "He knows exactly how a spell goes wrong, because he has watched it go wrong.",
+   "description": "He curses the enemy's casters, so their spells cost more and go wrong more often.",
    "levels": [
     [
      {
@@ -6220,7 +6220,7 @@
    "rank": 0,
    "build": true,
    "requires": ["magic_quick_recitation"],
-   "description": "The Winds do not rush through him anymore. They wait in him, patient, like water in a cistern.",
+   "description": "He opens himself to the Winds and draws them in faster than a wizard should.",
    "levels": [
     [
      {
@@ -6239,7 +6239,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_steady_hands"],
-   "description": "Where he stands, broken shells knit again. The men near him feel it before they understand it.",
+   "description": "He can mend the magic barriers of the men around him in the middle of a fight.",
    "levels": [
     [
      {
@@ -6263,7 +6263,7 @@
    "rank": 0,
    "build": true,
    "requires": ["corruption_taint_remembered"],
-   "description": "He has watched Chaos corruption eat a world. He knows exactly where to plant it.",
+   "description": "He carries the taint of the Dark Gods with him, and the land around him sours.",
    "levels": [
     [
      {
@@ -6326,7 +6326,7 @@
    "rank": 0,
    "build": true,
    "requires": ["corruption_taint_remembered"],
-   "description": "He has watched Khorne corruption eat a world. He knows exactly where to plant it.",
+   "description": "Skulls on the roadsides, blood in the wells. The Blood God's mark follows him.",
    "levels": [
     [
      {
@@ -6389,7 +6389,7 @@
    "rank": 0,
    "build": true,
    "requires": ["corruption_taint_remembered"],
-   "description": "He has watched Nurgle corruption eat a world. He knows exactly where to plant it.",
+   "description": "Flies, rot and slow fevers follow him. The Plague God's gifts spread where he walks.",
    "levels": [
     [
      {
@@ -6452,7 +6452,7 @@
    "rank": 0,
    "build": true,
    "requires": ["corruption_taint_remembered"],
-   "description": "He has watched Slaanesh corruption eat a world. He knows exactly where to plant it.",
+   "description": "Strange music, sweet smells and restless dreams follow him. The Dark Prince's touch spreads where he goes.",
    "levels": [
     [
      {
@@ -6515,7 +6515,7 @@
    "rank": 0,
    "build": true,
    "requires": ["corruption_taint_remembered"],
-   "description": "He has watched Tzeentch corruption eat a world. He knows exactly where to plant it.",
+   "description": "Things shift and change where he passes. The Changer's mark spreads in his wake.",
    "levels": [
     [
      {
@@ -6578,7 +6578,7 @@
    "rank": 0,
    "build": true,
    "requires": ["corruption_taint_remembered"],
-   "description": "He has watched Skaven corruption eat a world. He knows exactly where to plant it.",
+   "description": "Warpstone dust in the grain and scratching in the walls. The Horned Rat's taint follows him.",
    "levels": [
     [
      {
@@ -6641,7 +6641,7 @@
    "rank": 0,
    "build": true,
    "requires": ["corruption_taint_remembered"],
-   "description": "He has watched Vampiric corruption eat a world. He knows exactly where to plant it.",
+   "description": "Graves stir and the nights grow longer where he stays. The taint of undeath spreads from him.",
    "levels": [
     [
      {
@@ -6704,7 +6704,7 @@
    "rank": 14,
    "build": true,
    "requires": ["corruption_spread_chaos", "corruption_spread_khorne", "corruption_spread_nurgle", "corruption_spread_slaanesh", "corruption_spread_tzeentch", "corruption_spread_skaven", "corruption_spread_vampiric"],
-   "description": "Three kinds of rot are not enough.",
+   "description": "He has learned to carry every kind of corruption at once. Wherever he stays, all of them spread faster.",
    "levels": [
     [
      {
@@ -6755,7 +6755,7 @@
    "rank": 0,
    "build": true,
    "requires": [],
-   "description": "He has walked through every kind of ruin there is. He can still smell the corruption in each.",
+   "description": "He has seen every kind of corruption take hold of a land, and knows how each one spreads.",
    "levels": [
     [
      {
@@ -6804,7 +6804,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_spell_and_steel"],
-   "description": "He learned to charge from a knight who rode into the last sunset of a dying world.",
+   "description": "He learned to charge from a knight, and hits the enemy line with his full weight.",
    "levels": [
     [
      {"effect": "wh_main_effect_character_stat_speed", "scope": "character_to_character_own", "value": 5},
@@ -6864,7 +6864,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_spell_and_steel"],
-   "description": "He has fought for days at the end of the world. One afternoon does not tire him.",
+   "description": "\"Pace yourself. The battle will still be there in an hour.\"",
    "levels": [
     [
      {
@@ -6913,7 +6913,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_steady_hands"],
-   "description": "His body has healed from worse, many times. It still knows how.",
+   "description": "His body takes well to healing magic and recovers more from it.",
    "levels": [
     [
      {
@@ -6958,7 +6958,7 @@
    "rank": 0,
    "build": true,
    "requires": ["hero_training"],
-   "description": "Half the captains of the world once sat at his table and listened.",
+   "description": "Many captains and wizards learned from him in other lives. New recruits arrive already knowing his lessons.",
    "levels": [
     [
      {
@@ -6991,7 +6991,7 @@
    "rank": 0,
    "build": true,
    "requires": ["combat_steady_hands"],
-   "description": "He has learned to stretch the shimmer thin, across every rank that stands with him.",
+   "description": "He spreads his magic shield across every unit in his army.",
    "levels": [
     [
      {
@@ -7026,7 +7026,7 @@
    "requires": ["arts_army_3_last_stand"],
    "slot": "army_4",
    "build": true,
-   "description": "Every army he ever marched with left him one trick. He hands them all on.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects."
+   "description": "Every army he marched with in other lives taught him something. Now his men learn all of it.\\\\n\\\\nWhat it does follows the weapon in his hands. Use Change Loadout to see the new effects."
   },
   "arts_final_host_of_his_own": {
    "name": "A Host of His Own",
@@ -7037,7 +7037,7 @@
    "build": true,
    "requires": ["arts_army_4_every_banner"],
    "role": "gate",
-   "description": "The men around him fight the way he taught them, whatever he holds.",
+   "description": "His soldiers fight the way he taught them, whatever weapon he carries that day.",
    "levels": [
     [
      {
@@ -7087,56 +7087,56 @@
  "lores": {
   "wh_main_lore_fire": {
    "name": "Lore of Fire",
-   "description": "Aqshy, the first Wind he ever felt. It burned his hands then too.",
+   "description": "Aqshy, the Wind of Fire. It was the first magic he ever touched, and it burned him.",
    "icon": "wh_main_lore_passive_kindleflame.png",
    "build": true,
    "tier": 0
   },
   "wh_dlc03_lore_beasts": {
    "name": "Lore of Beasts",
-   "description": "Ghur, learned from a beastmaster in a world where men had lost.",
+   "description": "Ghur, learned from a beastmaster in a life where men lost the war.",
    "icon": "wh_dlc03_lore_passive_wild_heart.png",
    "build": true,
    "tier": 1
   },
   "wh_main_lore_metal": {
    "name": "Lore of Metal",
-   "description": "Chamon, the patient lore of things that last. Nothing lasted.",
+   "description": "Chamon, the Wind of metal, learned in the workshops of the Gold College.",
    "icon": "wh_main_spell_metal_plague_of_rust.png",
    "build": true,
    "tier": 2
   },
   "wh_main_lore_heavens": {
    "name": "Lore of the Heavens",
-   "description": "Azyr. He read the stars that fell on the last night.",
+   "description": "Azyr. He learned to read the stars, and then to bring them down.",
    "icon": "wh_main_lore_passive_roiling_skies.png",
    "build": true,
    "tier": 3
   },
   "wh_main_lore_light": {
    "name": "Lore of Light",
-   "description": "Hysh, kept burning in a temple after every other light went out.",
+   "description": "Hysh, learned in a temple that kept its lamps lit to the very end.",
    "icon": "wh_main_lore_passive_exorcism.png",
    "build": true,
    "tier": 4
   },
   "wh_dlc05_lore_life": {
    "name": "Lore of Life",
-   "description": "Ghyran. He grew a garden on a dead world, just to see if he could.",
+   "description": "Ghyran. He once grew a garden on a dead world, just to see if he could.",
    "icon": "wh_dlc05_spell_life_awakening_of_the_wood.png",
    "build": true,
    "tier": 5
   },
   "wh_dlc05_lore_shadows": {
    "name": "Lore of Shadows",
-   "description": "Ulgu, the lore of not being where the end is looking.",
+   "description": "Ulgu, the lore of being somewhere other than where the enemy is looking.",
    "icon": "wh_dlc05_lore_passive_smoke_and_mirrors.png",
    "build": true,
    "tier": 6
   },
   "wh_main_lore_death": {
    "name": "Lore of Death",
-   "description": "Shyish. He has more right to this lore than any Amethyst magister alive.",
+   "description": "Shyish. Few wizards know death as well as a man who has died more than once.",
    "icon": "wh_main_lore_passive_life_leeching.png",
    "build": true,
    "tier": 7
@@ -7150,63 +7150,63 @@
   },
   "wh3_main_lore_of_ice": {
    "name": "Lore of Ice",
-   "description": "The cold that came after the fires, in a world that ended slowly.",
+   "description": "The cold of the far north, learned from the Ice Witches of Kislev.",
    "icon": "wh3_main_lore_passive_frost_shield.png",
    "build": true,
    "tier": 9
   },
   "wh3_main_lore_of_tempest": {
    "name": "Lore of Tempest",
-   "description": "Storms he walked through for a century to reach the next ending.",
+   "description": "Storm magic. He learned to call lightning by standing in it.",
    "icon": "wh3_main_spell_tempest_hailstorm.png",
    "build": true,
    "tier": 10
   },
   "wh3_main_lore_of_yang": {
    "name": "Lore of Yang",
-   "description": "Half a truth from Cathay. The other half is the next skill.",
+   "description": "Half of Cathay's magic of balance. The Lore of Yin is the other half.",
    "icon": "wh3_main_lore_passive_strength_of_yang.png",
    "build": true,
    "tier": 11
   },
   "wh3_main_lore_of_yin": {
    "name": "Lore of Yin",
-   "description": "The other half. He has never managed to hold both at once. Yet.",
+   "description": "The other half of Cathay's magic of balance. He has never managed to hold both at once.",
    "icon": "wh3_main_lore_passive_power_of_yin.png",
    "build": true,
    "tier": 12
   },
   "wh3_dlc27_lore_mists": {
    "name": "Lore of Mists",
-   "description": "Sea-fog spells from a coast that sank.",
+   "description": "Sea-fog spells, learned on a coast that sank under the waves.",
    "icon": "wh3_dlc27_spell_mists_flensing_haar.png",
    "build": true,
    "tier": 13
   },
   "wh3_dlc24_lore_hag": {
    "name": "Lore of the Hag",
-   "description": "Old witch-craft from the far north, bought at a price he still pays.",
+   "description": "Old witchcraft from the far north, bought at a price he is still paying.",
    "icon": "wh3_dlc24_lore_passive_fate_of_interlopers.png",
    "build": true,
    "tier": 14
   },
   "wh2_main_lore_dark_magic": {
    "name": "Dark Magic",
-   "description": "Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.",
+   "description": "Dhar, raw and dangerous. He knows exactly what it does to the one who uses it, and uses it anyway.",
    "icon": "wh2_main_lore_passive_spiteful_conjuration.png",
    "build": true,
    "tier": 15
   },
   "wh_main_lore_vampires": {
    "name": "Lore of Vampires",
-   "description": "Taught by a count who wanted a friend for the long dark.",
+   "description": "Taught by a vampire count who wanted company for the long dark.",
    "icon": "wh_main_lore_passive_the_curse_of_undeath.png",
    "build": true,
    "tier": 16
   },
   "wh3_dlc29_lore_undeath": {
    "name": "Lore of Undeath",
-   "description": "The Great Necromancer's own words, from a world where he won.",
+   "description": "The Great Necromancer's own words, learned in a world where Nagash won.",
    "icon": "wh3_dlc29_lore_passive_raise_the_dead.png",
    "build": true,
    "tier": 17
@@ -7220,14 +7220,14 @@
   },
   "wh2_dlc11_lore_deep": {
    "name": "Lore of the Deep",
-   "description": "Drowned magic, from a fleet that sailed off the end of the world.",
+   "description": "Drowned magic, learned aboard a ship crewed by the dead.",
    "icon": "wh2_dlc11_spell_deep_denizens_of_the_deep.png",
    "build": true,
    "tier": 19
   },
   "wh_main_lore_big_waaagh": {
    "name": "Big Waaagh!",
-   "description": "It should not work for a man. It works for him. He does not know why.",
+   "description": "Orc magic. It should not work for a man, and nobody can explain why it does.",
    "icon": "wh_main_lore_passive_power_of_da_waaagh.png",
    "build": true,
    "tier": 20
@@ -7241,14 +7241,14 @@
   },
   "wh3_dlc23_lore_hashut": {
    "name": "Lore of Hashut",
-   "description": "Fire and slavery, from the furnace-priests of a world they burned.",
+   "description": "Fire and darkness from the priests of Hashut. He does not care to say how he learned it.",
    "icon": "wh3_dlc23_lore_passive_killing_fire.png",
    "build": true,
    "tier": 22
   },
   "wh2_main_lore_ruin": {
    "name": "Lore of Ruin",
-   "description": "Warp lightning. He has seen what is left when the Horned Rat wins.",
+   "description": "Warp lightning, learned from a grey seer who thought him harmless.",
    "icon": "wh2_main_lore_passive_musk_of_fear.png",
    "build": true,
    "tier": 23
@@ -7262,21 +7262,21 @@
   },
   "wh2_dlc14_lore_stealth": {
    "name": "Lore of Stealth",
-   "description": "The Eshin sorcerers' tricks, learned by being their target for a decade.",
+   "description": "The tricks of Clan Eshin, learned by spending ten years as their target.",
    "icon": "wh2_dlc14_skill_all_magic_stealth_05_veil_of_shadows.png",
    "build": true,
    "tier": 25
   },
   "wh3_main_lore_nurgle": {
    "name": "Lore of Nurgle",
-   "description": "Grandfather's kindness. He refused it, and kept the spells.",
+   "description": "Grandfather Nurgle offered him his gifts. He turned them down and kept the spells.",
    "icon": "wh3_main_lore_passive_children_of_nurgle.png",
    "build": true,
    "tier": 26
   },
   "wh3_main_lore_slaanesh": {
    "name": "Lore of Slaanesh",
-   "description": "He refused this one too. It was harder.",
+   "description": "Slaanesh tempted him too. Saying no was harder this time, but he kept the spells.",
    "icon": "wh3_main_lore_passive_blissful_rapture.png",
    "build": true,
    "tier": 27
@@ -7290,7 +7290,7 @@
   },
   "wh_dlc03_lore_wild": {
    "name": "Lore of the Wild",
-   "description": "The herdstone songs. He sang them at the end, when there was no one left to hear.",
+   "description": "The songs of the beastmen's herdstones. He learned them by listening from the trees.",
    "icon": "wh_dlc03_spell_wild_mantle_of_ghorok.png",
    "build": true,
    "tier": 29
