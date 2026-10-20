@@ -1240,7 +1240,7 @@
   },
   "iron_hand": {
    "name": "Iron Hand",
-   "description": "No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way Zhao Ming fights before he takes his dragon form.",
+   "description": "No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way the dragon-blooded lords of Cathay fight before they take their dragon form.",
    "campaign_set": "cam_hu1_advisor_overhaul_iron_hand",
    "icon": "wh3_main_lord_abilities_iron_dragon_human_form.png",
    "picker_icon": "ui/campaign ui/skills/wh3_main_lord_abilities_iron_dragon_human_form.png",

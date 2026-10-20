@@ -73,7 +73,7 @@ ancillaries_onscreen_name_advisor_overhaul_rig_glaive_disc	Glaive, Disc of Tzeen
 ancillaries_colour_text_advisor_overhaul_rig_glaive_disc	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
 land_units_onscreen_name_advisor_overhaul_iron_hand_foot	The Advisor (Iron Hand)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_iron_hand_foot	Iron Hand, On Foot	true
-ancillaries_colour_text_advisor_overhaul_rig_iron_hand_foot	No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way Zhao Ming fights before he takes his dragon form. He walks, as he always has.	true
+ancillaries_colour_text_advisor_overhaul_rig_iron_hand_foot	No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way the dragon-blooded lords of Cathay fight before they take their dragon form. He walks, as he always has.	true
 land_units_onscreen_name_advisor_overhaul_iron_hand_apex	The Advisor (Iron Hand, Battering Ram)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_iron_hand_apex	Iron Hand, Battering Ram	true
 ancillaries_colour_text_advisor_overhaul_rig_iron_hand_apex	Nothing stops or knocks him down. He bowls men over and flings them aside, and every blow cracks the armour of what it hits. He counts as a large target.	true
@@ -117,7 +117,7 @@ character_skills_localised_description_advisor_overhaul_choose_weapon_greatsword
 character_skills_localised_name_advisor_overhaul_choose_weapon_glaive	Glaive	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_glaive	A long Cathayan glaive made to cut a horse out from under its rider, and a short sword at his hip for when the line closes.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_iron_hand	Iron Hand	true
-character_skills_localised_description_advisor_overhaul_choose_weapon_iron_hand	No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way Zhao Ming fights before he takes his dragon form.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_description_advisor_overhaul_choose_weapon_iron_hand	No weapon at all. Open hands, a stance like a city wall, and the weight of the forge behind every blow, the way the dragon-blooded lords of Cathay fight before they take their dragon form.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_skill_actions_default	Default Actions	true
 character_skills_localised_description_advisor_overhaul_skill_actions_default	The hero actions he always has: Scouting, Scout Settlement and Boost Income.	true
 character_skills_localised_name_advisor_overhaul_skill_arts_apex	Master of Arms	true
