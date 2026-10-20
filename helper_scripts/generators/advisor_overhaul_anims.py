@@ -4,7 +4,7 @@ Retargeted sets copy a vanilla set from another human skeleton onto the advisor'
 has no humanoid01 disc rider, so the Chaos Sorcerer Lord's humanoid01c disc set is copied. Every animation the set plays is retargeted with
 `tools.anim_retarget`, and so is every animation its `.anm.meta` files splice in. Metas that splice a source animation are copied and pointed at
 the retargeted copy, or the game layers the source skeleton's animation over the advisor (his staff then stops spinning while he casts).
-Metas with no spliced animation keep their vanilla path. The second is the Glaive, Taoyan's humanoid01e trident set. `FILL_SLOTS` gives it
+Metas that name bones are copied with the bones renumbered for `humanoid01`. Metas with neither keep their vanilla path. The second is the Glaive, Taoyan's humanoid01e trident set. `FILL_SLOTS` gives it
 Settra's casts, which she lacks, `PROP_PINS` holds her sword, scabbard and glaive where her docking would have them, and `BAKED_DOCKING` bakes
 the docks into the tracks. The third is the Iron Hand, Zhao Ming's unarmed humanoid01e human form set with his own casts. The fourth is the
 bow on the Carmine Dragon, the High Elf princess's humanoid01b dragon set, and the staff on it. `MOUNTS` points the dragon sets at the carmine
@@ -92,6 +92,10 @@ BONE_RENAMES = {
     "humanoid01e": {**{f"weapon_{i + 1}": f"be_prop_{i}" for i in range(6)}, "head_0": "head", "jaw_0": "jaw", "eyebrows_0": "eyebrow",
                     "shoulderpad_left_0": "shoulder_pad_left", "shoulderpad_right_0": "shoulder_pad_right"},
 }
+
+# Meta tags that name bones by index -> where each index sits after the entry's filter string. `SPLICE` also names one, after two strings.
+# Each skeleton numbers its bones its own way, so a meta copied from another skeleton gets renumbered to match humanoid01.
+BONE_FIELDS = {"TRANSFORM": (0, 4), "DISMEMBER": (0,)}
 
 # Every set casts with `CAST_SPELL_*` on foot and `RIDER_CAST_SPELL_*` when mounted.
 FOOT_CASTS = r"^CAST_SPELL_"
@@ -363,7 +367,42 @@ def repoint(data: bytes, renamed: Dict[str, str]) -> bytes:
     return data
 
 
-def write_copies(name: str, anims: Dict[str, bytes], metas: Dict[str, bytes], folder: str, prefix: str, slots: List[Slot]) -> int:
+def renumber_bones(data: bytes, bones: List[Optional[int]]) -> bytes:
+    """Points a meta's bone fields at the target skeleton's numbering and drops entries on bones the target lacks. A bone of -1 means every bone.
+
+    Args:
+        data (bytes): The meta file, numbered for the source skeleton.
+        bones (List[Optional[int]]): Source bone index -> the target's index of the same bone, or None when the target has no such bone.
+
+    Returns:
+        bytes: The renumbered meta.
+    """
+    entries = meta_entries(data)
+    out, kept = bytearray(data[:8]), 0
+    for i, (offset, tag) in enumerate(entries):
+        entry = bytearray(data[offset:entries[i + 1][0] if i + 1 < len(entries) else len(data)])
+        at = entry_body(data, offset, tag)[2] - offset
+        if tag == "SPLICE":
+            # The bone follows the spliced animation's path and one more string.
+            for _ in range(2):
+                at += 2 + struct.unpack_from("<H", entry, at)[0]
+            fields = [at]
+        else:
+            fields = [at + field for field in BONE_FIELDS.get(tag, ())]
+        targets = [struct.unpack_from("<i", entry, field)[0] for field in fields]
+        if any(bone >= len(bones) or (bone >= 0 and bones[bone] is None) for bone in targets):
+            continue
+        for field, bone in zip(fields, targets):
+            if bone >= 0:
+                struct.pack_into("<i", entry, field, bones[bone])
+        out += entry
+        kept += 1
+    struct.pack_into("<I", out, 4, kept)
+    return bytes(out)
+
+
+def write_copies(name: str, anims: Dict[str, bytes], metas: Dict[str, bytes], folder: str, prefix: str, slots: List[Slot],
+                 bones: Optional[List[Optional[int]]] = None) -> int:
     """Writes a new set's animations into the mod folder, copies each meta that splices one of them with the path pointed at the copy, and points
     the slots at the copies.
 
@@ -374,6 +413,7 @@ def write_copies(name: str, anims: Dict[str, bytes], metas: Dict[str, bytes], fo
         folder (str): Output folder, relative to the mod folder.
         prefix (str): Short prefix marking the copies.
         slots (List[Slot]): The slots whose references are pointed at the copies, changed in place.
+        bones (Optional[List[Optional[int]]]): For metas from another skeleton, its bone index -> the advisor's, as `renumber_bones` takes it.
 
     Returns:
         int: How many metas were copied.
@@ -390,10 +430,12 @@ def write_copies(name: str, anims: Dict[str, bytes], metas: Dict[str, bytes], fo
     if len(set(renamed.values())) != len(renamed):
         raise SystemExit(f"{name}: two animations map to the same file name")
 
-    # Only a meta that splices a copied animation needs a copy. The rest keep their vanilla path.
+    # Only a meta that splices a copied animation or names a renumbered bone needs a copy. The rest keep their vanilla path.
     new_metas: Dict[str, str] = {}
     for meta, data in metas.items():
         changed = repoint(data, renamed)
+        if bones:
+            changed = renumber_bones(changed, bones)
         if changed != data:
             new_metas[meta] = f"{folder}/meta/{os.path.basename(meta)}"
             os.makedirs(os.path.join(MOD, folder, "meta"), exist_ok=True)
@@ -440,7 +482,9 @@ def build_set(name: str, source_data: bytes, source_skeleton: str, folder: str, 
     retargeted = {path: write_anim(retarget(load(path), source_bind, target_bind, TARGET_SKELETON, renames=renames)) for path in anims + spliced}
     new = copy.deepcopy(source)
     new.name, new.skeleton = name, TARGET_SKELETON
-    copied = write_copies(name, retargeted, meta_data, folder, prefix, new.slots)
+    index = {bone.name: i for i, bone in enumerate(target_bind.bones)}
+    bones = [index.get((renames or {}).get(bone.name, bone.name)) for bone in source_bind.bones]
+    copied = write_copies(name, retargeted, meta_data, folder, prefix, new.slots, bones)
     print(f"{name}: {len(new.slots)} slots, {len(anims)} animations + {len(spliced)} spliced retargeted, {copied} metas repointed")
     return write_set(new)
 

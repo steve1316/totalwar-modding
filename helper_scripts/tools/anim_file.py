@@ -110,7 +110,8 @@ def _read_plain(reader: _Reader, bone_count: int, version: int) -> Tuple[List[Li
         for _ in range(frames):
             dyn_trans.append([reader.read("3f") for _ in range(dyn_t)])
             dyn_rots.append([_short_quat(reader.read("4h")) for _ in range(dyn_r)])
-    frame_count = max(len(dyn_trans), 1)
+    # A pose with only static tracks still declares its frame count. The game divides by frames - 1, so 1 frame crashes it.
+    frame_count = len(dyn_trans) or max(frames, 1)
 
     def pick(mapping: int, static: list, dynamic: list, frame: int):
         if mapping == -1:
@@ -157,7 +158,8 @@ def _read_v8_part(reader: _Reader, bone_count: int) -> Tuple[List[List[Optional[
     static = read_frame(False) if static_t or static_r else ([None] * bone_count, [None] * bone_count)
     dyn_t, dyn_r, frames = reader.read("I"), reader.read("I"), reader.read("I")
     dynamic = [read_frame(True) for _ in range(frames)] if dyn_t or dyn_r else []
-    frame_count = max(len(dynamic), 1)
+    # A pose with only static tracks still declares its frame count. The game divides by frames - 1, so 1 frame crashes it.
+    frame_count = len(dynamic) or max(frames, 1)
     translations, rotations = [], []
     for frame in range(frame_count):
         dyn = dynamic[frame] if dynamic else ([None] * bone_count, [None] * bone_count)
