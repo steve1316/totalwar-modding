@@ -8,6 +8,9 @@
 ---
 --- The rigs he does not wear sit in the faction pool, so the character panel's Mount box lists them. A pick there is read back from the worn rig.
 ---
+--- It also gives him each weapon's art bundles and the Polymath bundle for the skills he owns, and draws their boxes over the art and Polymath
+--- skill cards.
+---
 --- The button is a child of a vanilla row: the character panel's bottom-right buttons, or the hover strip over the selected Advisor's unit card on
 --- the map. The picker options are direct children of the UI root. The script only ever changes or destroys a component it found by its own
 --- unique name.
@@ -34,7 +37,7 @@ local BUTTON_TEMPLATE = "ui/templates/square_medium_button"
 --- Image index of the icon in `BUTTON_TEMPLATE`.
 local BUTTON_ICON_INDEX = 0
 
---- Icon of the Change Loadout button (ui2.pack), also used by a picker option whose item has no icon.
+--- Icon of the Change Loadout button (ui2.pack).
 local BUTTON_ICON = "ui/skins/default/icon_swap.png"
 
 --- State of the option he already uses. It is one of `BUTTON_TEMPLATE`'s states (active, down, down_off, hover, inactive), the pressed look.
@@ -59,7 +62,7 @@ local REFRESH_MS = 300
 local CLICK_NAME = TAG .. "_loadout_click"
 
 --- Delay of that callback in milliseconds. Making or destroying root components while the game still handles the click broke every script's UI checks
---- and crashed the game (runs 1, 4 and 5), so clicks only schedule their work.
+--- and crashed the game, so clicks only schedule their work.
 local CLICK_MS = 50
 
 --- Name of the one-shot real-time callback that selects the Advisor again after a loadout change.
@@ -171,10 +174,10 @@ local ART_TOOLTIP_NAME = TAG .. "_art_tooltip"
 local ART_TOOLTIP_MS = 20
 local ART_CARD_LOOKS = 15
 
---- UI text: loc key in text/db/advisor_overhaul_ui.loc and the English fallback used if the key does not resolve.
+--- UI text: loc key in text/db/advisor_overhaul_ui.loc (item names are in advisor_overhaul.loc) and the English fallback if the key does not resolve.
 local TEXT = {
 	--- Tooltip of the Change Loadout button.
-	button = { "advisor_overhaul_ui_button_tooltip", "Change Loadout||Choose which of the Advisor's unlocked weapons and mounts he takes to war." },
+	button = { "advisor_overhaul_ui_button_tooltip", "Change Loadout||Choose which of the Advisor's unlocked weapons and mounts he takes to war. Learn weapon and mount skills to unlock more." },
 	--- Tooltip of the button once he has changed his loadout this turn.
 	button_used = { "advisor_overhaul_ui_button_used_tooltip", "Change Loadout||The Advisor has already changed his loadout this turn." },
 	--- Start of a weapon option's label, followed by the weapon. No UI text holds `%`: reading one through the game broke every script and crashed it.
@@ -193,11 +196,12 @@ local TEXT = {
 	mount_blocked = { "advisor_overhaul_ui_mount_blocked_tooltip", "The Advisor cannot ride this mount with his current weapon. Pick another weapon first." },
 	--- Start of the line an art slot skill's tooltip gets for the weapon he holds, followed by the weapon's name.
 	art_with = { "advisor_overhaul_ui_art_with", "With" },
+	--- Start of the line an art slot skill's tooltip gets while its weapon is still locked, followed by the weapon's name.
 	art_locked = { "advisor_overhaul_ui_art_locked", "Available after unlocking" },
 	--- Line of the Polymath box before the disciplines that count, once he has the Polymath and before he has it.
 	polymath_counted = { "advisor_overhaul_ui_polymath_counted", "Disciplines counted:" },
 	polymath_counted_unlearned = { "advisor_overhaul_ui_polymath_counted_unlearned", "Disciplines counted if learned now:" },
-	--- Words of a discipline's line in the Polymath box: "Memory: 1 of 3 skills".
+	--- Words of a discipline's line in the Polymath box: "Memory: 1 of 5 skills".
 	polymath_of = { "advisor_overhaul_ui_polymath_of", "of" },
 	polymath_skills = { "advisor_overhaul_ui_polymath_skills", "skills" },
 	--- Name of each Polymath discipline, by `discipline_` and its key in `ADVISOR_OVERHAUL_RIGS.polymath.disciplines`.
@@ -302,13 +306,6 @@ end
 --- @param text string The message.
 local function log(text)
 	out(TAG .. ": " .. text)
-end
-
---- Logs the native UI call about to run, so a call that breaks the game is the last line in the log.
---- @param name string The component.
---- @param call string The call and its arguments.
-local function log_call(name, call)
-	log("ui call " .. name .. ": " .. call)
 end
 
 
@@ -1186,7 +1183,6 @@ end
 --- @param state string `current`, `pick` or `blocked`.
 --- @returns UIC|nil The option, or nil when it could not be made.
 local function add_option(kind, item, name, state)
-	log_call(name, "CreateComponent " .. BUTTON_TEMPLATE)
 	local option = create_own(name, BUTTON_TEMPLATE)
 	if not option then
 		return nil
@@ -1201,18 +1197,13 @@ local function add_option(kind, item, name, state)
 	elseif state == "blocked" then
 		reason = ui_text(kind .. "_blocked")
 	end
-	local icon = item.icon or BUTTON_ICON
+	local icon = item.icon
 	local ui_state = state == "current" and CURRENT_STATE or state == "blocked" and "inactive" or "active"
 	local ok, err = pcall(function()
-		log_call(name, "SetImagePath " .. icon .. " " .. BUTTON_ICON_INDEX)
 		option:SetImagePath(icon, BUTTON_ICON_INDEX)
-		log_call(name, "SetTooltipText " .. label .. "||" .. reason)
 		option:SetTooltipText(label .. "||" .. reason, true)
-		log_call(name, "SetState " .. ui_state)
 		option:SetState(ui_state)
-		log_call(name, "PropagatePriority " .. ui_priority)
 		option:PropagatePriority(ui_priority)
-		log_call(name, "RegisterTopMost")
 		option:RegisterTopMost()
 		topmost[name] = true
 	end)
@@ -1259,7 +1250,6 @@ local function open_picker(character)
 	end
 	-- Each column stacks upward from just above the button. Weapons sit in the button's column, mounts in the next one to the right.
 	local ok, err = pcall(function()
-		log_call(BUTTON_NAME, "Position and Dimensions")
 		local button_x, button_y = button:Position()
 		local size, height = button:Dimensions()
 		local x = button_x
@@ -1268,7 +1258,6 @@ local function open_picker(character)
 			if #column > 0 then
 				for i, entry in ipairs(column) do
 					local y = math.max(0, button_y - (#column - i + 1) * (height + OPTION_GAP))
-					log_call(entry.name, "MoveTo " .. x .. "," .. y)
 					entry.uic:MoveTo(x, y)
 				end
 				x = x + size + COLUMN_GAP
@@ -1365,18 +1354,16 @@ local function panel_character(panel)
 	return character, "the panel shows " .. character:character_subtype_key() .. " cqi " .. cqi
 end
 
---- Logs the injected button's size next to its first vanilla sibling's, and lays the row out again when the button sits on a shown sibling.
+--- Lays the row out again when the injected button sits on a shown sibling.
 --- @param parent UIC The row the button is in.
 --- @param button UIC The button.
---- @param created boolean Whether the button was just made, so its size is logged once.
 --- @returns string The button's spot, for the log.
-local function check_row_layout(parent, button, created)
+local function check_row_layout(parent, button)
 	local own = read_bounds(button)
 	if not own then
 		return "unreadable spot"
 	end
 	local overlap = nil
-	local first = nil
 	local ok, count = pcall(function()
 		return parent:ChildCount()
 	end)
@@ -1388,19 +1375,12 @@ local function check_row_layout(parent, button, created)
 		local id = component_id(child)
 		if id and id ~= BUTTON_NAME then
 			local bounds = read_bounds(child)
-			if bounds then
-				first = first or (id .. " " .. bounds.w .. "x" .. bounds.h)
-				if bounds.visible and bounds.x == own.x and bounds.y == own.y then
-					overlap = id
-				end
+			if bounds and bounds.visible and bounds.x == own.x and bounds.y == own.y then
+				overlap = id
 			end
 		end
 	end
-	if created then
-		log("injected button size " .. own.w .. "x" .. own.h .. ", first vanilla sibling " .. tostring(first))
-	end
 	if overlap then
-		log_call(component_id(parent) or "parent", "Layout, the button sits on " .. overlap)
 		local laid, err = pcall(function()
 			parent:Layout()
 		end)
@@ -1459,29 +1439,22 @@ local function show_button(character, panel, why)
 		end
 	end
 	local button = find_child(parent, BUTTON_NAME)
-	local created = false
 	if not button then
-		log_call(BUTTON_NAME, "CreateComponent " .. BUTTON_TEMPLATE .. " in " .. where)
 		button = create_child(parent, BUTTON_NAME, BUTTON_TEMPLATE)
 		if not button then
 			set_hidden(why, "the button could not be made in " .. where)
 			return
 		end
-		created = true
 	end
 	button_path = path
 	local used = used_this_turn(cqi)
 	local ok, result = pcall(function()
-		log_call(BUTTON_NAME, "SetImagePath " .. BUTTON_ICON .. " " .. BUTTON_ICON_INDEX)
 		button:SetImagePath(BUTTON_ICON, BUTTON_ICON_INDEX)
 		local state = used and "inactive" or "active"
-		log_call(BUTTON_NAME, "SetState " .. state)
 		button:SetState(state)
-		log_call(BUTTON_NAME, "SetTooltipText " .. (used and "button_used" or "button"))
 		button:SetTooltipText(ui_text(used and "button_used" or "button"), true)
-		log_call(BUTTON_NAME, "SetVisible true")
 		button:SetVisible(true)
-		return check_row_layout(parent, button, created)
+		return check_row_layout(parent, button)
 	end)
 	if not ok then
 		set_hidden(why, "button set up failed: " .. tostring(result))
@@ -1888,7 +1861,6 @@ local function make_art_box()
 	if not box then
 		return nil
 	end
-	log_call(ART_BOX, "SetInteractive false, PropagatePriority " .. ui_priority .. ", RegisterTopMost")
 	box:SetInteractive(false)
 	for _, name in ipairs({ ART_BOX_TITLE, ART_BOX_TEXT }) do
 		local child = find_named(box, name)
@@ -1919,7 +1891,7 @@ local function make_art_box()
 end
 
 --- Sets the art box's texts, and points the vanilla effect list at the art's bundle.
---- @param tip table What the box shows, from `art_card_tooltip`.
+--- @param tip table What the box shows, from `art_card_tooltip` or `polymath_card_tooltip`.
 local function fill_art_box(tip)
 	find_named(art_box, ART_BOX_TITLE):SetStateText(tip.title, "")
 	find_named(art_box, ART_BOX_TEXT):SetStateText(tip.text, "")
@@ -1947,7 +1919,6 @@ local function show_art_box(card, skill)
 	local tip = art_card_tips[skill]
 	if art_box_text ~= tip.whole then
 		art_box_text = tip.whole
-		log_call(ART_BOX, "SetStateText for " .. skill)
 		fill_art_box(tip)
 	end
 	if art_box_skill ~= skill then
@@ -2048,7 +2019,6 @@ local function update_art_box(panel)
 	end
 	if skill and art_card_tips[skill] then
 		if tooltip:Visible() then
-			log_call(SKILL_TOOLTIP, "SetVisible false for " .. skill)
 			tooltip:SetVisible(false)
 		end
 		if art_box_skill ~= skill then
@@ -2136,7 +2106,6 @@ local function check_mount_pick()
 	local trigger = RECONCILE_PREFIX .. cqi
 	log("Mount box check cqi " .. cqi .. ": wears " .. (#worn > 0 and table.concat(worn, ", ") or "no rig") .. ", saved pair " .. tostring(wanted)
 		.. ", sending " .. trigger)
-	log_call("CampaignUI", "TriggerCampaignScriptEvent " .. trigger)
 	CampaignUI.TriggerCampaignScriptEvent(character:faction():command_queue_index(), trigger)
 end
 
@@ -2204,13 +2173,7 @@ core:add_listener(
 	"CharacterSelected",
 	true,
 	function(context)
-		local character = context:character()
-		selected_cqi = character:command_queue_index()
-		local ok, details = pcall(function()
-			return "subtype " .. character:character_subtype_key() .. ", faction " .. character:faction():name() .. ", local Advisor "
-				.. tostring(is_local_advisor(character)) .. ", embedded " .. tostring(character:is_embedded_in_military_force())
-		end)
-		log("CharacterSelected cqi " .. selected_cqi .. ", " .. (ok and details or ("details failed: " .. tostring(details))))
+		selected_cqi = context:character():command_queue_index()
 		schedule_refresh("character " .. selected_cqi .. " selected")
 	end,
 	true
