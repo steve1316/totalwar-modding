@@ -311,7 +311,7 @@ character_skills_localised_description_advisor_overhaul_skill_memory_long_patien
 character_skills_localised_name_advisor_overhaul_skill_memory_old_lessons	Memory: Old Lessons	true
 character_skills_localised_description_advisor_overhaul_skill_memory_old_lessons	Everything he teaches, he learned the hard way. Several times.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_polymath	Polymath: Everything, Again	true
-character_skills_localised_description_advisor_overhaul_skill_memory_polymath	He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\n\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Locks every Apex except Master of Arms.	true
+character_skills_localised_description_advisor_overhaul_skill_memory_polymath	He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he is all of them at once.\\n\\nA discipline counts once he knows 5 of its skills: Arts, Memory, Magic (learned spells count) and Hero work. Every discipline that counts makes him stronger, and all four make him the strongest he can be.\\n\\nLocks every Apex.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_seen_the_end	Memory: Seen the End	true
 character_skills_localised_description_advisor_overhaul_skill_memory_seen_the_end	He has watched this army walk into this ambush before. Not this time.	true
 character_skills_localised_name_advisor_overhaul_skill_memory_weight_of_years	Memory: The Weight of Years	true
@@ -424,14 +424,16 @@ effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_army_4	Cast
 effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_army_4	Every unit under him becomes the company he once led. They take a blow the way metal takes the hammer.	true
 effect_bundles_localised_title_advisor_overhaul_weapon_art_iron_hand_apex	Battering Ram	true
 effect_bundles_localised_description_advisor_overhaul_weapon_art_iron_hand_apex	He stops fighting the line and walks through it. On foot nothing stops or knocks him down, his body bowls men over and flings them aside, and every blow cracks the armour of what it hits. On foot he counts as a large target.	true
+effect_bundles_localised_title_advisor_overhaul_bundle_polymath_0	Polymath: Everything, Again (0 of 4)	true
+effect_bundles_localised_description_advisor_overhaul_bundle_polymath_0	He draws on none of his 4 disciplines yet. Each discipline counts once he knows 5 of its skills.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_1	Polymath: Everything, Again (1 of 4)	true
-effect_bundles_localised_description_advisor_overhaul_bundle_polymath_1	He draws on 1 of his disciplines at once.	true
+effect_bundles_localised_description_advisor_overhaul_bundle_polymath_1	He draws on 1 of his 4 disciplines. Each discipline counts once he knows 5 of its skills.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_2	Polymath: Everything, Again (2 of 4)	true
-effect_bundles_localised_description_advisor_overhaul_bundle_polymath_2	He draws on 2 of his disciplines at once.	true
+effect_bundles_localised_description_advisor_overhaul_bundle_polymath_2	He draws on 2 of his 4 disciplines. Each discipline counts once he knows 5 of its skills.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_3	Polymath: Everything, Again (3 of 4)	true
-effect_bundles_localised_description_advisor_overhaul_bundle_polymath_3	He draws on 3 of his disciplines at once.	true
+effect_bundles_localised_description_advisor_overhaul_bundle_polymath_3	He draws on 3 of his 4 disciplines. Each discipline counts once he knows 5 of its skills.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_4	Polymath: Everything, Again (4 of 4)	true
-effect_bundles_localised_description_advisor_overhaul_bundle_polymath_4	He draws on 4 of his disciplines at once.	true
+effect_bundles_localised_description_advisor_overhaul_bundle_polymath_4	He draws on all 4 of his disciplines at once.	true
 character_skills_localised_name_advisor_overhaul_lore_fire	First Tome: Lore of Fire	true
 character_skills_localised_description_advisor_overhaul_lore_fire	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: its passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_lore_fire_2	Second Tome: Lore of Fire	true

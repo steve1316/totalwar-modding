@@ -46,7 +46,7 @@ it by itself once he reaches that rank (every mount and weapon). Without an `unl
 The rest of his kit, also in the registry:
 - `weapons.<w>.arts`: slot -> `name`, `description`, `effects` (each `effect`, `scope`, `value`). Each is an effect bundle, which the loadout
   script puts on him while he holds that weapon and owns the slot's skill. Every weapon must define every slot a built skill uses.
-- `bundles`: id -> `name`, `description`, `icon`, `effects`. Effect bundles the story script puts on him (the pact's corruption, its debt).
+- `bundles`: id -> `name`, `description`, `icon`, `effects`, optional `hidden` (no portrait icon). Effect bundles the script puts on him (the Polymath bonus).
 - `actions`: vanilla hero action keys copied for him, a wizard. Each copy gets its own enable effect (`action_effect_key`) that a skill level
   gives, and the vanilla action's name and description.
 - `action_overrides`: action key -> column -> value, swapped into his copy of that action (outcomes, description).
@@ -59,7 +59,8 @@ The rest of his kit, also in the registry:
 Each tree row's cards take that row's colour from `ROW_COLOURS`, through a skill category for his subtype only.
 
 The Polymath (the skill with `role` "polymath") grows with every discipline of `DISCIPLINES` in which he has `POLYMATH_SKILLS` skills: the
-loadout script puts the bundle `bundles.polymath_<n>` on him for n such disciplines, so the registry needs one per discipline.
+loadout script puts the bundle `bundles.polymath_<n>` on him for n such disciplines, so the registry needs one from 0 up to every discipline. Each
+bundle holds the whole bonus, so the skill itself has no effects.
 
 Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_TEMPLATE`), mounted pairs start from a vanilla hero on the same
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
@@ -216,7 +217,7 @@ ROW_COLOURS = ["F1413D", "3DA5F1", "F1C43D", "9B3DF1", "3DF17A", "F13DC4", "F181
 
 # The Polymath's disciplines: name -> the tree rows whose skills count for it. And how many skills of one discipline make it count.
 DISCIPLINES = {"arts": [2, 1], "memory": [4], "magic": [3, 5, 6, 7], "hero_work": [8, 9]}
-POLYMATH_SKILLS = 3
+POLYMATH_SKILLS = 5
 
 # Spells a lore skill's first level gives, the cheapest first, and how many levels a lore skill has.
 LORE_FIRST_SPELLS = 3
@@ -1295,7 +1296,7 @@ def story_bundle_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], tex
         texts (List[Tuple[str, str]]): Loc rows, added to.
     """
     for bundle_id, entry in registry.get("bundles", {}).items():
-        bundle_rows(bundle_key(bundle_id), entry, rows, texts)
+        bundle_rows(bundle_key(bundle_id), entry, rows, texts, hidden=entry.get("hidden", False))
 
 
 def action_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], vanilla_texts: List[Tuple[str, str]]) -> None:
@@ -1500,8 +1501,8 @@ def polymath_data(registry: Dict) -> Optional[Dict]:
         registry (Dict): The registry.
 
     Returns:
-        Optional[Dict]: `skill`, `needed`, `disciplines` (name -> skill keys, lores included) and `bundles` (one per number of disciplines), or None
-        when no Polymath is built.
+        Optional[Dict]: `skill`, `needed`, `disciplines` (name -> skill keys, lores included) and `bundles` (one per number of disciplines, from 0), or
+        None when no Polymath is built.
 
     Raises:
         SystemExit: When a Polymath bundle is missing from the registry's `bundles`.
@@ -1510,7 +1511,7 @@ def polymath_data(registry: Dict) -> Optional[Dict]:
     polymaths = [k for k, s in skills.items() if s.get("build") and s.get("role") == "polymath"]
     if not polymaths:
         return None
-    missing = [f"polymath_{n}" for n in range(1, len(DISCIPLINES) + 1) if f"polymath_{n}" not in registry.get("bundles", {})]
+    missing = [f"polymath_{n}" for n in range(len(DISCIPLINES) + 1) if f"polymath_{n}" not in registry.get("bundles", {})]
     if missing:
         raise SystemExit(f"the Polymath needs the bundles {', '.join(missing)}")
     disciplines = {}
@@ -1520,7 +1521,7 @@ def polymath_data(registry: Dict) -> Optional[Dict]:
                  for slot, (slot_row, _) in enumerate(lore_slots(registry)) if slot_row in rows]
         disciplines[name] = sorted(keys)
     return {"skill": planned_skill_key(polymaths[0]), "needed": POLYMATH_SKILLS, "disciplines": disciplines,
-            "bundles": [bundle_key(f"polymath_{n}") for n in range(1, len(DISCIPLINES) + 1)]}
+            "bundles": [bundle_key(f"polymath_{n}") for n in range(len(DISCIPLINES) + 1)]}
 
 
 def art_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:

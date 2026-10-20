@@ -534,7 +534,7 @@ local function sync_polymath(character)
 	if not data then
 		return false
 	end
-	local counted = {}
+	local counted, wanted = {}, nil
 	if character:has_skill(data.skill) then
 		for name, keys in pairs(data.disciplines) do
 			local owned = 0
@@ -547,8 +547,9 @@ local function sync_polymath(character)
 				table.insert(counted, name)
 			end
 		end
+		-- The first bundle is for no disciplines, so he has one whenever he owns the Polymath.
+		wanted = data.bundles[#counted + 1]
 	end
-	local wanted = data.bundles[#counted]
 	local changed = false
 	for _, bundle in ipairs(data.bundles) do
 		local has = character:has_effect_bundle(bundle)

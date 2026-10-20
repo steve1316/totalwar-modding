@@ -3051,31 +3051,9 @@
    "build": true,
    "role": "polymath",
    "requires": [],
-   "description": "He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he will be all of them.\\\\n\\\\nThe Polymath. It grows with each discipline (Arts, Memory, Magic, Hero work) in which he has 3 skills. Locks every Apex except Master of Arms.",
+   "description": "He has been a swordsman, a sorcerer, a spy and a steward, in one ending or another. This time he is all of them at once.\\\\n\\\\nA discipline counts once he knows 5 of its skills: Arts, Memory, Magic (learned spells count) and Hero work. Every discipline that counts makes him stronger, and all four make him the strongest he can be.\\\\n\\\\nLocks every Apex.",
    "levels": [
-    [
-     {
-      "effect": "wh_main_effect_character_stat_melee_attack",
-      "scope": "character_to_character_own",
-      "value": 5
-     },
-     {
-      "effect": "wh_main_effect_character_stat_melee_defence",
-      "scope": "character_to_character_own",
-      "value": 5
-     },
-     {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5},
-     {
-      "effect": "wh_main_effect_agent_action_success_chance",
-      "scope": "character_to_character_own",
-      "value": 5
-     },
-     {
-      "effect": "wh_main_effect_character_stat_leadership",
-      "scope": "character_to_character_own",
-      "value": 5
-     }
-    ]
+    []
    ],
    "exclusive": ["civic_apex", "magic_archmage", "martial_apex"]
   },
@@ -7328,34 +7306,27 @@
  },
  "actions": ["wh2_main_agent_action_champion_assist_army_scavenge", "wh2_main_agent_action_champion_passive_increase_trade", "wh2_main_agent_action_champion_passive_stimulate_growth", "wh2_main_agent_action_spy_assist_army_increase_mobility", "wh2_main_agent_action_spy_hinder_character_assassinate", "wh3_dlc26_agent_action_champion_passive_spread_corruption_kho"],
  "bundles": {
-  "polymath_1": {
-   "name": "Polymath: Everything, Again (1 of 4)",
+  "polymath_0": {
+   "name": "Polymath: Everything, Again (0 of 4)",
    "icon": "public_order.png",
-   "description": "He draws on 1 of his disciplines at once.",
-   "effects": [
-    {
-     "effect": "wh_main_effect_agent_action_success_chance",
-     "scope": "character_to_character_own",
-     "value": 5
-    }
-   ]
-  },
-  "polymath_2": {
-   "name": "Polymath: Everything, Again (2 of 4)",
-   "icon": "public_order.png",
-   "description": "He draws on 2 of his disciplines at once.",
+   "hidden": true,
+   "description": "He draws on none of his 4 disciplines yet. Each discipline counts once he knows 5 of its skills.",
    "effects": [
     {
      "effect": "wh_main_effect_character_stat_melee_attack",
      "scope": "character_to_character_own",
-     "value": 5
+     "value": 10
     },
     {
      "effect": "wh_main_effect_character_stat_melee_defence",
      "scope": "character_to_character_own",
-     "value": 5
+     "value": 10
     },
-    {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5},
+    {
+     "effect": "wh3_main_effect_spell_mastery",
+     "scope": "character_to_character_own",
+     "value": 10
+    },
     {
      "effect": "wh_main_effect_agent_action_success_chance",
      "scope": "character_to_character_own",
@@ -7364,26 +7335,31 @@
     {
      "effect": "wh_main_effect_character_stat_leadership",
      "scope": "character_to_character_own",
-     "value": 5
+     "value": 10
     }
    ]
   },
-  "polymath_3": {
-   "name": "Polymath: Everything, Again (3 of 4)",
+  "polymath_1": {
+   "name": "Polymath: Everything, Again (1 of 4)",
    "icon": "public_order.png",
-   "description": "He draws on 3 of his disciplines at once.",
+   "hidden": true,
+   "description": "He draws on 1 of his 4 disciplines. Each discipline counts once he knows 5 of its skills.",
    "effects": [
     {
      "effect": "wh_main_effect_character_stat_melee_attack",
      "scope": "character_to_character_own",
-     "value": 5
+     "value": 15
     },
     {
      "effect": "wh_main_effect_character_stat_melee_defence",
      "scope": "character_to_character_own",
-     "value": 5
+     "value": 15
     },
-    {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 5},
+    {
+     "effect": "wh3_main_effect_spell_mastery",
+     "scope": "character_to_character_own",
+     "value": 15
+    },
     {
      "effect": "wh_main_effect_agent_action_success_chance",
      "scope": "character_to_character_own",
@@ -7392,26 +7368,31 @@
     {
      "effect": "wh_main_effect_character_stat_leadership",
      "scope": "character_to_character_own",
-     "value": 5
+     "value": 15
     }
    ]
   },
-  "polymath_4": {
-   "name": "Polymath: Everything, Again (4 of 4)",
+  "polymath_2": {
+   "name": "Polymath: Everything, Again (2 of 4)",
    "icon": "public_order.png",
-   "description": "He draws on 4 of his disciplines at once.",
+   "hidden": true,
+   "description": "He draws on 2 of his 4 disciplines. Each discipline counts once he knows 5 of its skills.",
    "effects": [
     {
      "effect": "wh_main_effect_character_stat_melee_attack",
      "scope": "character_to_character_own",
-     "value": 10
+     "value": 20
     },
     {
      "effect": "wh_main_effect_character_stat_melee_defence",
      "scope": "character_to_character_own",
-     "value": 10
+     "value": 20
     },
-    {"effect": "wh3_main_effect_spell_mastery", "scope": "character_to_character_own", "value": 10},
+    {
+     "effect": "wh3_main_effect_spell_mastery",
+     "scope": "character_to_character_own",
+     "value": 20
+    },
     {
      "effect": "wh_main_effect_agent_action_success_chance",
      "scope": "character_to_character_own",
@@ -7419,6 +7400,102 @@
     },
     {
      "effect": "wh_main_effect_character_stat_leadership",
+     "scope": "character_to_character_own",
+     "value": 15
+    },
+    {
+     "effect": "wh_main_effect_character_stat_ward_save",
+     "scope": "character_to_character_own",
+     "value": 5
+    }
+   ]
+  },
+  "polymath_3": {
+   "name": "Polymath: Everything, Again (3 of 4)",
+   "icon": "public_order.png",
+   "hidden": true,
+   "description": "He draws on 3 of his 4 disciplines. Each discipline counts once he knows 5 of its skills.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_character_stat_melee_attack",
+     "scope": "character_to_character_own",
+     "value": 20
+    },
+    {
+     "effect": "wh_main_effect_character_stat_melee_defence",
+     "scope": "character_to_character_own",
+     "value": 20
+    },
+    {
+     "effect": "wh3_main_effect_spell_mastery",
+     "scope": "character_to_character_own",
+     "value": 20
+    },
+    {
+     "effect": "wh_main_effect_agent_action_success_chance",
+     "scope": "character_to_character_own",
+     "value": 25
+    },
+    {
+     "effect": "wh_main_effect_character_stat_leadership",
+     "scope": "character_to_character_own",
+     "value": 20
+    },
+    {
+     "effect": "wh_main_effect_character_stat_ward_save",
+     "scope": "character_to_character_own",
+     "value": 5
+    },
+    {
+     "effect": "wh2_main_effect_ability_cooldown_spells",
+     "scope": "character_to_character_own",
+     "value": -10
+    }
+   ]
+  },
+  "polymath_4": {
+   "name": "Polymath: Everything, Again (4 of 4)",
+   "icon": "public_order.png",
+   "hidden": true,
+   "description": "He draws on all 4 of his disciplines at once.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_character_stat_melee_attack",
+     "scope": "character_to_character_own",
+     "value": 25
+    },
+    {
+     "effect": "wh_main_effect_character_stat_melee_defence",
+     "scope": "character_to_character_own",
+     "value": 25
+    },
+    {
+     "effect": "wh3_main_effect_spell_mastery",
+     "scope": "character_to_character_own",
+     "value": 25
+    },
+    {
+     "effect": "wh_main_effect_agent_action_success_chance",
+     "scope": "character_to_character_own",
+     "value": 30
+    },
+    {
+     "effect": "wh_main_effect_character_stat_leadership",
+     "scope": "character_to_character_own",
+     "value": 20
+    },
+    {
+     "effect": "wh_main_effect_character_stat_ward_save",
+     "scope": "character_to_character_own",
+     "value": 10
+    },
+    {
+     "effect": "wh2_main_effect_ability_cooldown_spells",
+     "scope": "character_to_character_own",
+     "value": -15
+    },
+    {
+     "effect": "wh_main_effect_character_stat_weapon_strength",
      "scope": "character_to_character_own",
      "value": 10
     }
