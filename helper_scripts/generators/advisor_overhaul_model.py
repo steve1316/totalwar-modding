@@ -22,7 +22,7 @@ before `generators.advisor_overhaul`.
 
 It also writes the copies the registry's weapon and outfit changes need: each weapon of `model.prop_offsets`, `prop_turns` and `prop_sizes`
 moved, turned and sized, each prop piece of a weapon's `piece_shapes` the same way, and each `.wsmodel` piece of an outfit in `model.unpainted` with materials whose colour masks are blank (`BLANK_MASK`),
-so the game paints no faction colours or heraldry on it. Each ridden mount gets its skinned `ridden.body` (see `write_ridden_bodies`).
+so the game paints no faction colours or heraldry on it.
 
 Usage:
     python -m generators.advisor_overhaul_model [--preview]
@@ -43,8 +43,8 @@ import numpy as np
 from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim
 from tools.anim_retarget import quat_matrix, world_pose
-from generators.advisor_overhaul import PROP_CHANGES, REGISTRY, RIDDEN_FOLDER, UNPAINTED_FOLDER, piece_copy_path, prop_copy_path, ridden_body_path, unpainted_copy_path
-from tools.rmv2_file import FORMAT_STATIC, AttachmentPoint, Mesh, read_rmv2, read_wsmodel, set_attachment_points, set_pivot, set_positions, set_skin, turn_directions, write_rmv2
+from generators.advisor_overhaul import PROP_CHANGES, REGISTRY, UNPAINTED_FOLDER, piece_copy_path, prop_copy_path, unpainted_copy_path
+from tools.rmv2_file import Mesh, read_rmv2, read_wsmodel, set_attachment_points, set_pivot, set_positions, set_skin, turn_directions, write_rmv2
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,8 +60,7 @@ BLANK_MASK = "commontextures/default_black_srgb.dds"
 MASK_SOURCE = re.compile(r"(<slot[^>]*>\s*t_xml_mask1?\s*</slot>\s*<source>)[^<]*(</source>)")
 
 # The vanilla packs holding the skeletons and models below.
-VANILLA_PACKS = re.compile(r"^(anim2|variants|variants3|variants4)\.pack$")
-
+VANILLA_PACKS = re.compile(r"^(anim2|variants|variants4)\.pack$")
 
 # The Advisor gallery's preview folder, written by `--preview`. Each variant mesh definition in it becomes a "Preview: <name>" entry.
 PREVIEWS = "./temp/anim_viewer_gallery_previews"
@@ -445,55 +444,6 @@ def write_shaped_copy(assets: AssetSource, path: str, copy_path, offset: List[fl
     print(f"wrote {copy_path(path)}, moved {moved} cm, turned {', '.join(f'{t:g}' for t in turn)} degrees, sized {size * 100:g}%")
 
 
-def write_ridden_bodies(assets: AssetSource, mounts: Dict) -> None:
-    """Writes each ridden mount's skinned body: a copy of its `ridden.body` model with every vertex tied to one bone of the mount's skeleton.
-
-    The model must already sit where that bone's bind pose holds it, as the vanilla campaign disc sits on `humanoid01c`'s `be_prop_4`.
-
-    Args:
-        assets (AssetSource): The vanilla packs.
-        mounts (Dict): The registry's `mounts`.
-
-    Raises:
-        SystemExit: When a body model is not weighted or its bone is not on the skeleton.
-    """
-    shutil.rmtree(os.path.join(MOD, RIDDEN_FOLDER), ignore_errors=True)
-    for mount_key, mount in mounts.items():
-        body = mount.get("ridden", {}).get("body")
-        if not body:
-            continue
-        skeleton_path = f"animations/skeletons/{body['skeleton']}.anim"
-        text = assets.fetch_all([body["model"]])[norm(body["model"])].decode("utf-8-sig")
-        geometry = read_wsmodel(text)[0]
-        files = assets.fetch_all([geometry, skeleton_path])
-        skeleton = read_anim(files[norm(skeleton_path)])
-        bones = [b.name for b in skeleton.bones]
-        if body["bone"] not in bones:
-            sys.exit(f"mounts.{mount_key}.ridden.body.bone {body['bone']} is not on {body['skeleton']}")
-        bone = bones.index(body["bone"])
-        model = read_rmv2(files[norm(geometry)])
-        model.skeleton = body["skeleton"]
-        # One point per bone with no offset, as on vanilla skinned models.
-        points = [AttachmentPoint(name, (1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0), i) for i, name in enumerate(bones)]
-        for mesh in (m for lod in model.lods for m in lod):
-            if mesh.vertex_format == FORMAT_STATIC:
-                sys.exit(f"mounts.{mount_key}.ridden.body.model is not weighted")
-            tied = np.zeros_like(mesh.blocks.vertices["bone"])
-            tied[:, 0] = bone
-            weights = np.zeros_like(mesh.blocks.vertices["weight"])
-            weights[:, 0] = 255
-            set_skin(mesh, tied, weights)
-            set_attachment_points(mesh, points)
-        copy = ridden_body_path(mount_key)
-        geometry_copy = copy.replace(".wsmodel", ".rigid_model_v2")
-        os.makedirs(os.path.dirname(os.path.join(MOD, copy)), exist_ok=True)
-        with open(os.path.join(MOD, geometry_copy), "wb") as f:
-            f.write(write_rmv2(model))
-        with open(os.path.join(MOD, copy), "w", encoding="utf-8", newline="\n") as f:
-            f.write(text.replace(geometry, geometry_copy))
-        print(f"wrote {copy}, every vertex on {body['skeleton']} {body['bone']} (bone {bone})")
-
-
 def write_unpainted_copies(assets: AssetSource, model: Dict) -> None:
     """Writes a copy of each `.wsmodel` piece of the outfits in the registry's `model.unpainted`, and of its materials with their colour masks
     replaced by `BLANK_MASK`. The copies keep the vanilla geometry and every other texture.
@@ -532,7 +482,6 @@ def build(preview: bool) -> None:
     assets = AssetSource([], [], VANILLA_PACKS)
     write_prop_copies(assets, *(model.get(name, {}) for name in PROP_CHANGES))
     write_piece_copies(AssetSource([], []), registry["weapons"])
-    write_ridden_bodies(assets, registry["mounts"])
     files = assets.fetch_all([SOURCE_SKELETON, TARGET_SKELETON, POINTS_MODEL] + [source for source, _, _ in MODELS.values()])
     rig = Rig(read_anim(files[norm(SOURCE_SKELETON)]), read_anim(files[norm(TARGET_SKELETON)]), model["hand_shift"])
     print("bind gaps over 1 cm of bones both skeletons have:")

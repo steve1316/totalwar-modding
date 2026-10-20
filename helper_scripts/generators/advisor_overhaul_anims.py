@@ -110,20 +110,6 @@ PEGASUS_FLY = r"^RIDER_FLY_"
 # in those frames until it is back at this height.
 DISC_FLOOR = 0.45
 
-# His rider on a ridden disc is placed from the disc's origin on the ground, so his bow set is lifted by this much and his disc set holds the disc
-# where it is at the start of its stand, 0.78 m up. The sorcerer's ankles sit level with that disc bone and his own ankles 0.1 m over the ground.
-DISC_LIFT = 0.69
-# Every slot but the deaths, falls and dock poses. His corpse lands on the ground and the disc falls with it.
-ALIVE_POSES = r"^(?!DOCK_EQUIPMENT_|PERSISTENT_METADATA_|(LAND_)?DEATH_|DEAD_|FALL_)"
-
-# Ridden disc set -> (its rider's set, how much of the sorcerer's disc bob and tilt it plays, folder, file name prefix). The game starts the rider's
-# and the disc's animations on their own, so both play one hover, taken from the stand of the set the disc set copies. Each disc slot lasts as long
-# as his slot of the same name, and every animation of either fits whole hover cycles, so a slot change starts both at the same point of it. A
-# quarter keeps the slip small when the two play different slots. Chosen 2026-10-19.
-DISC_HOVER = {"hu1c_advisor_overhaul_disc": ("hu1_advisor_overhaul_disc_sword_and_bow", 0.25, "animations/battle/humanoid01c/advisor_overhaul/disc_hover", "aodh")}
-# The slots that hover: the living ones, but not the hand, face and portrait poses.
-HOVER_POSES = r"^(?!DOCK_EQUIPMENT_|PERSISTENT_METADATA_|(LAND_)?DEATH_|DEAD_|FALL_|HAND_POSE_|FACE_POSE_|PORTHOLE_)"
-
 # Set name -> (the set that gives it the slots it lacks, regex of the slots it gives). The giving set is a vanilla humanoid01 set or one
 # built before it. Taoyan casts no spells, so her set has no casts, and Settra's halberd set gives them. Chosen 2026-10-17: the rest of the Glaive
 # stays pure Taoyan, so only the casts come over.
@@ -172,12 +158,11 @@ GLAIVE_HIP = {prop: (f"hu1_advisor_overhaul_glaive:{pose}", anchor) for prop, (p
 # Every slot but the dock poses and the persistent metadata.
 ALL_POSES = r"^(?!DOCK_EQUIPMENT_|PERSISTENT_METADATA_)"
 
-# Set name -> list of (slot regex, `grips`, `pins`, folder, file name prefix, optional `floor`, optional `still`). Each matching slot plays a copy
-# of its animation with props held, and a copy of its meta pointed at the copy:
+# Set name -> list of (slot regex, `grips`, `pins`, folder, file name prefix, optional `floor`). Each matching slot plays a copy of its animation
+# with props held, and a copy of its meta pointed at the copy:
 # - `grips`: prop -> (the bone whose place it takes in the first frame, the bone it is then held to).
 # - `pins`: prop -> (the slot whose first frame gives its offset, the bone it is held to). A slot of another set is named `set:SLOT`.
 # - `floor`: (bone, height). In frames where the bone is lower, his body and props are raised until it is at that height.
-# - `still`: `animroot` stays where it starts. A rider and his mount share one space, so a root that travels in one and not the other parts them.
 # A slot's weapon bools say which props it shows, bit N for `be_prop_N`, so each matching slot also shows the props it holds.
 # Settra's casts are the staff-and-sword ones with his halberd slung on his back. The Glaive's copies put the polearm where the staff starts, in his
 # left hand, and keep it there: the staff twirls in his fingers, which a long blade turns into a jitter. Both models lie centred along the same axis.
@@ -204,13 +189,6 @@ PROP_PINS = {
                          **GLAIVE_HIP}, f"{DERIVED_FOLDER}/disc_two_handed/held", "aodth", ("be_prop_4", DISC_FLOOR)),
     ],
     "hu1_advisor_overhaul_disc01_glaive": [(ALL_POSES, {"be_prop_0": ("be_prop_1", "hand_right")}, {}, f"{DERIVED_FOLDER}/disc_glaive", "aodg")],
-    # `animroot` stays on the ground, so a floor on it lifts him by that height in every frame. His foot attacks lunge up to 1.6 m, which would carry
-    # him off the disc, so his root stays still like the disc's.
-    "hu1_advisor_overhaul_disc_sword_and_bow": [(ALIVE_POSES, {}, {}, f"{DERIVED_FOLDER}/disc_sword_and_bow/lifted", "aodl", ("animroot", DISC_LIFT), True)],
-    # The sorcerer's disc bobs half a metre in its stand and up to 1.8 m in its turns, which his feet cannot follow, so it starts as in the stand's
-    # start and `DISC_HOVER` moves it by a smaller hover he shares. Its root also carries the walk, run and attack travel (up to 34 m a loop) that
-    # his stands lack, so the root stays still.
-    "hu1c_advisor_overhaul_disc": [(ALIVE_POSES, {}, {"be_prop_4": ("STAND", "animroot")}, "animations/battle/humanoid01c/advisor_overhaul/disc", "aodm", None, True)],
 }
 
 # Set name -> (folder, file name prefix) for the copies of vanilla animations its docking is baked into. Taoyan's glaive, sword and scabbard ride on
@@ -232,18 +210,12 @@ CAMPAIGN_SETS = {
 # The shield and the bone it is held to. In vanilla shield animations the shield moves with this bone to within 2 mm.
 SHIELD_PIN = {"be_prop_2": "hand_left"}
 
-# His bow set's stances, moves and stance changes: every slot that docks the bow on his back outside a fight, plus the bow moves and turns.
-BOW_STANCES = (r"^(STAND(_IDLE_\d+)?|COMBAT_READY|COMBAT_IDLE_\d+|WALK_\d+|RUN_\d+|CHARGE|COMBAT_READY_MOVE_\d+|(COMBAT_READY_|SHOOT_|SHOOT_READY_)?(STEP|TURN)_\w+"
-               r"|SHOOT_STAND(_IDLE_\d+)?|SHOOT_READY_IDLE_\d+|SHOOT_(WALK|RUN)_\d+|(STAND|COMBAT_READY|SHOOT_STAND|SHOOT_READY)_TO_(STAND|COMBAT_READY|SHOOT_STAND|SHOOT_READY))$")
-
 # New set name -> how it is made:
 # - `base`: the vanilla set it copies, or one built before it.
 # - `donor` and `donor_slots`: a vanilla set and a regex of the slot names it replaces.
 # - `pins`: prop bone -> the bone it is held to in the cast slots (`PIN_SLOTS`).
 # - `folder` and `prefix`: where the pinned animations go and the prefix marking them. Sets that pin nothing need neither.
 # - `stand`: the slot whose first frame gives the pin offsets, when it is not `RIDER_STAND` (mounted) or `STAND` (on foot).
-# - `stance`: a slot of the set and a regex of the slots that play its animations instead.
-# - `skeleton`: its skeleton for its table row, when it is not `TARGET_SKELETON`.
 DERIVED_SETS = {
     "hu1_advisor_overhaul_sword_and_shield": {"base": "hu1_empire_sword_and_shield", "pins": SHIELD_PIN, "folder": f"{DERIVED_FOLDER}/sword_and_shield",
                                               "prefix": "aos"},
@@ -258,13 +230,6 @@ DERIVED_SETS = {
                                                      "donor_slots": RIDER_CASTS},
     # The Huntsmarshal's short and medium casts are bow tricks (an oil flask and a trick shot), so all six come from the Amethyst Wizard.
     "hu1_advisor_overhaul_sword_and_bow": {"base": "hu1_huntsmarshal_sword_bow", "donor": "hu1_pr8_amethyst_staff_and_sword", "donor_slots": FOOT_CASTS},
-    # His foot bow set for the disc. Between shots a rider plays `STAND`, which docks the bow on his back, so every stance, move and stance change
-    # plays his still bow stance instead and the bow stays in his hand. Walking feet would look wrong on the disc anyway. Chosen 2026-10-19.
-    # The game places him from the disc's origin on the ground whatever its rider bone, rider rows or set flag say (tested 2026-10-19), so `PROP_PINS`
-    # lifts him onto the disc.
-    "hu1_advisor_overhaul_disc_sword_and_bow": {"base": "hu1_advisor_overhaul_sword_and_bow", "stance": ("SHOOT_READY", BOW_STANCES)},
-    # The ridden disc's own set: the Tzeentch sorcerer's disc set with the disc held still (`PROP_PINS`). Only the disc of its model shows.
-    "hu1c_advisor_overhaul_disc": {"base": "hu1c_wh3_dlc20_tzeentch_sorcerer_wm_disc01_staff_sword", "skeleton": "humanoid01c"},
     # The Mounted Yeomen's horse set plays foot casts in all six rider cast slots.
     "hu1_advisor_overhaul_hr1_warhorse_sword_and_bow": {"base": "hu1_empire_hr1_warhorse_sword_and_bow", "donor": HORSE_CAST_DONOR, "donor_slots": RIDER_CASTS},
     # The staff-and-sword horse sets as they are, plus the fire slots in `ADDED_SLOTS`.
@@ -294,11 +259,6 @@ RIDER_FIRE = RIDER_SHOTS + [("RIDER_COMBAT_READY", "RIDER_STAND")]
 # vanilla disc sorcerer. The disc set has no combat-ready stance, and a fire slot without one leaves him in a T-pose after the shot.
 DISC_FIRE = [("FIRE_LEVEL", "CAST_SPELL_FORWARD_SHORT"), ("COMBAT_READY", "STAND"), ("FLY_COMBAT_READY", "FLY_STAND")]
 
-# The bow on the disc: he rides the disc as its own mount and plays his disc bow set, as Zerooz's Skyfire Archers do. A rider shoots on the move from
-# the `RIDER_FIRE_*` slots, so they play his own moving shots, whose feet stay still. His `FIRE_LEVEL` steps forward, off the disc. Chosen 2026-10-19.
-RIDDEN_BOW = [("RIDER_FIRE_FORWARD_LEVEL", "MOVING_FIRE_FORWARD_LEVEL"), ("RIDER_FIRE_BACK_LEVEL", "MOVING_FIRE_BACKWARD_LEVEL"),
-              ("RIDER_FIRE_LEFT_LEVEL", "MOVING_FIRE_LEFT_LEVEL"), ("RIDER_FIRE_RIGHT_LEVEL", "MOVING_FIRE_RIGHT_LEVEL")]
-
 # The staff bolt on the dragon fires from the rider slots, as the High Elf dragon bow set does. The staff dragon set sits in `STAND` and has no
 # combat-ready stance of either kind.
 DRAGON_FIRE = RIDER_SHOTS + [("COMBAT_READY", "STAND"), ("RIDER_COMBAT_READY", "STAND")]
@@ -307,7 +267,6 @@ DRAGON_FIRE = RIDER_SHOTS + [("COMBAT_READY", "STAND"), ("RIDER_COMBAT_READY", "
 # `hu1_pr8_amethyst_staff_and_sword` already has `FIRE_LEVEL` (`hu1_sfsw_aim_fire_stand_01`, `FIRE_POS` at 0.9 s of 2.2 s) and `COMBAT_READY`.
 ADDED_SLOTS = {
     "hu1_advisor_overhaul_disc01_staff_and_sword": DISC_FIRE,
-    "hu1_advisor_overhaul_disc_sword_and_bow": RIDDEN_BOW,
     "hu1_advisor_overhaul_hr1_warhorse_staff_and_sword": RIDER_FIRE,
     "hu1_advisor_overhaul_hr1_pegasus_staff_and_sword": RIDER_FIRE,
     "hu1_advisor_overhaul_dr1_dragon_staff_and_sword": DRAGON_FIRE,
@@ -510,7 +469,7 @@ def hold_props(anim: Animation, skeleton: Animation, holds: Dict[str, Tuple[str,
 
 
 def build_derived(name: str, spec: Dict, sets: Dict[str, bytes], assets: AssetSource, names: Dict[int, str]) -> bytes:
-    """Copies a vanilla set, swaps in the donor's and the `stance` slots and pins props in its cast animations, writing the pinned animations into the mod folder.
+    """Copies a vanilla set, swaps in the donor's slots and pins props in its cast animations, writing the pinned animations into the mod folder.
 
     Args:
         name (str): The new set's name.
@@ -523,7 +482,7 @@ def build_derived(name: str, spec: Dict, sets: Dict[str, bytes], assets: AssetSo
         bytes: The new set `.bin`.
 
     Raises:
-        SystemExit: When the donor lacks a slot, the `stance` slot is empty or the set has no stand animation.
+        SystemExit: When the donor lacks a slot or the set has no stand animation.
     """
     new = parse_set(sets[spec["base"]])
     new.name = name
@@ -544,15 +503,6 @@ def build_derived(name: str, spec: Dict, sets: Dict[str, bytes], assets: AssetSo
                 if slot_name(slot) not in donor:
                     raise SystemExit(f"{name}: donor set has no {slot_name(slot)}")
                 slot.refs = list(donor[slot_name(slot)])
-                swapped += 1
-    if spec.get("stance"):
-        source, pattern = spec["stance"]
-        refs = next((slot.refs for slot in new.slots if slot_name(slot) == source and slot.refs), None)
-        if refs is None:
-            raise SystemExit(f"{name}: no {source} to play")
-        for slot in new.slots:
-            if re.match(pattern, slot_name(slot)):
-                slot.refs = list(refs)
                 swapped += 1
     if not pins:
         print(f"{name}: {len(new.slots)} slots, {swapped} swapped")
@@ -686,7 +636,7 @@ def first_anim(slots: List[Slot], names: Dict[int, str], slot: str) -> Optional[
 
 
 def pin_props(data: bytes, names: Dict[int, str], sets: Dict[str, bytes], assets: AssetSource, pattern: str, grips: Dict[str, Tuple[str, str]],
-              pins: Dict[str, Tuple[str, str]], folder: str, prefix: str, floor: Optional[Tuple[str, float]] = None, still: bool = False) -> bytes:
+              pins: Dict[str, Tuple[str, str]], folder: str, prefix: str, floor: Optional[Tuple[str, float]] = None) -> bytes:
     """Points the matching slots at copies of their animations with props held, and at copies of their metas pointed at them. Each slot also shows
     the props it holds, unless it shows none at all (a slot of weapon bools 0, such as an unarmed stand).
 
@@ -701,7 +651,6 @@ def pin_props(data: bytes, names: Dict[int, str], sets: Dict[str, bytes], assets
         folder (str): Output folder for the copies, relative to the mod folder.
         prefix (str): Short prefix marking the copies.
         floor (Optional[Tuple[str, float]]): (bone, height). In frames where the bone is lower he is raised until it is at that height.
-        still (bool): Whether `animroot` stays where it starts, so the copies carry no travel.
 
     Returns:
         bytes: The changed set `.bin`.
@@ -733,9 +682,6 @@ def pin_props(data: bytes, names: Dict[int, str], sets: Dict[str, bytes], assets
     moved: Dict[str, bytes] = {}
     for path in anims:
         anim = read_anim(read(path))
-        if still:
-            for rotations, translations in zip(anim.rotations, anim.translations):
-                rotations[0], translations[0] = anim.rotations[0][0], anim.translations[0][0]
         heights = [0.0] * len(anim.translations)
         if floor:
             bone, low = floor
@@ -759,90 +705,8 @@ def pin_props(data: bytes, names: Dict[int, str], sets: Dict[str, bytes], assets
             slot.weapon_bools |= shown
     held = [f"{prop} held to {hand} where {leader} starts" for prop, (leader, hand) in grips.items()] + [f"{p} held to {a} as in {pose}" for p, (pose, a) in pins.items()]
     held += [f"raised until {floor[0]} is {floor[1]} m up"] if floor else []
-    held += ["animroot held still"] if still else []
     print(f"{anim_set.name}: {len(moved)} {pattern} animations with {', '.join(held)}, {copied} metas repointed")
     return write_set(anim_set)
-
-
-def hover_disc(data: bytes, names: Dict[int, str], sets: Dict[str, bytes], assets: AssetSource, rider: str, scale: float, folder: str, prefix: str) -> bytes:
-    """Makes a ridden disc hover under its rider (see `DISC_HOVER`). His animations in the mod folder change in place, and each disc slot plays a
-    new animation of the disc held where its stand starts and moved by the hover.
-
-    Args:
-        data (bytes): The disc set `.bin`.
-        names (Dict[int, str]): Slot names by id.
-        sets (Dict[str, bytes]): Set `.bin` files by set name, with the rider's set already built.
-        assets (AssetSource): The vanilla packs, for files the mod folder lacks.
-        rider (str): The rider's set name.
-        scale (float): How much of the sorcerer's bob and tilt plays.
-        folder (str): Output folder for the disc's animations, relative to the mod folder.
-        prefix (str): Short prefix marking them.
-
-    Returns:
-        bytes: The changed disc set `.bin`.
-
-    Raises:
-        SystemExit: When the copied set or the disc set has no stand.
-    """
-    mount_set, rider_set = parse_set(data), parse_set(sets[rider])
-    stands = (first_anim(parse_set(sets[DERIVED_SETS[mount_set.name]["base"]]).slots, names, "STAND"), first_anim(mount_set.slots, names, "STAND"))
-    if None in stands:
-        raise SystemExit(f"{mount_set.name}: no STAND to hover from")
-    mount_slots = [slot for slot in mount_set.slots if slot.refs and re.match(HOVER_POSES, names.get(slot.slot_id, ""))]
-    rider_slots = {names.get(slot.slot_id, ""): slot.refs[0].anim for slot in rider_set.slots if slot.refs and re.match(HOVER_POSES, names.get(slot.slot_id, ""))}
-    # Only his copies in the mod folder can change, which are all his living slots on the disc.
-    lifted = sorted(path for path in set(rider_slots.values()) if os.path.exists(os.path.join(MOD, path)))
-    skeletons = {name: f"animations/skeletons/{name}.anim" for name in (mount_set.skeleton, rider_set.skeleton)}
-    read = read_files([*stands, *lifted, *skeletons.values(), *(slot.refs[0].anim for slot in mount_slots)], assets)
-    mount_skeleton, rider_skeleton = (read_anim(read(skeletons[name])) for name in (mount_set.skeleton, rider_set.skeleton))
-    disc = [bone.name for bone in mount_skeleton.bones].index("be_prop_4")
-
-    # One hover cycle: the sorcerer's disc relative to where it starts, through his stand's loop (its last frame repeats the first).
-    source = read_anim(read(stands[0]))
-    track = [world_pose(source, mount_skeleton, frame)[disc] for frame in range(len(source.rotations) - 1)]
-    identity: Transform = ((0.0, 0.0, 0.0, 1.0), (0.0, 0.0, 0.0))
-    cycle = [_blend(identity, relative(track[0], place), scale) for place in track]
-    template = read_anim(read(stands[1]))
-    rest = world_pose(template, mount_skeleton, 0)[disc]
-
-    def hover(frames: int) -> List[Transform]:
-        cycles = max(1, round((frames - 1) / len(cycle)))
-        moves = []
-        for frame in range(frames):
-            at = frame * cycles * len(cycle) / max(1, frames - 1) % len(cycle)
-            moves.append(_blend(cycle[int(at)], cycle[(int(at) + 1) % len(cycle)], at - int(at)))
-        return moves
-
-    # His body and props turn and rise with the disc around its rest place.
-    for path in lifted:
-        anim = read_anim(read(path))
-        tops = [bone for bone, info in enumerate(anim.bones) if info.parent == 0]
-        for frame, move in enumerate(hover(len(anim.rotations))):
-            world = world_pose(anim, rider_skeleton, frame)
-            for bone in tops:
-                anim.rotations[frame][bone], anim.translations[frame][bone] = relative(world[0], compose(rest, compose(move, relative(rest, world[bone]))))
-        with open(os.path.join(MOD, path), "wb") as f:
-            f.write(write_anim(anim))
-
-    shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
-    os.makedirs(os.path.join(MOD, folder))
-    parent = world_pose(template, mount_skeleton, 0)[template.bones[disc].parent]
-    for slot in mount_slots:
-        name = names.get(slot.slot_id, "")
-        timing = read_anim(read(rider_slots.get(name) or rider_slots.get(name.removeprefix("FLY_")) or slot.refs[0].anim))
-        anim = copy.deepcopy(template)
-        frames = len(timing.rotations)
-        anim.frame_rate, anim.length = timing.frame_rate, timing.length
-        anim.rotations, anim.translations = [list(template.rotations[0]) for _ in range(frames)], [list(template.translations[0]) for _ in range(frames)]
-        for frame, move in enumerate(hover(frames)):
-            anim.rotations[frame][disc], anim.translations[frame][disc] = relative(parent, compose(rest, move))
-        path = f"{folder}/hu1_{prefix}_{name.lower()}.anim"
-        with open(os.path.join(MOD, path), "wb") as f:
-            f.write(write_anim(anim))
-        slot.refs = [replace(ref, anim=path) for ref in slot.refs]
-    bob = max(move[1][1] for move in cycle) - min(move[1][1] for move in cycle)
-    print(f"{mount_set.name}: {len(mount_slots)} disc animations and {len(lifted)} of {rider}'s hover with {scale} of {stands[0]} ({bob:.2f} m bob)")
-    return write_set(mount_set)
 
 
 def bake_docking(data: bytes, folder: str, prefix: str, names: Dict[int, str], assets: AssetSource) -> bytes:
@@ -1478,8 +1342,6 @@ def build() -> None:
             data = add_slots(data, ADDED_SLOTS[name], names)
         for spec in PROP_PINS.get(name, []):
             data = pin_props(data, names, sets, assets, *spec)
-        if name in DISC_HOVER:
-            data = hover_disc(data, names, sets, assets, *DISC_HOVER[name])
         if name in BAKED_DOCKING:
             data = bake_docking(data, *BAKED_DOCKING[name], names, assets)
         sets[name] = seat_riders(with_mount(name, data), names, sets, assets)

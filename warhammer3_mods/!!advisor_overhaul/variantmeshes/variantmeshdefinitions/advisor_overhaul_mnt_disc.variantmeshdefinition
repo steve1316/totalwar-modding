@@ -1,5 +1,0 @@
-<VARIANT_MESH>
-	<SLOT name="body" >
-		<VARIANT_MESH model="variantmeshes/wh_variantmodels/hu1/advisor_overhaul/mounts/disc_body.wsmodel" />
-	</SLOT>
-</VARIANT_MESH>

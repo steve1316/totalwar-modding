@@ -13,7 +13,7 @@ from typing import Dict, List, Tuple
 from core.asset_source import AssetSource, norm
 from core.extract_cache import extracted_tree
 from core.utilities import extract_tsv_data, load_tsv_data
-from generators.advisor_overhaul import DATA, LORE_LEVELS, MOD, ROW_COLOURS, STAT_COLUMNS, fixed_skills, pair_props, pairs, ridden, unit_key
+from generators.advisor_overhaul import DATA, LORE_LEVELS, MOD, ROW_COLOURS, STAT_COLUMNS, fixed_skills, pair_props, pairs, unit_key
 from tools.glf_rebuild_animpack import AnimSet
 from tools.skill_catalog import CATALOG_LOC_PREFIXES, SKILL_CATALOG_TABLES, SKILL_ICON_FOLDER, catalog_art, skill_catalog
 from tools.ttc_review.catalog import ABILITY_FOLDER, ABILITY_NAME_PREFIX, SKIN_FILES
@@ -280,7 +280,7 @@ class PanelBuilder:
                 "overrides": sorted(k for k in weapon.get("forms", {}).get(mount_key, {}) if k != "props"), "attributes": weapon.get("attributes", []),
                 "props": pair_props(registry, weapon_key, mount_key),
                 "prop_overrides": sorted(weapon.get("forms", {}).get(mount_key, {}).get("props", {})),
-                "mount_props": [] if ridden(weapon, mount_key) else sorted(registry["mounts"][mount_key].get("variant_props", {})),
+                "mount_props": sorted(registry["mounts"][mount_key].get("variant_props", {})),
                 "look": {"body": weapon.get("body", registry["model"]["body"]), "hood": weapon.get("hood", registry["model"]["hood"]), "pieces": weapon.get("pieces", {}),
                          "piece_shapes": weapon.get("piece_shapes", {})},
                 "attributes_removed": weapon.get("attributes_removed", []), "abilities": weapon.get("abilities", []),

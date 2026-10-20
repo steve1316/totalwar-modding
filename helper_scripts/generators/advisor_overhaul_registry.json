@@ -1463,8 +1463,6 @@
    "variant_props": {
     "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel", "equipment"]
    },
-   "ridden": {"animation": "hu1c_advisor_overhaul_disc",
-              "body": {"model": "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_cam_01.wsmodel", "skeleton": "humanoid01c", "bone": "be_prop_4"}},
    "grant_rank": 19,
    "unlock_rank": 18
   },
