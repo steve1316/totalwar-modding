@@ -983,11 +983,11 @@ def agent_rows(data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tu
          "An old wizard of the Empire who has spent longer giving counsel than most kingdoms have stood. He follows your faction leader from the "
          "first day of the campaign, and he will not stay dead for long."),
         (f"unit_description_historical_texts_text_{DESCRIPTION}",
-         "Nobody at court remembers hiring him. He was simply there one morning, leaning on his staff by the war table, already correcting the "
-         "maps.\\\\n\\\\nHe has outlived the generals who ignored him and quietly buried the ones who listened too late. Some say he trained at "
+         "Nobody remembers hiring him. He was simply there one morning, perusing through our confidential books, already advising the faction "
+         "leader...\\\\n\\\\nHe has outlived the generals who ignored him and quietly buried the ones who listened too late. Some say he trained at "
          "every College in Altdorf and was thrown out of each in turn. He says only that he has seen how this ends, and would rather it ended "
          "differently."),
-        (f"unit_description_short_texts_text_{DESCRIPTION}", "An old, hooded Imperial wizard who fights with staff and sword beside your faction leader."),
+        (f"unit_description_short_texts_text_{DESCRIPTION}", "Nobody remembers hiring him. He was simply there one morning, already advising the faction leader..."),
     ]
 
 

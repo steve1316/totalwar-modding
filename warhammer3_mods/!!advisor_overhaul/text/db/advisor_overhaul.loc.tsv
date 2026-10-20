@@ -3,8 +3,8 @@ key	text	tooltip
 names_name_930556520	The Advisor	true
 agent_subtypes_onscreen_name_override_advisor_overhaul_advisor	The Advisor	true
 agent_subtypes_description_text_override_advisor_overhaul_advisor	An old wizard of the Empire who has spent longer giving counsel than most kingdoms have stood. He follows your faction leader from the first day of the campaign, and he will not stay dead for long.	true
-unit_description_historical_texts_text_advisor_overhaul_advisor	Nobody at court remembers hiring him. He was simply there one morning, leaning on his staff by the war table, already correcting the maps.\\n\\nHe has outlived the generals who ignored him and quietly buried the ones who listened too late. Some say he trained at every College in Altdorf and was thrown out of each in turn. He says only that he has seen how this ends, and would rather it ended differently.	true
-unit_description_short_texts_text_advisor_overhaul_advisor	An old, hooded Imperial wizard who fights with staff and sword beside your faction leader.	true
+unit_description_historical_texts_text_advisor_overhaul_advisor	Nobody remembers hiring him. He was simply there one morning, perusing through our confidential books, already advising the faction leader...\\n\\nHe has outlived the generals who ignored him and quietly buried the ones who listened too late. Some say he trained at every College in Altdorf and was thrown out of each in turn. He says only that he has seen how this ends, and would rather it ended differently.	true
+unit_description_short_texts_text_advisor_overhaul_advisor	Nobody remembers hiring him. He was simply there one morning, already advising the faction leader...	true
 land_units_onscreen_name_advisor_overhaul_staff_and_sword_foot	The Advisor	true
 ancillaries_onscreen_name_advisor_overhaul_loadout_staff_and_sword_foot	Staff and Sword, On Foot	true
 ancillaries_colour_text_advisor_overhaul_loadout_staff_and_sword_foot	A walking staff for his spells and a plain Imperial blade for anything that gets too close. He walks, as he always has.	true
