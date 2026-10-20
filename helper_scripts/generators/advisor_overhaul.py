@@ -576,7 +576,7 @@ def choice_skill(kind: str, key: str) -> str:
     Returns:
         str: The skill key.
     """
-    return f"{PREFIX}_choose_{kind}_{key}"
+    return f"{PREFIX}_skill_{kind}_{key}"
 
 
 def art_bundle_key(weapon: str, slot: str) -> str:
@@ -660,9 +660,9 @@ def lore_skill_key(lore: str, slot: int = 0) -> str:
         slot (int): The pick slot, 0 for the first.
 
     Returns:
-        str: The skill key, such as `advisor_overhaul_lore_death`, with `_2` for the second slot and so on.
+        str: The skill key, such as `advisor_overhaul_skill_lore_death`, with `_2` for the second slot and so on.
     """
-    return f"{PREFIX}_lore_{lore_short(lore)}" + (f"_{slot + 1}" if slot else "")
+    return f"{PREFIX}_skill_lore_{lore_short(lore)}" + (f"_{slot + 1}" if slot else "")
 
 
 def item_key(item_id: str) -> str:
@@ -1020,7 +1020,7 @@ def fixed_skills(registry: Dict) -> List[Dict]:
             buy_rank = item["grant_rank"] - 1 if grant_only else item.get("unlock_rank", 1)
             skills.append({"kind": kind, "key": key, "item": item, "row": row, "tier": None if hidden else tier, "hidden": hidden, "default": default,
                            "buy_rank": buy_rank, "free": default or grant_only, "skill": choice_skill(kind, key),
-                           "node": f"{PREFIX}_choose_{kind}_node_{key}", "name": item["name"], "icon": item.get("skill_icon") or os.path.basename(item["icon"])})
+                           "node": f"{PREFIX}_skill_node_{kind}_{key}", "name": item["name"], "icon": item.get("skill_icon") or os.path.basename(item["icon"])})
             tier += 0 if hidden else 1
     return skills
 
@@ -1391,7 +1391,7 @@ def lore_node_key(lore: str, slot: int) -> str:
     Returns:
         str: The node key.
     """
-    return f"{PREFIX}_lore_node_{lore_short(lore)}" + (f"_{slot + 1}" if slot else "")
+    return f"{PREFIX}_skill_node_lore_{lore_short(lore)}" + (f"_{slot + 1}" if slot else "")
 
 
 def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
