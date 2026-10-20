@@ -230,12 +230,15 @@ NAMES_GROUP = "names_emp_empire"
 # Land unit stats moved by the template's mounted-minus-foot difference.
 DELTA_COLUMNS = ["bonus_hit_points", "charge_bonus", "melee_attack", "melee_defence"]
 
-# Land unit columns every pair keeps from his foot unit, so each pair stays the same hero.
-IDENTITY_COLUMNS = ["accuracy", "campaign_action_points", "morale", "visibility_spotting_range_min", "visibility_spotting_range_max", "selection_vo",
-                    "selected_vo_tertiary", "spell_mastery"]
+# Land unit columns that pick the lines he says when selected. Every form, the Iron Dragon too, keeps his foot unit's.
+VOICE_COLUMNS = ["selection_vo", "selected_vo_secondary", "selected_vo_tertiary"]
 
-# Main unit columns every pair keeps from his foot unit.
-MAIN_IDENTITY_COLUMNS = ["audio_voiceover_culture", "audio_voiceover_culture_override", "audio_voiceover_actor_group", "campaign_cap", "porthole_camera"]
+# Land unit columns every pair keeps from his foot unit, so each pair stays the same hero.
+IDENTITY_COLUMNS = ["accuracy", "campaign_action_points", "morale", "visibility_spotting_range_min", "visibility_spotting_range_max", "spell_mastery"] + VOICE_COLUMNS
+
+# Main unit columns every pair keeps from his foot unit. The `vo_is_*` flags would swap his voice for a dragon's or dinosaur's.
+MAIN_IDENTITY_COLUMNS = ["audio_voiceover_culture", "audio_voiceover_culture_override", "audio_voiceover_actor_group", "has_spoken_vo", "vo_is_dragon",
+                         "vo_is_dinosaur", "campaign_cap", "porthole_camera"]
 
 # Tables with one row per template unit that every pair copies from its template, with the column naming the unit.
 UNIT_ROW_TABLES = {
@@ -1589,8 +1592,10 @@ def dragon_rows(registry: Dict, unique_index: int, data: Dict, rows: Dict[str, L
     """
     templates = data["templates"]
     foot = next(r for r in templates["main_units_tables"] if r["land_unit"] == FOOT_TEMPLATE)
+    foot_land = next(r for r in templates["land_units_tables"] if r["key"] == FOOT_TEMPLATE)
     # He keeps his own voice and campaign cap. The dragon's porthole camera stays, since it frames the dragon.
     voice = {k: foot[k] for k in MAIN_IDENTITY_COLUMNS if k != "porthole_camera"}
+    land_voice = {k: foot_land[k] for k in VOICE_COLUMNS}
     for weapon_key, mount_key in pairs(registry):
         weapon, mount = registry["weapons"][weapon_key], registry["mounts"][mount_key]
         if "dragon" not in weapon or "template" in mount:
@@ -1602,10 +1607,10 @@ def dragon_rows(registry: Dict, unique_index: int, data: Dict, rows: Dict[str, L
         attributes = [r["attribute"] for r in templates["unit_attributes_to_groups_junctions_tables"] if r["attribute_group"] == template]
         for human in [unit_key(weapon_key, mount_key)] + ([unit_key(weapon_key, "apex")] if "apex_form" in weapon else []):
             key = f"{human}_dragon"
-            rows["land_units_tables"].append(dict(land, **stats, key=key, attribute_group=key, historical_description_text=DESCRIPTION,
+            rows["land_units_tables"].append(dict(land, **stats, **land_voice, key=key, attribute_group=key, historical_description_text=DESCRIPTION,
                                                   short_description_text=DESCRIPTION))
             abilities = ["wh3_main_unit_passive_single_entity", transform_key(human, "human")] + dragon.get("abilities", [])
-            unit_rows(key, template, dict(main, **voice, vo_is_dragon="false"), attributes, abilities, dragon["variant"], f"The Advisor ({dragon['name']})",
+            unit_rows(key, template, dict(main, **voice), attributes, abilities, dragon["variant"], f"The Advisor ({dragon['name']})",
                       unique_index, data, rows, texts)
             unique_index += 1
             rows["land_units_to_unit_abilites_junctions_tables"].append({"ability": transform_key(human, "dragon"), "land_unit": human, "culture": "*"})
