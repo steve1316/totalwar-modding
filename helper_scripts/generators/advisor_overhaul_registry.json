@@ -125,7 +125,7 @@
    },
    "missile": {
     "description": "His staff bolt, a plain arcane bolt for now. Its element is meant to follow his first lore later, so the key names no element. `template` is the vanilla Hag Witch's staff bolt, with one bolt per shot instead of two, and `projectile` replacing the template's values. `ammo` is a little under the Hag Witch's 28.",
-    "key": "advisor_overhaul_staff_bolt",
+    "key": "advisor_overhaul_staff_and_sword_missile",
     "template": "wh3_dlc24_ksl_hag_witch_hags",
     "ammo": 20,
     "projectile": {
@@ -140,8 +140,8 @@
     },
     "upgrade": {
      "description": "Bursting Bolts, the Staff apex reward. Five weaker bolts per shot instead of one, each bursting in a wide blue blast that spares his own side. The blast is the Blue Scribes' blue flame burst, as wide as the Poison Wind Mortar's blast and pushing harder, without its Warpflame.",
-     "key": "advisor_overhaul_staff_bolt_burst",
-     "effect": "advisor_overhaul_effect_staff_bolt_burst",
+     "key": "advisor_overhaul_staff_and_sword_apex_missile",
+     "effect": "advisor_overhaul_effect_staff_and_sword_apex_missile",
      "projectile": {"projectile_number": "5", "spread": "10.0000", "damage": "25", "ap_damage": "50"},
      "explosion": {
       "template": "wh3_dlc24_scribes_blue_flame_bombardment",
@@ -343,7 +343,7 @@
      "description": "The staff drinks the Winds and gives them back to him, five bolts at a time.",
      "effects": [
       {
-       "effect": "advisor_overhaul_effect_staff_bolt_burst",
+       "effect": "advisor_overhaul_effect_staff_and_sword_apex_missile",
        "scope": "character_to_character_own",
        "value": 1
       },
@@ -612,8 +612,8 @@
     },
     "upgrade": {
      "description": "Hunter's Spread, the Bow apex reward. Six lighter arrows per shot instead of one, fanned out so they find more than one man in a block of infantry. Each arrow bursts in a small Hail of Doom blast that spares his own side, much smaller than the Staff's. The arrow is Markus Wulfhart's glowing arrow with the Hail of Doom trail, since Wulfhart's own trails draw ghost arrows beside a fan of arrows. The bonus against infantry and large targets is cut per arrow.",
-     "key": "advisor_overhaul_bow_spread_arrow",
-     "effect": "advisor_overhaul_effect_bow_spread_arrow",
+     "key": "advisor_overhaul_sword_and_bow_apex_missile",
+     "effect": "advisor_overhaul_effect_sword_and_bow_apex_missile",
      "projectile": {"projectile_number": "6", "spread": "5.0000", "damage": "60", "ap_damage": "45", "bonus_v_infantry": "25", "bonus_v_large": "35"},
      "display": {"template": "wh2_dlc13_markus_wulfhart_arrow", "trail_fx": "wh_dlc05_abilities_hail_of_doom_trail"},
      "explosion": {
@@ -788,7 +788,7 @@
      "description": "He nocks six arrows at once. He learned it from a world where there was never time for one.",
      "effects": [
       {
-       "effect": "advisor_overhaul_effect_bow_spread_arrow",
+       "effect": "advisor_overhaul_effect_sword_and_bow_apex_missile",
        "scope": "character_to_character_own",
        "value": 1
       },
@@ -7524,13 +7524,13 @@
    "good": true,
    "text": "Splash attack power: %+n%"
   },
-  "advisor_overhaul_effect_staff_bolt_burst": {
+  "advisor_overhaul_effect_staff_and_sword_apex_missile": {
    "priority": 10,
    "icon": "archer.png",
    "good": true,
    "text": "\"Bursting Bolts\" (each staff shot fires five bolts that burst in a wide blue blast, sparing his own side)"
   },
-  "advisor_overhaul_effect_bow_spread_arrow": {
+  "advisor_overhaul_effect_sword_and_bow_apex_missile": {
    "priority": 10,
    "icon": "archer.png",
    "good": true,

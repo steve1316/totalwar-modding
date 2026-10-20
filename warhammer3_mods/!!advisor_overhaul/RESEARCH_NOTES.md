@@ -18,8 +18,8 @@ mount loadouts, and a script that gives every human faction one at campaign star
 ## Standalone hero (2026-10-13)
 
 - **Every key starts with `advisor_overhaul_`.** Agent subtype `advisor_overhaul_advisor`, agent type `wizard`, skill node set
-  `advisor_overhaul_advisor_skill_node_set`, units `advisor_overhaul_<weapon>_<mount>`, rig ancillaries `advisor_overhaul_rig_<weapon>_<mount>`,
-  art sets `advisor_overhaul_art_<weapon>`. `generators/advisor_overhaul.py` writes every table from `advisor_overhaul_registry.json` and the
+  `advisor_overhaul_advisor_skill_node_set`, units `advisor_overhaul_<weapon>_<mount>`, loadout ancillaries `advisor_overhaul_loadout_<weapon>_<mount>`,
+  art sets `advisor_overhaul_portrait_<weapon>`. `generators/advisor_overhaul.py` writes every table from `advisor_overhaul_registry.json` and the
   vanilla rows kept in `advisor_overhaul.json`.
 - **Tables a script-spawned hero needs.** Read from the vanilla Amethyst and Grey Wizard rows. `[data]`
   - Agent: `agent_subtypes`, `faction_agent_permitted_subtypes`, `names`, `character_skill_node_sets`.
@@ -369,7 +369,7 @@ staff shot.
 
 ### Staff bolt (2026-10-13)
 
-- **Every Staff and Sword pair shoots a staff bolt**, GLF Battle Mage style. `advisor_overhaul_staff_bolt` (missile weapon and projectile, a
+- **Every Staff and Sword pair shoots a staff bolt**, GLF Battle Mage style. `advisor_overhaul_staff_and_sword_missile` (missile weapon and projectile, a
   generic key so the element can follow his first lore later) copies the vanilla Hag Witch's bolt (`wh3_dlc24_ksl_hag_witch_hags_bolt`, a
   magical caster bolt with its own trail and impact VFX) with 1 bolt per shot (2), damage 60 + AP 120 (40 + 90 per bolt), range 150 (100),
   reload 10 (8), marksmanship 50 (10), spread 2 (6) and `homing_strong_magical_fast` (none, GLF's homing). Ammo 20 (Hag Witch 28). `[data]`
@@ -518,7 +518,7 @@ staff shot.
   - The character panel's Details model is the full-body porthole (`ClanLeaderModelView` in `character_details_panel_details.twui.xml`). It
     ignores the ancillary junction and follows only the art set.
   - The uniforms now point `filename` and `campaign_porthole_filename` at the weapon's foot variant. `[game]`
-- **Weapon art sets.** `advisor_overhaul_art_<weapon>` (in `campaign_character_art_sets` and `campaign_character_arts`) carries the weapon's uniform and
+- **Weapon art sets.** `advisor_overhaul_portrait_<weapon>` (in `campaign_character_art_sets` and `campaign_character_arts`) carries the weapon's uniform and
   campaign animation set. On every apply, including on load, the script calls `cm:add_character_model_override(character, art_set)`. Junction rows
   repeat for every art set, so the map still follows the rig. Portrait settings are copied from the base entry for both art set ids and variant
   ids. The Details model then switched. `[game]`

@@ -1,8 +1,8 @@
 art_set_id	agent_type	culture	subculture	faction	is_custom	is_male	agent_subtype	campaign_map_scale	prebattle_separation_offset
 #campaign_character_art_sets_tables;7;db/campaign_character_art_sets_tables/advisor_overhaul									
-advisor_overhaul_art_staff_and_sword	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
-advisor_overhaul_art_sword_and_shield	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
-advisor_overhaul_art_sword_and_bow	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
-advisor_overhaul_art_greatsword	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
-advisor_overhaul_art_glaive	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
-advisor_overhaul_art_iron_hand	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
+advisor_overhaul_portrait_staff_and_sword	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
+advisor_overhaul_portrait_sword_and_shield	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
+advisor_overhaul_portrait_sword_and_bow	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
+advisor_overhaul_portrait_greatsword	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
+advisor_overhaul_portrait_glaive	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000
+advisor_overhaul_portrait_iron_hand	wizard				false	true	advisor_overhaul_advisor	1.0000	0.0000

@@ -496,7 +496,7 @@ def rig_key(weapon: str, mount: str) -> str:
     Returns:
         str: The ancillary key.
     """
-    return f"{PREFIX}_rig_{weapon}_{mount}"
+    return f"{PREFIX}_loadout_{weapon}_{mount}"
 
 
 def uniform_key(weapon: str, mount: str) -> str:
@@ -563,7 +563,7 @@ def weapon_art_set(weapon: str) -> str:
     Returns:
         str: The art set key.
     """
-    return f"{PREFIX}_art_{weapon}"
+    return f"{PREFIX}_portrait_{weapon}"
 
 
 def choice_skill(kind: str, key: str) -> str:
