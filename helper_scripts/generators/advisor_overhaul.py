@@ -1839,8 +1839,7 @@ def build() -> None:
     write_portraits(data["portraits"], registry["portrait"], portrait_ids)
     write_portrait_images(registry["portrait"])
     write_skill_icons(rows["character_skills_tables"])
-    write_script(registry, combos, upgrades, arts, [n["character_skill_key"] for n in rows["character_skill_nodes_tables"] if n["points_on_creation"] == "1"],
-                 polymath_data(registry))
+    write_script(registry, combos, upgrades, arts, polymath_data(registry))
     with open(os.path.join(MOD, "text", "db", f"{FILE}.loc.tsv"), "w", encoding="utf-8", newline="\n") as f:
         f.write(f"key\ttext\ttooltip\n#Loc;1;text/db/{FILE}.loc\t\t\n")
         f.write("".join(f"{key}\t{text}\ttrue\n" for key, text in texts))
@@ -2180,9 +2179,9 @@ def write_skill_icons(skills: List[Dict[str, str]]) -> None:
 
 
 def write_script(registry: Dict, combos: List[Tuple[str, str, str]], upgrades: List[Tuple[str, str, str, str]], arts: Dict[str, List[Dict]],
-                 learned: List[str], polymath: Optional[Dict]) -> None:
+                 polymath: Optional[Dict]) -> None:
     """Writes the Lua data table the campaign scripts read: his subtype, the weapons and mounts with their unlock skills, names and picker icons,
-    the ancillary of every valid pair both ways, the rigs that replace a pair's once he owns a skill, the skills he is made with, each weapon's
+    the ancillary of every valid pair both ways, the rigs that replace a pair's once he owns a skill, each weapon's
     arts and the Polymath.
 
     Args:
@@ -2190,7 +2189,6 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], upgrades: L
         combos (List[Tuple[str, str, str]]): (weapon, mount, ancillary) per valid pair.
         upgrades (List[Tuple[str, str, str, str]]): (weapon, mount, ancillary, skill) per pair whose rig is replaced once he owns the skill.
         arts (Dict[str, List[Dict]]): Weapon -> its arts, from `weapon_art_rows`.
-        learned (List[str]): The skills he is made with.
         polymath (Optional[Dict]): The Polymath, from `polymath_data`, or None.
     """
     quote = lambda text: text.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
@@ -2221,9 +2219,7 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], upgrades: L
     lines += ["\t},", '\t--- "weapon|mount" -> the skill that swaps that pair\'s rig for another (an apex form), and that rig.', "\tupgrades = {"]
     lines += [f'\t\t["{w}|{m}"] = {{ skill = "{s}", ancillary = "{a}" }},' for w, m, a, s in upgrades]
     lines += ["\t},", "\t--- Forename loc key of his name.", f'\tname = "names_name_{name_id()}",']
-    lines += ["\t--- Hidden skills he is made with. An Advisor from before they were added gets them from the spawn script.", "\tlearned_skills = {"]
-    lines += [f'\t\t"{skill}",' for skill in learned]
-    lines += ["\t},", "\t--- Weapon -> its arts: the art slot skill he must own and its English name, the effect bundle he wears",
+    lines += ["\t--- Weapon -> its arts: the art slot skill he must own and its English name, the effect bundle he wears",
               "\t--- for it while holding that weapon, the art's English name (its loc key is the bundle's title), the slot skill's flavour text,",
               "\t--- the art's description and the slot skills it needs, for the art card tooltip.", "\tarts = {"]
     for weapon, slots in arts.items():

@@ -85,10 +85,6 @@ ADVISOR_OVERHAUL_RIGS = {
 	},
 	--- Forename loc key of his name.
 	name = "names_name_930556520",
-	--- Hidden skills he is made with. An Advisor from before they were added gets them from the spawn script.
-	learned_skills = {
-		"advisor_overhaul_skill_actions_default",
-	},
 	--- Weapon -> its arts: the art slot skill he must own and its English name, the effect bundle he wears
 	--- for it while holding that weapon, the art's English name (its loc key is the bundle's title), the slot skill's flavour text,
 	--- the art's description and the slot skills it needs, for the art card tooltip.
