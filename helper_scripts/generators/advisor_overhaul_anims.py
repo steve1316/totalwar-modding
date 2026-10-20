@@ -166,7 +166,7 @@ ALL_POSES = r"^(?!DOCK_EQUIPMENT_|PERSISTENT_METADATA_)"
 # with props held, and a copy of its meta pointed at the copy:
 # - `grips`: prop -> (the bone whose place it takes in the first frame, the bone it is then held to).
 # - `pins`: prop -> (the slot whose first frame gives its offset, the bone it is held to). A slot of another set is named `set:SLOT`.
-# - `floor`: (bone, height). In frames where the bone is lower, his body and props are raised until it is at that height.
+# - `floor`: (prop bone, height). In frames where the bone is lower, his body and props are raised until it is at that height. Only slots that show the prop.
 # A slot's weapon bools say which props it shows, bit N for `be_prop_N`, so each matching slot also shows the props it holds.
 # Settra's casts are the staff-and-sword ones with his halberd slung on his back. The Glaive's copies put the polearm where the staff starts, in his
 # left hand, and keep it there: the staff twirls in his fingers, which a long blade turns into a jitter. Both models lie centred along the same axis.
@@ -694,7 +694,7 @@ def pin_props(data: bytes, names: Dict[int, str], sets: Dict[str, bytes], assets
         pins (Dict[str, Tuple[str, str]]): Prop bone -> (the slot whose first frame gives its offset, the bone it is held to). `set:SLOT` names another set's slot.
         folder (str): Output folder for the copies, relative to the mod folder.
         prefix (str): Short prefix marking the copies.
-        floor (Optional[Tuple[str, float]]): (bone, height). In frames where the bone is lower he is raised until it is at that height.
+        floor (Optional[Tuple[str, float]]): (prop bone, height). In slots showing the prop, frames where it is lower raise him until it is that high.
 
     Returns:
         bytes: The changed set `.bin`.
@@ -723,11 +723,13 @@ def pin_props(data: bytes, names: Dict[int, str], sets: Dict[str, bytes], assets
     pose_worlds = {pose: world_pose(read_anim(read(anim)), skeleton, 0) for pose, anim in poses.items()}
     pinned = {prop: (anchor, relative(pose_worlds[pose][index[anchor]], pose_worlds[pose][index[prop]])) for prop, (pose, anchor) in pins.items()}
 
+    # Only slots that show the floor's prop are raised. The porthole poses hide the disc far under the ground, and raising them lifts him out of view.
+    floored = {r.anim for slot in slots for r in slot.refs if floor and slot.weapon_bools & 1 << int(floor[0].rpartition("_")[2])}
     moved: Dict[str, bytes] = {}
     for path in anims:
         anim = read_anim(read(path))
         heights = [0.0] * len(anim.translations)
-        if floor:
+        if path in floored:
             bone, low = floor
             heights = [max(0.0, low - world_pose(anim, skeleton, f)[index[bone]][1][1]) for f in range(len(heights))]
         if any(heights):
