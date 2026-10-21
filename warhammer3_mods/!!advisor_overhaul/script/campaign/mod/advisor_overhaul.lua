@@ -2521,10 +2521,14 @@ core:add_listener(
 	true
 )
 
---- Helpers the spawn script shares. It reads them when it runs, since script load order is not promised.
+--- Helpers the spawn and quest scripts share. They read them when they run, since script load order is not promised.
 ADVISOR_OVERHAUL = {
+	--- Whether a character is an Advisor.
+	is_advisor = is_advisor,
 	--- Lists the Advisors of a faction.
 	faction_advisors = faction_advisors,
+	--- The weapon and mount an Advisor uses now.
+	current_pair = current_pair,
 }
 
 cm:add_first_tick_callback(function()
