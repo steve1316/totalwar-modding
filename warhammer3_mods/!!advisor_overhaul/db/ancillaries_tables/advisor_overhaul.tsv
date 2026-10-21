@@ -24,3 +24,9 @@ advisor_overhaul_loadout_glaive_pegasus	wh_main_anc_mount_imperial_pegasus	.	fal
 advisor_overhaul_loadout_glaive_disc	wh3_main_anc_mount_disc_of_tzeentch	.	false	false	false	1	0	9999			false	false	false	mount	16	30	30	50	true	advisor_overhaul_glaive_disc		1	0		false	false	false	all
 advisor_overhaul_loadout_iron_hand_foot	wh_main_anc_mount_warhorse	.	false	false	false	1	0	9999			false	false	false	mount	16	30	30	50	true	advisor_overhaul_iron_hand_foot		1	0		false	false	false	all
 advisor_overhaul_loadout_iron_hand_apex	wh_main_anc_mount_warhorse	.	false	false	false	1	0	9999			false	false	false	mount	16	30	30	50	true	advisor_overhaul_iron_hand_apex		1	0		false	false	false	all
+advisor_overhaul_item_steward_seal	wh_main_anc_talisman	.	false	false	false	1	0	9999			false	false	false	talisman	16	30	30	50	true			200	0		false	false	false	all
+advisor_overhaul_item_unwritten_grimoire	wh_main_anc_arcane_item	.	false	false	false	1	0	9999			false	false	false	arcane_item	16	30	30	50	true			200	0		false	false	false	all
+advisor_overhaul_item_old_archivist	wh_main_anc_human_old_man	.	false	false	false	1	0	9999			false	false	false	general	16	30	30	50	true			200	0	follower	false	false	false	all
+advisor_overhaul_item_mantle_of_many_wars	wh_main_anc_armour	.	false	false	false	1	0	9999			false	false	false	armour	16	30	30	50	true			200	0		false	false	false	all
+advisor_overhaul_item_lantern_of_the_long_watch	wh_main_anc_enchanted_item	.	false	false	false	1	0	9999			false	false	false	enchanted_item	16	30	30	50	true			200	0		false	false	false	all
+advisor_overhaul_item_edge_of_final_counsel	wh_main_anc_weapon	.	false	false	false	1	0	9999			false	false	false	weapon	16	30	30	50	true			200	0		false	false	false	all

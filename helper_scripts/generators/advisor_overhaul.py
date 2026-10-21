@@ -222,6 +222,10 @@ LORE_LEVELS = 3
 # The name each pick slot gives its copy of a lore: `First Tome: Lore of Fire`.
 TOME_ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth"]
 
+# Issuer of his quest missions, the one vanilla quest missions use, and the unit set of every campaign unit he can be (his kill counter).
+MISSION_ISSUER = "CLAN_ELDERS"
+UNIT_SET = f"{PREFIX}_advisor_units"
+
 # Names group of his name row. Frequency 0 keeps the name out of random name rolls.
 NAMES_GROUP = "names_emp_empire"
 
@@ -270,7 +274,9 @@ TABLES = [
     "ancillary_to_effects_tables", "character_skill_categories_tables", "character_skills_to_level_reached_criterias_tables",
     "effect_bonus_value_special_ability_group_junctions_tables", "effect_bonus_value_ids_unit_sets_tables", "special_ability_groups_to_units_junctions_tables",
     "unit_abilities_tables", "unit_special_abilities_tables", "battle_personalities_tables", "land_units_to_battle_personalities_junctions_tables",
-    "units_custom_battle_types_tables", *UNIT_ROW_TABLES,
+    "units_custom_battle_types_tables", "ancillary_sets_tables", "ancillary_set_ancillary_junctions_tables", "ancillary_set_effect_junctions_tables",
+    "unit_sets_tables", "unit_set_to_unit_junctions_tables", "character_ancillary_quest_ui_details_tables", "missions_tables",
+    "cdir_events_mission_issuer_junctions_tables", *UNIT_ROW_TABLES,
 ]
 
 # Vanilla rows a missile `upgrade` can copy: registry field, kept-data name, table, and the projectile column pointed at the copy.
@@ -362,7 +368,8 @@ def vanilla_lores() -> Dict[str, Dict]:
     one a vanilla skill uses is preferred. Spells with no overcast effect of their own keep none.
 
     Returns:
-        Dict[str, Dict]: Lore key -> `passives` (enable effects) and `spells` (each `enable`, `overcast` or None, and `cost`), cheapest first.
+        Dict[str, Dict]: Lore key -> `passives` (enable effects) and `spells` (each `enable`, `overcast` or None, `cost`, and `abilities`: the
+            spell's ability key and its overcast `_upgraded` key when vanilla has one), cheapest first.
     """
     groups = read_vanilla("special_ability_groups_tables")[0]
     lores = sorted(r["ability_group"] for r in groups if r["is_composite_group"] == "false" and r["show_lore_icon"] == "true"
@@ -389,7 +396,8 @@ def vanilla_lores() -> Dict[str, Dict]:
             if row.get("passive") == "true":
                 passives.append(enable)
             else:
-                spells.append({"enable": enable, "overcast": own(spell, "enable_overchage"), "cost": float(row.get("mana_cost") or 0)})
+                spells.append({"enable": enable, "overcast": own(spell, "enable_overchage"), "cost": float(row.get("mana_cost") or 0),
+                               "abilities": [spell] + ([f"{spell}_upgraded"] if f"{spell}_upgraded" in abilities else [])})
         out[lore] = {"passives": passives, "spells": sorted(spells, key=lambda s: (s["cost"], s["enable"]))}
     return out
 
@@ -672,6 +680,18 @@ def item_key(item_id: str) -> str:
         str: The ancillary key.
     """
     return f"{PREFIX}_item_{item_id}"
+
+
+def quest_key(item_id: str) -> str:
+    """The mission of one of his quest items.
+
+    Args:
+        item_id (str): Its id in the registry's `items`.
+
+    Returns:
+        str: The mission key.
+    """
+    return f"{PREFIX}_quest_{item_id}"
 
 
 def ui_name(kind: str, key: str) -> str:
@@ -1342,7 +1362,8 @@ def action_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]
 
 
 def item_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
-    """Adds his quest items, the registry's `items`: one ancillary each, only for him, with its effects.
+    """Adds his quest items, the registry's `items`: one ancillary each, only for him, with its effects, all in the registry's `item_set`.
+    Ranked 200 like a vanilla lord's own quest items, which all keep `legendary_item` false.
 
     Args:
         registry (Dict): The registry.
@@ -1353,15 +1374,72 @@ def item_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
     Raises:
         SystemExit: When an item's type is unknown.
     """
+    item_set = registry.get("item_set")
+    set_key = f"{PREFIX}_ancillary_set_{item_set['key']}" if item_set else ""
     for item_id, item in registry.get("items", {}).items():
         key = item_key(item_id)
         if item.get("type") not in data.get("ancillary_types", []):
-            raise SystemExit(f"item {item_id}: unknown ancillary type {item.get('type')}")
-        ancillary_rows(rows, key, item["type"], item.get("category", "talisman"), legendary_item="true", uniqueness_score="100")
+            raise SystemExit(f"item {item_id}: unknown ancillary type {item.get('type')}, run with --refresh")
+        ancillary_rows(rows, key, item["type"], item.get("category", "talisman"), uniqueness_score="200", subcategory=item.get("subcategory", ""))
         rows["ancillary_to_effects_tables"] += [{"ancillary": key, "effect": e["effect"], "effect_scope": e["scope"], "value": effect_value(e)}
                                                 for e in item.get("effects", [])]
         texts.append((f"ancillaries_onscreen_name_{key}", item["name"]))
         texts.append((f"ancillaries_colour_text_{key}", item.get("description", "")))
+        if set_key:
+            rows["ancillary_set_ancillary_junctions_tables"].append({"ancillary_key": key, "set_key": set_key})
+    if set_key:
+        rows["ancillary_sets_tables"].append({"key": set_key, "icon": item_set["icon"]})
+        rows["ancillary_set_effect_junctions_tables"] += [{"effect_key": e["effect"], "set_key": set_key, "effect_scope": e["scope"], "value": effect_value(e)}
+                                                          for e in item_set.get("effects", [])]
+        texts.append((f"ancillary_sets_name_{set_key}", item_set["name"]))
+        texts.append((f"ancillary_sets_description_{set_key}", item_set.get("flavour", "")))
+
+
+def quest_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]], vanilla_texts: List[Tuple[str, str]]) -> List[Dict]:
+    """Adds one script mission per item `quest`, its quest line in his character panel, and the unit set of every campaign unit he can be,
+    which the `kills` quest counts. Call it before `custom_battle_lore_rows`, so the Custom Battle copies stay out of the set.
+
+    Args:
+        registry (Dict): The registry.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+        vanilla_texts (List[Tuple[str, str]]): Loc rows with the game's `%n` count markers, added to.
+
+    Returns:
+        List[Dict]: Per quest the script's data: mission, item, rank, kind, target, `per_race` and its objective text keys.
+    """
+    rows["unit_sets_tables"].append({"key": UNIT_SET, "use_unit_exp_level_range": "false", "min_unit_exp_level_inclusive": "-1",
+                                     "max_unit_exp_level_inclusive": "-1", "special_category": ""})
+    rows["unit_set_to_unit_junctions_tables"] += [{"unit_caste": "", "unit_category": "", "unit_class": "", "unit_record": r["unit"], "unit_set": UNIT_SET,
+                                                   "exclude": "false"} for r in rows["main_units_tables"]]
+    quests = []
+    for item_id, item in registry.get("items", {}).items():
+        quest = item.get("quest")
+        if not quest:
+            continue
+        key, ancillary = quest_key(item_id), item_key(item_id)
+        rows["missions_tables"].append({
+            "key": key, "mission_type": "SCRIPTED", "localised_title": "", "localised_description": "", "ui_image": "emp/generic",
+            "ui_icon": "rom_event_mission.png", "generate": "false", "prioritised": "false", "event_category": "Military", "set_piece_battle": "",
+            "location_x": "0", "location_y": "0", "quest_mission": "false", "quest_mission_final": "false", "trigger_radius": "0.0000", "quest_character": "",
+            "sticky_by_default": "false", "localised_mission_completed_text": f"Success! {item['name']} is the Advisor's.", "can_be_manually_cancelled": "false",
+        })
+        rows["cdir_events_mission_issuer_junctions_tables"].append({"issuer_key": MISSION_ISSUER, "mission_key": key})
+        rows["character_ancillary_quest_ui_details_tables"].append({"agent_subtype": SUBTYPE, "ancillary": ancillary, "rank": str(quest["rank"]),
+                                                                    "instant": "false", "is_quest_battle": "false"})
+        texts.append((f"missions_localised_title_{key}", quest["title"]))
+        texts.append((f"missions_localised_description_{key}", quest["description"]))
+        # An objective naming `{weapon}` becomes one objective per weapon, each with its own line naming the weapon.
+        parts = [(w, quest["objective"].replace("{weapon}", weapon["name"])) for w, weapon in registry["weapons"].items()] \
+            if "{weapon}" in quest["objective"] else [("", quest["objective"])]
+        objectives = {}
+        for part, text in parts:
+            text_key = f"mission_text_text_{key}" + (f"_{part}" if part else "")
+            vanilla_texts.append((text_key, text))
+            objectives[part] = text_key
+        quests.append({"key": key, "item": ancillary, "rank": quest["rank"], "kind": quest["kind"], "target": quest["target"],
+                       "per_race": quest.get("per_race", 0), "objectives": objectives})
+    return quests
 
 
 def lore_slots(registry: Dict) -> List[Tuple[int, int]]:
@@ -1374,6 +1452,18 @@ def lore_slots(registry: Dict) -> List[Tuple[int, int]]:
         List[Tuple[int, int]]: The `(row, rank)` of each slot, in order.
     """
     return [(s["row"], s["rank"]) for s in registry.get("lore_slots", [])]
+
+
+def built_lores(registry: Dict) -> List[str]:
+    """The lores the registry marks to build, in registry order.
+
+    Args:
+        registry (Dict): The registry.
+
+    Returns:
+        List[str]: The lore keys.
+    """
+    return [lore for lore, entry in registry.get("lores", {}).items() if entry.get("build")]
 
 
 def lore_node_key(lore: str, slot: int) -> str:
@@ -1403,7 +1493,7 @@ def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
         SystemExit: When a lore is not in the kept rows (run `--refresh`).
     """
     me = "character_to_character_own"
-    built = [lore for lore, entry in registry.get("lores", {}).items() if entry.get("build")]
+    built = built_lores(registry)
     # A unit linked to several lores, each on its own page, gets the Lore panel to switch between them, the way vanilla does it for Mannfred.
     rows["special_ability_groups_to_units_junctions_tables"] += [{"ability_group": lore, "unit": r["unit"], "group_page_order": str(page)}
                                                                  for page, lore in enumerate(built) for r in rows["main_units_tables"]]
@@ -1450,7 +1540,7 @@ def custom_battle_lore_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]
         rows (Dict[str, List[Dict[str, str]]]): Rows by table, changed in place.
         texts (List[Tuple[str, str]]): Loc rows, added to.
     """
-    built = [lore for lore, entry in registry.get("lores", {}).items() if entry.get("build")]
+    built = built_lores(registry)
     if not built:
         return
     units = [r["unit"] for r in rows["units_custom_battle_permissions_tables"]]
@@ -1525,8 +1615,7 @@ def polymath_data(registry: Dict) -> Optional[Dict]:
     disciplines = []
     for name, rows in DISCIPLINES.items():
         keys = [planned_skill_key(k) for k, s in skills.items() if s.get("build") and not s.get("hidden") and s.get("row") in rows and k not in polymaths]
-        keys += [lore_skill_key(lore, slot) for lore, e in registry.get("lores", {}).items() if e.get("build")
-                 for slot, (slot_row, _) in enumerate(lore_slots(registry)) if slot_row in rows]
+        keys += [lore_skill_key(lore, slot) for lore in built_lores(registry) for slot, (slot_row, _) in enumerate(lore_slots(registry)) if slot_row in rows]
         disciplines.append({"name": name, "skills": sorted(keys)})
     skill = skills[polymaths[0]]
     return {"skill": planned_skill_key(polymaths[0]), "name": skill["name"], "flavour": box_flavour(skill),
@@ -1803,7 +1892,7 @@ def build() -> None:
         raise SystemExit(f"animation sets played but not in battle_animations_table: {', '.join(sorted(unknown))}")
     rows["culture_to_battle_animation_tables_tables"] += [{"battle_animations_table": s, "culture_pack": c} for s in sorted(battle_sets)
                                                           for c in data["culture_packs"] if f"{s}|{c}" not in vanilla_pairs]
-    # Text copied from vanilla keeps its `%n%` value markers, so it skips `check_loc`. No script reads it.
+    # Text copied from vanilla and mission counter lines keep their `%n` value markers, so they skip `check_loc`. No script reads them.
     vanilla_texts: List[Tuple[str, str]] = []
     action_rows(registry, data, rows, vanilla_texts)
     effect_rows(registry, rows, vanilla_texts)
@@ -1812,6 +1901,7 @@ def build() -> None:
     arts = weapon_art_rows(registry, rows, texts)
     story_bundle_rows(registry, rows, texts)
     item_rows(registry, data, rows, texts)
+    quests = quest_rows(registry, rows, texts, vanilla_texts)
     lore_rows(registry, data, rows, texts)
     # After `lore_rows`, so the copies link to one lore and not every lore.
     custom_battle_lore_rows(registry, rows, texts)
@@ -1834,7 +1924,7 @@ def build() -> None:
     write_portraits(data["portraits"], registry["portrait"], portrait_ids)
     write_portrait_images(registry["portrait"])
     write_skill_icons(rows["character_skills_tables"])
-    write_script(registry, combos, upgrades, arts, polymath_data(registry))
+    write_script(registry, combos, upgrades, arts, polymath_data(registry), quests, lore_spell_data(registry, data))
     with open(os.path.join(MOD, "text", "db", f"{FILE}.loc.tsv"), "w", encoding="utf-8", newline="\n") as f:
         f.write(f"key\ttext\ttooltip\n#Loc;1;text/db/{FILE}.loc\t\t\n")
         f.write("".join(f"{key}\t{text}\ttrue\n" for key, text in texts))
@@ -1878,7 +1968,7 @@ def check_node_slots(nodes: List[Dict[str, str]]) -> None:
 
 
 def check_effects(rows: Dict[str, List[Dict[str, str]]], data: Dict) -> None:
-    """Stops the build on an effect or scope the game lacks, in any skill level, effect bundle or item. His own effects (the hero action enables)
+    """Stops the build on an effect or scope the game lacks, in any skill level, effect bundle, item or item set. His own effects (the hero action enables)
     count as known.
 
     Args:
@@ -1891,7 +1981,8 @@ def check_effects(rows: Dict[str, List[Dict[str, str]]], data: Dict) -> None:
     known, scopes = set(data["effects"]) | {r["effect"] for r in rows["effects_tables"]}, set(data["scopes"])
     for table, owner, effect, scope in (("character_skill_level_to_effects_junctions_tables", "character_skill_key", "effect_key", "effect_scope"),
                                         ("effect_bundles_to_effects_junctions_tables", "effect_bundle_key", "effect_key", "effect_scope"),
-                                        ("ancillary_to_effects_tables", "ancillary", "effect", "effect_scope")):
+                                        ("ancillary_to_effects_tables", "ancillary", "effect", "effect_scope"),
+                                        ("ancillary_set_effect_junctions_tables", "set_key", "effect_key", "effect_scope")):
         for row in rows[table]:
             if row[effect] not in known or row[scope] not in scopes:
                 raise SystemExit(f"{row[owner]}: unknown effect {row[effect]} or scope {row[scope]}")
@@ -2173,11 +2264,27 @@ def write_skill_icons(skills: List[Dict[str, str]]) -> None:
         icon.save(os.path.join(out, name), optimize=True)
 
 
+def lore_spell_data(registry: Dict, data: Dict) -> List[Dict]:
+    """The spells of each built lore, for the spell quest.
+
+    Args:
+        registry (Dict): The registry.
+        data (Dict): The kept vanilla rows (the lores).
+
+    Returns:
+        List[Dict]: Per built lore, its `skills` (its skill in every pick slot) and `abilities` (its spells and their overcasts).
+    """
+    slots = range(len(lore_slots(registry)))
+    return [{"skills": [lore_skill_key(lore, slot) for slot in slots],
+             "abilities": [a for spell in data["lores"][lore]["spells"] for a in spell.get("abilities", [])]}
+            for lore in built_lores(registry) if lore in data.get("lores", {})]
+
+
 def write_script(registry: Dict, combos: List[Tuple[str, str, str]], upgrades: List[Tuple[str, str, str, str]], arts: Dict[str, List[Dict]],
-                 polymath: Optional[Dict]) -> None:
+                 polymath: Optional[Dict], quests: List[Dict], lore_spells: List[Dict]) -> None:
     """Writes the Lua data table the campaign scripts read: his subtype, the weapons and mounts with their unlock skills, names and picker icons,
     the ancillary of every valid pair both ways, the rigs that replace a pair's once he owns a skill, each weapon's
-    arts and the Polymath.
+    arts, the Polymath, his quests and the spells of each built lore.
 
     Args:
         registry (Dict): The registry.
@@ -2185,6 +2292,8 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], upgrades: L
         upgrades (List[Tuple[str, str, str, str]]): (weapon, mount, ancillary, skill) per pair whose rig is replaced once he owns the skill.
         arts (Dict[str, List[Dict]]): Weapon -> its arts, from `weapon_art_rows`.
         polymath (Optional[Dict]): The Polymath, from `polymath_data`, or None.
+        quests (List[Dict]): His quests, from `quest_rows`.
+        lore_spells (List[Dict]): The spells of each built lore, from `lore_spell_data`.
     """
     quote = lambda text: text.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
     folder = os.path.join(MOD, "script", "campaign", "mod")
@@ -2232,7 +2341,20 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], upgrades: L
                   f'\t\tname = "{quote(polymath["name"])}",', f'\t\tflavour = "{quote(polymath["flavour"])}",', f'\t\tneeded = {polymath["needed"]},', "\t\tdisciplines = {"]
         lines += [f'\t\t\t{{ name = "{d["name"]}", skills = {{ ' + ", ".join(f'"{k}"' for k in d["skills"]) + " } }," for d in polymath["disciplines"]]
         lines += ["\t\t},", "\t\tbundles = { " + ", ".join(f'"{b}"' for b in polymath["bundles"]) + " },", "\t},"]
-    lines += ["}"]
+    lines += ["\t--- His quests in registry order: mission key, item ancillary, shown rank it opens at, counter kind, target, wins needed",
+              "\t--- per race, and objective text keys (per weapon for `weapon_wins`, else under the empty key).", "\tquests = {"]
+    for q in quests:
+        objectives = ", ".join(f'["{part}"] = "{text}"' for part, text in q["objectives"].items())
+        lines.append(f'\t\t{{ key = "{q["key"]}", item = "{q["item"]}", rank = {q["rank"]}, kind = "{q["kind"]}", '
+                     f'target = {q["target"]}, per_race = {q["per_race"]}, objectives = {{ {objectives} }} }},')
+    lines += ["\t},", "\t--- Unit set of every campaign unit he can be, which the kill quest counts.", f'\tunit_set = "{UNIT_SET}",',
+              "\t--- Issuer of every quest mission.", f'\tmission_issuer = "{MISSION_ISSUER}",',
+              "\t--- Each built lore: its skill in every pick slot, and the ability keys of its spells and their overcasts.", "\tlore_spells = {"]
+    for lore in lore_spells:
+        skills = ", ".join(f'"{s}"' for s in lore["skills"])
+        abilities = ", ".join(f'"{a}"' for a in lore["abilities"])
+        lines.append(f'\t\t{{ skills = {{ {skills} }}, abilities = {{ {abilities} }} }},')
+    lines += ["\t},", "}"]
     with open(os.path.join(folder, f"{FILE}_rigs.lua"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
 

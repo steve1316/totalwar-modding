@@ -7578,5 +7578,234 @@
    "chance_of_success": "5",
    "succeed_always_override": "false"
   }
+ },
+ "items": {
+  "steward_seal": {
+   "type": "wh_main_anc_talisman",
+   "category": "talisman",
+   "name": "The Steward's Seal",
+   "description": "The seal of a house that ended long ago. He still presses it into the wax before every order, and the men still read it as a promise.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_force_stat_melee_attack",
+     "scope": "agent_to_parent_army_own",
+     "value": 10
+    },
+    {
+     "effect": "wh_main_effect_force_stat_weapon_strength",
+     "scope": "agent_to_parent_army_own",
+     "value": 15
+    },
+    {
+     "effect": "wh_main_effect_force_stat_leadership",
+     "scope": "agent_to_parent_army_own",
+     "value": 10
+    }
+   ],
+   "quest": {
+    "rank": 30,
+    "kind": "kills",
+    "target": 50000,
+    "title": "The Steward's Seal",
+    "description": "He served a house whose name nobody remembers. Its seal is still out there, he says, and he will know where once he has finished enough wars by hand.",
+    "objective": "Slay %n enemies with the Advisor's own hand"
+   }
+  },
+  "unwritten_grimoire": {
+   "type": "wh_main_anc_arcane_item",
+   "category": "arcane_item",
+   "name": "The Unwritten Grimoire",
+   "description": "Every page is blank until he needs it. Then it holds the spell, the counter-spell and a note in his own hand about what went wrong last time.",
+   "effects": [
+    {
+     "effect": "wh3_main_effect_winds_of_magic_pool_cap",
+     "scope": "character_to_force_own_unseen",
+     "value": 30
+    },
+    {
+     "effect": "wh2_dlc14_effect_magic_cost_all_lores_percentage",
+     "scope": "agent_to_parent_army_own",
+     "value": -20
+    },
+    {
+     "effect": "wh_main_effect_force_stat_magic_resistance",
+     "scope": "agent_to_parent_army_own",
+     "value": 15
+    }
+   ],
+   "quest": {
+    "rank": 30,
+    "kind": "spells",
+    "target": 500,
+    "title": "The Unwritten Grimoire",
+    "description": "He keeps a book with nothing in it. He says it fills itself, but only for someone who has cast enough to deserve the ink.",
+    "objective": "Cast 500 spells from the Advisor's own lores in battles he fights\\\\nCurrent total: %n / %n"
+   }
+  },
+  "old_archivist": {
+   "type": "wh_main_anc_human_old_man",
+   "category": "general",
+   "subcategory": "follower",
+   "name": "The Old Archivist",
+   "description": "Older than the Advisor, or so he claims. He keeps every name, every debt and every door that was left unlocked.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_technology_research_points",
+     "scope": "character_to_faction_unseen",
+     "value": 20
+    },
+    {
+     "effect": "wh_main_effect_agent_action_success_chance",
+     "scope": "character_to_character_own_factionwide_heroes",
+     "value": 20
+    },
+    {
+     "effect": "wh_main_effect_agent_recruitment_cost_mod",
+     "scope": "character_to_province_own_factionwide",
+     "value": -30
+    },
+    {
+     "effect": "wh_main_effect_agent_recruitment_xp_all_agents",
+     "scope": "character_to_province_own_factionwide",
+     "value": 3
+    }
+   ],
+   "quest": {
+    "rank": 35,
+    "kind": "actions",
+    "target": 100,
+    "title": "The Old Archivist",
+    "description": "An old man has been writing down everything the Advisor does in the dark. He will only join someone whose record is worth keeping.",
+    "objective": "Succeed at hero actions with the Advisor\\\\nCurrent total: %n / %n"
+   }
+  },
+  "mantle_of_many_wars": {
+   "type": "wh_main_anc_armour",
+   "category": "armour",
+   "name": "Mantle of Many Wars",
+   "description": "Patched from the cloaks of every army he has marched with. Nothing gets through it that has not already been stopped once before.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_force_stat_physical_resistance",
+     "scope": "agent_to_parent_army_own",
+     "value": 15
+    },
+    {
+     "effect": "wh_main_effect_force_stat_missile_resistance",
+     "scope": "agent_to_parent_army_own",
+     "value": 15
+    },
+    {
+     "effect": "wh_main_effect_force_army_campaign_attrition_all_resistance",
+     "scope": "character_to_force_own_alt_text",
+     "value": -100
+    },
+    {
+     "effect": "wh_main_effect_force_all_campaign_replenishment_rate",
+     "scope": "character_to_force_own_alt_text",
+     "value": 15
+    }
+   ],
+   "quest": {
+    "rank": 40,
+    "kind": "weapon_wins",
+    "target": 10,
+    "title": "Mantle of Many Wars",
+    "description": "One weapon is a habit. Six are an education. Win with each of them until the old cloak has a patch for every one.",
+    "objective": "Win battles with the Advisor holding {weapon}\\\\nCurrent total: %n / %n"
+   }
+  },
+  "lantern_of_the_long_watch": {
+   "type": "wh_main_anc_enchanted_item",
+   "category": "enchanted_item",
+   "name": "Lantern of the Long Watch",
+   "description": "It burns without oil and never gives away the camp. Whoever carries it is never the one surprised.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_force_all_campaign_movement_range",
+     "scope": "character_to_force_own_alt_text",
+     "value": 25
+    },
+    {
+     "effect": "wh_main_effect_force_army_campaign_ambush_defence_success_chance",
+     "scope": "character_to_force_own_alt_text",
+     "value": 50
+    },
+    {
+     "effect": "wh_main_effect_force_army_campaign_ambush_attack_success_chance",
+     "scope": "character_to_force_own_alt_text",
+     "value": 25
+    },
+    {
+     "effect": "wh_main_effect_force_stat_vigour_loss_reduction",
+     "scope": "agent_to_parent_army_own",
+     "value": -50
+    }
+   ],
+   "quest": {
+    "rank": 50,
+    "kind": "heroic",
+    "target": 25,
+    "title": "Lantern of the Long Watch",
+    "description": "The lantern only lights for a watchman who has seen a battle won outright, again and again, without a single bad night.",
+    "objective": "Win heroic victories with the Advisor in the battle\\\\nCurrent total: %n / %n"
+   }
+  },
+  "edge_of_final_counsel": {
+   "type": "wh_main_anc_weapon",
+   "category": "weapon",
+   "name": "Edge of Final Counsel",
+   "description": "Not a blade he swings. It is the one he points at a map, and the army goes where it points.",
+   "effects": [
+    {
+     "effect": "wh_main_effect_force_stat_melee_defence",
+     "scope": "agent_to_parent_army_own",
+     "value": 10
+    },
+    {
+     "effect": "wh_main_effect_force_stat_ap_damage",
+     "scope": "agent_to_parent_army_own",
+     "value": 20
+    },
+    {
+     "effect": "wh_main_effect_force_stat_ward_save",
+     "scope": "agent_to_parent_army_own",
+     "value": 10
+    }
+   ],
+   "quest": {
+    "rank": 50,
+    "kind": "races",
+    "target": 6,
+    "per_race": 5,
+    "title": "Edge of Final Counsel",
+    "description": "Every people breaks a different way. Learn how six of them break, five times each, and he will finally give his last piece of advice.",
+    "objective": "Win 5 battles with the Advisor against each of 6 different races\\\\nRaces done: %n / %n"
+   }
+  }
+ },
+ "item_set": {
+  "description": "The item set every one of his `items` belongs to. `flavour` is its description text, and its effects apply while he holds every piece.",
+  "key": "regalia",
+  "name": "The Counsellor's Regalia",
+  "icon": "ui/skins/default/icon_item_set.png",
+  "flavour": "Every war he ever advised on, carried at once.",
+  "effects": [
+   {
+    "effect": "wh_main_effect_force_stat_leadership",
+    "scope": "character_to_force_own_factionwide",
+    "value": 8
+   },
+   {
+    "effect": "wh_main_effect_force_all_campaign_experience_base_all",
+    "scope": "character_to_force_own_factionwide",
+    "value": 2
+   },
+   {
+    "effect": "wh_main_effect_force_all_campaign_upkeep",
+    "scope": "character_to_force_own_factionwide",
+    "value": -10
+   }
+  ]
  }
 }

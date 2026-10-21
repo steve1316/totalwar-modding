@@ -434,6 +434,32 @@ effect_bundles_localised_title_advisor_overhaul_bundle_polymath_3	Polymath: Ever
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_3	He draws on 3 of his 4 disciplines. Each discipline counts once he knows 5 of its skills.	true
 effect_bundles_localised_title_advisor_overhaul_bundle_polymath_4	Polymath: Everything, Again (4 of 4)	true
 effect_bundles_localised_description_advisor_overhaul_bundle_polymath_4	He draws on all 4 of his disciplines at once.	true
+ancillaries_onscreen_name_advisor_overhaul_item_steward_seal	The Steward's Seal	true
+ancillaries_colour_text_advisor_overhaul_item_steward_seal	The seal of a house that ended long ago. He still presses it into the wax before every order, and the men still read it as a promise.	true
+ancillaries_onscreen_name_advisor_overhaul_item_unwritten_grimoire	The Unwritten Grimoire	true
+ancillaries_colour_text_advisor_overhaul_item_unwritten_grimoire	Every page is blank until he needs it. Then it holds the spell, the counter-spell and a note in his own hand about what went wrong last time.	true
+ancillaries_onscreen_name_advisor_overhaul_item_old_archivist	The Old Archivist	true
+ancillaries_colour_text_advisor_overhaul_item_old_archivist	Older than the Advisor, or so he claims. He keeps every name, every debt and every door that was left unlocked.	true
+ancillaries_onscreen_name_advisor_overhaul_item_mantle_of_many_wars	Mantle of Many Wars	true
+ancillaries_colour_text_advisor_overhaul_item_mantle_of_many_wars	Patched from the cloaks of every army he has marched with. Nothing gets through it that has not already been stopped once before.	true
+ancillaries_onscreen_name_advisor_overhaul_item_lantern_of_the_long_watch	Lantern of the Long Watch	true
+ancillaries_colour_text_advisor_overhaul_item_lantern_of_the_long_watch	It burns without oil and never gives away the camp. Whoever carries it is never the one surprised.	true
+ancillaries_onscreen_name_advisor_overhaul_item_edge_of_final_counsel	Edge of Final Counsel	true
+ancillaries_colour_text_advisor_overhaul_item_edge_of_final_counsel	Not a blade he swings. It is the one he points at a map, and the army goes where it points.	true
+ancillary_sets_name_advisor_overhaul_ancillary_set_regalia	The Counsellor's Regalia	true
+ancillary_sets_description_advisor_overhaul_ancillary_set_regalia	Every war he ever advised on, carried at once.	true
+missions_localised_title_advisor_overhaul_quest_steward_seal	The Steward's Seal	true
+missions_localised_description_advisor_overhaul_quest_steward_seal	He served a house whose name nobody remembers. Its seal is still out there, he says, and he will know where once he has finished enough wars by hand.	true
+missions_localised_title_advisor_overhaul_quest_unwritten_grimoire	The Unwritten Grimoire	true
+missions_localised_description_advisor_overhaul_quest_unwritten_grimoire	He keeps a book with nothing in it. He says it fills itself, but only for someone who has cast enough to deserve the ink.	true
+missions_localised_title_advisor_overhaul_quest_old_archivist	The Old Archivist	true
+missions_localised_description_advisor_overhaul_quest_old_archivist	An old man has been writing down everything the Advisor does in the dark. He will only join someone whose record is worth keeping.	true
+missions_localised_title_advisor_overhaul_quest_mantle_of_many_wars	Mantle of Many Wars	true
+missions_localised_description_advisor_overhaul_quest_mantle_of_many_wars	One weapon is a habit. Six are an education. Win with each of them until the old cloak has a patch for every one.	true
+missions_localised_title_advisor_overhaul_quest_lantern_of_the_long_watch	Lantern of the Long Watch	true
+missions_localised_description_advisor_overhaul_quest_lantern_of_the_long_watch	The lantern only lights for a watchman who has seen a battle won outright, again and again, without a single bad night.	true
+missions_localised_title_advisor_overhaul_quest_edge_of_final_counsel	Edge of Final Counsel	true
+missions_localised_description_advisor_overhaul_quest_edge_of_final_counsel	Every people breaks a different way. Learn how six of them break, five times each, and he will finally give his last piece of advice.	true
 character_skills_localised_name_advisor_overhaul_skill_lore_fire	First Tome: Lore of Fire	true
 character_skills_localised_description_advisor_overhaul_skill_lore_fire	Aqshy, the Wind of Fire. It was the first magic he ever touched, and it burned him.\\n\\nLevel 1: its passive and 3 of its 6 spells.\\nLevel 2: every spell.\\nLevel 3: every spell can be overcast.	true
 character_skills_localised_name_advisor_overhaul_skill_lore_fire_2	Second Tome: Lore of Fire	true
@@ -2412,3 +2438,14 @@ effects_description_advisor_overhaul_effect_sword_and_bow_apex_missile	"Hunter's
 effects_description_advisor_overhaul_effect_army_fatigue	Vigour loss: %+n%	true
 effects_description_advisor_overhaul_effect_army_melee_defence_down	Melee defence: %+n	true
 effects_description_advisor_overhaul_effect_army_armour_down	Armour: %+n	true
+mission_text_text_advisor_overhaul_quest_steward_seal	Slay %n enemies with the Advisor's own hand	true
+mission_text_text_advisor_overhaul_quest_unwritten_grimoire	Cast 500 spells from the Advisor's own lores in battles he fights\\nCurrent total: %n / %n	true
+mission_text_text_advisor_overhaul_quest_old_archivist	Succeed at hero actions with the Advisor\\nCurrent total: %n / %n	true
+mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_staff_and_sword	Win battles with the Advisor holding Staff and Sword\\nCurrent total: %n / %n	true
+mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_sword_and_shield	Win battles with the Advisor holding Sword and Shield\\nCurrent total: %n / %n	true
+mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_sword_and_bow	Win battles with the Advisor holding Sword and Bow\\nCurrent total: %n / %n	true
+mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_greatsword	Win battles with the Advisor holding Greatsword\\nCurrent total: %n / %n	true
+mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_glaive	Win battles with the Advisor holding Glaive\\nCurrent total: %n / %n	true
+mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_iron_hand	Win battles with the Advisor holding Iron Hand\\nCurrent total: %n / %n	true
+mission_text_text_advisor_overhaul_quest_lantern_of_the_long_watch	Win heroic victories with the Advisor in the battle\\nCurrent total: %n / %n	true
+mission_text_text_advisor_overhaul_quest_edge_of_final_counsel	Win 5 battles with the Advisor against each of 6 different races\\nRaces done: %n / %n	true

@@ -21252,31 +21252,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh2_dlc09_spell_nehekhara_djafs_incantation_of_cursed_blades",
+      "wh2_dlc09_spell_nehekhara_djafs_incantation_of_cursed_blades_upgraded"
+     ],
      "cost": 3.0,
      "enable": "wh2_dlc09_effect_ability_enable_djafs_incantation_of_cursed_blades",
      "overcast": "wh2_dlc09_effect_ability_overcast_djafs_incantation_of_cursed_blades"
     },
     {
+     "abilities": [
+      "wh2_dlc09_spell_nehekhara_nerus_incantation_of_protection",
+      "wh2_dlc09_spell_nehekhara_nerus_incantation_of_protection_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh2_dlc09_effect_ability_enable_nerus_incantation_of_protection",
      "overcast": "wh2_dlc09_effect_ability_overcast_nerus_incantation_of_protection"
     },
     {
+     "abilities": [
+      "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting",
+      "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh2_dlc09_effect_ability_enable_ptras_incantation_of_righteous_smiting",
      "overcast": "wh2_dlc09_effect_ability_overcast_ptras_incantation_of_righteous_smiting"
     },
     {
+     "abilities": [
+      "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance",
+      "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance_upgraded"
+     ],
      "cost": 9.0,
      "enable": "wh2_dlc09_effect_ability_enable_usirians_incantation_of_vengeance",
      "overcast": "wh2_dlc09_effect_ability_overcast_usirians_incantation_of_vengeance"
     },
     {
+     "abilities": [
+      "wh2_dlc09_spell_nehekhara_sakhmets_incantation_of_the_skullstorm",
+      "wh2_dlc09_spell_nehekhara_sakhmets_incantation_of_the_skullstorm_upgraded"
+     ],
      "cost": 10.0,
      "enable": "wh2_dlc09_effect_ability_enable_sakhmets_incantation_of_the_skullstorm",
      "overcast": "wh2_dlc09_effect_ability_overcast_sakhmets_incantation_of_the_skullstorm"
     },
     {
+     "abilities": [
+      "wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation",
+      "wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation_upgraded"
+     ],
      "cost": 13.0,
      "enable": "wh2_dlc09_effect_ability_enable_usekhps_incantation_of_desiccation",
      "overcast": "wh2_dlc09_effect_ability_overcast_usekhps_incantation_of_desiccation"
@@ -21289,31 +21313,54 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh2_dlc11_spell_deep_spiteful_shot",
+      "wh2_dlc11_spell_deep_spiteful_shot_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh2_dlc11_effect_ability_enable_spiteful_shot",
      "overcast": "wh2_dlc11_effect_ability_overcast_spiteful_shot"
     },
     {
+     "abilities": [
+      "wh2_dlc11_spell_deep_tidecall",
+      "wh2_dlc11_spell_deep_tidecall_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh2_dlc11_effect_ability_enable_tidecall",
      "overcast": "wh2_dlc11_effect_ability_overcast_tidecall"
     },
     {
+     "abilities": [
+      "wh2_dlc11_spell_deep_fog_of_the_damned",
+      "wh2_dlc11_spell_deep_fog_of_the_damned_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh2_dlc11_effect_ability_enable_fog_of_the_damned",
      "overcast": "wh2_dlc11_effect_ability_overcast_fog_of_the_damned"
     },
     {
+     "abilities": [
+      "wh2_dlc11_spell_deep_denizens_of_the_deep"
+     ],
      "cost": 12.0,
      "enable": "wh2_dlc11_effect_ability_enable_denizens_of_the_deep",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh2_dlc11_spell_deep_krakens_pull",
+      "wh2_dlc11_spell_deep_krakens_pull_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh2_dlc11_effect_ability_enable_krakens_pull",
      "overcast": "wh2_dlc11_effect_ability_overcast_krakens_pull"
     },
     {
+     "abilities": [
+      "wh2_dlc11_spell_deep_ghost_ship",
+      "wh2_dlc11_spell_deep_ghost_ship_upgraded"
+     ],
      "cost": 20.0,
      "enable": "wh2_dlc11_effect_ability_enable_ghost_ship",
      "overcast": "wh2_dlc11_effect_ability_overcast_ghost_ship"
@@ -21326,31 +21373,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh2_dlc14_spell_stealth_warp_stars",
+      "wh2_dlc14_spell_stealth_warp_stars_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh2_dlc14_effect_magic_stealth_enable_warp_stars",
      "overcast": "wh2_dlc14_effect_magic_stealth_enable_warp_stars_upgraded"
     },
     {
+     "abilities": [
+      "wh2_main_spell_ruin_skitterleap",
+      "wh2_main_spell_ruin_skitterleap_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh2_main_effect_ability_enable_skitterleap",
      "overcast": "wh2_main_effect_ability_overcast_skitterleap"
     },
     {
+     "abilities": [
+      "wh2_dlc14_spell_stealth_veil_of_shadows",
+      "wh2_dlc14_spell_stealth_veil_of_shadows_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh2_dlc14_effect_magic_stealth_enable_veil_of_shadows",
      "overcast": "wh2_dlc14_effect_magic_stealth_enable_veil_of_shadows_upgraded"
     },
     {
+     "abilities": [
+      "wh2_dlc14_spell_stealth_armour_of_darkness",
+      "wh2_dlc14_spell_stealth_armour_of_darkness_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh2_dlc14_effect_magic_stealth_enable_armour_of_darkness",
      "overcast": "wh2_dlc14_effect_magic_stealth_enable_armour_of_darkness_upgraded"
     },
     {
+     "abilities": [
+      "wh2_dlc14_spell_stealth_brittle_bone",
+      "wh2_dlc14_spell_stealth_brittle_bone_upgraded"
+     ],
      "cost": 11.0,
      "enable": "wh2_dlc14_effect_magic_stealth_enable_brittle_bone",
      "overcast": "wh2_dlc14_effect_magic_stealth_enable_brittle_bone_upgraded"
     },
     {
+     "abilities": [
+      "wh2_dlc14_spell_stealth_black_whirlwind",
+      "wh2_dlc14_spell_stealth_black_whirlwind_upgraded"
+     ],
      "cost": 13.0,
      "enable": "wh2_dlc14_effect_magic_stealth_enable_black_whirlwind",
      "overcast": "wh2_dlc14_effect_magic_stealth_enable_black_whirlwind_upgraded"
@@ -21361,31 +21432,49 @@
    "passives": [],
    "spells": [
     {
+     "abilities": [
+      "wh2_dlc17_rune_abilities_rune_of_breaking"
+     ],
      "cost": 0.0,
      "enable": "wh2_dlc17_effect_ability_enable_rune_of_breaking",
      "overcast": "wh2_dlc17_effect_ability_enable_master_rune_of_breaking"
     },
     {
+     "abilities": [
+      "wh2_dlc17_rune_abilities_rune_of_slowness"
+     ],
      "cost": 0.0,
      "enable": "wh2_dlc17_effect_ability_enable_rune_of_slowness",
      "overcast": "wh2_dlc17_effect_ability_enable_master_rune_of_slowness"
     },
     {
+     "abilities": [
+      "wh2_dlc17_rune_abilities_rune_of_speed"
+     ],
      "cost": 0.0,
      "enable": "wh2_dlc17_effect_ability_enable_rune_of_speed",
      "overcast": "wh2_dlc17_effect_ability_enable_master_rune_of_speed"
     },
     {
+     "abilities": [
+      "wh_main_rune_abilities_rune_of_negation"
+     ],
      "cost": 0.0,
      "enable": "wh_main_effect_ability_enable_rune_of_negation",
      "overcast": "wh2_dlc17_effect_ability_enable_master_rune_of_negation"
     },
     {
+     "abilities": [
+      "wh_main_rune_abilities_rune_of_oath_and_steel"
+     ],
      "cost": 0.0,
      "enable": "wh_main_effect_ability_enable_rune_of_oath_and_steel",
      "overcast": "wh_dlc06_effect_ability_enable_master_rune_of_oath_and_steel"
     },
     {
+     "abilities": [
+      "wh_main_rune_abilities_rune_of_wrath_and_ruin"
+     ],
      "cost": 0.0,
      "enable": "wh_main_effect_ability_enable_rune_of_wrath_&_ruin",
      "overcast": "wh_dlc06_effect_ability_enable_master_rune_of_wrath_&_ruin"
@@ -21398,31 +21487,53 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh2_main_spell_dark_magic_power_of_darkness"
+     ],
      "cost": 4.0,
      "enable": "wh2_main_effect_ability_enable_power_of_darkness",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh2_main_spell_dark_magic_chillwind",
+      "wh2_main_spell_dark_magic_chillwind_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh2_main_effect_ability_enable_chillwind",
      "overcast": "wh2_main_effect_ability_overcast_chillwind"
     },
     {
+     "abilities": [
+      "wh2_main_spell_dark_magic_word_of_pain",
+      "wh2_main_spell_dark_magic_word_of_pain_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh2_main_effect_ability_enable_word_of_pain",
      "overcast": "wh2_main_effect_ability_overcast_word_of_pain"
     },
     {
+     "abilities": [
+      "wh2_main_spell_dark_magic_doombolt",
+      "wh2_main_spell_dark_magic_doombolt_upgraded"
+     ],
      "cost": 9.0,
      "enable": "wh2_main_effect_ability_enable_doombolt",
      "overcast": "wh2_main_effect_ability_overcast_doombolt"
     },
     {
+     "abilities": [
+      "wh2_main_spell_dark_magic_bladewind",
+      "wh2_main_spell_dark_magic_bladewind_upgraded"
+     ],
      "cost": 11.0,
      "enable": "wh2_main_effect_ability_enable_bladewind",
      "overcast": "wh2_main_effect_ability_overcast_bladewind"
     },
     {
+     "abilities": [
+      "wh2_main_spell_dark_magic_soul_stealer"
+     ],
      "cost": 18.0,
      "enable": "wh2_main_effect_ability_enable_soul_stealer",
      "overcast": null
@@ -21435,31 +21546,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh2_main_spell_high_magic_hand_of_glory",
+      "wh2_main_spell_high_magic_hand_of_glory_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh2_main_effect_ability_enable_hand_of_glory",
      "overcast": "wh2_main_effect_ability_overcast_hand_of_glory"
     },
     {
+     "abilities": [
+      "wh2_main_spell_high_magic_apotheosis",
+      "wh2_main_spell_high_magic_apotheosis_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh2_main_effect_ability_enable_apotheosis",
      "overcast": "wh2_main_effect_ability_overcast_apotheosis"
     },
     {
+     "abilities": [
+      "wh2_main_spell_high_magic_soul_quench",
+      "wh2_main_spell_high_magic_soul_quench_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh2_main_effect_ability_enable_soul_quench",
      "overcast": "wh2_main_effect_ability_overcast_soul_quench"
     },
     {
+     "abilities": [
+      "wh2_main_spell_high_magic_tempest",
+      "wh2_main_spell_high_magic_tempest_upgraded"
+     ],
      "cost": 10.0,
      "enable": "wh2_main_effect_ability_enable_tempest",
      "overcast": "wh2_main_effect_ability_overcast_tempest"
     },
     {
+     "abilities": [
+      "wh2_main_spell_high_magic_fiery_convocation",
+      "wh2_main_spell_high_magic_fiery_convocation_upgraded"
+     ],
      "cost": 13.0,
      "enable": "wh2_main_effect_ability_enable_fiery_convocation",
      "overcast": "wh2_main_effect_ability_overcast_fiery_convocation"
     },
     {
+     "abilities": [
+      "wh2_main_spell_high_magic_arcane_unforging",
+      "wh2_main_spell_high_magic_arcane_unforging_upgraded"
+     ],
      "cost": 14.0,
      "enable": "wh2_main_effect_ability_enable_arcane_unforging",
      "overcast": "wh2_main_effect_ability_overcast_arcane_unforging"
@@ -21472,31 +21607,53 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh2_main_spell_plague_bless_with_filth",
+      "wh2_main_spell_plague_bless_with_filth_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh2_main_effect_ability_enable_bless_with_filth",
      "overcast": "wh2_main_effect_ability_overcast_bless_with_filth"
     },
     {
+     "abilities": [
+      "wh2_main_spell_plague_pestilent_breath",
+      "wh2_main_spell_plague_pestilent_breath_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh2_main_effect_ability_enable_pestilent_breath",
      "overcast": "wh2_main_effect_ability_overcast_pestilent_breath"
     },
     {
+     "abilities": [
+      "wh2_main_spell_plague_wither",
+      "wh2_main_spell_plague_wither_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh2_main_effect_ability_enable_wither",
      "overcast": "wh2_main_effect_ability_overcast_wither"
     },
     {
+     "abilities": [
+      "wh2_main_spell_plague_vermintide"
+     ],
      "cost": 7.0,
      "enable": "wh2_main_effect_ability_enable_vermintide",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh2_main_spell_plague_plague",
+      "wh2_main_spell_plague_plague_upgraded"
+     ],
      "cost": 12.0,
      "enable": "wh2_main_effect_ability_enable_plague",
      "overcast": "wh2_main_effect_ability_overcast_plague"
     },
     {
+     "abilities": [
+      "wh2_main_spell_plague_pestilent_birth"
+     ],
      "cost": 14.0,
      "enable": "wh2_main_effect_ability_enable_pestilent_birth",
      "overcast": null
@@ -21509,31 +21666,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh2_main_spell_ruin_howling_warpgale",
+      "wh2_main_spell_ruin_howling_warpgale_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh2_main_effect_ability_enable_howling_warpgale",
      "overcast": "wh2_main_effect_ability_overcast_howling_warpgale"
     },
     {
+     "abilities": [
+      "wh2_main_spell_ruin_death_frenzy",
+      "wh2_main_spell_ruin_death_frenzy_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh2_main_effect_ability_enable_death_frenzy",
      "overcast": "wh2_main_effect_ability_overcast_death_frenzy"
     },
     {
+     "abilities": [
+      "wh2_main_spell_ruin_warp_lightning",
+      "wh2_main_spell_ruin_warp_lightning_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh2_main_effect_ability_enable_warp_lightning",
      "overcast": "wh2_main_effect_ability_overcast_warp_lightning"
     },
     {
+     "abilities": [
+      "wh2_main_spell_ruin_scorch",
+      "wh2_main_spell_ruin_scorch_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh2_main_effect_ability_enable_skaven_scorch",
      "overcast": "wh2_main_effect_ability_overcast_skaven_scorch"
     },
     {
+     "abilities": [
+      "wh2_main_spell_ruin_cracks_call",
+      "wh2_main_spell_ruin_cracks_call_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh2_main_effect_ability_enable_cracks_call",
      "overcast": "wh2_main_effect_ability_overcast_cracks_call"
     },
     {
+     "abilities": [
+      "wh2_dlc14_spell_ruin_flensing_ruin",
+      "wh2_dlc14_spell_ruin_flensing_ruin_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh2_main_effect_magic_ruin_enable_flensing_ruin",
      "overcast": "wh2_main_effect_magic_ruin_enable_flensing_ruin_upgrade"
@@ -21546,31 +21727,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_dlc23_spell_hashut_burning_wrath",
+      "wh3_dlc23_spell_hashut_burning_wrath_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_dlc23_effect_ability_enable_burning_wrath",
      "overcast": "wh3_dlc23_effect_ability_enable_burning_wrath_upgraded"
     },
     {
+     "abilities": [
+      "wh3_dlc23_spell_hashut_dark_subjugation",
+      "wh3_dlc23_spell_hashut_dark_subjugation_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_dlc23_effect_ability_enable_dark_subjugation",
      "overcast": "wh3_dlc23_effect_ability_enable_dark_subjugation_upgraded"
     },
     {
+     "abilities": [
+      "wh3_dlc23_spell_hashut_ash_storm",
+      "wh3_dlc23_spell_hashut_ash_storm_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh3_dlc23_effect_ability_enable_ash_storm",
      "overcast": "wh3_dlc23_effect_ability_enable_ash_storm_upgraded"
     },
     {
+     "abilities": [
+      "wh3_dlc23_spell_hashut_curse_of_hashut",
+      "wh3_dlc23_spell_hashut_curse_of_hashut_upgraded"
+     ],
      "cost": 10.0,
      "enable": "wh3_dlc23_effect_ability_enable_curse_of_hashut",
      "overcast": "wh3_dlc23_effect_ability_enable_curse_of_hashut_upgraded"
     },
     {
+     "abilities": [
+      "wh3_dlc23_spell_hashut_hell_hammer",
+      "wh3_dlc23_spell_hashut_hell_hammer_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh3_dlc23_effect_ability_enable_hell_hammer",
      "overcast": "wh3_dlc23_effect_ability_enable_hell_hammer_upgraded"
     },
     {
+     "abilities": [
+      "wh3_dlc23_spell_hashut_flames_of_azgorh",
+      "wh3_dlc23_spell_hashut_flames_of_azgorh_upgraded"
+     ],
      "cost": 18.0,
      "enable": "wh3_dlc23_effect_ability_enable_flames_of_azgorh",
      "overcast": "wh3_dlc23_effect_ability_enable_flames_of_azgorh_upgraded"
@@ -21583,31 +21788,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_dlc24_spell_hags_the_forbidden_fens",
+      "wh3_dlc24_spell_hags_the_forbidden_fens_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh3_dlc24_effect_ability_enable_the_forbidden_fens",
      "overcast": "wh3_dlc24_effect_ability_overcast_the_forbidden_fens"
     },
     {
+     "abilities": [
+      "wh3_dlc24_spell_hags_witchbrew",
+      "wh3_dlc24_spell_hags_witchbrew_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_dlc24_effect_ability_enable_witchbrew",
      "overcast": "wh3_dlc24_effect_ability_overcast_witchbrew"
     },
     {
+     "abilities": [
+      "wh3_dlc24_spell_hags_curse_of_the_ancient_witch",
+      "wh3_dlc24_spell_hags_curse_of_the_ancient_witch_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh3_dlc24_effect_ability_enable_curse_of_the_ancient_witch",
      "overcast": "wh3_dlc24_effect_ability_overcast_curse_of_the_ancient_witch"
     },
     {
+     "abilities": [
+      "wh3_dlc24_spell_hags_vengeance_of_spirits",
+      "wh3_dlc24_spell_hags_vengeance_of_spirits_upgraded"
+     ],
      "cost": 12.0,
      "enable": "wh3_dlc24_effect_ability_enable_vengeance_of_spirits",
      "overcast": "wh3_dlc24_effect_ability_overcast_vengeance_of_spirits"
     },
     {
+     "abilities": [
+      "wh3_dlc24_spell_hags_malediction_of_madness",
+      "wh3_dlc24_spell_hags_malediction_of_madness_upgraded"
+     ],
      "cost": 16.0,
      "enable": "wh3_dlc24_effect_ability_enable_malediction_of_madness",
      "overcast": "wh3_dlc24_effect_ability_overcast_malediction_of_madness"
     },
     {
+     "abilities": [
+      "wh3_dlc24_spell_hags_cursed_cauldron",
+      "wh3_dlc24_spell_hags_cursed_cauldron_upgraded"
+     ],
      "cost": 18.0,
      "enable": "wh3_dlc24_effect_ability_enable_cursed_cauldron",
      "overcast": "wh3_dlc24_effect_ability_overcast_cursed_cauldron"
@@ -21620,31 +21849,54 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_dlc27_spell_mists_ladrielles_shroud",
+      "wh3_dlc27_spell_mists_ladrielles_shroud_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh3_dlc27_effect_ability_enable_ladrielles_shroud",
      "overcast": "wh3_dlc27_effect_ability_overcast_ladrielles_shroud"
     },
     {
+     "abilities": [
+      "wh3_dlc27_spell_mists_walk_between_worlds",
+      "wh3_dlc27_spell_mists_walk_between_worlds_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_dlc27_effect_ability_enable_walk_between_worlds",
      "overcast": "wh3_dlc27_effect_ability_overcast_walk_between_worlds"
     },
     {
+     "abilities": [
+      "wh3_dlc27_spell_mists_flensing_haar",
+      "wh3_dlc27_spell_mists_flensing_haar_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh3_dlc27_effect_ability_enable_flensing_haar",
      "overcast": "wh3_dlc27_effect_ability_overcast_flensing_haar"
     },
     {
+     "abilities": [
+      "wh3_dlc27_spell_mists_mathlanns_spite",
+      "wh3_dlc27_spell_mists_mathlanns_spite_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh3_dlc27_effect_ability_enable_mathlanns_spite",
      "overcast": "wh3_dlc27_effect_ability_overcast_mathlanns_spite"
     },
     {
+     "abilities": [
+      "wh3_dlc27_spell_mists_the_writhing_mist",
+      "wh3_dlc27_spell_mists_the_writhing_mist_upgraded"
+     ],
      "cost": 10.0,
      "enable": "wh3_dlc27_effect_ability_enable_the_writhing_mist",
      "overcast": "wh3_dlc27_effect_ability_overcast_the_writhing_mist"
     },
     {
+     "abilities": [
+      "wh3_dlc27_spell_mists_mistress_of_the_deeps"
+     ],
      "cost": 13.0,
      "enable": "wh3_dlc27_effect_ability_enable_mistress_of_the_deeps",
      "overcast": null
@@ -21657,31 +21909,54 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_dlc29_spell_undeath_sulekhim_hand_of_dust",
+      "wh3_dlc29_spell_undeath_sulekhim_hand_of_dust_upgraded"
+     ],
      "cost": 3.0,
      "enable": "wh3_dlc29_effect_ability_enable_sulekhim_hand_of_dust",
      "overcast": "wh3_dlc29_effect_ability_enable_sulekhim_hand_of_dust_upgraded"
     },
     {
+     "abilities": [
+      "wh3_dlc29_spell_undeath_morkharn_breath_of_darkness",
+      "wh3_dlc29_spell_undeath_morkharn_breath_of_darkness_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh3_dlc29_effect_ability_enable_morkharn_breath_of_darkness",
      "overcast": "wh3_dlc29_effect_ability_enable_morkharn_breath_of_darkness_upgraded"
     },
     {
+     "abilities": [
+      "wh3_dlc29_spell_undeath_khizaar_the_soulstealer",
+      "wh3_dlc29_spell_undeath_khizaar_the_soulstealer_upgraded"
+     ],
      "cost": 10.0,
      "enable": "wh3_dlc29_effect_ability_enable_khizaar_soulstealer",
      "overcast": "wh3_dlc29_effect_ability_enable_khizaar_soulstealer_upgraded"
     },
     {
+     "abilities": [
+      "wh3_dlc29_spell_undeath_razkhar_the_abyssal_swarm",
+      "wh3_dlc29_spell_undeath_razkhar_the_abyssal_swarm_upgraded"
+     ],
      "cost": 12.0,
      "enable": "wh3_dlc29_effect_ability_enable_razkhar_abyssal_swarm",
      "overcast": "wh3_dlc29_effect_ability_enable_razkhar_abyssal_swarm_upgraded"
     },
     {
+     "abilities": [
+      "wh3_dlc29_spell_undeath_akararan_the_dark_riders",
+      "wh3_dlc29_spell_undeath_akararan_the_dark_riders_upgraded"
+     ],
      "cost": 18.0,
      "enable": "wh3_dlc29_effect_ability_enable_akararan_dark_raiders",
      "overcast": "wh3_dlc29_effect_ability_enable_akararan_dark_raiders_upgraded"
     },
     {
+     "abilities": [
+      "wh3_dlc29_spell_undeath_kandorak_the_harbinger"
+     ],
      "cost": 23.0,
      "enable": "wh3_dlc29_effect_ability_enable_kandorak_harbringer",
      "overcast": "wh3_dlc29_effect_ability_enable_kandorak_harbringer_upgraded"
@@ -21694,31 +21969,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_main_spell_nurgle_miasma_of_pestilence",
+      "wh3_main_spell_nurgle_miasma_of_pestilence_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh3_main_effect_ability_enable_miasma_of_pestilence",
      "overcast": "wh3_main_effect_ability_overcast_miasma_of_pestilence"
     },
     {
+     "abilities": [
+      "wh3_main_spell_nurgle_stream_of_corruption",
+      "wh3_main_spell_nurgle_stream_of_corruption_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh3_main_effect_ability_enable_stream_of_corruption",
      "overcast": "wh3_main_effect_ability_overcast_stream_of_corruption"
     },
     {
+     "abilities": [
+      "wh3_main_spell_nurgle_curse_of_the_leper",
+      "wh3_main_spell_nurgle_curse_of_the_leper_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh3_main_effect_ability_enable_curse_of_the_leper",
      "overcast": "wh3_main_effect_ability_overcast_curse_of_the_leper"
     },
     {
+     "abilities": [
+      "wh3_main_spell_nurgle_pestilent_pustule",
+      "wh3_main_spell_nurgle_pestilent_pustule_upgraded"
+     ],
      "cost": 13.0,
      "enable": "wh3_main_effect_ability_enable_blight_boil",
      "overcast": "wh3_main_effect_ability_overcast_blight_boil"
     },
     {
+     "abilities": [
+      "wh3_main_spell_nurgle_rancid_visitations",
+      "wh3_main_spell_nurgle_rancid_visitations_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh3_main_effect_ability_enable_rancid_visitations",
      "overcast": "wh3_main_effect_ability_overcast_rancid_visitations"
     },
     {
+     "abilities": [
+      "wh3_main_spell_nurgle_fleshy_abundance",
+      "wh3_main_spell_nurgle_fleshy_abundance_upgraded"
+     ],
      "cost": 16.0,
      "enable": "wh3_main_effect_ability_enable_fleshy_abundance",
      "overcast": "wh3_main_effect_ability_overcast_fleshy_abundance"
@@ -21731,31 +22030,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_main_spell_great_maw_braingobbler",
+      "wh3_main_spell_great_maw_braingobbler_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh3_main_effect_ability_enable_braingobbler",
      "overcast": "wh3_main_effect_ability_overcast_braingobbler"
     },
     {
+     "abilities": [
+      "wh3_main_spell_great_maw_bullgorger",
+      "wh3_main_spell_great_maw_bullgorger_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh3_main_effect_ability_enable_bullgorger",
      "overcast": "wh3_main_effect_ability_overcast_bullgorger"
     },
     {
+     "abilities": [
+      "wh3_main_spell_great_maw_toothcracker",
+      "wh3_main_spell_great_maw_toothcracker_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_main_effect_ability_enable_toothcracker",
      "overcast": "wh3_main_effect_ability_overcast_toothcracker"
     },
     {
+     "abilities": [
+      "wh3_main_spell_great_maw_bonecrusher",
+      "wh3_main_spell_great_maw_bonecrusher_upgraded"
+     ],
      "cost": 10.0,
      "enable": "wh3_main_effect_ability_enable_bonecrusher",
      "overcast": "wh3_main_effect_ability_overcast_bonecrusher"
     },
     {
+     "abilities": [
+      "wh3_main_spell_great_maw_trollguts",
+      "wh3_main_spell_great_maw_trollguts_upgraded"
+     ],
      "cost": 16.0,
      "enable": "wh3_main_effect_ability_enable_trollguts",
      "overcast": "wh3_main_effect_ability_overcast_trollguts"
     },
     {
+     "abilities": [
+      "wh3_main_spell_great_maw_the_maw",
+      "wh3_main_spell_great_maw_the_maw_upgraded"
+     ],
      "cost": 18.0,
      "enable": "wh3_main_effect_ability_enable_the_maw",
      "overcast": "wh3_main_effect_ability_overcast_the_maw"
@@ -21768,31 +22091,54 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_main_spell_ice_ice_sheet"
+     ],
      "cost": 4.0,
      "enable": "wh3_main_effect_ability_enable_ice_sheet",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh3_main_spell_ice_ice_maidens_kiss",
+      "wh3_main_spell_ice_ice_maidens_kiss_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_main_effect_ability_enable_ice_maidens_kiss",
      "overcast": "wh3_main_effect_ability_overcast_ice_maidens_kiss"
     },
     {
+     "abilities": [
+      "wh3_main_spell_ice_frost_blades",
+      "wh3_main_spell_ice_frost_blades_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh3_main_effect_ability_enable_frost_blades",
      "overcast": "wh3_main_effect_ability_overcast_frost_blades"
     },
     {
+     "abilities": [
+      "wh3_main_spell_ice_crystal_sanctuary",
+      "wh3_main_spell_ice_crystal_sanctuary_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh3_main_effect_ability_enable_crystal_sanctuary",
      "overcast": "wh3_main_effect_ability_overcast_crystal_sanctuary"
     },
     {
+     "abilities": [
+      "wh3_main_spell_ice_death_frost",
+      "wh3_main_spell_ice_death_frost_upgraded"
+     ],
      "cost": 12.0,
      "enable": "wh3_main_effect_ability_enable_death_frost",
      "overcast": "wh3_main_effect_ability_overcast_death_frost"
     },
     {
+     "abilities": [
+      "wh3_main_spell_ice_heart_of_winter",
+      "wh3_main_spell_ice_heart_of_winter_upgraded"
+     ],
      "cost": 22.0,
      "enable": "wh3_main_effect_ability_enable_heart_of_winter",
      "overcast": "wh3_main_effect_ability_overcast_heart_of_winter"
@@ -21805,31 +22151,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_main_spell_tempest_gust_of_true_flight",
+      "wh3_main_spell_tempest_gust_of_true_flight_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh3_main_effect_ability_enable_gust_of_true_flight",
      "overcast": "wh3_main_effect_ability_overcast_gust_of_true_flight"
     },
     {
+     "abilities": [
+      "wh3_main_spell_tempest_hailstorm",
+      "wh3_main_spell_tempest_hailstorm_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_main_effect_ability_enable_hailstorm",
      "overcast": "wh3_main_effect_ability_overcast_hailstorm"
     },
     {
+     "abilities": [
+      "wh3_main_spell_tempest_swiftwing",
+      "wh3_main_spell_tempest_swiftwing_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_main_effect_ability_enable_swiftwing",
      "overcast": "wh3_main_effect_ability_overcast_swiftwing"
     },
     {
+     "abilities": [
+      "wh3_main_spell_tempest_biting_wind",
+      "wh3_main_spell_tempest_biting_wind_upgraded"
+     ],
      "cost": 12.0,
      "enable": "wh3_main_effect_ability_enable_biting_wind",
      "overcast": "wh3_main_effect_ability_overcast_biting_wind"
     },
     {
+     "abilities": [
+      "wh3_main_spell_tempest_hawks_of_miska",
+      "wh3_main_spell_tempest_hawks_of_miska_upgraded"
+     ],
      "cost": 13.0,
      "enable": "wh3_main_effect_ability_enable_hawks_of_miska",
      "overcast": "wh3_main_effect_ability_overcast_hawks_of_miska"
     },
     {
+     "abilities": [
+      "wh3_main_spell_tempest_blizzard",
+      "wh3_main_spell_tempest_blizzard_upgraded"
+     ],
      "cost": 18.0,
      "enable": "wh3_main_effect_ability_enable_blizzard",
      "overcast": "wh3_main_effect_ability_overcast_blizzard"
@@ -21842,31 +22212,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_main_spell_yang_jade_shield",
+      "wh3_main_spell_yang_jade_shield_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh3_main_effect_ability_enable_jade_shield",
      "overcast": "wh3_main_effect_ability_overcast_jade_shield"
     },
     {
+     "abilities": [
+      "wh3_main_spell_yang_dragons_breath",
+      "wh3_main_spell_yang_dragons_breath_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_main_effect_ability_enable_dragons_breath",
      "overcast": "wh3_main_effect_ability_overcast_dragons_breath"
     },
     {
+     "abilities": [
+      "wh3_main_spell_yang_wall_of_wind_and_fire",
+      "wh3_main_spell_yang_wall_of_wind_and_fire_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_main_effect_ability_enable_wall_of_wind_and_fire",
      "overcast": "wh3_main_effect_ability_overcast_wall_of_wind_and_fire"
     },
     {
+     "abilities": [
+      "wh3_main_spell_yang_stone_ground_stance",
+      "wh3_main_spell_yang_stone_ground_stance_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh3_main_effect_ability_enable_stone_ground_stance",
      "overcast": "wh3_main_effect_ability_overcast_stone_ground_stance"
     },
     {
+     "abilities": [
+      "wh3_main_spell_yang_might_of_heaven_and_earth",
+      "wh3_main_spell_yang_might_of_heaven_and_earth_upgraded"
+     ],
      "cost": 10.0,
      "enable": "wh3_main_effect_ability_enable_might_of_heaven_and_earth",
      "overcast": "wh3_main_effect_ability_overcast_might_of_heaven_and_earth"
     },
     {
+     "abilities": [
+      "wh3_main_spell_yang_constellation_of_the_dragon",
+      "wh3_main_spell_yang_constellation_of_the_dragon_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh3_main_effect_ability_enable_constellation_of_the_dragon",
      "overcast": "wh3_main_effect_ability_overcast_constellation_of_the_dragon"
@@ -21879,31 +22273,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_main_spell_yin_cloak_of_jet",
+      "wh3_main_spell_yin_cloak_of_jet_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh3_main_effect_ability_enable_cloak_of_jet",
      "overcast": "wh3_main_effect_ability_overcast_cloak_of_jet"
     },
     {
+     "abilities": [
+      "wh3_main_spell_yin_storm_of_shadows",
+      "wh3_main_spell_yin_storm_of_shadows_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh3_main_effect_ability_enable_storm_of_shadows",
      "overcast": "wh3_main_effect_ability_overcast_storm_of_shadows"
     },
     {
+     "abilities": [
+      "wh3_main_spell_yin_missile_mirror",
+      "wh3_main_spell_yin_missile_mirror_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh3_main_effect_ability_enable_missile_mirror",
      "overcast": "wh3_main_effect_ability_overcast_missile_mirror"
     },
     {
+     "abilities": [
+      "wh3_main_spell_yin_blossom_wind",
+      "wh3_main_spell_yin_blossom_wind_upgraded"
+     ],
      "cost": 9.0,
      "enable": "wh3_main_effect_ability_enable_blossom_wind",
      "overcast": "wh3_main_effect_ability_overcast_blossom_wind"
     },
     {
+     "abilities": [
+      "wh3_main_spell_yin_ancestral_warriors",
+      "wh3_main_spell_yin_ancestral_warriors_upgraded"
+     ],
      "cost": 16.0,
      "enable": "wh3_main_effect_ability_enable_ancestral_warriors",
      "overcast": "wh3_main_effect_ability_overcast_ancestral_warriors"
     },
     {
+     "abilities": [
+      "wh3_main_spell_yin_talons_of_night",
+      "wh3_main_spell_yin_talons_of_night_upgraded"
+     ],
      "cost": 17.0,
      "enable": "wh3_main_effect_ability_enable_talons_of_night",
      "overcast": "wh3_main_effect_ability_overcast_talons_of_night"
@@ -21916,31 +22334,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_main_spell_slaanesh_acquiescence",
+      "wh3_main_spell_slaanesh_acquiescence_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_main_effect_ability_enable_acquiescence",
      "overcast": "wh3_main_effect_ability_overcast_acquiescence"
     },
     {
+     "abilities": [
+      "wh3_main_spell_slaanesh_lash_of_slaanesh",
+      "wh3_main_spell_slaanesh_lash_of_slaanesh_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_main_effect_ability_overcast_lash_of_slaanesh",
      "overcast": "wh3_main_effect_ability_overcast_lash_of_slaanesh"
     },
     {
+     "abilities": [
+      "wh3_main_spell_slaanesh_hysterical_frenzy",
+      "wh3_main_spell_slaanesh_hysterical_frenzy_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh3_main_effect_ability_enable_hysterical_frenzy",
      "overcast": "wh3_main_effect_ability_overcast_hysterical_frenzy"
     },
     {
+     "abilities": [
+      "wh3_main_spell_slaanesh_slicing_shards",
+      "wh3_main_spell_slaanesh_slicing_shards_upgraded"
+     ],
      "cost": 12.0,
      "enable": "wh3_main_effect_ability_enable_slicing_shards",
      "overcast": "wh3_main_effect_ability_overcast_slicing_shards"
     },
     {
+     "abilities": [
+      "wh3_main_spell_slaanesh_pavane_of_slaanesh",
+      "wh3_main_spell_slaanesh_pavane_of_slaanesh_upgraded"
+     ],
      "cost": 14.0,
      "enable": "wh3_main_effect_ability_overcast_pavane_of_slaanesh",
      "overcast": "wh3_main_effect_ability_overcast_pavane_of_slaanesh"
     },
     {
+     "abilities": [
+      "wh3_main_spell_slaanesh_phantasmagoria",
+      "wh3_main_spell_slaanesh_phantasmagoria_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh3_main_effect_ability_enable_phantasmagoria",
      "overcast": "wh3_main_effect_ability_overcast_phantasmagoria"
@@ -21953,31 +22395,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh3_main_spell_tzeentch_blue_fire_of_tzeentch",
+      "wh3_main_spell_tzeentch_blue_fire_of_tzeentch_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_main_effect_ability_overcast_blue_fire_of_tzeentch",
      "overcast": "wh3_main_effect_ability_overcast_blue_fire_of_tzeentch"
     },
     {
+     "abilities": [
+      "wh3_main_spell_tzeentch_pink_fire_of_tzeentch",
+      "wh3_main_spell_tzeentch_pink_fire_of_tzeentch_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh3_main_effect_ability_overcast_pink_fire_of_tzeentch",
      "overcast": "wh3_main_effect_ability_overcast_pink_fire_of_tzeentch"
     },
     {
+     "abilities": [
+      "wh3_main_spell_tzeentch_treason_of_tzeentch",
+      "wh3_main_spell_tzeentch_treason_of_tzeentch_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh3_main_effect_ability_overcast_treason_of_tzeentch",
      "overcast": "wh3_main_effect_ability_overcast_treason_of_tzeentch"
     },
     {
+     "abilities": [
+      "wh3_main_spell_tzeentch_glean_magic",
+      "wh3_main_spell_tzeentch_glean_magic_upgraded"
+     ],
      "cost": 9.0,
      "enable": "wh3_main_effect_ability_enable_glean_magic",
      "overcast": "wh3_main_effect_ability_overcast_glean_magic"
     },
     {
+     "abilities": [
+      "wh3_main_spell_tzeentch_tzeentchs_firestorm",
+      "wh3_main_spell_tzeentch_tzeentchs_firestorm_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh3_main_effect_ability_overcast_tzeentchs_firestorm",
      "overcast": "wh3_main_effect_ability_overcast_tzeentchs_firestorm"
     },
     {
+     "abilities": [
+      "wh3_main_spell_tzeentch_infernal_gateway",
+      "wh3_main_spell_tzeentch_infernal_gateway_upgraded"
+     ],
      "cost": 18.0,
      "enable": "wh3_main_effect_ability_enable_infernal_gateway",
      "overcast": "wh3_main_effect_ability_overcast_infernal_gateway"
@@ -21990,31 +22456,54 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_dlc03_spell_beasts_wyssans_wildform",
+      "wh_dlc03_spell_beasts_wyssans_wildform_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh_dlc03_effect_ability_enable_wyssans_wildform",
      "overcast": "wh2_main_effect_ability_overcast_wyssans_wildform"
     },
     {
+     "abilities": [
+      "wh_dlc03_spell_beasts_flock_of_doom",
+      "wh_dlc03_spell_beasts_flock_of_doom_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh_dlc03_effect_ability_enable_flock_of_doom",
      "overcast": "wh2_main_effect_ability_overcast_flock_of_doom"
     },
     {
+     "abilities": [
+      "wh_dlc03_spell_beasts_the_amber_spear",
+      "wh_dlc03_spell_beasts_the_amber_spear_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh_dlc03_effect_ability_enable_the_amber_spear",
      "overcast": "wh2_main_effect_ability_overcast_the_amber_spear"
     },
     {
+     "abilities": [
+      "wh_dlc03_spell_beasts_panns_impenetrable_pelt",
+      "wh_dlc03_spell_beasts_panns_impenetrable_pelt_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh_dlc03_effect_ability_enable_panns_impenetrable_pelt",
      "overcast": "wh2_main_effect_ability_overcast_panns_impenetrable_pelt"
     },
     {
+     "abilities": [
+      "wh_dlc03_spell_beasts_the_curse_of_anraheir",
+      "wh_dlc03_spell_beasts_the_curse_of_anraheir_upgraded"
+     ],
      "cost": 11.0,
      "enable": "wh_dlc03_effect_ability_enable_the_curse_of_anraheir",
      "overcast": "wh2_main_effect_ability_overcast_the_curse_of_anraheir"
     },
     {
+     "abilities": [
+      "wh_dlc03_spell_beasts_transformation_of_kadon"
+     ],
      "cost": 15.0,
      "enable": "wh_dlc03_effect_ability_enable_transformation_of_kadon",
      "overcast": null
@@ -22027,31 +22516,53 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_dlc03_spell_wild_devolve",
+      "wh_dlc03_spell_wild_devolve_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh_dlc03_effect_ability_enable_devolve",
      "overcast": "wh2_main_effect_ability_overcast_devolve"
     },
     {
+     "abilities": [
+      "wh_dlc03_spell_wild_bray_scream",
+      "wh_dlc03_spell_wild_bray_scream_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_dlc03_effect_ability_enable_bray_scream",
      "overcast": "wh2_main_effect_ability_overcast_bray_scream"
     },
     {
+     "abilities": [
+      "wh_dlc03_spell_wild_viletide",
+      "wh_dlc03_spell_wild_viletide_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh_dlc03_effect_ability_enable_viletide",
      "overcast": "wh2_main_effect_ability_overcast_viletide"
     },
     {
+     "abilities": [
+      "wh_dlc03_spell_wild_mantle_of_ghorok"
+     ],
      "cost": 9.0,
      "enable": "wh_dlc03_effect_ability_enable_mantle_of_ghorok",
      "overcast": "wh2_dlc17_effect_magic_wild_enable_mantle_of_ghorok_upgraded"
     },
     {
+     "abilities": [
+      "wh_dlc03_spell_wild_traitor_kin",
+      "wh_dlc03_spell_wild_traitor_kin_upgraded"
+     ],
      "cost": 11.0,
      "enable": "wh_dlc03_effect_ability_enable_traitor_kin",
      "overcast": "wh2_main_effect_ability_overcast_traitor_kin"
     },
     {
+     "abilities": [
+      "wh_dlc03_spell_wild_savage_dominion"
+     ],
      "cost": 15.0,
      "enable": "wh_dlc03_effect_ability_enable_savage_dominion",
      "overcast": null
@@ -22064,31 +22575,54 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_dlc05_spell_life_awakening_of_the_wood"
+     ],
      "cost": 6.0,
      "enable": "wh_dlc05_effect_ability_enable_awakening_of_the_wood",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh_dlc05_spell_life_earth_blood",
+      "wh_dlc05_spell_life_earth_blood_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh_dlc05_effect_ability_enable_earth_blood",
      "overcast": "wh2_main_effect_ability_overcast_earth_blood"
     },
     {
+     "abilities": [
+      "wh_dlc05_spell_life_shield_of_thorns",
+      "wh_dlc05_spell_life_shield_of_thorns_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh_dlc05_effect_ability_enable_shield_of_thorns",
      "overcast": "wh2_main_effect_ability_overcast_shield_of_thorns"
     },
     {
+     "abilities": [
+      "wh_dlc05_spell_life_flesh_to_stone",
+      "wh_dlc05_spell_life_flesh_to_stone_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh_dlc05_effect_ability_enable_flesh_to_stone",
      "overcast": "wh2_main_effect_ability_overcast_flesh_to_stone"
     },
     {
+     "abilities": [
+      "wh_dlc05_spell_life_regrowth",
+      "wh_dlc05_spell_life_regrowth_upgraded"
+     ],
      "cost": 13.0,
      "enable": "wh_dlc05_effect_ability_enable_regrowth",
      "overcast": "wh2_main_effect_ability_overcast_regrowth"
     },
     {
+     "abilities": [
+      "wh_dlc05_spell_life_the_dwellers_below",
+      "wh_dlc05_spell_life_the_dwellers_below_upgraded"
+     ],
      "cost": 17.0,
      "enable": "wh2_main_effect_ability_overcast_dwellers_below",
      "overcast": "wh2_main_effect_ability_overcast_dwellers_below"
@@ -22101,31 +22635,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_dlc05_spell_shadow_the_withering",
+      "wh_dlc05_spell_shadow_the_withering_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_dlc05_effect_ability_enable_the_withering",
      "overcast": "wh2_main_effect_ability_overcast_the_withering"
     },
     {
+     "abilities": [
+      "wh_dlc05_spell_shadow_the_enfeebling_foe",
+      "wh_dlc05_spell_shadow_the_enfeebling_foe_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh_dlc05_effect_ability_enable_enfeebling_foe",
      "overcast": "wh2_main_effect_ability_overcast_melkoths_enfeebling_foe"
     },
     {
+     "abilities": [
+      "wh_dlc05_spell_shadow_melkoths_mystifying_miasma",
+      "wh_dlc05_spell_shadow_melkoths_mystifying_miasma_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh_dlc05_effect_ability_enable_melkoths_mystifying_miasma",
      "overcast": "wh2_main_effect_ability_overcast_melkoths_mystifying_miasma"
     },
     {
+     "abilities": [
+      "wh_dlc05_spell_shadow_okkams_mindrazor",
+      "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh_dlc05_effect_ability_enable_okkams_mindrazor",
      "overcast": "wh2_main_effect_ability_overcast_okkams_mindrazor"
     },
     {
+     "abilities": [
+      "wh_dlc05_spell_shadow_the_penumbral_pendulum",
+      "wh_dlc05_spell_shadow_the_penumbral_pendulum_upgraded"
+     ],
      "cost": 12.0,
      "enable": "wh_dlc05_effect_ability_enable_penumbral_pendulum",
      "overcast": "wh2_main_effect_ability_overcast_penumbral_pendulum"
     },
     {
+     "abilities": [
+      "wh_dlc05_spell_shadow_pit_of_shades",
+      "wh_dlc05_spell_shadow_pit_of_shades_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh_dlc05_effect_ability_enable_pit_of_shades",
      "overcast": "wh2_main_effect_ability_overcast_pit_of_shades"
@@ -22138,31 +22696,53 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_main_spell_big_waaagh_eadbutt",
+      "wh_main_spell_big_waaagh_eadbutt_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_eadbutt",
      "overcast": "wh2_main_effect_ability_overcast_eadbutt"
     },
     {
+     "abilities": [
+      "wh_main_spell_big_waaagh_gaze_of_mork",
+      "wh_main_spell_big_waaagh_gaze_of_mork_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_gaze_of_mork",
      "overcast": "wh2_main_effect_ability_overcast_gaze_of_mork"
     },
     {
+     "abilities": [
+      "wh_main_spell_big_waaagh_brain_bursta",
+      "wh_main_spell_big_waaagh_brain_bursta_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh_main_effect_ability_enable_brain_bursta",
      "overcast": "wh2_main_effect_ability_overcast_brain_bursta"
     },
     {
+     "abilities": [
+      "wh_main_spell_big_waaagh_fists_of_gork"
+     ],
      "cost": 7.0,
      "enable": "wh_main_effect_ability_enable_fists_of_gork",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh_main_spell_big_waaagh_ere_we_go"
+     ],
      "cost": 11.0,
      "enable": "wh_main_effect_ability_enable_ere_we_go",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh_main_spell_big_waaagh_foot_of_gork",
+      "wh_main_spell_big_waaagh_foot_of_gork_upgraded"
+     ],
      "cost": 18.0,
      "enable": "wh_main_effect_ability_enable_foot_of_gork",
      "overcast": "wh2_main_effect_ability_overcast_foot_of_gork"
@@ -22175,31 +22755,54 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_main_spell_death_aspect_of_the_dreadknight",
+      "wh_main_spell_death_aspect_of_the_dreadknight_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh_main_effect_ability_enable_aspect_of_the_dreadknight",
      "overcast": "wh2_main_effect_ability_overcast_aspect_of_the_dreadknight"
     },
     {
+     "abilities": [
+      "wh_main_spell_death_doom_and_darkness",
+      "wh_main_spell_death_doom_and_darkness_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_doom_and_darkness",
      "overcast": "wh2_main_effect_ability_overcast_doom_and_darkness"
     },
     {
+     "abilities": [
+      "wh_main_spell_death_soulblight",
+      "wh_main_spell_death_soulblight_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh_main_effect_ability_enable_soulblight",
      "overcast": "wh2_main_effect_ability_overcast_soulblight"
     },
     {
+     "abilities": [
+      "wh_main_spell_death_spirit_leech",
+      "wh_main_spell_death_spirit_leech_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh_main_effect_ability_enable_spirit_leech",
      "overcast": "wh2_main_effect_ability_overcast_spirit_leech"
     },
     {
+     "abilities": [
+      "wh_main_spell_death_the_purple_sun_of_xereus",
+      "wh_main_spell_death_the_purple_sun_of_xereus_upgraded"
+     ],
      "cost": 18.0,
      "enable": "wh_main_effect_ability_enable_the_purple_sun_of_xereus",
      "overcast": "wh2_main_effect_ability_overcast_the_purple_sun_of_xereus"
     },
     {
+     "abilities": [
+      "wh_main_spell_death_the_fate_of_bjuna"
+     ],
      "cost": 22.0,
      "enable": "wh_main_effect_ability_enable_the_fate_of_bjuna",
      "overcast": null
@@ -22212,31 +22815,54 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_main_spell_fire_cascading_fire_cloak"
+     ],
      "cost": 4.0,
      "enable": "wh_main_effect_ability_enable_cascading_fire_cloak",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh_main_spell_fire_fireball",
+      "wh_main_spell_fire_fireball_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_fireball",
      "overcast": "wh2_main_effect_ability_overcast_fireball"
     },
     {
+     "abilities": [
+      "wh_main_spell_fire_flaming_sword_of_rhuin",
+      "wh_main_spell_fire_flaming_sword_of_rhuin_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh_main_effect_ability_enable_flaming_sword_of_rhuin",
      "overcast": "wh2_main_effect_ability_overcast_flaming_sword_of_rhuin"
     },
     {
+     "abilities": [
+      "wh_main_spell_fire_piercing_bolts_of_burning",
+      "wh_main_spell_fire_piercing_bolts_of_burning_upgraded"
+     ],
      "cost": 10.0,
      "enable": "wh_main_effect_ability_enable_piercing_bolts_of_burning",
      "overcast": "wh2_main_effect_ability_overcast_piercing_bolts_of_burning"
     },
     {
+     "abilities": [
+      "wh_main_spell_fire_the_burning_head",
+      "wh_main_spell_fire_the_burning_head_upgraded"
+     ],
      "cost": 10.0,
      "enable": "wh_main_effect_ability_enable_the_burning_head",
      "overcast": "wh2_main_effect_ability_overcast_the_burning_head"
     },
     {
+     "abilities": [
+      "wh_main_spell_fire_flame_storm",
+      "wh_main_spell_fire_flame_storm_upgraded"
+     ],
      "cost": 13.0,
      "enable": "wh_main_effect_ability_enable_flame_storm",
      "overcast": "wh2_main_effect_ability_overcast_flame_storm"
@@ -22249,31 +22875,54 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_main_spell_heavens_harmonic_convergence",
+      "wh_main_spell_heavens_harmonic_convergence_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_harmonic_convergence",
      "overcast": "wh2_main_effect_ability_overcast_harmonic_convergence"
     },
     {
+     "abilities": [
+      "wh_main_spell_heavens_wind_blast",
+      "wh_main_spell_heavens_wind_blast_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_wind_blast",
      "overcast": "wh2_main_effect_ability_overcast_wind_blast"
     },
     {
+     "abilities": [
+      "wh_main_spell_heavens_urannons_thunderbolt",
+      "wh_main_spell_heavens_urannons_thunderbolt_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh_main_effect_ability_enable_urannons_thunderbolt",
      "overcast": "wh2_main_effect_ability_overcast_urannons_thunderbolt"
     },
     {
+     "abilities": [
+      "wh_main_spell_heavens_curse_of_the_midnight_wind",
+      "wh_main_spell_heavens_curse_of_the_midnight_wind_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh_main_effect_ability_enable_curse_of_the_midnight_wind",
      "overcast": "wh2_main_effect_ability_overcast_curse_of_the_midnight_wind"
     },
     {
+     "abilities": [
+      "wh_main_spell_heavens_comet_of_casandora",
+      "wh_main_spell_heavens_comet_of_casandora_upgraded"
+     ],
      "cost": 13.0,
      "enable": "wh_main_effect_ability_enable_comet_of_casandora",
      "overcast": "wh2_main_effect_ability_overcast_comet_of_casandora"
     },
     {
+     "abilities": [
+      "wh_main_spell_heavens_chain_lightning"
+     ],
      "cost": 14.0,
      "enable": "wh_main_effect_ability_enable_chain_lightning",
      "overcast": null
@@ -22286,31 +22935,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_main_spell_light_phas_protection",
+      "wh_main_spell_light_phas_protection_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_phas_protection",
      "overcast": "wh2_main_effect_ability_overcast_phas_protection"
     },
     {
+     "abilities": [
+      "wh_main_spell_light_shems_burning_gaze",
+      "wh_main_spell_light_shems_burning_gaze_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_shems_burning_gaze",
      "overcast": "wh2_main_effect_ability_overcast_shems_burning_gaze"
     },
     {
+     "abilities": [
+      "wh_main_spell_light_light_of_battle",
+      "wh_main_spell_light_light_of_battle_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh_main_effect_ability_enable_light_of_battle",
      "overcast": "wh2_main_effect_ability_overcast_light_of_battle"
     },
     {
+     "abilities": [
+      "wh_main_spell_light_net_of_amyntok",
+      "wh_main_spell_light_net_of_amyntok_upgraded"
+     ],
      "cost": 9.0,
      "enable": "wh_main_effect_ability_enable_net_of_amyntok",
      "overcast": "wh2_main_effect_ability_overcast_net_of_amyntok"
     },
     {
+     "abilities": [
+      "wh_main_spell_light_bironas_timewarp",
+      "wh_main_spell_light_bironas_timewarp_upgraded"
+     ],
      "cost": 11.0,
      "enable": "wh_main_effect_ability_enable_bironas_timewarp",
      "overcast": "wh2_main_effect_ability_overcast_bironas_timewarp"
     },
     {
+     "abilities": [
+      "wh_main_spell_light_banishment",
+      "wh_main_spell_light_banishment_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh_main_effect_ability_enable_banishment",
      "overcast": "wh2_main_effect_ability_overcast_banishment"
@@ -22323,31 +22996,52 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_main_spell_lil_waaagh_sneaky_stabbin"
+     ],
      "cost": 4.0,
      "enable": "wh_main_effect_ability_enable_sneaky_stabbin",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh_main_spell_lil_waaagh_vindictive_glare",
+      "wh_main_spell_lil_waaagh_vindictive_glare_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_vindictive_glare",
      "overcast": "wh2_main_effect_ability_overcast_vindictive_glare"
     },
     {
+     "abilities": [
+      "wh_main_spell_lil_waaagh_gorkll_fix_it"
+     ],
      "cost": 6.0,
      "enable": "wh_main_effect_ability_enable_gorkll_fix_it",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh_main_spell_lil_waaagh_night_shroud",
+      "wh_main_spell_lil_waaagh_night_shroud_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh_main_effect_ability_enable_night_shroud",
      "overcast": "wh2_main_effect_ability_overcast_night_shroud"
     },
     {
+     "abilities": [
+      "wh_main_spell_lil_waaagh_itchy_nuisance"
+     ],
      "cost": 8.0,
      "enable": "wh_main_effect_ability_enable_itchy_nuisance",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh_main_spell_lil_waaagh_curse_of_da_bad_moon",
+      "wh_main_spell_lil_waaagh_curse_of_da_bad_moon_upgraded"
+     ],
      "cost": 11.0,
      "enable": "wh_main_effect_ability_enable_curse_of_da_bad_moon",
      "overcast": "wh2_main_effect_ability_overcast_curse_of_da_bad_moon"
@@ -22360,31 +23054,55 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_main_spell_metal_plague_of_rust",
+      "wh_main_spell_metal_plague_of_rust_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh_main_effect_ability_enable_plague_of_rust",
      "overcast": "wh2_main_effect_ability_overcast_plague_of_rust"
     },
     {
+     "abilities": [
+      "wh_main_spell_metal_glittering_robe",
+      "wh_main_spell_metal_glittering_robe_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_glittering_robe",
      "overcast": "wh2_main_effect_ability_overcast_glittering_robe"
     },
     {
+     "abilities": [
+      "wh_main_spell_metal_searing_doom",
+      "wh_main_spell_metal_searing_doom_upgraded"
+     ],
      "cost": 6.0,
      "enable": "wh_main_effect_ability_enable_searing_doom",
      "overcast": "wh2_main_effect_ability_overcast_searing_doom"
     },
     {
+     "abilities": [
+      "wh_main_spell_metal_gehennas_golden_hounds",
+      "wh_main_spell_metal_gehennas_golden_hounds_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh_main_effect_ability_enable_gehennas_golden_hounds",
      "overcast": "wh2_main_effect_ability_overcast_gehennas_golden_hounds"
     },
     {
+     "abilities": [
+      "wh_main_spell_metal_transmutation_of_lead",
+      "wh_main_spell_metal_transmutation_of_lead_upgraded"
+     ],
      "cost": 11.0,
      "enable": "wh_main_effect_ability_enable_transmutation_of_lead",
      "overcast": "wh2_main_effect_ability_overcast_transmutation_of_lead"
     },
     {
+     "abilities": [
+      "wh_main_spell_metal_final_transmutation",
+      "wh_main_spell_metal_final_transmutation_upgraded"
+     ],
      "cost": 17.0,
      "enable": "wh_main_effect_ability_enable_final_transmutation",
      "overcast": "wh2_main_effect_ability_overcast_final_transmutation"
@@ -22397,31 +23115,54 @@
    ],
    "spells": [
     {
+     "abilities": [
+      "wh_main_spell_vampires_vanhels_danse_macabre",
+      "wh_main_spell_vampires_vanhels_danse_macabre_upgraded"
+     ],
      "cost": 4.0,
      "enable": "wh_main_effect_ability_enable_vanhels_danse_macabre",
      "overcast": "wh2_main_effect_ability_overcast_vanhels_danse_macabre"
     },
     {
+     "abilities": [
+      "wh_main_spell_vampires_raise_dead",
+      "wh_main_spell_vampires_raise_dead_upgraded"
+     ],
      "cost": 5.0,
      "enable": "wh_main_effect_ability_enable_raise_dead",
      "overcast": "wh2_main_effect_ability_overcast_raise_dead"
     },
     {
+     "abilities": [
+      "wh_main_spell_vampires_invocation_of_nehek",
+      "wh_main_spell_vampires_invocation_of_nehek_upgraded"
+     ],
      "cost": 7.0,
      "enable": "wh_main_effect_ability_enable_invocation_of_nehek",
      "overcast": "wh2_main_effect_ability_overcast_invocation_of_nehek"
     },
     {
+     "abilities": [
+      "wh_main_spell_vampires_gaze_of_nagash",
+      "wh_main_spell_vampires_gaze_of_nagash_upgraded"
+     ],
      "cost": 8.0,
      "enable": "wh_main_effect_ability_enable_gaze_of_nagash",
      "overcast": "wh2_main_effect_ability_overcast_gaze_of_nagash"
     },
     {
+     "abilities": [
+      "wh_main_spell_vampires_curse_of_years"
+     ],
      "cost": 10.0,
      "enable": "wh_main_effect_ability_enable_curse_of_years",
      "overcast": null
     },
     {
+     "abilities": [
+      "wh_main_spell_vampires_wind_of_death",
+      "wh_main_spell_vampires_wind_of_death_upgraded"
+     ],
      "cost": 15.0,
      "enable": "wh_main_effect_ability_enable_wind_of_death",
      "overcast": "wh2_main_effect_ability_overcast_wind_of_death"
@@ -23573,6 +24314,29 @@
    ],
    "version": "0"
   },
+  "ancillary_set_ancillary_junctions_tables": {
+   "header": [
+    "ancillary_key",
+    "set_key"
+   ],
+   "version": "0"
+  },
+  "ancillary_set_effect_junctions_tables": {
+   "header": [
+    "effect_key",
+    "set_key",
+    "effect_scope",
+    "value"
+   ],
+   "version": "0"
+  },
+  "ancillary_sets_tables": {
+   "header": [
+    "key",
+    "icon"
+   ],
+   "version": "0"
+  },
   "ancillary_to_effects_tables": {
    "header": [
     "ancillary",
@@ -23734,11 +24498,28 @@
    ],
    "version": "2"
   },
+  "cdir_events_mission_issuer_junctions_tables": {
+   "header": [
+    "issuer_key",
+    "mission_key"
+   ],
+   "version": "1"
+  },
   "cdir_military_generator_unit_qualities_tables": {
    "header": [
     "group_key",
     "unit_key",
     "quality"
+   ],
+   "version": "2"
+  },
+  "character_ancillary_quest_ui_details_tables": {
+   "header": [
+    "agent_subtype",
+    "ancillary",
+    "rank",
+    "instant",
+    "is_quest_battle"
    ],
    "version": "2"
   },
@@ -24108,6 +24889,30 @@
    ],
    "version": "12"
   },
+  "missions_tables": {
+   "header": [
+    "key",
+    "mission_type",
+    "localised_title",
+    "localised_description",
+    "ui_image",
+    "ui_icon",
+    "generate",
+    "prioritised",
+    "event_category",
+    "set_piece_battle",
+    "location_x",
+    "location_y",
+    "quest_mission",
+    "quest_mission_final",
+    "trigger_radius",
+    "quest_character",
+    "sticky_by_default",
+    "localised_mission_completed_text",
+    "can_be_manually_cancelled"
+   ],
+   "version": "0"
+  },
   "names_tables": {
    "header": [
     "id",
@@ -24304,6 +25109,27 @@
     "battle_entity_stats_override"
    ],
    "version": "1"
+  },
+  "unit_set_to_unit_junctions_tables": {
+   "header": [
+    "unit_caste",
+    "unit_category",
+    "unit_class",
+    "unit_record",
+    "unit_set",
+    "exclude"
+   ],
+   "version": "1"
+  },
+  "unit_sets_tables": {
+   "header": [
+    "key",
+    "use_unit_exp_level_range",
+    "min_unit_exp_level_inclusive",
+    "max_unit_exp_level_inclusive",
+    "special_category"
+   ],
+   "version": "2"
   },
   "unit_special_abilities_tables": {
    "header": [
