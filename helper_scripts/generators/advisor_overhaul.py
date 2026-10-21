@@ -1441,11 +1441,11 @@ def quest_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: Lis
         # An objective naming `{weapon}` becomes one objective per weapon, each with its own line naming the weapon.
         parts = [(w, quest["objective"].replace("{weapon}", weapon["name"])) for w, weapon in registry["weapons"].items()] \
             if "{weapon}" in quest["objective"] else [("", quest["objective"])]
-        # A `races` quest also gets a line per race, one for a race the registry does not name, and one for a line no race holds yet.
+        # A `races` quest also gets a line per race and one for a race the registry does not name.
         races = sorted(quest.get("races", {}), key=lambda race: (quest["races"][race], race))
         parts += [(f"race_{race}", quest["race_line"].replace("{race}", quest["races"][race])) for race in races]
         if races:
-            parts += [("race_other", quest["race_line"].replace("{race}", quest["other_race"])), ("race_open", quest["open_line"])]
+            parts.append(("race_other", quest["race_line"].replace("{race}", quest["other_race"])))
         objectives = {}
         for part, text in parts:
             text_key = f"mission_text_text_{key}" + (f"_{part}" if part else "")

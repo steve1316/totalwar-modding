@@ -7787,7 +7787,6 @@
     "description": "Every people breaks a different way. Learn how six of them break, five times each, and he will finally give his last piece of advice.",
     "objective": "Win 5 battles with the Advisor against each of 6 different races\\\\nRaces done: %n / %n",
     "race_line": "Wins against {race}: %n / %n",
-    "open_line": "A race not yet beaten: %n / %n",
     "other_race": "another race",
     "races": {
      "wh2_dlc09_sc_tmb_tomb_kings": "Tomb Kings",

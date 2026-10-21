@@ -23,9 +23,6 @@ local NOT_TARGET_ACTIONS = { assist_army = true, assist_province = true, command
 --- The battle result of a heroic victory.
 local HEROIC_RESULT = "heroic_victory"
 
---- Objective layout of the `races` quest. A mission issued with an older layout is cancelled on load and issued again with its saved wins.
-local RACES_LAYOUT = 2
-
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Data
@@ -92,13 +89,12 @@ local function state_key(faction_name)
 end
 
 --- A faction's quest state: `issued` and `done` (mission key -> true), `progress` (mission key -> count, races done for the `races` quest),
---- `weapons` (weapon -> wins), `races` (subculture -> wins), `race_order` (subcultures in the order first beaten) and `races_layout`
---- (objective layout the `races` quest was issued with, nil for the first).
+--- `weapons` (weapon -> wins), `races` (subculture -> wins) and `race_lines` (race lines the `races` mission was issued with, nil in older saves).
 --- @param faction_name string The faction.
 --- @returns table The state. Changes are kept only after `save_state`.
 local function state_of(faction_name)
 	local state = cm:get_saved_value(state_key(faction_name)) or {}
-	for _, field in ipairs({ "issued", "done", "progress", "weapons", "races", "race_order" }) do
+	for _, field in ipairs({ "issued", "done", "progress", "weapons", "races" }) do
 		state[field] = state[field] or {}
 	end
 	return state
@@ -144,61 +140,52 @@ local function faction_advisors(faction)
 	return ADVISOR_OVERHAUL.faction_advisors(faction)
 end
 
---- The races the `races` quest shows, one per line and sorted by name. Races beaten enough always show, the other lines go to the races
---- beaten first. Lines no race holds yet come last.
+--- The races the `races` quest shows, one line per race beaten at least once. Races beaten enough come first, then the rest, each sorted by name.
 --- @param state table The faction's state.
 --- @param quest table The quest.
---- @returns table Per line `{ race = subculture or nil, wins = n }`.
+--- @returns table Per line `{ race = subculture, wins = n }`.
 local function race_lines(state, quest)
-	-- Saves from before `race_order` keep their races, in key order.
-	local listed, missing = {}, {}
-	for _, race in ipairs(state.race_order) do
-		listed[race] = true
-	end
-	for race in pairs(state.races) do
-		if not listed[race] then
-			table.insert(missing, race)
-		end
-	end
-	table.sort(missing)
-	for _, race in ipairs(missing) do
-		table.insert(state.race_order, race)
-	end
-	local per_race, total, lines = quest_per_race(quest), quest_target(quest), {}
-	for _, finished in ipairs({ true, false }) do
-		for _, race in ipairs(state.race_order) do
-			if #lines < total and (state.races[race] >= per_race) == finished then
-				table.insert(lines, { race = race, wins = state.races[race] })
-			end
-		end
-	end
-	-- Races the registry does not name sort after the named ones, by key.
-	local order = {}
+	local per_race, order, lines = quest_per_race(quest), {}, {}
 	for index, race in ipairs(quest.races) do
 		order[race] = index
 	end
+	for race, wins in pairs(state.races) do
+		if wins > 0 then
+			table.insert(lines, { race = race, wins = wins })
+		end
+	end
+	-- Races the registry does not name sort after the named ones, by key.
 	table.sort(lines, function(a, b)
+		local a_done, b_done = a.wins >= per_race, b.wins >= per_race
+		if a_done ~= b_done then
+			return a_done
+		end
 		local left, right = order[a.race] or #quest.races + 1, order[b.race] or #quest.races + 1
 		if left ~= right then
 			return left < right
 		end
 		return a.race < b.race
 	end)
-	while #lines < total do
-		table.insert(lines, { wins = 0 })
-	end
 	return lines
 end
 
 --- The text key of one race line.
 --- @param quest table The `races` quest.
---- @param race string|nil The subculture, or nil for a line no race holds yet.
+--- @param race string The subculture.
 --- @returns string The objective text key.
 local function race_text(quest, race)
-	if not race then
-		return quest.objectives.race_open
-	end
 	return quest.objectives["race_" .. race] or quest.objectives.race_other
+end
+
+--- The race lines as log text.
+--- @param lines table The lines from `race_lines`.
+--- @returns string Each race with its wins.
+local function lines_text(lines)
+	local parts = {}
+	for _, line in ipairs(lines) do
+		table.insert(parts, line.race .. " " .. line.wins)
+	end
+	return table.concat(parts, ", ")
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,7 +198,7 @@ end
 --- @param text string The objective text key.
 --- @param total number The total.
 --- @param count number The count so far.
---- @param open boolean|nil True to leave it open until the script completes it, for a race line whose race can change.
+--- @param open boolean|nil True to leave it open until the script completes it, for a race line whose race can move to another line.
 local function add_counter(mm, key, text, total, count, open)
 	mm:add_new_objective("SCRIPTED")
 	mm:add_condition("script_key " .. key)
@@ -230,11 +217,16 @@ end
 --- @param why string What caused it, for the log.
 local function issue(faction_name, state, quest, why)
 	local target = quest_target(quest)
+	-- The manager of an earlier mission with this key stays registered after a cancel or failure, and the new one could not register.
+	local old_mm = cm:get_mission_manager(faction_name, quest.key)
+	if old_mm then
+		cm:unregister_mission_manager(old_mm)
+	end
 	local mm = mission_manager:new(faction_name, quest.key)
 	mm:set_mission_issuer(rig_data().mission_issuer)
 	-- Without this every objective after the first needs its own payload, and the game refuses the mission.
 	mm:set_all_objectives_are_primary()
-	local counts
+	local counts, lines
 	if quest.kind == "kills" then
 		mm:add_new_objective("KILL_X_ENTITIES_BY")
 		mm:add_condition("total " .. target)
@@ -254,12 +246,11 @@ local function issue(faction_name, state, quest, why)
 		add_counter(mm, script_key(quest, faction_name), quest.objectives[""], target, count)
 		counts = tostring(count)
 		if quest.kind == "races" then
-			local parts = { counts }
-			for index, line in ipairs(race_lines(state, quest)) do
+			lines = race_lines(state, quest)
+			for index, line in ipairs(lines) do
 				add_counter(mm, line_key(quest, faction_name, index), race_text(quest, line.race), quest_per_race(quest), line.wins, true)
-				table.insert(parts, (line.race or "open") .. " " .. line.wins)
 			end
-			counts = table.concat(parts, ", ")
+			counts = counts .. (#lines > 0 and ", " .. lines_text(lines) or "")
 		end
 	end
 	-- The vanilla item payload, so the reward shows the item card. It lands in the faction pool and `equip_reward` moves it onto him.
@@ -271,8 +262,8 @@ local function issue(faction_name, state, quest, why)
 		return
 	end
 	state.issued[quest.key] = true
-	if quest.kind == "races" then
-		state.races_layout = RACES_LAYOUT
+	if lines then
+		state.race_lines = #lines
 	end
 	save_state(faction_name, state)
 	log(faction_name .. " gets " .. quest.key .. " (" .. quest.kind .. ", target " .. target .. ", so far " .. counts .. ") on " .. why)
@@ -329,28 +320,39 @@ local function raise(faction_name, state, quest, counts, part, amount, why)
 	save_state(faction_name, state)
 	-- The race lines stay open, so they are completed before the last race completes the quest.
 	if quest.kind == "races" and after == target then
-		for index = 1, target do
+		for index = 1, state.race_lines or 0 do
 			cm:complete_scripted_mission_objective(faction_name, quest.key, line_key(quest, faction_name, index), true)
 		end
 	end
 	cm:increase_scripted_mission_count(quest.key, script_key(quest, faction_name, part), after - before)
 end
 
---- Rewrites every race line of a faction's `races` quest from its saved wins, since a new race can move the others between lines.
+--- Rewrites every race line of a faction's `races` quest from its saved wins, since a race beaten enough moves to the top.
 --- @param faction_name string The faction.
 --- @param state table The faction's state.
 --- @param quest table The `races` quest.
 local function refresh_race_lines(faction_name, state, quest)
-	local per_race, parts = quest_per_race(quest), {}
-	for index, line in ipairs(race_lines(state, quest)) do
+	local per_race, lines = quest_per_race(quest), race_lines(state, quest)
+	for index, line in ipairs(lines) do
 		cm:set_scripted_mission_text(quest.key, line_key(quest, faction_name, index), race_text(quest, line.race), math.min(line.wins, per_race), per_race)
-		table.insert(parts, (line.race or "open") .. " " .. line.wins)
 	end
-	log(faction_name .. " race lines: " .. table.concat(parts, ", "))
+	log(faction_name .. " race lines: " .. lines_text(lines))
+end
+
+--- Cancels a faction's `races` mission and issues it again from its saved wins, since a mission takes no new objective once issued.
+--- @param faction_name string The faction.
+--- @param state table The faction's state, saved first since the `MissionCancelled` listener reads it.
+--- @param quest table The `races` quest.
+--- @param why string What caused it, for the log.
+local function reissue(faction_name, state, quest, why)
+	save_state(faction_name, state)
+	log(faction_name .. " " .. quest.key .. " is cancelled and issued again (" .. why .. ")")
+	cm:cancel_custom_mission(faction_name, quest.key)
+	issue(faction_name, state, quest, why)
 end
 
 --- Repairs a faction's saved quests on load. A quest marked issued with no active mission is cleared, so it is issued again. A `races`
---- mission from an older layout is cancelled, so it comes back with its race lines and saved wins.
+--- mission whose lines do not match the beaten races, as in saves from before the growing list, is issued again with a line per race.
 --- @param faction FACTION_SCRIPT_INTERFACE The faction.
 local function repair_quests(faction)
 	local faction_name = faction:name()
@@ -361,16 +363,14 @@ local function repair_quests(faction)
 			if not cm:mission_is_active_for_faction(faction, quest.key) then
 				state.issued[quest.key] = nil
 				log(faction_name .. " has " .. quest.key .. " marked issued but no such mission, it is issued again")
-			elseif quest.kind == "races" and (state.races_layout or 1) < RACES_LAYOUT then
-				table.insert(outdated, quest.key)
+			elseif quest.kind == "races" and state.race_lines ~= #race_lines(state, quest) then
+				table.insert(outdated, quest)
 			end
 		end
 	end
 	save_state(faction_name, state)
-	-- Cancelling fires `MissionCancelled`, whose listener clears the issued mark, so the state is saved first.
-	for _, key in ipairs(outdated) do
-		log(faction_name .. " has " .. key .. " from an older layout, it is cancelled and issued again")
-		cm:cancel_custom_mission(faction_name, key)
+	for _, quest in ipairs(outdated) do
+		reissue(faction_name, state, quest, "old race lines")
 	end
 end
 
@@ -483,19 +483,16 @@ local function count_battle(pb, faction, advisor, attacker)
 				raise(faction_name, state, quest, state.weapons, weapon, 1, "win with " .. weapon)
 			elseif quest.kind == "races" and won then
 				-- Each race is counted once per battle. A race counts toward the quest once it is beaten `per_race` times.
-				local per_race, seen, finished, changed = quest_per_race(quest), {}, {}, false
+				local per_race, seen, finished, changed, added = quest_per_race(quest), {}, {}, false, false
 				for _, entry in ipairs(side_entries(not attacker)) do
 					local enemy = cm:get_faction(entry.faction_name)
 					local race = enemy and entry.faction_name ~= "rebels" and enemy:subculture()
 					if race and not seen[race] then
 						seen[race] = true
 						local before = state.races[race] or 0
-						if before == 0 then
-							table.insert(state.race_order, race)
-						end
 						if before < per_race then
 							state.races[race] = before + 1
-							changed = true
+							changed, added = true, added or before == 0
 						end
 						log("  wins against " .. race .. " (" .. entry.faction_name .. "): " .. before .. " -> " .. state.races[race] .. " of " .. per_race)
 						if before + 1 == per_race then
@@ -505,10 +502,19 @@ local function count_battle(pb, faction, advisor, attacker)
 				end
 				if changed then
 					save_state(faction_name, state)
-					refresh_race_lines(faction_name, state, quest)
 				end
-				for _, race in ipairs(finished) do
-					raise(faction_name, state, quest, state.progress, nil, 1, race .. " beaten " .. per_race .. " times")
+				-- A new race that finishes the quest gets no line, as raising it completes every line. That needs `per_race` 1.
+				local progress = (state.progress[quest.key] or 0) + #finished
+				if added and progress < quest_target(quest) then
+					state.progress[quest.key] = progress
+					reissue(faction_name, state, quest, "a new race beaten")
+				else
+					if changed and not added then
+						refresh_race_lines(faction_name, state, quest)
+					end
+					for _, race in ipairs(finished) do
+						raise(faction_name, state, quest, state.progress, nil, 1, race .. " beaten " .. per_race .. " times")
+					end
 				end
 			end
 		end
