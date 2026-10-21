@@ -1330,6 +1330,11 @@
      "description": "He takes the hit and does not move a step, however hard it lands.",
      "effects": [
       {
+       "effect": "advisor_overhaul_effect_mass",
+       "scope": "character_to_character_own",
+       "value": 50
+      },
+      {
        "effect": "wh_main_effect_character_stat_physical_resistance",
        "scope": "character_to_character_own",
        "value": 10
@@ -7556,6 +7561,14 @@
    "icon": "modifier_icon_monstrous_impact.png",
    "good": true,
    "text": "\"Battering Ram\" (plows through enemy formations with ease while also counting as a large target)"
+  },
+  "advisor_overhaul_effect_mass": {
+   "priority": 430,
+   "bonus": "unit_mass_percentage_mod",
+   "unit_sets": ["all_units"],
+   "icon": "mass.png",
+   "good": true,
+   "text": "Mass: %+n%"
   },
   "advisor_overhaul_effect_army_fatigue": {
    "priority": 600,
