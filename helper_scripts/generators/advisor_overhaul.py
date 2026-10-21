@@ -118,8 +118,11 @@ DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "advisor_overhau
 # The mod source folder.
 MOD = "../warhammer3_mods/!!advisor_overhaul"
 
-# File name of every table and loc file this generator writes.
+# File name of the portrait settings, the rigs Lua and the loc file.
 FILE = "advisor_overhaul"
+
+# File name of every table file, named like the pack.
+TABLE_FILE = "!!advisor_overhaul"
 
 # The vanilla pack holding the portrait settings, and where the refresh and the build extract portrait files to (through the extract cache).
 UI_PACK = f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\common\\Total War WARHAMMER III\\data\\ui.pack"
@@ -2024,16 +2027,16 @@ def write(table: str, rows: List[Dict[str, str]], spec: Dict) -> None:
     """
     folder = os.path.join(MOD, "db", table)
     if not rows:
-        if os.path.exists(os.path.join(folder, f"{FILE}.tsv")):
-            os.remove(os.path.join(folder, f"{FILE}.tsv"))
+        if os.path.exists(os.path.join(folder, f"{TABLE_FILE}.tsv")):
+            os.remove(os.path.join(folder, f"{TABLE_FILE}.tsv"))
         if os.path.isdir(folder) and not os.listdir(folder):
             os.rmdir(folder)
         return
     os.makedirs(folder, exist_ok=True)
     header = spec["header"]
-    lines = ["\t".join(header), "\t".join([f"#{table};{spec['version']};db/{table}/{FILE}"] + [""] * (len(header) - 1))]
+    lines = ["\t".join(header), "\t".join([f"#{table};{spec['version']};db/{table}/{TABLE_FILE}"] + [""] * (len(header) - 1))]
     lines += ["\t".join(row.get(column, "") for column in header) for row in rows]
-    with open(os.path.join(folder, f"{FILE}.tsv"), "w", encoding="utf-8", newline="\n") as f:
+    with open(os.path.join(folder, f"{TABLE_FILE}.tsv"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
 
 
