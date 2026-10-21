@@ -159,6 +159,8 @@ local function issue(faction_name, state, quest, why)
 	local target = quest_target(quest)
 	local mm = mission_manager:new(faction_name, quest.key)
 	mm:set_mission_issuer(rig_data().mission_issuer)
+	-- Without this every objective after the first needs its own payload, and the game refuses the mission.
+	mm:set_all_objectives_are_primary()
 	local counts
 	if quest.kind == "kills" then
 		mm:add_new_objective("KILL_X_ENTITIES_BY")
@@ -183,6 +185,10 @@ local function issue(faction_name, state, quest, why)
 	mm:add_payload("add_ancillary_to_faction_pool{ancillary_key " .. quest.item .. ";}")
 	mm:set_should_whitelist(false)
 	mm:trigger()
+	if not mm:has_been_triggered() then
+		log(faction_name .. " could not get " .. quest.key .. ", the game refused the mission, it is tried again at the next turn start")
+		return
+	end
 	state.issued[quest.key] = true
 	save_state(faction_name, state)
 	log(faction_name .. " gets " .. quest.key .. " (" .. quest.kind .. ", target " .. target .. ", so far " .. counts .. ") on " .. why)
@@ -238,6 +244,20 @@ local function raise(faction_name, state, quest, counts, part, amount, why)
 	counts[slot] = after
 	save_state(faction_name, state)
 	cm:increase_scripted_mission_count(quest.key, script_key(quest, faction_name, part), after - before)
+end
+
+--- Repairs a faction's saved quests on load. A quest marked issued with no active mission is cleared, so it is issued again.
+--- @param faction FACTION_SCRIPT_INTERFACE The faction.
+local function repair_quests(faction)
+	local faction_name = faction:name()
+	local state = state_of(faction_name)
+	for _, quest in ipairs(rig_data().quests) do
+		if is_active(state, quest) and not cm:mission_is_active_for_faction(faction, quest.key) then
+			state.issued[quest.key] = nil
+			log(faction_name .. " has " .. quest.key .. " marked issued but no such mission, it is issued again")
+		end
+	end
+	save_state(faction_name, state)
 end
 
 --- Moves a quest item the mission payload put in the faction pool onto a faction's Advisor: the first at the quest's rank, else any. With no
@@ -515,6 +535,7 @@ cm:add_first_tick_callback(function()
 		end
 		local humans = cm:get_human_factions()
 		for _, faction_name in ipairs(humans) do
+			repair_quests(cm:get_faction(faction_name))
 			issue_due(cm:get_faction(faction_name), "first tick")
 		end
 	end, 3)
