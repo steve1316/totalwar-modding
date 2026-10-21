@@ -1406,7 +1406,7 @@ def quest_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: Lis
         vanilla_texts (List[Tuple[str, str]]): Loc rows with the game's `%n` count markers, added to.
 
     Returns:
-        List[Dict]: Per quest the script's data: mission, item, rank, kind, target, `per_race` and its objective text keys.
+        List[Dict]: Per quest the script's data: mission, item, rank, kind, target, `per_race`, named races in name order and its objective text keys.
     """
     rows["unit_sets_tables"].append({"key": UNIT_SET, "use_unit_exp_level_range": "false", "min_unit_exp_level_inclusive": "-1",
                                      "max_unit_exp_level_inclusive": "-1", "special_category": ""})
@@ -1432,13 +1432,18 @@ def quest_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: Lis
         # An objective naming `{weapon}` becomes one objective per weapon, each with its own line naming the weapon.
         parts = [(w, quest["objective"].replace("{weapon}", weapon["name"])) for w, weapon in registry["weapons"].items()] \
             if "{weapon}" in quest["objective"] else [("", quest["objective"])]
+        # A `races` quest also gets a line per race, one for a race the registry does not name, and one for a line no race holds yet.
+        races = sorted(quest.get("races", {}), key=lambda race: (quest["races"][race], race))
+        parts += [(f"race_{race}", quest["race_line"].replace("{race}", quest["races"][race])) for race in races]
+        if races:
+            parts += [("race_other", quest["race_line"].replace("{race}", quest["other_race"])), ("race_open", quest["open_line"])]
         objectives = {}
         for part, text in parts:
             text_key = f"mission_text_text_{key}" + (f"_{part}" if part else "")
             vanilla_texts.append((text_key, text))
             objectives[part] = text_key
         quests.append({"key": key, "item": ancillary, "rank": quest["rank"], "kind": quest["kind"], "target": quest["target"],
-                       "per_race": quest.get("per_race", 0), "objectives": objectives})
+                       "per_race": quest.get("per_race", 0), "races": races, "objectives": objectives})
     return quests
 
 
@@ -2341,12 +2346,14 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]], upgrades: L
                   f'\t\tname = "{quote(polymath["name"])}",', f'\t\tflavour = "{quote(polymath["flavour"])}",', f'\t\tneeded = {polymath["needed"]},', "\t\tdisciplines = {"]
         lines += [f'\t\t\t{{ name = "{d["name"]}", skills = {{ ' + ", ".join(f'"{k}"' for k in d["skills"]) + " } }," for d in polymath["disciplines"]]
         lines += ["\t\t},", "\t\tbundles = { " + ", ".join(f'"{b}"' for b in polymath["bundles"]) + " },", "\t},"]
-    lines += ["\t--- His quests in registry order: mission key, item ancillary, shown rank it opens at, counter kind, target, wins needed",
-              "\t--- per race, and objective text keys (per weapon for `weapon_wins`, else under the empty key).", "\tquests = {"]
+    lines += ["\t--- His quests in registry order: mission key, item ancillary, shown rank it opens at, counter kind, target, wins needed per race,",
+              "\t--- named races in name order, and objective text keys (per weapon for `weapon_wins`, per race as `race_<subculture>`, else under the empty key).",
+              "\tquests = {"]
     for q in quests:
         objectives = ", ".join(f'["{part}"] = "{text}"' for part, text in q["objectives"].items())
+        races = ", ".join(f'"{race}"' for race in q["races"])
         lines.append(f'\t\t{{ key = "{q["key"]}", item = "{q["item"]}", rank = {q["rank"]}, kind = "{q["kind"]}", '
-                     f'target = {q["target"]}, per_race = {q["per_race"]}, objectives = {{ {objectives} }} }},')
+                     f'target = {q["target"]}, per_race = {q["per_race"]}, races = {{ {races} }}, objectives = {{ {objectives} }} }},')
     lines += ["\t},", "\t--- Unit set of every campaign unit he can be, which the kill quest counts.", f'\tunit_set = "{UNIT_SET}",',
               "\t--- Issuer of every quest mission.", f'\tmission_issuer = "{MISSION_ISSUER}",',
               "\t--- Each built lore: its skill in every pick slot, and the ability keys of its spells and their overcasts.", "\tlore_spells = {"]
