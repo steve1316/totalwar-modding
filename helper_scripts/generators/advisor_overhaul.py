@@ -1007,7 +1007,7 @@ def agent_rows(data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tu
     rows["unit_description_short_texts_tables"].append({"key": DESCRIPTION})
     rows["character_skill_node_sets_tables"].append(dict(data["node_set"], key=NODE_SET, agent_key=AGENT_TYPE, agent_subtype_key=SUBTYPE))
     texts += [
-        (f"agent_subtypes_onscreen_name_override_{SUBTYPE}", "The Advisor"),
+        (f"agent_subtypes_onscreen_name_override_{SUBTYPE}", "Legendary Hero"),
         (f"agent_subtypes_description_text_override_{SUBTYPE}",
          "An old wizard of the Empire who has spent longer giving counsel than most kingdoms have stood. He follows your faction leader from the "
          "first day of the campaign, and he will not stay dead for long."),
