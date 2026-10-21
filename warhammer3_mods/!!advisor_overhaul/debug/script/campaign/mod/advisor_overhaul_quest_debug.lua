@@ -4,5 +4,5 @@ ADVISOR_OVERHAUL_QUEST_DEBUG = {
 	--- The rank every quest opens at.
 	rank = 1,
 	--- Wins given at load against races not fought yet, so Edge of Final Counsel starts with lines. Greenskins is one win from done.
-	races = { wh_main_sc_grn_greenskins = 4, wh_main_sc_vmp_vampire_counts = 2, wh_dlc03_sc_bst_beastmen = 1 },
+	races = { wh_main_sc_grn_greenskins = 19, wh_main_sc_vmp_vampire_counts = 2, wh_dlc03_sc_bst_beastmen = 1 },
 }

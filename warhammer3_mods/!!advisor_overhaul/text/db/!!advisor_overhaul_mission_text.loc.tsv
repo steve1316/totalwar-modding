@@ -1,7 +1,7 @@
 key	text	tooltip
 #Loc;1;text/db/!!advisor_overhaul_mission_text.loc		
 mission_text_text_advisor_overhaul_quest_steward_seal	Slay %n enemies with the Advisor's own hand	true
-mission_text_text_advisor_overhaul_quest_unwritten_grimoire	Cast 500 spells from the Advisor's own lores in battles he fights\\nCurrent total: %n / %n	true
+mission_text_text_advisor_overhaul_quest_unwritten_grimoire	Cast 1000 spells from the Advisor's own lores in battles he fights\\nCurrent total: %n / %n	true
 mission_text_text_advisor_overhaul_quest_old_archivist	Succeed at hero actions with the Advisor\\nCurrent total: %n / %n	true
 mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_staff_and_sword	Win battles with the Advisor holding Staff and Sword\\nCurrent total: %n / %n	true
 mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_sword_and_shield	Win battles with the Advisor holding Sword and Shield\\nCurrent total: %n / %n	true
@@ -10,7 +10,7 @@ mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_greatsword	Win batt
 mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_glaive	Win battles with the Advisor holding Glaive\\nCurrent total: %n / %n	true
 mission_text_text_advisor_overhaul_quest_mantle_of_many_wars_iron_hand	Win battles with the Advisor holding Iron Hand\\nCurrent total: %n / %n	true
 mission_text_text_advisor_overhaul_quest_lantern_of_the_long_watch	Win heroic victories with the Advisor in the battle\\nCurrent total: %n / %n	true
-mission_text_text_advisor_overhaul_quest_edge_of_final_counsel	Win 5 battles with the Advisor against each of 6 different races\\nRaces done: %n / %n	true
+mission_text_text_advisor_overhaul_quest_edge_of_final_counsel	Win 20 battles with the Advisor against 4 different races\\nRaces done: %n / %n	true
 mission_text_text_advisor_overhaul_quest_edge_of_final_counsel_race_wh_dlc03_sc_bst_beastmen	Wins against Beastmen: %n / %n	true
 mission_text_text_advisor_overhaul_quest_edge_of_final_counsel_race_wh_main_sc_brt_bretonnia	Wins against Bretonnia: %n / %n	true
 mission_text_text_advisor_overhaul_quest_edge_of_final_counsel_race_wh3_dlc23_sc_chd_chaos_dwarfs	Wins against Chaos Dwarfs: %n / %n	true

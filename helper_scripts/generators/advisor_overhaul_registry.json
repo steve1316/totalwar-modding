@@ -7610,7 +7610,7 @@
    "quest": {
     "rank": 30,
     "kind": "kills",
-    "target": 50000,
+    "target": 100000,
     "title": "The Steward's Seal",
     "description": "He served a house whose name nobody remembers. Its seal is still out there, he says, and he will know where once he has finished enough wars by hand.",
     "objective": "Slay %n enemies with the Advisor's own hand"
@@ -7641,10 +7641,10 @@
    "quest": {
     "rank": 30,
     "kind": "spells",
-    "target": 500,
+    "target": 1000,
     "title": "The Unwritten Grimoire",
     "description": "He keeps a book with nothing in it. He says it fills itself, but only for someone who has cast enough to deserve the ink.",
-    "objective": "Cast 500 spells from the Advisor's own lores in battles he fights\\\\nCurrent total: %n / %n"
+    "objective": "Cast 1000 spells from the Advisor's own lores in battles he fights\\\\nCurrent total: %n / %n"
    }
   },
   "old_archivist": {
@@ -7714,7 +7714,7 @@
    "quest": {
     "rank": 40,
     "kind": "weapon_wins",
-    "target": 10,
+    "target": 25,
     "title": "Mantle of Many Wars",
     "description": "One weapon is a habit. Six are an education. Win with each of them until the old cloak has a patch for every one.",
     "objective": "Win battles with the Advisor holding {weapon}\\\\nCurrent total: %n / %n"
@@ -7781,11 +7781,11 @@
    "quest": {
     "rank": 50,
     "kind": "races",
-    "target": 6,
-    "per_race": 5,
+    "target": 4,
+    "per_race": 20,
     "title": "Edge of Final Counsel",
-    "description": "Every people breaks a different way. Learn how six of them break, five times each, and he will finally give his last piece of advice.",
-    "objective": "Win 5 battles with the Advisor against each of 6 different races\\\\nRaces done: %n / %n",
+    "description": "Every people breaks a different way. Learn how four of them break, twenty times each, and he will finally give his last piece of advice.",
+    "objective": "Win 20 battles with the Advisor against 4 different races\\\\nRaces done: %n / %n",
     "race_line": "Wins against {race}: %n / %n",
     "other_race": "another race",
     "races": {
