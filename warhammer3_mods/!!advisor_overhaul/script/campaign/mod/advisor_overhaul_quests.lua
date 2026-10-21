@@ -7,8 +7,8 @@
 --- (after a failure or a cancel) starts from the saved count. The quest data comes from `ADVISOR_OVERHAUL_RIGS`, written by
 --- generators/advisor_overhaul.py, and the Advisor helpers from `ADVISOR_OVERHAUL` in advisor_overhaul.lua.
 ---
---- A debug pack may set `ADVISOR_OVERHAUL_QUEST_DEBUG` to `{ rank = n, targets = { kind = n, ... }, per_race = n }` to open every quest at a lower
---- rank with smaller targets.
+--- A debug pack may set `ADVISOR_OVERHAUL_QUEST_DEBUG` to `{ rank = n, targets = { kind = n, ... }, per_race = n, races = { subculture = wins, ... } }`
+--- to open every quest at a lower rank with smaller targets, and to start the `races` quest with wins against races not fought yet.
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -662,14 +662,41 @@ core:add_listener(
 	true
 )
 
+--- Gives a faction the race wins a debug pack lists, for races it has not fought yet, so the `races` quest shows lines at once. Each race stays one
+--- win short of done, so the races done count needs no change. A mission already out gets the new lines through `repair_quests`.
+--- @param faction_name string The faction.
+local function seed_debug_races(faction_name)
+	local debug = debug_settings()
+	if not (debug and debug.races) then
+		return
+	end
+	local state, parts = state_of(faction_name), {}
+	for _, quest in ipairs(rig_data().quests) do
+		if quest.kind == "races" then
+			for race, wins in pairs(debug.races) do
+				if not state.races[race] then
+					state.races[race] = math.min(wins, quest_per_race(quest) - 1)
+					table.insert(parts, race .. " " .. state.races[race])
+				end
+			end
+		end
+	end
+	if #parts > 0 then
+		save_state(faction_name, state)
+		log(faction_name .. " gets debug race wins: " .. table.concat(parts, ", "))
+	end
+end
+
 cm:add_first_tick_callback(function()
 	-- advisor_overhaul_spawn.lua spawns the Advisors on the first tick of a new campaign, so this waits until they exist.
 	cm:callback(function()
 		if debug_settings() then
-			log("debug pack loaded: " .. tostring(debug_settings().rank) .. " rank, smaller targets")
+			local debug = debug_settings()
+			log("debug pack loaded: quests open at rank " .. tostring(debug.rank) .. (debug.targets and ", smaller targets" or ""))
 		end
 		local humans = cm:get_human_factions()
 		for _, faction_name in ipairs(humans) do
+			seed_debug_races(faction_name)
 			repair_quests(cm:get_faction(faction_name))
 			issue_due(cm:get_faction(faction_name), "first tick")
 		end
