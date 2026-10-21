@@ -1327,7 +1327,7 @@
     },
     "art_4": {
      "name": "Unbending",
-     "description": "He takes the hit and does not move a step. Neither do the ones who stand with him.",
+     "description": "He takes the hit and does not move a step, however hard it lands.",
      "effects": [
       {
        "effect": "wh_main_effect_character_stat_physical_resistance",
