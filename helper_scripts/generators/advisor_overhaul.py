@@ -118,11 +118,14 @@ DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "advisor_overhau
 # The mod source folder.
 MOD = "../warhammer3_mods/!!advisor_overhaul"
 
-# File name of the portrait settings, the rigs Lua and the loc file.
+# File name of the portrait settings and the generated rigs Lua.
 FILE = "advisor_overhaul"
 
-# File name of every table file, named like the pack.
+# File name of every table and loc file, named like the pack.
 TABLE_FILE = "!!advisor_overhaul"
+
+# The hand-written loc file of his UI words, which the build leaves alone.
+UI_LOC = f"{TABLE_FILE}_ui.loc.tsv"
 
 # The vanilla pack holding the portrait settings, and where the refresh and the build extract portrait files to (through the extract cache).
 UI_PACK = f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\common\\Total War WARHAMMER III\\data\\ui.pack"
@@ -155,6 +158,9 @@ UI_PACKS = re.compile(r"^ui")
 
 # Every key of the mod starts with this.
 PREFIX = "advisor_overhaul"
+
+# Loc key starts that are not one of his tables, and the loc file name each goes to. Every other key goes to the file of its table.
+LOC_GROUPS = {"mission_text": "mission_text", f"{PREFIX}_ui": "ui_names"}
 
 # The Advisor's agent type and subtype.
 AGENT_TYPE = "wizard"
@@ -1933,9 +1939,7 @@ def build() -> None:
     write_portrait_images(registry["portrait"])
     write_skill_icons(rows["character_skills_tables"])
     write_script(registry, combos, upgrades, arts, polymath_data(registry), quests, lore_spell_data(registry, data))
-    with open(os.path.join(MOD, "text", "db", f"{FILE}.loc.tsv"), "w", encoding="utf-8", newline="\n") as f:
-        f.write(f"key\ttext\ttooltip\n#Loc;1;text/db/{FILE}.loc\t\t\n")
-        f.write("".join(f"{key}\t{text}\ttrue\n" for key, text in texts))
+    write_loc(texts, list(rows))
     print(f"wrote {len(combos)} pairs ({len(rows['land_units_tables'])} units, {len(variants)} variants, {sum(map(len, rows.values()))} rows) to {MOD}")
 
 
@@ -2014,6 +2018,35 @@ def check_loc(texts: List[Tuple[str, str]]) -> None:
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Writers
+
+
+def write_loc(texts: List[Tuple[str, str]], tables: List[str]) -> None:
+    """Writes the loc rows, one file per table as in LEAPOI. A key goes to the longest table name it starts with. Loc files no longer written are
+    removed, the hand-written UI file is kept.
+
+    Args:
+        texts (List[Tuple[str, str]]): Key and text per loc row.
+        tables (List[str]): His table names, with `_tables`.
+
+    Raises:
+        SystemExit: When a key starts with no table name.
+    """
+    groups = {**{t.removesuffix("_tables"): t.removesuffix("_tables") for t in tables}, **LOC_GROUPS}
+    prefixes = sorted(groups, key=len, reverse=True)
+    files: Dict[str, List[Tuple[str, str]]] = {}
+    for key, text in texts:
+        prefix = next((p for p in prefixes if key.startswith(f"{p}_")), None)
+        if prefix is None:
+            raise SystemExit(f"loc key {key} starts with no table name")
+        files.setdefault(f"{TABLE_FILE}_{groups[prefix]}.loc.tsv", []).append((key, text))
+    folder = os.path.join(MOD, "text", "db")
+    for name in os.listdir(folder):
+        if name.startswith(f"{TABLE_FILE}_") and name not in files and name != UI_LOC:
+            os.remove(os.path.join(folder, name))
+    for name, file_texts in sorted(files.items()):
+        with open(os.path.join(folder, name), "w", encoding="utf-8", newline="\n") as f:
+            f.write(f"key\ttext\ttooltip\n#Loc;1;text/db/{name[:-len('.tsv')]}\t\t\n")
+            f.write("".join(f"{key}\t{text}\ttrue\n" for key, text in file_texts))
 
 
 def write(table: str, rows: List[Dict[str, str]], spec: Dict) -> None:

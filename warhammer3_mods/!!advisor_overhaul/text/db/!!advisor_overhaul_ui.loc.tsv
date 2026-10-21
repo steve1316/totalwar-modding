@@ -1,5 +1,5 @@
 key	text	tooltip
-#Loc;1;text/db/advisor_overhaul_ui.loc		
+#Loc;1;text/db/!!advisor_overhaul_ui.loc		
 advisor_overhaul_ui_button_tooltip	Change Loadout||Choose which of the Advisor's unlocked weapons and mounts he takes to war. Learn weapon and mount skills to unlock more.	true
 advisor_overhaul_ui_button_used_tooltip	Change Loadout||The Advisor has already changed his loadout this turn.	true
 advisor_overhaul_ui_weapon_option	Weapon:	true

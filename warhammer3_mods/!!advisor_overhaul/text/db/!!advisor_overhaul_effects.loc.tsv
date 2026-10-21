@@ -1,0 +1,15 @@
+key	text	tooltip
+#Loc;1;text/db/!!advisor_overhaul_effects.loc		
+effects_description_advisor_overhaul_effect_enable_champion_assist_army_scavenge	Hero action: {{tr:agent_action_name_scavenge}}	true
+effects_description_advisor_overhaul_effect_enable_champion_passive_increase_trade	Hero action: {{tr:agent_action_name_increase_trade}}	true
+effects_description_advisor_overhaul_effect_enable_champion_passive_stimulate_growth	Hero action: {{tr:agent_action_name_stimulate_growth}}	true
+effects_description_advisor_overhaul_effect_enable_spy_assist_army_increase_mobility	Hero action: {{tr:agent_action_name_increase_mobility}}	true
+effects_description_advisor_overhaul_effect_enable_spy_hinder_character_assassinate	Hero action: {{tr:agent_action_name_assassinate}}	true
+effects_description_advisor_overhaul_effect_enable_champion_passive_spread_corruption_kho	Hero action: {{tr:agent_action_name_spread_corruption}}	true
+effects_description_advisor_overhaul_effect_army_barrier	Barrier: %+n for all units in the army except characters	true
+effects_description_advisor_overhaul_effect_army_splash_power	Splash attack power: %+n%	true
+effects_description_advisor_overhaul_effect_staff_and_sword_apex_missile	"Bursting Bolts" (each staff shot fires five bolts that burst in a wide blue blast, sparing his own side)	true
+effects_description_advisor_overhaul_effect_sword_and_bow_apex_missile	"Hunter's Spread" (each bow shot fires six lighter arrows in a glowing fan, each bursting in a small blast that spares his own side)	true
+effects_description_advisor_overhaul_effect_army_fatigue	Vigour loss: %+n%	true
+effects_description_advisor_overhaul_effect_army_melee_defence_down	Melee defence: %+n	true
+effects_description_advisor_overhaul_effect_army_armour_down	Armour: %+n	true

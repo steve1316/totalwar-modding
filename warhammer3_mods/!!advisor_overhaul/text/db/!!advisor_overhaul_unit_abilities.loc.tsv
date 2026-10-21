@@ -1,0 +1,10 @@
+key	text	tooltip
+#Loc;1;text/db/!!advisor_overhaul_unit_abilities.loc		
+unit_abilities_onscreen_name_advisor_overhaul_iron_hand_foot_dragon_form	Dragon Form	true
+unit_abilities_tooltip_text_advisor_overhaul_iron_hand_foot_dragon_form	He lets the old shape take him: iron scales, a forge-hot breath, wings over the field. The Iron Dragon of Cathay, as he remembers it.	true
+unit_abilities_onscreen_name_advisor_overhaul_iron_hand_foot_human_form	Human Form	true
+unit_abilities_tooltip_text_advisor_overhaul_iron_hand_foot_human_form	He folds the dragon away and stands as a man again, open hands and an unbending stance.	true
+unit_abilities_onscreen_name_advisor_overhaul_iron_hand_apex_dragon_form	Dragon Form	true
+unit_abilities_tooltip_text_advisor_overhaul_iron_hand_apex_dragon_form	He lets the old shape take him: iron scales, a forge-hot breath, wings over the field. The Iron Dragon of Cathay, as he remembers it.	true
+unit_abilities_onscreen_name_advisor_overhaul_iron_hand_apex_human_form	Human Form	true
+unit_abilities_tooltip_text_advisor_overhaul_iron_hand_apex_human_form	He folds the dragon away and stands as a man again, open hands and an unbending stance.	true

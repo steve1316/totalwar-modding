@@ -174,7 +174,7 @@ local ART_TOOLTIP_NAME = TAG .. "_art_tooltip"
 local ART_TOOLTIP_MS = 20
 local ART_CARD_LOOKS = 15
 
---- UI text: loc key in text/db/advisor_overhaul_ui.loc (item names are in advisor_overhaul.loc) and the English fallback if the key does not resolve.
+--- UI text: loc key in text/db/!!advisor_overhaul_ui.loc (item names are in !!advisor_overhaul_ancillaries.loc) and the English fallback if the key does not resolve.
 local TEXT = {
 	--- Tooltip of the Change Loadout button.
 	button = { "advisor_overhaul_ui_button_tooltip", "Change Loadout||Choose which of the Advisor's unlocked weapons and mounts he takes to war. Learn weapon and mount skills to unlock more." },

@@ -1,0 +1,13 @@
+key	text	tooltip
+#Loc;1;text/db/!!advisor_overhaul_ui_names.loc		
+advisor_overhaul_ui_weapon_staff_and_sword	Staff and Sword	true
+advisor_overhaul_ui_weapon_sword_and_shield	Sword and Shield	true
+advisor_overhaul_ui_weapon_sword_and_bow	Sword and Bow	true
+advisor_overhaul_ui_weapon_greatsword	Greatsword	true
+advisor_overhaul_ui_weapon_glaive	Glaive	true
+advisor_overhaul_ui_weapon_iron_hand	Iron Hand	true
+advisor_overhaul_ui_mount_foot	On Foot	true
+advisor_overhaul_ui_mount_warhorse	Barded Warhorse	true
+advisor_overhaul_ui_mount_pegasus	Imperial Pegasus	true
+advisor_overhaul_ui_mount_disc	Disc of Tzeentch	true
+advisor_overhaul_ui_mount_carmine_dragon	Carmine Dragon	true

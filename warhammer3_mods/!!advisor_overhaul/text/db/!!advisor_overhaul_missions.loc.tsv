@@ -1,0 +1,14 @@
+key	text	tooltip
+#Loc;1;text/db/!!advisor_overhaul_missions.loc		
+missions_localised_title_advisor_overhaul_quest_steward_seal	The Steward's Seal	true
+missions_localised_description_advisor_overhaul_quest_steward_seal	He served a house whose name nobody remembers. Its seal is still out there, he says, and he will know where once he has finished enough wars by hand.	true
+missions_localised_title_advisor_overhaul_quest_unwritten_grimoire	The Unwritten Grimoire	true
+missions_localised_description_advisor_overhaul_quest_unwritten_grimoire	He keeps a book with nothing in it. He says it fills itself, but only for someone who has cast enough to deserve the ink.	true
+missions_localised_title_advisor_overhaul_quest_old_archivist	The Old Archivist	true
+missions_localised_description_advisor_overhaul_quest_old_archivist	An old man has been writing down everything the Advisor does in the dark. He will only join someone whose record is worth keeping.	true
+missions_localised_title_advisor_overhaul_quest_mantle_of_many_wars	Mantle of Many Wars	true
+missions_localised_description_advisor_overhaul_quest_mantle_of_many_wars	One weapon is a habit. Six are an education. Win with each of them until the old cloak has a patch for every one.	true
+missions_localised_title_advisor_overhaul_quest_lantern_of_the_long_watch	Lantern of the Long Watch	true
+missions_localised_description_advisor_overhaul_quest_lantern_of_the_long_watch	The lantern only lights for a watchman who has seen a battle won outright, again and again, without a single bad night.	true
+missions_localised_title_advisor_overhaul_quest_edge_of_final_counsel	Edge of Final Counsel	true
+missions_localised_description_advisor_overhaul_quest_edge_of_final_counsel	Every people breaks a different way. Learn how six of them break, five times each, and he will finally give his last piece of advice.	true
