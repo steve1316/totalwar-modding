@@ -141,7 +141,7 @@
      "homing_params": "homing_strong_magical_fast"
     },
     "upgrade": {
-     "description": "Bursting Bolts, the Staff apex reward. Five weaker bolts per shot instead of one, each bursting in a wide blue blast that spares his own side. The blast is the Blue Scribes' blue flame burst, as wide as the Poison Wind Mortar's blast and pushing harder, without its Warpflame.",
+     "description": "Bursting Bolts, the Staff apex reward. Five weaker bolts per shot instead of one, each bursting in a wide blue blast. The blast is the Blue Scribes' blue flame burst, as wide as the Poison Wind Mortar's blast and pushing harder, without its Warpflame.",
      "key": "advisor_overhaul_staff_and_sword_apex_missile",
      "effect": "advisor_overhaul_effect_staff_and_sword_apex_missile",
      "projectile": {"projectile_number": "5", "spread": "10.0000", "damage": "25", "ap_damage": "50"},
@@ -613,7 +613,7 @@
      "bonus_v_large": "100"
     },
     "upgrade": {
-     "description": "Hunter's Spread, the Bow apex reward. Six lighter arrows per shot instead of one, fanned out so they find more than one man in a block of infantry. Each arrow bursts in a small Hail of Doom blast that spares his own side, much smaller than the Staff's. The arrow is Markus Wulfhart's glowing arrow with the Hail of Doom trail, since Wulfhart's own trails draw ghost arrows beside a fan of arrows. The bonus against infantry and large targets is cut per arrow.",
+     "description": "Hunter's Spread, the Bow apex reward. Six lighter arrows per shot instead of one, fanned out so they find more than one man in a block of infantry. Each arrow bursts in a small Hail of Doom blast, much smaller than the Staff's. The arrow is Markus Wulfhart's glowing arrow with the Hail of Doom trail, since Wulfhart's own trails draw ghost arrows beside a fan of arrows. The bonus against infantry and large targets is cut per arrow.",
      "key": "advisor_overhaul_sword_and_bow_apex_missile",
      "effect": "advisor_overhaul_effect_sword_and_bow_apex_missile",
      "projectile": {"projectile_number": "6", "spread": "5.0000", "damage": "60", "ap_damage": "45", "bonus_v_infantry": "25", "bonus_v_large": "35"},
@@ -7548,13 +7548,13 @@
    "priority": 10,
    "icon": "archer.png",
    "good": true,
-   "text": "\"Bursting Bolts\" (each staff shot fires five bolts that burst in a wide blue blast, sparing his own side)"
+   "text": "\"Bursting Bolts\" (each staff shot fires five bolts that burst in a wide blue blast)"
   },
   "advisor_overhaul_effect_sword_and_bow_apex_missile": {
    "priority": 10,
    "icon": "archer.png",
    "good": true,
-   "text": "\"Hunter's Spread\" (each bow shot fires six lighter arrows in a glowing fan, each bursting in a small blast that spares his own side)"
+   "text": "\"Hunter's Spread\" (each bow shot fires six lighter arrows in a glowing fan, each bursting in a small blast)"
   },
   "advisor_overhaul_effect_iron_hand_apex_form": {
    "priority": 10,
