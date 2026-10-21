@@ -43,6 +43,22 @@ local function has_advisor(faction)
 	return #ADVISOR_OVERHAUL.faction_advisors(faction) > 0
 end
 
+--- Logs each Advisor's name keys and the text they show, so a missing name in the panel can be traced.
+--- @param faction_key string The faction key.
+--- @param when string When this check runs, for the log.
+local function log_names(faction_key, when)
+	local faction = cm:get_faction(faction_key)
+	if not faction then
+		return
+	end
+	for _, advisor in ipairs(ADVISOR_OVERHAUL.faction_advisors(faction)) do
+		local forename = advisor:get_forename()
+		local surname = advisor:get_surname()
+		log(faction_key .. ": " .. when .. ", Advisor cqi " .. advisor:command_queue_index() .. " forename '" .. forename .. "' shows '"
+			.. common.get_localised_string(forename) .. "', surname '" .. surname .. "' shows '" .. common.get_localised_string(surname) .. "'")
+	end
+end
+
 --- A free spot next to the faction leader, or next to the home settlement when the leader is not on the map.
 --- @param faction FACTION_SCRIPT_INTERFACE The faction.
 --- @returns number|nil The x position, or nil when no spot was found.
@@ -103,12 +119,20 @@ local function spawn_for(faction_key)
 	cm:set_character_immortality(lookup, true)
 	cm:replenish_action_points(lookup)
 	local name = ADVISOR_OVERHAUL_RIGS.name
+	local cqi = advisor:command_queue_index()
+	log_names(faction_key, "before naming")
 	if name then
 		cm:change_character_localised_name(advisor, name, "", "", "")
+		-- The game blanks a names row from another race's names group, so those races get his name as a custom name instead.
+		local named = cm:get_character_by_cqi(cqi)
+		if named:get_forename() == "" then
+			cm:change_character_custom_name(named, common.get_localised_string(name), "", "", "")
+			log(faction_key .. ": the game blanked " .. name .. " for this race, gave it as a custom name instead")
+		end
 	end
 	cm:set_saved_value(done_key(faction_key), true)
-	log(faction_key .. ": spawned Advisor cqi " .. advisor:command_queue_index() .. " at " .. x .. "," .. y .. " (" .. how .. "), immortal, named "
-		.. tostring(name))
+	log(faction_key .. ": spawned Advisor cqi " .. cqi .. " at " .. x .. "," .. y .. " (" .. how .. "), immortal, named " .. tostring(name))
+	log_names(faction_key, "after naming")
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

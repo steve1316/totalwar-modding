@@ -1,4 +1,4 @@
 key	text	tooltip
 #Loc;1;text/db/!!advisor_overhaul_agent_subtypes.loc		
-agent_subtypes_onscreen_name_override_advisor_overhaul_advisor	The Advisor	true
+agent_subtypes_onscreen_name_override_advisor_overhaul_advisor	Legendary Hero	true
 agent_subtypes_description_text_override_advisor_overhaul_advisor	An old wizard of the Empire who has spent longer giving counsel than most kingdoms have stood. He follows your faction leader from the first day of the campaign, and he will not stay dead for long.	true
