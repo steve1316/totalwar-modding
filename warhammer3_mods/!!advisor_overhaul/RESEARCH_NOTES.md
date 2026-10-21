@@ -626,8 +626,25 @@ Stat deltas from foot (Amethyst Wizard, vanilla):
   - Objectives: `DEFEAT_N_ARMIES_OF_FACTION`, `ACHIEVE_CHARACTER_RANK`, `KILL_X_ENTITIES`, `PERFORM_ANY_AGENT_ACTION`, `SEARCH_RUINS`, `CAPTURE_REGIONS` or
     `SCRIPTED`.
   - There is no win-N-battles objective, so use `SCRIPTED` with a counter. `[data]`
-- **Item payloads.** Script missions only have a faction-pool item payload. To put the item on the advisor, listen for `MissionSucceeded` and call
-  `cm:force_add_ancillary`. Two `money` payloads on one mission silently drop the mission (a LEAPOI lesson). `[data]`
+- **Item payloads.** Script missions only have a faction-pool item payload. The item reward note says how it reaches the advisor. Two `money`
+  payloads on one mission silently drop the mission (a LEAPOI lesson). `[data]`
+- **A script mission still needs DB rows.** Each key needs a `missions_tables` row (SCRIPTED, as LEAPOI does) and a
+  `cdir_events_mission_issuer_junctions_tables` row (we use CLAN_ELDERS). Title and description come from `missions_localised_title_<key>` and
+  `missions_localised_description_<key>`. An objective's `override_text` is a loc key under `mission_text_text_`, with no table row. `[data]`
+- **SCRIPTED counters.** The conditions are `script_key`, `override_text`, `total`, `count` and `count_completion`.
+  - Progress goes through `cm:increase_scripted_mission_count(mission, script_key, n)`, which takes no faction. In co-op two factions share the mission
+    key, so the script key carries the faction name.
+  - Vanilla puts several objectives on one mission with a script key each. We use that for six weapon counters on one quest.
+  - `count` starts the counter part way, so a quest issued again after a fail keeps its saved progress. `[data]`
+- **Native kill counter.** `KILL_X_ENTITIES_BY` with `total` and `unit_set <key>` counts kills made by units in a `unit_sets` set, autoresolve
+  included. Its progress lives in the mission, so a re-issued kill quest starts again from 0. `[data]`
+- **Spell counts.** On `BattleCompleted`, `pb:get_how_many_times_ability_has_been_used_in_battle(faction_cqi, ability)` gives casts per faction.
+  An overcast is its own key (`<spell>_upgraded`). Another caster of the same lore in that army also counts. `[data]`
+- **Item reward.** A `text_display` payload only shows a line of text, with no item tooltip. The vanilla item payload
+  `add_ancillary_to_faction_pool{ancillary_key <item>;}` (`victory_objectives.lua`) shows the item card. It puts the item in the faction pool, so a
+  `FactionGainedAncillary` listener moves it onto the Advisor (`cm:force_remove_ancillary_from_faction`, then `cm:force_add_ancillary`). `[untested]`
+- **Item sets.** `ancillary_sets`, `ancillary_set_ancillary_junctions` and `ancillary_set_effect_junctions` + loc `ancillary_sets_name_` /
+  `ancillary_sets_description_`. Vanilla legendary items keep `legendary_item` false and use uniqueness score 200 (Ghal Maraz). `[data]`
 - **Two-choice dilemma:**
   - Tables: `dilemmas_tables`, `cdir_events_dilemma_option_junctions`, `cdir_events_dilemma_choice_details`, `cdir_events_dilemma_payloads`. Every
     choice needs at least a TEXT_DISPLAY payload.
