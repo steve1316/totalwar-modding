@@ -22,16 +22,16 @@ export class NewForm {
   // Whether the project can make forms: the gallery lists the sets and the API reads the registry's weapons.
   enabled() { return !!(this.data && this.studio.tuning && this.studio.tuning.registry && this.studio.tuning.registry.weapons); }
 
-  // The registry's weapons with the saved and unsaved edits.
+  // The registry's weapons with the saved and unsaved edits: whole weapons, and their `retarget.<mount>` and `arts.<slot>` entries.
   weapons() {
     const all = structuredClone(this.enabled() ? this.studio.tuning.registry.weapons : {});
     for (const [path, value] of Object.entries(this.studio.pending())) {
       const [root, key, field, mount, ...rest] = path.split(".");
       if (root !== "weapons" || rest.length) continue;
       if (field === undefined) { if (value === null) delete all[key]; else all[key] = structuredClone(value); }
-      else if (field === "retarget" && mount && all[key]) {
-        all[key].retarget = { ...all[key].retarget, [mount]: value };
-        if (value === null) delete all[key].retarget[mount];
+      else if ((field === "retarget" || field === "arts") && mount && all[key]) {
+        all[key][field] = { ...all[key][field], [mount]: value };
+        if (value === null) delete all[key][field][mount];
       }
     }
     return all;

@@ -17,6 +17,7 @@ import numpy as np
 from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim
 from tools.anim_retarget import world_pose
+from tools.anim_viewer.docking import SetDocking, apply_docking, set_docking
 from tools.anim_viewer.models import export_model
 from tools.glf_rebuild_animpack import AnimSet, load_slot_ids, parse_set, read_animpack
 
@@ -110,8 +111,10 @@ class Exporter:
     skeletons: Dict[str, Animation]
     # Manifest record of each exported animation.
     anims: List[Dict]
-    # Index into `anims` by animation path.
+    # Index into `anims` by animation path, plus the set docking it was exported with.
     ids: Dict[str, int]
+    # Equipment docks by set name.
+    dockings: Dict[str, Optional[SetDocking]]
     # Distinct bone lists ([name, parent] pairs).
     rigs: List[List]
     # Animation bundle buffers.
@@ -136,6 +139,7 @@ class Exporter:
         self.skeletons = {}
         self.anims = []
         self.ids = {}
+        self.dockings = {}
         self.rigs = []
         self.bundles = [bytearray()]
         self.models = {}
@@ -170,19 +174,39 @@ class Exporter:
             self.skeletons[name] = read_anim(self.read(f"animations/skeletons/{name}.anim"))
         return self.skeletons[name]
 
-    def anim(self, path: str) -> int:
-        """Exports one animation once.
+    def docking(self, anim_set: AnimSet) -> Optional[SetDocking]:
+        """A set's equipment docks, worked out once per set.
+
+        Args:
+            anim_set (AnimSet): The set.
+
+        Returns:
+            Optional[SetDocking]: Its docks, or None when it docks nothing.
+        """
+        if anim_set.name not in self.dockings:
+            metas = self.assets.fetch(sorted({ref.meta for slot in anim_set.slots for ref in slot.refs if ref.meta}))
+            self.dockings[anim_set.name] = set_docking(anim_set, self.names, lambda path: metas.get(norm(path)))
+        return self.dockings[anim_set.name]
+
+    def anim(self, path: str, docking: Optional[SetDocking] = None) -> int:
+        """Exports one animation once per set docking.
 
         Args:
             path (str): Game path of the `.anim`.
+            docking (Optional[SetDocking]): Its set's docks, which hold props where the game would.
 
         Returns:
             int: Its index in the manifest's `anims`.
         """
-        if path in self.ids:
-            return self.ids[path]
+        key = f"{path}#{id(docking)}" if docking else path
+        if key in self.ids:
+            return self.ids[key]
         anim = read_anim(self.read(path))
-        data, scale = export_anim(anim, self.skeleton(anim.skeleton))
+        skeleton = self.skeleton(anim.skeleton)
+        if docking and not apply_docking(anim, path, docking, lambda pose: read_anim(self.read(pose)), skeleton):
+            self.ids[key] = self.anim(path)
+            return self.ids[key]
+        data, scale = export_anim(anim, skeleton)
         rig = [[b.name, b.parent] for b in anim.bones]
         if rig not in self.rigs:
             self.rigs.append(rig)
@@ -191,8 +215,8 @@ class Exporter:
         self.anims.append({"bundle": len(self.bundles) - 1, "offset": len(self.bundles[-1]), "frames": len(anim.rotations), "rig": self.rigs.index(rig),
                            "fps": anim.frame_rate, "length": anim.length, "scale": scale, "skeleton": anim.skeleton})
         self.bundles[-1].extend(data)
-        self.ids[path] = len(self.anims) - 1
-        return self.ids[path]
+        self.ids[key] = len(self.anims) - 1
+        return self.ids[key]
 
     def model(self, variant: str, skeleton: str) -> Optional[str]:
         """Exports a variant's model once.
@@ -262,6 +286,7 @@ def compare_entry(exporter: Exporter, name: str, source_set: AnimSet, target_set
         Dict: The entry, already added to the exporter.
     """
     refs = {"source": first_refs(source_set, exporter.names), "target": first_refs(target_set, exporter.names)}
+    dockings = {"source": exporter.docking(source_set), "target": exporter.docking(target_set)}
     slots = []
     for slot in sorted(set(refs["source"]) | set(refs["target"])):
         if (keep and not re.search(keep, slot)) or (skip and re.search(skip, slot)):
@@ -269,7 +294,7 @@ def compare_entry(exporter: Exporter, name: str, source_set: AnimSet, target_set
         entry = {"slot": slot, "anims": {}, "paths": {}}
         for side, side_refs in refs.items():
             if slot in side_refs:
-                entry["anims"][side] = exporter.anim(side_refs[slot])
+                entry["anims"][side] = exporter.anim(side_refs[slot], dockings[side])
                 entry["paths"][side] = side_refs[slot]
         slots.append(entry)
     sides = []

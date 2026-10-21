@@ -7,7 +7,6 @@ import { LiveModels } from "./live_models.js";
 import { LookTab } from "./look.js";
 import { NewForm } from "./new_form.js";
 import { PortraitStage } from "./portrait.js";
-import { SkillsTab } from "./skills.js";
 import { StatsTab } from "./stats.js";
 
 const $ = id => document.getElementById(id);
@@ -50,8 +49,6 @@ const studio = {
     tabs.stats.saved();
     resetEdits();
   },
-  // Opens the Skills tab (a skill was picked on the tree).
-  openSkills() { if (tab !== "skills") selectTab("skills", true); else if (phone.matches && sheet === "peek") setSheet("half"); },
   // Drops every unsaved edit.
   undo() { resetEdits(); },
 };
@@ -60,7 +57,7 @@ const studio = {
 function resetEdits() {
   Object.assign(studio.edits, blankEdits());
   if (manifest.portrait) portrait.resetToSaved();
-  tabs.look.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
+  tabs.look.applyLive(); renderTab(); renderForms(); studio.changed();
 }
 studio.stage = new BattleStage($("battle"), studio.getAnim, DATA);
 
@@ -91,12 +88,13 @@ const portrait = manifest.portrait ? new PortraitStage($("portraitStage"), studi
 
 // What the Look tab chose, shown on the stage before a rebuild.
 studio.live = new LiveModels(studio);
-const tabs = { stats: new StatsTab(studio), look: new LookTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) },
-               skills: new SkillsTab($("skillsStage"), studio) };
+const tabs = { stats: new StatsTab(studio), look: new LookTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) } };
 // The New form dialog, which also lists the forms not in the gallery yet.
 const newForm = new NewForm(studio, () => renderForms());
+// The weapons with every pending edit, for the tabs that read them.
+studio.weapons = () => newForm.weapons();
 // Tab order and labels. Tabs without a module yet are shown greyed out. The Portrait tab has no button: the stage's Portrait button opens it.
-const TABS = [["stats", "Stats"], ["look", "Look"], ["skills", "Skills"]];
+const TABS = [["stats", "Stats"], ["look", "Look"]];
 let tab = "stats";
 
 function renderTabs() {
@@ -108,10 +106,10 @@ function renderTab() {
   $("inspBody").dataset.tab = tab;
   if (tabs[tab]) tabs[tab].render($("inspBody"));
 }
-// Picks a tab. The Portrait and Skills tabs show their own stage, and the other tabs the Battle stage.
+// Picks a tab. The Portrait tab shows its own stage, and the other tabs the Battle stage.
 async function selectTab(key, fromUser = false) {
   tab = key; renderTabs();
-  if (key === "portrait" || key === "skills") await setMode(key); else if (mode !== "battle") await setMode("battle");
+  if (key === "portrait") await setMode(key); else if (mode !== "battle") await setMode("battle");
   renderTab();
   if (fromUser && phone.matches && sheet === "peek") setSheet("half");
   writeHash();
@@ -132,18 +130,15 @@ async function setMode(next) {
   if (next === "portrait") await portrait.start();
   mode = next;
   $("battle").hidden = $("battleTools").hidden = $("info").hidden = mode !== "battle";
-  $("portraitStage").hidden = mode !== "portrait"; $("skillsStage").hidden = mode !== "skills";
-  $("bar").classList.toggle("noplay", mode === "skills");
+  $("portraitStage").hidden = mode !== "portrait";
   document.querySelectorAll("[data-mode]").forEach(b => b.classList.toggle("on", b.dataset.mode === mode));
   if (mode === "portrait") {
     if (times.portrait === null) times.portrait = portrait.startTime;
-  } else if (mode === "skills") {
-    tabs.skills.renderTree();
   } else {
     stage.resize(); stage.frameCamera();
   }
   // The stage and its tab go together.
-  const wanted = mode === "battle" ? (tab === "portrait" || tab === "skills" ? "stats" : tab) : mode;
+  const wanted = mode === "battle" ? (tab === "portrait" ? "stats" : tab) : mode;
   if (tab !== wanted) { tab = wanted; renderTabs(); renderTab(); }
   playing = mode === "battle"; syncPlay(); writeHash();
 }
@@ -183,12 +178,13 @@ function renderToggles() {
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Forms and slots
 
-// Forms grouped by weapon ("Greatsword - On Foot" goes under Greatsword). Gallery entries that are not a form (looks, previews, vanilla
-// references, retarget checks) are left out, unless the project has no forms at all.
+// Forms grouped by weapon ("Greatsword - On Foot" goes under Greatsword), then the retarget checks, so a retargeted set can be seen before any
+// form plays it. Other gallery entries (looks, previews, vanilla references) are left out, unless the project has no forms at all.
 const groups = new Map(), hasForms = manifest.entries.some(e => e.unit);
+const CHECKS = "Retarget checks";
 manifest.entries.forEach((e, i) => {
-  if (hasForms && !e.unit) return;
-  const [group, label] = e.unit ? e.name.split(" - ") : ["Gallery", e.name];
+  if (hasForms && !e.unit && e.kind !== "compare") return;
+  const [group, label] = e.unit ? e.name.split(" - ") : [hasForms ? CHECKS : "Gallery", e.name];
   if (!groups.has(group)) groups.set(group, []);
   groups.get(group).push({ index: i, label: label || e.name });
 });
@@ -264,7 +260,7 @@ async function selectSlot(slot) {
 // Time in seconds on each stage. The portrait starts paused on its calibration frame.
 const times = { battle: 0, portrait: null };
 let playing = true;
-const active = () => mode === "portrait" ? portrait : mode === "skills" ? null : stage;
+const active = () => mode === "portrait" ? portrait : stage;
 function syncPlay() { $("play").textContent = playing ? "Pause" : "Play"; }
 $("play").onclick = () => { playing = !playing; syncPlay(); };
 $("frame").oninput = e => { times[mode] = (+e.target.value + 0.5) / active().fps; playing = false; syncPlay(); };

@@ -1,0 +1,12 @@
+key	max_indent	min_indent	order	agent_subtype_override	col_hex
+#character_skill_categories_tables;2;db/character_skill_categories_tables/advisor_overhaul					
+advisor_overhaul_row_0	0	0	0	advisor_overhaul_advisor	F1413D
+advisor_overhaul_row_1	1	1	1	advisor_overhaul_advisor	3DA5F1
+advisor_overhaul_row_2	2	2	2	advisor_overhaul_advisor	F1C43D
+advisor_overhaul_row_3	3	3	3	advisor_overhaul_advisor	9B3DF1
+advisor_overhaul_row_4	4	4	4	advisor_overhaul_advisor	3DF17A
+advisor_overhaul_row_5	5	5	5	advisor_overhaul_advisor	F13DC4
+advisor_overhaul_row_6	6	6	6	advisor_overhaul_advisor	F1813D
+advisor_overhaul_row_7	7	7	7	advisor_overhaul_advisor	3DF1E8
+advisor_overhaul_row_8	8	8	8	advisor_overhaul_advisor	8A8A8A
+advisor_overhaul_row_9	9	9	9	advisor_overhaul_advisor	FFFFFF

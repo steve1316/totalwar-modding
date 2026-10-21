@@ -361,9 +361,9 @@ class Project:
     # Tuning value -> its dotted path in the registry (`PROP_MAPS`, `hand_shift`, `camera_head`), plus `prop_sources`: dotted paths, `*` for
     # every value of a map, to the prop slot maps whose models may get an offset.
     tuning: Dict[str, Any]
-    # Dotted path patterns (`*` for any one key) of the registry values the Edit and Skills tabs may set.
+    # Dotted path patterns (`*` for any one key) of the registry values the Edit tab may set.
     editable: List[str]
-    # Dotted paths of registry values the page reads as they are (such as the planned skills).
+    # Dotted paths of registry values the page reads as they are (such as the weapons).
     readable: List[str]
     # Folders of the project's own model files, which live previews read before the vanilla packs.
     assets: List[str]

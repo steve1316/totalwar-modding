@@ -8,10 +8,13 @@ Both skeletons use the same bone axes, so a bone's animated local rotation means
 - then moves held props (weapons) so they keep their offset from the hand or root they were nearest in the source. Without this a staff floats
   away from a hand that sits somewhere else on the target's shorter arm.
 
-Bones only the target has keep their bind pose. Bones only the source has are dropped.
+Bones only the target has keep their bind pose. Bones only the source has are dropped. Bones the skeletons name differently (humanoid01e's
+`head_0` and `weapon_1` are humanoid01's `head` and `be_prop_0`) can be renamed first. A bone whose parent differs between the skeletons gets its
+source world rotation instead of its local one.
 """
 
 import math
+from dataclasses import replace
 from typing import Dict, Iterable, List, Optional, Tuple
 
 import numpy as np
@@ -146,14 +149,13 @@ def quat_matrix(quat: Quat, position: Vec3) -> np.ndarray:
     return m
 
 
-def _anchor_props(source: Animation, source_skeleton: Animation, target: Animation, target_skeleton: Animation) -> None:
-    """Moves each held prop of the target so it keeps its source offset from the nearest hand or root."""
+def _anchor_props(source: Animation, source_worlds: List[List[Transform]], target: Animation, target_skeleton: Animation) -> None:
+    """Moves each held prop of the target so it keeps its source offset from the nearest hand or root, given the source's world pose per frame."""
     source_index = {bone.name: i for i, bone in enumerate(source.bones)}
     target_index = {bone.name: i for i, bone in enumerate(target.bones)}
     props = [b.name for b in target.bones if b.name.startswith("be_prop_") and b.name not in FIXED_PROPS and b.name in source_index]
     anchors = [name for name in ANCHOR_BONES if name in source_index and name in target_index]
     frames = len(source.rotations)
-    source_worlds = [world_pose(source, source_skeleton, frame) for frame in range(frames)]
 
     # One anchor per prop for the whole animation, so a prop never jumps between hands mid-swing.
     def mean_distance(prop: str, anchor: str) -> float:
@@ -189,8 +191,47 @@ def _anchor_props(source: Animation, source_skeleton: Animation, target: Animati
 # Retarget
 
 
+def renamed(anim: Animation, renames: Dict[str, str]) -> Animation:
+    """A copy of an animation or skeleton with some bones renamed.
+
+    Args:
+        anim (Animation): The animation or skeleton bind pose.
+        renames (Dict[str, str]): Old bone name -> new bone name.
+
+    Returns:
+        Animation: The copy. Its tracks are shared with `anim`.
+    """
+    return replace(anim, bones=[Bone(renames.get(bone.name, bone.name), bone.parent) for bone in anim.bones])
+
+
+def _match_world_rotations(source: Animation, source_worlds: List[List[Transform]], target: Animation, target_skeleton: Animation) -> None:
+    """Gives each bone whose parent differs between the skeletons the world rotation it has in the source, given the source's world pose per frame.
+
+    Copying a local rotation only works under the same parent. Humanoid01e has `neck_1` between `neck_0` and the head, so a copied head rotation
+    would lose the neck's turn.
+    """
+    source_index = {bone.name: i for i, bone in enumerate(source.bones)}
+
+    def parent_name(anim: Animation, index: int) -> str:
+        parent = anim.bones[index].parent
+        return anim.bones[parent].name if parent >= 0 else ""
+
+    moved = {i for i, bone in enumerate(target.bones)
+             if bone.name in source_index and bone.parent >= 0 and parent_name(source, source_index[bone.name]) != parent_name(target, i)}
+    if not moved:
+        return
+    for frame, source_world in enumerate(source_worlds):
+        world: List[Quat] = []
+        for i, bone in enumerate(target.bones):
+            local = target.rotations[frame][i] or target_skeleton.rotations[0][i]
+            if i in moved:
+                local = _qnorm(_qmul(_qconj(world[bone.parent]), source_world[source_index[bone.name]][0]))
+                target.rotations[frame][i] = local
+            world.append(_qnorm(local) if bone.parent < 0 else _qnorm(_qmul(world[bone.parent], local)))
+
+
 def retarget(source: Animation, source_skeleton: Animation, target_skeleton: Animation, skeleton_name: str,
-             offset_bones: Iterable[str] = OFFSET_BONES) -> Animation:
+             offset_bones: Iterable[str] = OFFSET_BONES, renames: Optional[Dict[str, str]] = None) -> Animation:
     """Retargets an animation onto another skeleton.
 
     Args:
@@ -199,10 +240,13 @@ def retarget(source: Animation, source_skeleton: Animation, target_skeleton: Ani
         target_skeleton (Animation): The target skeleton's bind pose.
         skeleton_name (str): The target skeleton's name, written into the new animation.
         offset_bones (Iterable[str]): Bones moved by the source's offset from its bind pose.
+        renames (Optional[Dict[str, str]]): Source bone name -> the target bone it drives, for bones the skeletons name differently.
 
     Returns:
         Animation: The animation on the target skeleton.
     """
+    if renames:
+        source, source_skeleton = renamed(source, renames), renamed(source_skeleton, renames)
     source_index = {bone.name: i for i, bone in enumerate(source.bones)}
     source_bind = {bone.name: i for i, bone in enumerate(source_skeleton.bones)}
     offset_bones = set(offset_bones)
@@ -225,5 +269,7 @@ def retarget(source: Animation, source_skeleton: Animation, target_skeleton: Ani
             translations[frame].append(translation)
     bones = [Bone(bone.name, bone.parent) for bone in target_skeleton.bones]
     target = Animation(7, source.unknown, source.frame_rate, skeleton_name, list(source.flags), source.length, bones, translations, rotations)
-    _anchor_props(source, source_skeleton, target, target_skeleton)
+    source_worlds = [world_pose(source, source_skeleton, frame) for frame in range(len(source.rotations))]
+    _match_world_rotations(source, source_worlds, target, target_skeleton)
+    _anchor_props(source, source_worlds, target, target_skeleton)
     return target

@@ -105,28 +105,6 @@
   .copyline code { flex: 1; min-width: 0; font: 11px/1.4 ui-monospace, monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 6px;
                    word-break: break-all; user-select: all; }
   #sheetJobs { display: none; }
-  /* The skill tree (studio/skills.js): rows of tiers like the game's, links drawn behind. */
-  #skillsStage { position: absolute; inset: 52px 0 0 0; overflow: auto; background: radial-gradient(ellipse at 50% 0%, #2a1520 0%, #170d12 70%); }
-  #skillsStage .pad { padding: 16px; }
-  .tree { position: relative; z-index: 1; display: grid; gap: 10px 8px; padding: 12px; align-items: center; width: max-content; }
-  .tree-row { color: #d8a640; font-size: 13px; text-align: right; padding-right: 6px; border-right: 2px solid #6b5233; align-self: stretch; display: flex; align-items: center; justify-content: flex-end; }
-  .node { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 92px; min-height: 96px; padding: 4px 2px; background: none; border: 0; }
-  .node .ring, .skill-head .ring { width: 56px; height: 56px; border-radius: 50%; border: 2px solid #6b5233; background: #0e0809; display: grid; place-items: center; overflow: hidden; flex: none; }
-  .node .ring img, .skill-head .ring img { width: 100%; height: 100%; }
-  .node .nm { font-size: 11px; line-height: 1.2; text-align: center; color: var(--text); }
-  .node .rk { position: absolute; top: 2px; right: 12px; min-width: 20px; padding: 0 4px; border-radius: 10px; background: #3c0909; border: 1px solid #a8302a; font: 11px/18px monospace; }
-  .node.fixed .ring { border-color: #8a7a5a; } .node.fixed { opacity: .75; cursor: default; }
-  .node.build .ring { border-color: #d8a640; box-shadow: 0 0 8px rgba(216,166,64,.45); }
-  .node.plan .ring { border-style: dashed; border-color: #a8998a; }
-  .node.on { background: none; border: 0; }
-  .node.on .ring { outline: 3px solid #e0705a; outline-offset: 2px; }
-  .node.empty { color: #5a4a40; font-size: 22px; justify-content: center; border: 1px dashed #3e2a2c; border-radius: 8px; min-height: 72px; }
-  .node.empty:hover { color: #d8a640; border-color: #6b5233; }
-  #skillsStage .links { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; }
-  #skillsStage .links line { stroke: #a8302a; stroke-width: 3; }
-  #skillsStage .links line.any { stroke: #d8a640; stroke-dasharray: 8 5; }
-  #skillsStage .links line.lock { stroke: #a8998a; stroke-width: 2; stroke-dasharray: 2 5; }
-  .skill-head { display: flex; gap: 10px; align-items: center; padding: 6px 4px; }
   .erow.wide { grid-template-columns: 90px 1fr; }
   .erow textarea { width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; font: inherit; }
   .erow.wide input { text-align: left; }
@@ -269,7 +247,6 @@
   <main id="stage">
     <div id="battle"></div>
     <div id="portraitStage" hidden></div>
-    <div id="skillsStage" hidden></div>
     <div id="stageModes"><button data-mode="battle" class="on">Battle</button><button data-mode="portrait" id="modePortrait">Portrait</button></div>
     <div id="battleTools"><span id="sides"></span><span id="toggles"></span></div>
     <div id="info"></div>
