@@ -7750,7 +7750,7 @@
    "quest": {
     "rank": 50,
     "kind": "heroic",
-    "target": 25,
+    "target": 10,
     "title": "Lantern of the Long Watch",
     "description": "The lantern only lights for a watchman who has seen a battle won outright, again and again, without a single bad night.",
     "objective": "Win heroic victories with the Advisor in the battle\\\\nCurrent total: %n / %n"
