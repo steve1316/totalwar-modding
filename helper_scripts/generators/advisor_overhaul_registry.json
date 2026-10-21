@@ -1327,8 +1327,13 @@
     },
     "art_4": {
      "name": "Unbending",
-     "description": "He takes the hit and does not move a step. Neither do the ones who stand with him.",
+     "description": "He takes the hit and does not move a step, however hard it lands.",
      "effects": [
+      {
+       "effect": "advisor_overhaul_effect_mass",
+       "scope": "character_to_character_own",
+       "value": 50
+      },
       {
        "effect": "wh_main_effect_character_stat_physical_resistance",
        "scope": "character_to_character_own",
@@ -1391,8 +1396,13 @@
     },
     "apex": {
      "name": "Battering Ram",
-     "description": "He stops fighting the line and walks through it. Nothing knocks him down, men are thrown aside, and every blow cracks armour. On foot he counts as a large target.",
+     "description": "He lowers his shoulder and walks into the enemy line, and the line gives way.",
      "effects": [
+      {
+       "effect": "advisor_overhaul_effect_iron_hand_apex_form",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
       {
        "effect": "wh_main_effect_character_stat_charge_bonus_add",
        "scope": "character_to_character_own",
@@ -7545,6 +7555,20 @@
    "icon": "archer.png",
    "good": true,
    "text": "\"Hunter's Spread\" (each bow shot fires six lighter arrows in a glowing fan, each bursting in a small blast that spares his own side)"
+  },
+  "advisor_overhaul_effect_iron_hand_apex_form": {
+   "priority": 10,
+   "icon": "modifier_icon_monstrous_impact.png",
+   "good": true,
+   "text": "\"Battering Ram\" (plows through enemy formations with ease while also counting as a large target)"
+  },
+  "advisor_overhaul_effect_mass": {
+   "priority": 430,
+   "bonus": "unit_mass_percentage_mod",
+   "unit_sets": ["all_units"],
+   "icon": "mass.png",
+   "good": true,
+   "text": "Mass: %+n%"
   },
   "advisor_overhaul_effect_army_fatigue": {
    "priority": 600,
