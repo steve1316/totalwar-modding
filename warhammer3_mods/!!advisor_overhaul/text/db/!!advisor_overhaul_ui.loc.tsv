@@ -1,0 +1,21 @@
+key	text	tooltip
+#Loc;1;text/db/!!advisor_overhaul_ui.loc		
+advisor_overhaul_ui_button_tooltip	Change Loadout||Choose which of the Advisor's unlocked weapons and mounts he takes to war. Learn weapon and mount skills to unlock more.	true
+advisor_overhaul_ui_button_used_tooltip	Change Loadout||The Advisor has already changed his loadout this turn.	true
+advisor_overhaul_ui_weapon_option	Weapon:	true
+advisor_overhaul_ui_mount_option	Mount:	true
+advisor_overhaul_ui_option_current	(current)	true
+advisor_overhaul_ui_option_pick_tooltip	Switch the Advisor to this. The change applies at once.	true
+advisor_overhaul_ui_option_current_tooltip	The Advisor already uses this.	true
+advisor_overhaul_ui_weapon_blocked_tooltip	The Advisor cannot use this weapon on his current mount. Pick another mount first.	true
+advisor_overhaul_ui_mount_blocked_tooltip	The Advisor cannot ride this mount with his current weapon. Pick another weapon first.	true
+advisor_overhaul_ui_art_with	With	true
+advisor_overhaul_ui_art_locked	Available after unlocking	true
+advisor_overhaul_ui_polymath_counted	Disciplines counted:	true
+advisor_overhaul_ui_polymath_counted_unlearned	Disciplines counted if learned now:	true
+advisor_overhaul_ui_polymath_of	of	true
+advisor_overhaul_ui_polymath_skills	skills	true
+advisor_overhaul_ui_discipline_arts	Arts	true
+advisor_overhaul_ui_discipline_memory	Memory	true
+advisor_overhaul_ui_discipline_magic	Magic	true
+advisor_overhaul_ui_discipline_hero_work	Hero work	true

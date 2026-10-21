@@ -1,0 +1,62 @@
+key	text	tooltip
+#Loc;1;text/db/!!advisor_overhaul_ancillaries.loc		
+ancillaries_onscreen_name_advisor_overhaul_loadout_staff_and_sword_foot	Staff and Sword, On Foot	true
+ancillaries_colour_text_advisor_overhaul_loadout_staff_and_sword_foot	A walking staff for his spells and a plain Imperial blade for anything that gets too close. He walks, as he always has.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_staff_and_sword_warhorse	Staff and Sword, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_loadout_staff_and_sword_warhorse	A walking staff for his spells and a plain Imperial blade for anything that gets too close. An armoured Imperial charger, trained not to shy at spellfire.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_staff_and_sword_pegasus	Staff and Sword, Imperial Pegasus	true
+ancillaries_colour_text_advisor_overhaul_loadout_staff_and_sword_pegasus	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A winged Imperial steed that carries him over the enemy line.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_staff_and_sword_disc	Staff and Sword, Disc of Tzeentch	true
+ancillaries_colour_text_advisor_overhaul_loadout_staff_and_sword_disc	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A floating daemon disc of Tzeentch. He does not talk about what he paid for it.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_staff_and_sword_carmine_dragon	Staff and Sword, Carmine Dragon	true
+ancillaries_colour_text_advisor_overhaul_loadout_staff_and_sword_carmine_dragon	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A blood-red dragon of the old Empire. It has seen more endings than he has.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_sword_and_shield_foot	Sword and Shield, On Foot	true
+ancillaries_colour_text_advisor_overhaul_loadout_sword_and_shield_foot	A sword and a knight's shield. He leaves the staff behind to stand in the front line. He walks, as he always has.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_sword_and_shield_warhorse	Sword and Shield, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_loadout_sword_and_shield_warhorse	A sword and a knight's shield. He leaves the staff behind to stand in the front line. An armoured Imperial charger, trained not to shy at spellfire.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_sword_and_shield_pegasus	Sword and Shield, Imperial Pegasus	true
+ancillaries_colour_text_advisor_overhaul_loadout_sword_and_shield_pegasus	A sword and a knight's shield. He leaves the staff behind to stand in the front line. A winged Imperial steed that carries him over the enemy line.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_sword_and_shield_carmine_dragon	Sword and Shield, Carmine Dragon	true
+ancillaries_colour_text_advisor_overhaul_loadout_sword_and_shield_carmine_dragon	A sword and a knight's shield. He leaves the staff behind to stand in the front line. A blood-red dragon of the old Empire. It has seen more endings than he has.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_sword_and_bow_foot	Sword and Bow, On Foot	true
+ancillaries_colour_text_advisor_overhaul_loadout_sword_and_bow_foot	A hunting bow and a short blade. He was a fair shot long before he became a wizard. He walks, as he always has.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_sword_and_bow_warhorse	Sword and Bow, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_loadout_sword_and_bow_warhorse	A hunting bow and a short blade. He was a fair shot long before he became a wizard. An armoured Imperial charger, trained not to shy at spellfire.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_sword_and_bow_pegasus	Sword and Bow, Imperial Pegasus	true
+ancillaries_colour_text_advisor_overhaul_loadout_sword_and_bow_pegasus	A hunting bow and a short blade. He was a fair shot long before he became a wizard. A winged Imperial steed that carries him over the enemy line.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_sword_and_bow_disc	Sword and Bow, Disc of Tzeentch	true
+ancillaries_colour_text_advisor_overhaul_loadout_sword_and_bow_disc	A hunting bow and a short blade. He was a fair shot long before he became a wizard. A floating daemon disc of Tzeentch. He does not talk about what he paid for it.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_sword_and_bow_carmine_dragon	Sword and Bow, Carmine Dragon	true
+ancillaries_colour_text_advisor_overhaul_loadout_sword_and_bow_carmine_dragon	A hunting bow and a short blade. He was a fair shot long before he became a wizard. A blood-red dragon of the old Empire. It has seen more endings than he has.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_greatsword_foot	Greatsword, On Foot	true
+ancillaries_colour_text_advisor_overhaul_loadout_greatsword_foot	A two-handed Imperial greatsword, far heavier than a wizard should carry. He swings it well enough. He walks, as he always has.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_greatsword_warhorse	Greatsword, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_loadout_greatsword_warhorse	A two-handed Imperial greatsword, far heavier than a wizard should carry. He swings it well enough. An armoured Imperial charger, trained not to shy at spellfire.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_greatsword_pegasus	Greatsword, Imperial Pegasus	true
+ancillaries_colour_text_advisor_overhaul_loadout_greatsword_pegasus	A two-handed Imperial greatsword, far heavier than a wizard should carry. He swings it well enough. A winged Imperial steed that carries him over the enemy line.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_greatsword_disc	Greatsword, Disc of Tzeentch	true
+ancillaries_colour_text_advisor_overhaul_loadout_greatsword_disc	A two-handed Imperial greatsword, far heavier than a wizard should carry. He swings it well enough. A floating daemon disc of Tzeentch. He does not talk about what he paid for it.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_glaive_foot	Glaive, On Foot	true
+ancillaries_colour_text_advisor_overhaul_loadout_glaive_foot	A long Cathayan glaive built to cut a horse out from under its rider, with a short sword at his hip for close work. He walks, as he always has.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_glaive_warhorse	Glaive, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_loadout_glaive_warhorse	A long Cathayan glaive built to cut a horse out from under its rider, with a short sword at his hip for close work. An armoured Imperial charger, trained not to shy at spellfire.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_glaive_pegasus	Glaive, Imperial Pegasus	true
+ancillaries_colour_text_advisor_overhaul_loadout_glaive_pegasus	A long Cathayan glaive built to cut a horse out from under its rider, with a short sword at his hip for close work. A winged Imperial steed that carries him over the enemy line.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_glaive_disc	Glaive, Disc of Tzeentch	true
+ancillaries_colour_text_advisor_overhaul_loadout_glaive_disc	A long Cathayan glaive built to cut a horse out from under its rider, with a short sword at his hip for close work. A floating daemon disc of Tzeentch. He does not talk about what he paid for it.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_iron_hand_foot	Iron Hand, On Foot	true
+ancillaries_colour_text_advisor_overhaul_loadout_iron_hand_foot	No weapon at all. He fights with open hands and the weight of a forge behind every blow, the way the dragon-blooded lords of Cathay do. He walks, as he always has.	true
+ancillaries_onscreen_name_advisor_overhaul_loadout_iron_hand_apex	Iron Hand, Battering Ram	true
+ancillaries_colour_text_advisor_overhaul_loadout_iron_hand_apex	Nothing stops or knocks him down. He bowls men over and flings them aside, and every blow cracks the armour of what it hits. He counts as a large target.	true
+ancillaries_onscreen_name_advisor_overhaul_item_steward_seal	The Steward's Seal	true
+ancillaries_colour_text_advisor_overhaul_item_steward_seal	The seal of a house that ended long ago. He still presses it into the wax before every order, and the men still read it as a promise.	true
+ancillaries_onscreen_name_advisor_overhaul_item_unwritten_grimoire	The Unwritten Grimoire	true
+ancillaries_colour_text_advisor_overhaul_item_unwritten_grimoire	Every page is blank until he needs it. Then it holds the spell, the counter-spell and a note in his own hand about what went wrong last time.	true
+ancillaries_onscreen_name_advisor_overhaul_item_old_archivist	The Old Archivist	true
+ancillaries_colour_text_advisor_overhaul_item_old_archivist	Older than the Advisor, or so he claims. He keeps every name, every debt and every door that was left unlocked.	true
+ancillaries_onscreen_name_advisor_overhaul_item_mantle_of_many_wars	Mantle of Many Wars	true
+ancillaries_colour_text_advisor_overhaul_item_mantle_of_many_wars	Patched from the cloaks of every army he has marched with. Nothing gets through it that has not already been stopped once before.	true
+ancillaries_onscreen_name_advisor_overhaul_item_lantern_of_the_long_watch	Lantern of the Long Watch	true
+ancillaries_colour_text_advisor_overhaul_item_lantern_of_the_long_watch	It burns without oil and never gives away the camp. Whoever carries it is never the one surprised.	true
+ancillaries_onscreen_name_advisor_overhaul_item_edge_of_final_counsel	Edge of Final Counsel	true
+ancillaries_colour_text_advisor_overhaul_item_edge_of_final_counsel	Not a blade he swings. It is the one he points at a map, and the army goes where it points.	true

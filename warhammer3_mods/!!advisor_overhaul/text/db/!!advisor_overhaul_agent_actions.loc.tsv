@@ -1,0 +1,14 @@
+key	text	tooltip
+#Loc;1;text/db/!!advisor_overhaul_agent_actions.loc		
+agent_actions_localised_action_name_advisor_overhaul_action_champion_assist_army_scavenge	{{tr:agent_action_name_scavenge}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_champion_assist_army_scavenge	[[col:yellow]]Increases the {{tr:icon_income}}income of post-battle loot earned by the parent army by %n%.[[/col]]	true
+agent_actions_localised_action_name_advisor_overhaul_action_champion_passive_increase_trade	{{tr:agent_action_name_increase_trade}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_champion_passive_increase_trade	[[col:yellow]]Increases tradable resources produced in the local province by %n%.[[/col]]	true
+agent_actions_localised_action_name_advisor_overhaul_action_champion_passive_stimulate_growth	{{tr:agent_action_name_stimulate_growth}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_champion_passive_stimulate_growth	[[col:yellow]]Increases [[img:icon_growth]][[/img]]growth in the local province by %n (reduces in enemy provinces).[[/col]]	true
+agent_actions_localised_action_name_advisor_overhaul_action_spy_assist_army_increase_mobility	{{tr:agent_action_name_increase_mobility}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_spy_assist_army_increase_mobility	[[col:yellow]]Increases the campaign movement range of the parent army by %n%.[[/col]]	true
+agent_actions_localised_action_name_advisor_overhaul_action_spy_hinder_character_assassinate	{{tr:agent_action_name_assassinate}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_spy_hinder_character_assassinate	[[col:yellow]]Kills the target Character.[[/col]]	true
+agent_actions_localised_action_name_advisor_overhaul_action_champion_passive_spread_corruption_kho	{{tr:agent_action_name_spread_corruption}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_champion_passive_spread_corruption_kho	[[col:yellow]]Increases the amount of [[img:icon_corruption_kho]][[/img]]Khorne corruption in the local province by %n.[[/col]]	true
