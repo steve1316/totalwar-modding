@@ -1110,7 +1110,8 @@ UI_PANEL_BUTTON_PICKER = {
     --- @param spec table The button.
     --- @returns boolean True when it was added.
     register = function(spec)
-        if type(spec) ~= "table" or type(spec.id) ~= "string" or spec.id:find(":", 1, true) then
+        -- No plain `string.find` here: in the game's Lua it breaks `string.len` and with it every later `out()`.
+        if type(spec) ~= "table" or type(spec.id) ~= "string" or spec.id:find(":") then
             log("register refused: the spec needs an id with no colon")
             return false
         end

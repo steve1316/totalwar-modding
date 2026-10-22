@@ -18,6 +18,9 @@ at the same in-pack path, so the subscribed standalone pack (`!!!` sorts first, 
 The notes below come from building the Advisor's Change Loadout button. Older names in them (`advisor_overhaul_loadout_*`, `aolo_`) are now
 `ui_pbp_<id>` and `ui_pbp_<id>_<column>_<option>`.
 
+- **Never call `string.find` with the plain flag (2026-10-22).** After `s:find(":", 1, true)` the game's Lua returns the string from
+  `string.len`, so the next `out()` fails at `lib_campaign_manager.lua:423`. Inside a first-tick callback that stopped every later one and the
+  game then crashed in the vanilla `award_name_of_power` listener. CA's `lib_core.lua` leaves the plain call commented out for the same reason. `[game]`
 
 - **First try crashed the game (2026-10-13 test).** The first version put the button inside the character panel (`character_context_parent >
   holder_br > bottom_buttons`) and the picker in a `script_dummy` on the panel. The button was made there, and a picker option appeared with the
