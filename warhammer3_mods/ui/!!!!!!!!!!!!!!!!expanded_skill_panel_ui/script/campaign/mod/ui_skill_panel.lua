@@ -93,9 +93,6 @@ local tips_from = nil
 --- Names of this script's components registered as top-most, so each is unregistered before it is destroyed.
 local topmost = {}
 
---- Draw priority of the box and its bar, read from the panel when the box is made.
-local ui_priority = UI_PRIORITY
-
 --- Our box: the component, false when it could not be made while this panel is open, or nil when it is not made yet.
 local box = nil
 
@@ -232,11 +229,10 @@ end
 --- @param parent UIC|nil The parent it was made in.
 --- @param name string The component's name.
 --- @param why string Why, for the log.
---- @returns boolean True when a component was destroyed.
 local function destroy_child(parent, name, why)
     local uic = find_child(parent, name)
     if not uic then
-        return false
+        return
     end
     if topmost[name] then
         topmost[name] = nil
@@ -248,7 +244,6 @@ local function destroy_child(parent, name, why)
         uic:Destroy()
     end)
     log("destroyed " .. name .. " (" .. why .. ")" .. (ok and "" or (", error: " .. tostring(err))))
-    return ok
 end
 
 --- Creates one of this script's components under a parent and checks the game gave back exactly that component.
@@ -269,12 +264,11 @@ local function create_child(parent, name, template)
         log("create " .. name .. " from " .. template .. " failed: " .. tostring(address))
         return nil
     end
-    local id = component_id(UIComponent(address))
-    if id ~= name then
-        log("create " .. name .. ": the game gave back " .. tostring(id) .. ", so it is left alone")
-        return nil
+    local made = wrap_named(address, name)
+    if not made then
+        log("create " .. name .. ": the game gave back " .. tostring(component_id(UIComponent(address))) .. ", so it is left alone")
     end
-    return UIComponent(address)
+    return made
 end
 
 --- A component's position and size, read without changing it.
@@ -333,7 +327,8 @@ end
 
 --- Makes the box's lock bar, hidden and set to the width of the box's text. Leaves `bar` nil when the game refuses any of it.
 --- @param width number The width in pixels of the box's text.
-local function make_bar(width)
+--- @param priority number The box's draw priority.
+local function make_bar(width, priority)
     local root = create_child(ui_root(), BAR, BAR_LAYOUT)
     if not root then
         return
@@ -354,7 +349,7 @@ local function make_bar(width)
             parts[name]:SetCanResizeWidth(true)
         end
         parts[BAR_FRAME]:Resize(width, BAR_H)
-        root:PropagatePriority(ui_priority)
+        root:PropagatePriority(priority)
         root:RegisterTopMost()
         topmost[BAR] = true
         root:SetVisible(false)
@@ -420,7 +415,7 @@ local function make_box(panel)
     local ok, panel_priority = pcall(function()
         return panel:Priority()
     end)
-    ui_priority = (ok and type(panel_priority) == "number") and math.max(UI_PRIORITY, panel_priority + PANEL_PRIORITY_BONUS) or UI_PRIORITY
+    local priority = (ok and type(panel_priority) == "number") and math.max(UI_PRIORITY, panel_priority + PANEL_PRIORITY_BONUS) or UI_PRIORITY
     local made = create_child(ui_root(), BOX, BOX_LAYOUT)
     if not made then
         return nil
@@ -444,12 +439,12 @@ local function make_box(panel)
         return nil
     end
     box_title, box_body = title, text
-    made:PropagatePriority(ui_priority)
+    made:PropagatePriority(priority)
     made:RegisterTopMost()
     topmost[BOX] = true
     made:SetVisible(false)
     -- Made after the box is drawn on top, so the bar draws over the box's frame.
-    make_bar(bounds and bounds.w or 0)
+    make_bar(bounds and bounds.w or 0, priority)
     return made
 end
 
@@ -530,7 +525,7 @@ end
 --- Hides the box if it is shown, and unlocks it.
 --- @param why string Why, for the log.
 local function hide_box(why)
-    if box and box_skill then
+    if box_skill then
         log("box: hid " .. box_skill .. " (" .. why .. ")")
         box:SetVisible(false)
         if bar then
@@ -548,12 +543,8 @@ end
 --- @param why string Why, for the log.
 local function remove_box(why)
     hide_box(why)
-    if box then
-        destroy_child(ui_root(), BOX, why)
-    end
-    if bar then
-        destroy_child(ui_root(), BAR, why)
-    end
+    destroy_child(ui_root(), BOX, why)
+    destroy_child(ui_root(), BAR, why)
     box, box_text, box_title, box_body, box_foot, bar, box_effects = nil, nil, nil, nil, nil, nil, nil
 end
 
