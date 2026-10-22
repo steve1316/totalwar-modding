@@ -17,6 +17,10 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
 - **Two ways to ship it.** List the standalone mod as a required item, or copy `script/campaign/mod/ui_skill_panel.lua` and
   `ui/campaign ui/character_details_panel_skills.twui.xml` into your pack at the same paths. Only one file per path runs: the pack that sorts first
   by name wins, and `!!!!!!!!!!!!!!!!expanded_skill_panel_ui` sorts ahead of most mod packs, so a subscribed standalone copy replaces older bundled ones.
+- **Demo (MCT, off by default).** Checking "Demo box on Best of the Empire" on the Expanded Skill Panel UI > Demo page in MCT gives Karl Franz's Best of the
+  Empire card (`wh_dlc08_skill_emp_lord_unique_karl_0`) a box with bold, italic, colours, icons, live rank, turn and treasury, the effects
+  of `wh2_main_minister_emp_reikland` and a foot. `script/campaign/mod/ui_skill_panel_demo.lua` is the code to copy. The demo and the MCT
+  page ship only in the standalone pack: a mod that bundles the skill panel leaves both out, so its players get no extra MCT page.
 - **Example.** A box for one skill of one lord, with a vanilla effect bundle's effects in it:
 
   ```lua
