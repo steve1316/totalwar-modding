@@ -3754,7 +3754,7 @@
 					name="frame"
 					width="20"
 					height="700"
-					interactive="true"
+					interactive="false"
 					uniqueguid="FF43B056-60CA-4455-99BCD9A6F7C1AA17"/>
 			</states>
 		</skills_vlistview>
@@ -3816,8 +3816,9 @@
 			part_of_template="true"
 			uniqueguid_in_template="6C253EE7-62DB-42FC-967ED9468F399339"
 			uniqueguid="CD070753-E980-4EC4-8DB7F456282DF23A"
-			dimensions="20.00,680.00"
-			dock_point="Center Right"
+			dimensions="20.00,638.00"
+			dock_point="Top Right"
+			offset="0.00,24.00"
 			priority="46">
 			<state_uniqueguids>
 				<state_uniqueguid
@@ -4188,7 +4189,7 @@
 					name="NewState"
 					width="20"
 					height="700"
-					interactive="true"
+					interactive="false"
 					uniqueguid="27E815BB-8B40-4E67-B540F7CE5FF3A8A0"/>
 			</states>
 		</list_clip>
