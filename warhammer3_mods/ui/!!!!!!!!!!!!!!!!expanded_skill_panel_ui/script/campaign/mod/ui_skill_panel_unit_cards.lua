@@ -1,6 +1,5 @@
 --- Wider unit card lists in skill tooltips. A tooltip with more than `CARDS_MAX` unit cards gets them moved into a list of `CARDS_PER_ROW` to
---- a row, so it stays short enough for the screen. Shorter lists keep the vanilla layout. A level pip's tooltip is built where scripts cannot
---- find it, so it keeps the vanilla list.
+--- a row, so it stays short enough for the screen. Shorter lists keep the vanilla layout.
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -13,11 +12,12 @@ local NAME = "ui_skill_panel_unit_cards"
 local PANEL = "character_details_panel"
 local HOLDER = "skills_holder"
 
---- Delay in milliseconds between looks for a hovered skill card's tooltip while the panel is open.
+--- Delay in milliseconds between looks for a hovered skill card's or level pip's tooltip while the panel is open.
 local POLL_MS = 10
 
---- The vanilla tooltip of a skill card, its list of parts, and the start of the name of its unit card list's copy.
-local SKILL_TOOLTIP = "edict_tooltip"
+--- The vanilla tooltips of a skill card and of its level pips, both made inside the card, their list of parts, and the start of the name of
+--- their unit card list's copy.
+local SKILL_TOOLTIPS = { "edict_tooltip", "CharacterSkillsTooltip" }
 local TOOLTIP_LIST = "list_parent"
 local UNIT_CARDS = "unit_card_list"
 
@@ -79,7 +79,7 @@ end
 --- Moves a tooltip's unit cards into a wide list in the vanilla list's place when there are more than `CARDS_MAX`, and hides the vanilla list.
 --- When the game fills the tooltip again and a wide list is already there, its old cards are hidden, not destroyed, as the game may still hold
 --- them.
---- @param tooltip UIC The skill tooltip.
+--- @param tooltip UIC The skill card's or level pip's tooltip.
 local function widen_cards(tooltip)
     local parts = find_uicomponent(tooltip, TOOLTIP_LIST)
     if not parts then
@@ -115,15 +115,17 @@ local function widen_cards(tooltip)
     log(count .. " unit cards moved into a list of " .. CARDS_PER_ROW .. " to a row")
 end
 
---- Widens the unit cards of the hovered skill card's tooltip.
+--- Widens the unit cards of the hovered skill card's or level pip's tooltip.
 local function widen_card_tooltip()
     local holder = find_uicomponent(core:get_ui_root(), PANEL, HOLDER)
     if not holder or not holder:Visible(true) then
         return
     end
-    local address = holder:Find(SKILL_TOOLTIP, false)
-    if address then
-        widen_cards(UIComponent(address))
+    for _, id in ipairs(SKILL_TOOLTIPS) do
+        local address = holder:Find(id, false)
+        if address then
+            widen_cards(UIComponent(address))
+        end
     end
 end
 
@@ -131,7 +133,7 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Polling
 
---- Widens the hovered skill card's tooltip every `POLL_MS` while the character panel is open, logging the first failure since it opened.
+--- Widens the hovered skill card's or level pip's tooltip every `POLL_MS` while the panel is open, logging the first failure since it opened.
 local function poll()
     if not panel_open then
         return
