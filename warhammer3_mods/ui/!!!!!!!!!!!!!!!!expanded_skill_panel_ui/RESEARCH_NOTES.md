@@ -74,6 +74,9 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   `listview` (700 px, inside a plain `skills_holder`) holds `rows_clip`, which clips 669 px of the 960 px `vscroll_box` around `list_clip`, and the
   `hslider` under the clip. Beside it, `skills_vlistview` is a `Listview` that only drives the vertical bar by scrolling its empty `vscroll_drive`
   box. `ui_skill_panel_vscroll.lua` moves `vscroll_box` to the same share every 10 ms. The wheel scrolls up and down only over the bar. `[game]`
+- **The scroll reaches only the rows that hold skills.** The script measures the rows with children (plus the top gap again under the last
+  one), resizes `vscroll_drive` to that share of its clip, and hides `skills_vlistview` when they all fit. Karl Franz's vanilla tree needs 560
+  of the 849 px view, so it gets no vertical bar. Resizing the driver box and hiding the list while the panel is open worked fine. `[game]`
 - **Keep the `hslider` outside the clip.** Inside the moving box it had to be pinned by script, and rows showed under and below it. With the
   clip between the `listview` and `list_clip`, the bar stays put and the rows end above it. The `listview` still finds `list_clip` and its bar.
   `[game]`
