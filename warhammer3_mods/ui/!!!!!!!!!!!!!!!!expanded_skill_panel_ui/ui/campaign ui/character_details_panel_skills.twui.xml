@@ -7,9 +7,9 @@
 		<root this="A610426C-6D90-4941-A249F85BF3417810">
 			<character_details_panel_skills this="183075FC-3C0E-4F2F-A6B91F175A6C223C">
 				<skills_holder this="D387A709-6776-402C-A7CB1AFE341B2E52">
-					<rows_clip this="BC0FEBDC-BE2E-414D-AB00543CA34B9055">
-						<vscroll_box this="90B69D37-9B00-4DFE-89943B76CE6F4FCD">
-							<listview this="EBE7C79F-A07B-462C-AD190E6CDC535470">
+					<listview this="EBE7C79F-A07B-462C-AD190E6CDC535470">
+						<rows_clip this="BC0FEBDC-BE2E-414D-AB00543CA34B9055">
+							<vscroll_box this="90B69D37-9B00-4DFE-89943B76CE6F4FCD">
 								<list_clip this="A77736FB-7FE9-4FEE-B5300DFD13D4C4EB">
 									<list_box this="39CA33CF-71FD-4145-BFF0EFBCA6DFD312">
 										<top_spacer this="E310EC25-07A0-4BBE-A8941A58DED95104"/>
@@ -48,16 +48,16 @@
 										<chain9 this="4F198939-72B9-4602-A1D339422E257CE6"/>
 									</list_box>
 								</list_clip>
-								<hslider this="EE7D5298-A38C-462B-8A7FF046BDB8780F">
-									<frame_left this="B8349BE6-5AD3-4404-8A67DC4A2B2A0D82"/>
-									<frame_right this="C3DD9B98-56D4-4C5D-95371EB939CFCBB2"/>
-									<handle this="6013DFA7-120A-4FEA-B89ADADB970F2ADF"/>
-									<left this="33B4864E-051C-4D34-8C4D843339DE4D04"/>
-									<right this="B0A6850B-C854-4A30-95D3894C647CF5CF"/>
-								</hslider>
-							</listview>
-						</vscroll_box>
-					</rows_clip>
+							</vscroll_box>
+						</rows_clip>
+						<hslider this="EE7D5298-A38C-462B-8A7FF046BDB8780F">
+							<frame_left this="B8349BE6-5AD3-4404-8A67DC4A2B2A0D82"/>
+							<frame_right this="C3DD9B98-56D4-4C5D-95371EB939CFCBB2"/>
+							<handle this="6013DFA7-120A-4FEA-B89ADADB970F2ADF"/>
+							<left this="33B4864E-051C-4D34-8C4D843339DE4D04"/>
+							<right this="B0A6850B-C854-4A30-95D3894C647CF5CF"/>
+						</hslider>
+					</listview>
 					<skills_vlistview this="0EE5BCA6-697C-4844-BACC7E92FA490B37">
 						<list_clip this="56280990-AAE1-4702-89DC4B48DA0F6BE8">
 							<vscroll_drive this="37706434-D946-46F7-9A8A2A4775C93195"/>
@@ -2252,8 +2252,8 @@
 			uniqueguid_in_template="97E97336-5CB8-4ADE-9BD1230FFDD860F0"
 			uniqueguid="EE7D5298-A38C-462B-8A7FF046BDB8780F"
 			dimensions="1115.00,20.00"
-			dock_point="Top Center"
-			offset="-4.00,4.00"
+			dock_point="Bottom Center"
+			offset="-4.00,-11.00"
 			priority="45">
 			<state_uniqueguids>
 				<state_uniqueguid
@@ -3027,7 +3027,7 @@
 					this="879465D4-7869-489F-828ED860BFCEC6E0"
 					name="frame"
 					width="1236"
-					height="960"
+					height="700"
 					interactive="true"
 					uniqueguid="879465D4-7869-489F-828ED860BFCEC6E0"/>
 			</states>
@@ -3772,7 +3772,7 @@
 					this="FA312F02-4AC6-4129-82A4CBE6478BCCCA"
 					name="NewState"
 					width="1236"
-					height="700"
+					height="669"
 					interactive="true"
 					uniqueguid="FA312F02-4AC6-4129-82A4CBE6478BCCCA"/>
 			</states>

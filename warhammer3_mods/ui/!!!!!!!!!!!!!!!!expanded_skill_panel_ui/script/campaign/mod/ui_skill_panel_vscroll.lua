@@ -22,9 +22,6 @@ local POLL_MS = 10
 --- Whether the character panel is open, from `PanelOpenedCampaign` and `PanelClosedCampaign`.
 local panel_open = false
 
---- How far the sideways bar sits under the top of the rows' clip, read at the first look since the panel opened.
-local hslider_gap = nil
-
 --- Whether a look has failed since the panel opened, so the log gets one line per open instead of one every `POLL_MS`.
 local failed = false
 
@@ -52,7 +49,7 @@ local function bar_share(drive_clip, drive)
     return math.max(0, math.min(1, (clip_y - drive_y) / range))
 end
 
---- Moves the rows' box to match the vertical bar, and keeps the sideways bar at the top of the rows' clip.
+--- Moves the rows' box to match the vertical bar. The rows' clip sits inside the sideways list and ends above its bar, so the bar stays put.
 local function follow_bar()
     local holder = find_uicomponent(core:get_ui_root(), PANEL, HOLDER)
     if not holder or not holder:Visible(true) then
@@ -60,7 +57,7 @@ local function follow_bar()
     end
     local clip = find_uicomponent(holder, "rows_clip")
     local rows = clip and find_uicomponent(clip, "vscroll_box")
-    local list_box = rows and find_uicomponent(rows, "listview", "list_clip", "list_box")
+    local list_box = rows and find_uicomponent(rows, "list_clip", "list_box")
     local drive_clip = find_uicomponent(holder, "skills_vlistview", "list_clip")
     local drive = drive_clip and find_uicomponent(drive_clip, "vscroll_drive")
     if not list_box or not drive then
@@ -73,20 +70,6 @@ local function follow_bar()
     local target = clip_y - math.floor(bar_share(drive_clip, drive) * overflow + 0.5)
     if rows_y ~= target then
         rows:MoveTo(rows_x, target)
-    end
-
-    -- The sideways bar is inside the rows' box, so it is moved back to the top after the box moves.
-    local hslider = find_uicomponent(rows, "listview", "hslider")
-    if not hslider then
-        return
-    end
-    local hs_x, hs_y = hslider:Position()
-    if not hslider_gap then
-        hslider_gap = hs_y - clip_y
-        log("sideways bar sits " .. hslider_gap .. " under the rows' clip")
-    end
-    if hs_y ~= clip_y + hslider_gap then
-        hslider:MoveTo(hs_x, clip_y + hslider_gap)
     end
 end
 
@@ -115,7 +98,6 @@ core:add_listener(
     end,
     function()
         panel_open = true
-        hslider_gap = nil
         failed = false
         -- The panel opens twice in a row, so any running look is stopped first to keep a single one.
         cm:remove_real_callback(NAME)
