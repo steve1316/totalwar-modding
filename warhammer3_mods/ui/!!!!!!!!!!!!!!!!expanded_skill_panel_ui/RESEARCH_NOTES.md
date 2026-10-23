@@ -60,8 +60,9 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   row), so a skill with 51 units ran off the screen bottom. `ui_skill_panel_unit_cards.lua` moves the cards of a list with more than 30 into its
   own List of 15 to a row (`ui/common ui/ui_skill_panel_unit_cards.twui.xml`), made in the tooltip's `list_parent` at the vanilla list's index,
   and hides the vanilla list. The rest of the tooltip does not follow the wider list, so shorter lists stay vanilla. `[game]`
-- **A level pip's tooltip is out of reach.** It is not an `edict_tooltip` under the skill's node, the card, or the UI root's new children, and
-  `ComponentMouseOn` never fires in the panel, so a pip hover keeps the vanilla list. Its slow update on hover happens in vanilla too. `[game]`
+- **A level pip's tooltip is `CharacterSkillsTooltip`, also inside the card (2026-10-23).** It appears as `... > <skill key> > card >
+  CharacterSkillsTooltip` with the same `list_parent > unit_card_list_copy_N`, so searches for `edict_tooltip` never saw it. Each pip refills it
+  with a new copy, so the wide list stays and only its old cards are hidden. Its slow update on hover happens in vanilla too. `[game]`
 - **Tooltips cannot be capped or scrolled.** No layout grows to its content up to a height limit. A tooltip closes when the mouse leaves the
   card, and the wheel scrolls the skill tree. A script `MoveTo` on the tooltip is undone every frame. `[game]`
 - **Rows stack by container height. Their offsets are ignored.** Vanilla rows 0-4 are 90 px and row 5 is 70 px. The `list_box` (`HorizontalList`)
