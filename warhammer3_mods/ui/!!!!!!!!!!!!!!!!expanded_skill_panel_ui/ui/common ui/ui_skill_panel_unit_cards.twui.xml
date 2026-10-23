@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<layout
+	version="142"
+	comment=""
+	precache_condition="">
+	<hierarchy>
+		<root this="D28CFE02-65C7-43BB-A8E2F69DCD6C5FF3">
+			<unit_cards this="9EC1E839-C347-4BCB-BB48E7F9CDB196C5"/>
+		</root>
+	</hierarchy>
+	<components>
+		<root
+			this="D28CFE02-65C7-43BB-A8E2F69DCD6C5FF3"
+			id="root"
+			tooltipslocalised="true"
+			uniqueguid="D28CFE02-65C7-43BB-A8E2F69DCD6C5FF3"
+			currentstate="2A19C330-30EC-443E-9BC16211504362AF"
+			defaultstate="2A19C330-30EC-443E-9BC16211504362AF">
+			<states>
+				<default
+					this="2A19C330-30EC-443E-9BC16211504362AF"
+					name="default"
+					width="1600"
+					height="900"
+					uniqueguid="2A19C330-30EC-443E-9BC16211504362AF"/>
+			</states>
+		</root>
+		<unit_cards
+			this="9EC1E839-C347-4BCB-BB48E7F9CDB196C5"
+			id="unit_cards"
+			priority="255"
+			tooltipslocalised="true"
+			uniqueguid="9EC1E839-C347-4BCB-BB48E7F9CDB196C5"
+			currentstate="4C1DF3A4-51BA-4801-B65D8E566181627E"
+			defaultstate="4C1DF3A4-51BA-4801-B65D8E566181627E">
+			<states>
+				<default
+					this="4C1DF3A4-51BA-4801-B65D8E566181627E"
+					name="default"
+					width="16"
+					height="11"
+					uniqueguid="4C1DF3A4-51BA-4801-B65D8E566181627E"/>
+			</states>
+			<LayoutEngine
+				type="List"
+				spacing="3.00,3.00"
+				itemsperrow="15"
+				sizetocontent="true"
+				secondary_margins="15.00,15.00"
+				margins="10.00,10.00">
+				<columnwidths>
+					<column width="317"/>
+				</columnwidths>
+			</LayoutEngine>
+		</unit_cards>
+	</components>
+</layout>
