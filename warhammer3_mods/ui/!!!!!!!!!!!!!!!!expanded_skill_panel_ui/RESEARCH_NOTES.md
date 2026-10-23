@@ -60,7 +60,7 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   12 items per row and dock offset 0,20 showed ten rows. It replaces the panel for every character. Removed with the old lore system, restored
   2026-10-15 for the skills plan. The file is the vanilla ui3.pack file plus only those changes, checked against the patched game that day. `[game]`
   Since the vertical bar (2026-10-22) rows 1-8 are back to the vanilla 90 px (row 9 stays 70), `list_box` is 900 px at offset 0,15 with no
-  docking, and the `hslider` sits at the top of the rows. `[game]`
+  docking, and the `hslider` keeps the vanilla spot at the bottom. `[game]`
 - **Group boxes are modules.** A vanilla boxed group (Karl Franz's army buffs) is a `module_<skill>` component inside one row: a run of
   cards in a line, framed by `template_module` (in `chain0`) with the `parchment_divider` image. The frame is drawn 99 px tall from 22 px above the
   module, so modules in neighbouring 90 px rows overlap about 9 px and read as one box. With 70 px rows they clipped into each other, so the 10-row
@@ -70,10 +70,16 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   row's `chain` list, then `Divorce` and `Adopt(address, index)`), and they lay out and look right. But learning any skill then froze and crashed
   the game, even when only the script's own parts were moved and the cards were left alone. Without the script it works. Do not add components to
   the skill rows. `[game]`
-- **Vertical scrolling (2026-10-22).** The rows stay in the vanilla `listview` (`HorizontalListView`): wheel and drag scroll sideways. A plain
-  `skills_holder` holds `rows_clip` (clips 700 px of the 960 px `vscroll_box` around the `listview`) and `skills_vlistview`, a 20 px `Listview` that
-  only drives the vertical bar by scrolling its empty `vscroll_drive` box. `ui_skill_panel_vscroll.lua` moves `vscroll_box` to the same share every
-  10 ms and keeps the `hslider` at the top of the clip. The wheel scrolls up and down only over the bar. `[game]`
+- **Vertical scrolling (2026-10-22).** The rows stay in the vanilla `listview` (`HorizontalListView`): wheel and drag scroll sideways. The
+  `listview` (700 px, inside a plain `skills_holder`) holds `rows_clip`, which clips 669 px of the 960 px `vscroll_box` around `list_clip`, and the
+  `hslider` under the clip. Beside it, `skills_vlistview` is a `Listview` that only drives the vertical bar by scrolling its empty `vscroll_drive`
+  box. `ui_skill_panel_vscroll.lua` moves `vscroll_box` to the same share every 10 ms. The wheel scrolls up and down only over the bar. `[game]`
+- **Keep the `hslider` outside the clip.** Inside the moving box it had to be pinned by script, and rows showed under and below it. With the
+  clip between the `listview` and `list_clip`, the bar stays put and the rows end above it. The `listview` still finds `list_clip` and its bar.
+  `[game]`
+- **The game widened the 20 px bar list to 340 px.** It covered the right end of the rows, where the wheel then scrolled up and down. Its frame
+  and clip are not interactive now, so the wheel and clicks there reach the rows, and the wheel over the bar itself still scrolls up and down.
+  The `vslider` is 638 px from 24 px below the top: its top arrow is drawn above its box. `[game]`
 - **Two lists must never move the same box.** Both list callbacks set the whole position of their box: `HorizontalListView` puts it back at the
   clip's top and `Listview` back at its left. A `Listview` wrapped around the `listview` found the inner `list_box` and moved it, so each scroll
   undid the other. Moving it back by script fought the game every frame and flickered. A single component with both callbacks ran only `Listview`.
