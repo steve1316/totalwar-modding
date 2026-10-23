@@ -15,9 +15,11 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   `UI_SKILL_PANEL.remove_card_boxes(id)` takes a set out again.
   Keep `%` out of loc text read through `common.get_localised_string`: one broke the Change Loadout UI (button picker notes).
 - **Two ways to ship it.** List the standalone mod as a required item, or copy `script/campaign/mod/ui_skill_panel.lua`,
-  `script/campaign/mod/ui_skill_panel_vscroll.lua` and `ui/campaign ui/character_details_panel_skills.twui.xml` into your pack at the same paths.
-  The layout needs the vscroll script: without it the vertical bar moves but the rows do not. Only one file per path runs: the pack that sorts first
-  by name wins, and `!!!!!!!!!!!!!!!!expanded_skill_panel_ui` sorts ahead of most mod packs, so a subscribed standalone copy replaces older bundled ones.
+  `script/campaign/mod/ui_skill_panel_vscroll.lua`, `script/campaign/mod/ui_skill_panel_unit_cards.lua`,
+  `ui/campaign ui/character_details_panel_skills.twui.xml` and `ui/common ui/ui_skill_panel_unit_cards.twui.xml` into your pack at the same paths.
+  The layout needs the vscroll script: without it the vertical bar moves but the rows do not. The unit cards script needs its layout file.
+  Only one file per path runs: the pack that sorts first by name wins, and `!!!!!!!!!!!!!!!!expanded_skill_panel_ui` sorts ahead of most mod
+  packs, so a subscribed standalone copy replaces older bundled ones.
 - **Demo (MCT, off by default).** Checking "Demo box on Best of the Empire" on the Expanded Skill Panel UI > Demo page in MCT gives Karl Franz's Best of the
   Empire card (`wh_dlc08_skill_emp_lord_unique_karl_0`) a box with bold, italic, colours, icons, live rank, turn and treasury, the effects
   of `wh2_main_minister_emp_reikland` and a foot. `script/campaign/mod/ui_skill_panel_demo.lua` is the code to copy. The demo and the MCT
@@ -51,6 +53,17 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
 - **Six rows is a layout limit, not an engine one.** `ui/campaign ui/character_details_panel_skills.twui.xml` (ui3.pack) has six row containers,
   `chain0` to `chain5`. Nodes on indent 6+ never show. Adding `chain6`+ containers makes them show, and `character_skill_categories` bands work on
   them too. `[game]`
+- **Ten rows is the engine limit (2026-10-22).** A 100-row layout with a test tree on indents 0-99 filled only `chain0` to `chain9`: nodes on
+  indent 10+ were dropped with no error. The game sorts nodes into a fixed list of 10 rows and skips any indent of 10 or more before it looks up
+  `chain%d` (`cmp [node+0x6c], 0xa` in `Warhammer3.exe`). Extra row containers do nothing. `[game]`
+- **Long unit card lists in skill tooltips go wider (2026-10-23).** A skill card's `edict_tooltip` lists its units in `unit_card_list` (10 to a
+  row), so a skill with 51 units ran off the screen bottom. `ui_skill_panel_unit_cards.lua` moves the cards of a list with more than 30 into its
+  own List of 15 to a row (`ui/common ui/ui_skill_panel_unit_cards.twui.xml`), made in the tooltip's `list_parent` at the vanilla list's index,
+  and hides the vanilla list. The rest of the tooltip does not follow the wider list, so shorter lists stay vanilla. `[game]`
+- **A level pip's tooltip is out of reach.** It is not an `edict_tooltip` under the skill's node, the card, or the UI root's new children, and
+  `ComponentMouseOn` never fires in the panel, so a pip hover keeps the vanilla list. Its slow update on hover happens in vanilla too. `[game]`
+- **Tooltips cannot be capped or scrolled.** No layout grows to its content up to a height limit. A tooltip closes when the mouse leaves the
+  card, and the wheel scrolls the skill tree. A script `MoveTo` on the tooltip is undone every frame. `[game]`
 - **Rows stack by container height. Their offsets are ignored.** Vanilla rows 0-4 are 90 px and row 5 is 70 px. The `list_box` (`HorizontalList`)
   wraps after `itemsperrow` items. The top spacer counts as one, so 10 rows need at least 11, or the last row lands in a second column off screen.
   `[game]`
