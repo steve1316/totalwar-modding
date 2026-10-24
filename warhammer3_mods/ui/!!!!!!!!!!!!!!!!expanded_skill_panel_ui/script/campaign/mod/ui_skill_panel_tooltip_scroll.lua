@@ -1,6 +1,6 @@
---- Scrolling effect tooltips. The mod's edict_tooltip layout puts the tooltip's parts in a list with a vertical bar that starts `MAX_HEIGHT` tall, so a
---- long tooltip has its final size on the first frame the game draws. This script shrinks the list to a short tooltip's parts and keeps its top on the
---- screen. The layout is used by skill cards, their level pips and the other campaign tooltips built from edict_tooltip.
+--- Scrolling tooltips. The mod's edict_tooltip and tech_tooltip_context layouts put the tooltip's parts in a list with a vertical bar that starts
+--- `MAX_HEIGHT` tall, so a long tooltip has its final size on the first frame the game draws. This script shrinks the list to a short tooltip's parts
+--- and keeps its top on the screen. The layouts serve skill cards, their level pips, technologies and the other campaign tooltips built from them.
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -9,15 +9,15 @@
 --- Name used in the log and the timer's name.
 local NAME = "ui_skill_panel_tooltip_scroll"
 
---- The scroll list in edict_tooltip.twui.xml, its clip and the box holding the tooltip's parts.
+--- The scroll list in both tooltip layouts, its clip and the box holding the tooltip's parts.
 local LIST = "tooltip_scroll"
 local LIST_CLIP = "list_clip"
 local LIST_BOX = "list_box"
 
---- Height of the list in the layout, the most a tooltip shows before it scrolls. Keep it equal to the layout's `tooltip_scroll` height.
+--- Height of the list in the layouts, the most a tooltip shows before it scrolls. Keep it equal to the layouts' `tooltip_scroll` height.
 local MAX_HEIGHT = 800
 
---- Room the list keeps around its box, as the layout's clip is this much shorter than the list.
+--- Room the list keeps around its box, as the layouts' clip is this much shorter than the list.
 local LIST_PAD = 10
 
 --- Gap left above the list when its top would sit off the screen.
