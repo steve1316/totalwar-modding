@@ -16,10 +16,13 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   Keep `%` out of loc text read through `common.get_localised_string`: one broke the Change Loadout UI (button picker notes).
 - **Two ways to ship it.** List the standalone mod as a required item, or copy `script/campaign/mod/ui_skill_panel.lua`,
   `script/campaign/mod/ui_skill_panel_vscroll.lua`, `script/campaign/mod/ui_skill_panel_unit_cards.lua`,
-  `ui/campaign ui/character_details_panel_skills.twui.xml` and `ui/common ui/ui_skill_panel_unit_cards.twui.xml` into your pack at the same paths.
-  The layout needs the vscroll script: without it the vertical bar moves but the rows do not. The unit cards script needs its layout file.
+  `ui/campaign ui/character_details_panel_skills.twui.xml`, `ui/campaign ui/edict_tooltip.twui.xml` and
+  `ui/common ui/ui_skill_panel_unit_cards.twui.xml` into your pack at the same paths. The layout needs the vscroll script: without it the
+  vertical bar moves but the rows do not. The unit cards script needs both tooltip layouts.
   Only one file per path runs: the pack that sorts first by name wins, and `!!!!!!!!!!!!!!!!expanded_skill_panel_ui` sorts ahead of most mod
   packs, so a subscribed standalone copy replaces older bundled ones.
+- **`edict_tooltip` is replaced for the whole game.** About 60 vanilla layouts use it (banners, events, dilemmas and more), so any of their
+  tooltips with unit cards gets the fixed card box too. Another mod that replaces `edict_tooltip.twui.xml` clashes with this one.
 - **Demo (MCT, off by default).** Checking "Demo box on Best of the Empire" on the Expanded Skill Panel UI > Demo page in MCT gives Karl Franz's Best of the
   Empire card (`wh_dlc08_skill_emp_lord_unique_karl_0`) a box with bold, italic, colours, icons, live rank, turn and treasury, the effects
   of `wh2_main_minister_emp_reikland` and a foot. `script/campaign/mod/ui_skill_panel_demo.lua` is the code to copy. The demo and the MCT
@@ -56,15 +59,28 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
 - **Ten rows is the engine limit (2026-10-22).** A 100-row layout with a test tree on indents 0-99 filled only `chain0` to `chain9`: nodes on
   indent 10+ were dropped with no error. The game sorts nodes into a fixed list of 10 rows and skips any indent of 10 or more before it looks up
   `chain%d` (`cmp [node+0x6c], 0xa` in `Warhammer3.exe`). Extra row containers do nothing. `[game]`
-- **Long unit card lists in skill tooltips go wider (2026-10-23).** A skill card's `edict_tooltip` lists its units in `unit_card_list` (10 to a
-  row), so a skill with 51 units ran off the screen bottom. `ui_skill_panel_unit_cards.lua` moves the cards of a list with more than 30 into its
-  own List of 15 to a row (`ui/common ui/ui_skill_panel_unit_cards.twui.xml`), made in the tooltip's `list_parent` at the vanilla list's index,
-  and hides the vanilla list. The rest of the tooltip does not follow the wider list, so shorter lists stay vanilla. `[game]`
+- **Unit card lists in skill tooltips sit in a fixed box that scrolls (2026-10-23).** A skill's units are listed in `edict_tooltip`'s
+  `unit_card_list` (10 to a row), so a skill with 92 units ran off the screen bottom. The mod's `edict_tooltip.twui.xml` locks that list to 372x335
+  px (`allowhorizontalresize` and `allowverticalresize` false, `clipchildren`): 4 rows of 9 and 30 px of blank space. `ui_skill_panel_unit_cards.lua`
+  moves the cards of a list with more than 36 into a List with a vertical bar (`ui/common ui/ui_skill_panel_unit_cards.twui.xml`) of the same
+  size, at the vanilla list's index in `list_parent`, and hides the vanilla list. The mouse can enter the tooltip, so the bar and the wheel
+  scroll it. `[game]`
 - **A level pip's tooltip is `CharacterSkillsTooltip`, also inside the card (2026-10-23).** It appears as `... > <skill key> > card >
-  CharacterSkillsTooltip` with the same `list_parent > unit_card_list_copy_N`, so searches for `edict_tooltip` never saw it. Each pip refills it
-  with a new copy, so the wide list stays and only its old cards are hidden. Its slow update on hover happens in vanilla too. `[game]`
-- **Tooltips cannot be capped or scrolled.** No layout grows to its content up to a height limit. A tooltip closes when the mouse leaves the
-  card, and the wheel scrolls the skill tree. A script `MoveTo` on the tooltip is undone every frame. `[game]`
+  CharacterSkillsTooltip` with the same `list_parent > unit_card_list_copy_N`, so searches for `edict_tooltip` never saw it. The game builds it in
+  code (`SkillLevelPip`, no layout path), but from `ui/campaign ui/edict_tooltip`, so replacing that file reaches it. A new tooltip is made for each
+  hover and each pip. `[game]`
+- **Anything a script changes in a tooltip shows a frame late (2026-10-23).** The game draws each new tooltip before a script sees it, even when
+  the script looks every frame (`POLL_MS` 1). Widening its text, moving its cards or cutting its rows made it flash and jump on every pip. Sizes
+  that must hold from the first frame go in the layout. `sizetocontent="false"` alone did not hold the list's height: the game grew it to
+  1374-1586 px for 92 cards. The resize flags did. `[game]`
+- **`cm:real_callback` with a delay of 0 runs at once (2026-10-23).** A look that registers itself again at 0 recurses until "stack overflow".
+  1 ms goes through the real timer, which is checked once per frame. `[game]`
+- **The game places a tooltip, not the script.** It goes under the mouse when it fits, else it is pushed up until its bottom is 28 px past the
+  screen bottom (y 1468 on a 1440 px screen), so the blank space under the card box is what goes off screen. Levels with more effects are taller,
+  so they sit higher than shorter ones. The card's `ContextLayoutTooltip` takes `alternate_parent_dock_point` and `invert_y`, but the pip
+  tooltip takes no settings, and a script `MoveTo` on the tooltip is undone every frame. The vanilla placement was kept (2026-10-23). `[game]`
+- **A tooltip has no height limit that grows to its content.** A layout is either sized to its content or fixed, so a short list of unit cards
+  sits in the same 4-row box as a long one. `[game]`
 - **Rows stack by container height. Their offsets are ignored.** Vanilla rows 0-4 are 90 px and row 5 is 70 px. The `list_box` (`HorizontalList`)
   wraps after `itemsperrow` items. The top spacer counts as one, so 10 rows need at least 11, or the last row lands in a second column off screen.
   `[game]`
