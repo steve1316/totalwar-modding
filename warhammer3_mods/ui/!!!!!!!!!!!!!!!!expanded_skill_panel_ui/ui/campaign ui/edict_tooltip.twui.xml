@@ -6,72 +6,85 @@
 	<hierarchy>
 		<root this="72043EDF-6DC2-4386-94F5589FF5B24C78">
 			<edict_tooltip this="FDA72F56-3A2F-4794-81AEB1B265FF7A24">
-				<list_parent this="328D957A-0E69-4D19-AB2F61166723C68C">
-					<dy_heading_textbox this="C4618AB7-D896-4924-ADD80EC7BBC1D009"/>
-					<dy_description_textbox this="FAF9AF4D-E604-4FC4-8F2DA19FD2450621"/>
-					<dy_textbox this="69AFFF88-AE4B-42E8-A8F407412F850FB8"/>
-					<ancillary_list this="018312B0-F553-4DE3-A66F372D606E2B0F">
-						<row_ancillary this="C4BFEEC2-0ABF-494F-81056319D5AA6FD0">
-							<dy_icon this="A4E2943B-0DF9-492E-85829085CEB57F0B"/>
-						</row_ancillary>
-					</ancillary_list>
-					<effect_list this="9E4C603E-2D57-439B-A71C5FA042502D7C">
-						<row_effect this="11CD7951-99B9-434D-98FE4CB2CB8BFB02">
-							<dy_icon this="05FBB231-21C3-4E28-B4B7245900615B98"/>
-						</row_effect>
-						<template_breakdown_effect this="2DB63791-D289-4F93-9382EB0A472CF1BD">
-							<title this="EF0519FA-C17B-4305-B8886F7F79A03E55"/>
-							<value this="DFFBACCC-4794-4EB8-A74E6513B4C1C95C"/>
-						</template_breakdown_effect>
-					</effect_list>
-					<unit_card_list this="C64AF7DD-D6FC-448C-A1187301E438804B">
-						<unit_card_template this="707E19A0-600A-410C-9CE79BCB6311FE0B"/>
-					</unit_card_list>
-					<dev_excluded_card_list this="BD4436CD-BF5D-4166-BF421AF8F3D1841A"/>
-					<dev_excluded_unit_set_list this="CB85BDD8-F94D-442B-962D8DDC63A1DD60">
-						<dev_excluded_unit_set_template this="C53CEF07-C218-4CCC-BFA448811A994E72"/>
-					</dev_excluded_unit_set_list>
-					<line_break this="5013A069-C7D2-4A50-A4E8E3640A2CFC5B"/>
-				</list_parent>
-				<stick_progress_bar this="92E503CD-AFF7-4E7F-9C291A00F20F52F7">
-					<bar_extents_and_pos this="724B5F28-FD35-493C-88C2FDCCC5338600">
-						<auto_resizing_comp this="C0605BFD-19A4-4D83-B08548650DDAB052">
-							<completed_comp this="B572AEAE-DFC8-4955-835815869016979D"/>
-							<in_progress_comp this="2B7865CB-6A2B-4407-9DCDF41AE5E32499"/>
-						</auto_resizing_comp>
-					</bar_extents_and_pos>
-				</stick_progress_bar>
-				<tokens_list this="B86B7B45-6710-4A53-BE0E8E8E0AD93B7A">
-					<template_chaotic_plans_token_tooltip this="7648E7DD-A83B-4BDA-AB3780FB22FABD3D">
-						<tooltip_content_holder this="D415E8A4-920D-468A-96218AED82C4DAD1">
-							<title_holder this="9CEE2257-8F8F-4A22-98DC498C80C593E9">
-								<icon this="7614A572-9272-43C4-A9F72ADB868C8D05">
-									<icon_tier this="974F294D-1795-4FD2-9DFBC6A45E266962"/>
-								</icon>
-								<dy_title this="A3106D51-FE04-4471-B43C822DD6D681B6"/>
-								<dy_token_type this="97AF4969-4D95-4910-BEE0FC664FA3F5CB"/>
-							</title_holder>
-							<separator this="84746BB3-E14B-429F-90F65C34F7CA9E5C"/>
-							<dy_description_tx this="265A3F8C-EC1E-4A77-B3BC66CD69987177"/>
-							<effects_list this="1A9AAA5A-3632-49BA-8D97B7090F43E9B8">
-								<template_entry this="ECE0EE3A-EB69-4069-A039EAB72DAED9AD">
-									<icon this="24B0F944-F4FC-4561-AC35BCF7FC1E196D"/>
-								</template_entry>
-							</effects_list>
-							<unit_card_list this="7E8961D8-F2F1-460C-8CB2B0A0B9253F32">
-								<template_unit_card this="1838016C-E14E-48B8-A8D75EAEFB9236DF"/>
-							</unit_card_list>
-							<stick_progress_bar this="C232687E-4DBF-4E5D-BDFD179574032762">
-								<bar_extents_and_pos this="DE5F8ACF-74EC-4952-9437BD9807137804">
-									<auto_resizing_comp this="059F4BF8-BEA3-47D3-82F6B20A3E271286">
-										<completed_comp this="0D4BB504-F3B8-4678-89B3A92CB1AAA323"/>
-										<in_progress_comp this="1C5ABE17-0FA0-4939-A51F67A90AFA1011"/>
+				<tooltip_scroll this="D62FA8C9-7273-487E-A58EBE5A4C95AB49">
+					<list_clip this="B4A2D844-B3A5-45B3-94B09180C3B44B51">
+						<list_box this="87C8CB55-607B-4E5F-8A1028D471E1E0CF">
+							<list_parent this="328D957A-0E69-4D19-AB2F61166723C68C">
+								<dy_heading_textbox this="C4618AB7-D896-4924-ADD80EC7BBC1D009"/>
+								<dy_description_textbox this="FAF9AF4D-E604-4FC4-8F2DA19FD2450621"/>
+								<dy_textbox this="69AFFF88-AE4B-42E8-A8F407412F850FB8"/>
+								<ancillary_list this="018312B0-F553-4DE3-A66F372D606E2B0F">
+									<row_ancillary this="C4BFEEC2-0ABF-494F-81056319D5AA6FD0">
+										<dy_icon this="A4E2943B-0DF9-492E-85829085CEB57F0B"/>
+									</row_ancillary>
+								</ancillary_list>
+								<effect_list this="9E4C603E-2D57-439B-A71C5FA042502D7C">
+									<row_effect this="11CD7951-99B9-434D-98FE4CB2CB8BFB02">
+										<dy_icon this="05FBB231-21C3-4E28-B4B7245900615B98"/>
+									</row_effect>
+									<template_breakdown_effect this="2DB63791-D289-4F93-9382EB0A472CF1BD">
+										<title this="EF0519FA-C17B-4305-B8886F7F79A03E55"/>
+										<value this="DFFBACCC-4794-4EB8-A74E6513B4C1C95C"/>
+									</template_breakdown_effect>
+								</effect_list>
+								<unit_card_list this="C64AF7DD-D6FC-448C-A1187301E438804B">
+									<unit_card_template this="707E19A0-600A-410C-9CE79BCB6311FE0B"/>
+								</unit_card_list>
+								<dev_excluded_card_list this="BD4436CD-BF5D-4166-BF421AF8F3D1841A"/>
+								<dev_excluded_unit_set_list this="CB85BDD8-F94D-442B-962D8DDC63A1DD60">
+									<dev_excluded_unit_set_template this="C53CEF07-C218-4CCC-BFA448811A994E72"/>
+								</dev_excluded_unit_set_list>
+								<line_break this="5013A069-C7D2-4A50-A4E8E3640A2CFC5B"/>
+							</list_parent>
+							<stick_progress_bar this="92E503CD-AFF7-4E7F-9C291A00F20F52F7">
+								<bar_extents_and_pos this="724B5F28-FD35-493C-88C2FDCCC5338600">
+									<auto_resizing_comp this="C0605BFD-19A4-4D83-B08548650DDAB052">
+										<completed_comp this="B572AEAE-DFC8-4955-835815869016979D"/>
+										<in_progress_comp this="2B7865CB-6A2B-4407-9DCDF41AE5E32499"/>
 									</auto_resizing_comp>
 								</bar_extents_and_pos>
 							</stick_progress_bar>
-						</tooltip_content_holder>
-					</template_chaotic_plans_token_tooltip>
-				</tokens_list>
+							<tokens_list this="B86B7B45-6710-4A53-BE0E8E8E0AD93B7A">
+								<template_chaotic_plans_token_tooltip this="7648E7DD-A83B-4BDA-AB3780FB22FABD3D">
+									<tooltip_content_holder this="D415E8A4-920D-468A-96218AED82C4DAD1">
+										<title_holder this="9CEE2257-8F8F-4A22-98DC498C80C593E9">
+											<icon this="7614A572-9272-43C4-A9F72ADB868C8D05">
+												<icon_tier this="974F294D-1795-4FD2-9DFBC6A45E266962"/>
+											</icon>
+											<dy_title this="A3106D51-FE04-4471-B43C822DD6D681B6"/>
+											<dy_token_type this="97AF4969-4D95-4910-BEE0FC664FA3F5CB"/>
+										</title_holder>
+										<separator this="84746BB3-E14B-429F-90F65C34F7CA9E5C"/>
+										<dy_description_tx this="265A3F8C-EC1E-4A77-B3BC66CD69987177"/>
+										<effects_list this="1A9AAA5A-3632-49BA-8D97B7090F43E9B8">
+											<template_entry this="ECE0EE3A-EB69-4069-A039EAB72DAED9AD">
+												<icon this="24B0F944-F4FC-4561-AC35BCF7FC1E196D"/>
+											</template_entry>
+										</effects_list>
+										<unit_card_list this="7E8961D8-F2F1-460C-8CB2B0A0B9253F32">
+											<template_unit_card this="1838016C-E14E-48B8-A8D75EAEFB9236DF"/>
+										</unit_card_list>
+										<stick_progress_bar this="C232687E-4DBF-4E5D-BDFD179574032762">
+											<bar_extents_and_pos this="DE5F8ACF-74EC-4952-9437BD9807137804">
+												<auto_resizing_comp this="059F4BF8-BEA3-47D3-82F6B20A3E271286">
+													<completed_comp this="0D4BB504-F3B8-4678-89B3A92CB1AAA323"/>
+													<in_progress_comp this="1C5ABE17-0FA0-4939-A51F67A90AFA1011"/>
+												</auto_resizing_comp>
+											</bar_extents_and_pos>
+										</stick_progress_bar>
+									</tooltip_content_holder>
+								</template_chaotic_plans_token_tooltip>
+							</tokens_list>
+						</list_box>
+					</list_clip>
+					<vslider this="36277C22-45FE-4A1D-A72559BA1B605612">
+						<frame_top this="2B4926F7-4F68-4C2A-BEAFD2DF54BA13A2"/>
+						<frame_bottom this="01CECAE0-4679-4AB2-A0A252E65780D38D"/>
+						<handle this="F74BF786-C964-4A3A-AB31960B3CB5CBE7"/>
+						<top this="BBF5A0FE-0944-4F75-B3C69932FAD9318A"/>
+						<bottom this="85C8D875-D7BD-4A6D-8D1D90DCC9FE7A42"/>
+					</vslider>
+				</tooltip_scroll>
 			</edict_tooltip>
 		</root>
 	</hierarchy>
@@ -198,6 +211,83 @@
 					is_text_localised="false"/>
 			</localised_texts>
 		</bar_extents_and_pos>
+		<bottom
+			this="85C8D875-D7BD-4A6D-8D1D90DCC9FE7A42"
+			id="bottom"
+			part_of_template="true"
+			uniqueguid_in_template="14EE31B8-28AF-4A50-93B1E0AF78E85719"
+			uniqueguid="85C8D875-D7BD-4A6D-8D1D90DCC9FE7A42"
+			dimensions="15.00,22.00"
+			dock_point="Bottom Center"
+			offset="1.00,21.00"
+			priority="45"
+			sound_category="UI_GBL_TMP_Slider_Arrows">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="active"
+					uniqueguid="B73C3A62-C031-40C6-A1D792EF326DE7BD"/>
+				<state_uniqueguid
+					name="down"
+					uniqueguid="38DE27BD-D436-4E5A-8DDD22130BF5B794"/>
+				<state_uniqueguid
+					name="down_off"
+					uniqueguid="BD8CE9F2-3CFC-4116-BAECB53BAD99CEF8"/>
+				<state_uniqueguid
+					name="hover"
+					uniqueguid="DB399AD8-7C79-4627-895E35D8287D3B73"/>
+				<state_uniqueguid
+					name="inactive"
+					uniqueguid="C8C921A9-F28B-4DB8-AC16ED0AAA889DD3"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_bottom_active.png"
+					uniqueguid="F6CF7A29-32CA-4F21-BE84C0FDBAAB6499"/>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_bottom_pressed.png"
+					uniqueguid="D4284450-9C83-4F9D-BDE7659B441FBC0A"/>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_bottom_hover.png"
+					uniqueguid="12E3FBDC-6E1C-419C-BB9931CDAAA35F51"/>
+			</component_image_uniqueguids>
+			<callbacks_with_context>
+				<callback_with_context callback_id="SliderIncrementButton"/>
+			</callbacks_with_context>
+			<user_properties>
+				<property
+					name="disable_override"
+					value="position"/>
+				<property
+					name="disable_override0"
+					value="resizable"/>
+				<property
+					name="stepSize"
+					value="10"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="active"
+					is_text_localised="false"/>
+				<localised_text
+					state="down"
+					is_text_localised="false"/>
+				<localised_text
+					state="down_off"
+					is_text_localised="false"/>
+				<localised_text
+					state="hover"
+					is_text_localised="false"/>
+				<localised_text
+					state="inactive"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_bottom_active.png"/>
+				<element value="ui/skins/default/slider_vertical_bottom_pressed.png"/>
+				<element value="ui/skins/default/slider_vertical_bottom_hover.png"/>
+			</override_images>
+		</bottom>
 		<completed_comp
 			this="0D4BB504-F3B8-4678-89B3A92CB1AAA323"
 			id="completed_comp"
@@ -883,7 +973,7 @@
 					this="A3FFCDD2-41D4-4292-BCE49EC01BF7881F"
 					name="NewState"
 					width="392"
-					height="113"
+					height="100"
 					interactive="true"
 					uniqueguid="A3FFCDD2-41D4-4292-BCE49EC01BF7881F">
 					<component_text
@@ -906,10 +996,6 @@
 					</frames>
 				</expand>
 			</animations>
-			<LayoutEngine
-				type="HorizontalList"
-				itemsperrow="4"
-				sizetocontent="true"/>
 		</edict_tooltip>
 		<effects_list
 			this="1A9AAA5A-3632-49BA-8D97B7090F43E9B8"
@@ -998,6 +1084,142 @@
 				</columnwidths>
 			</LayoutEngine>
 		</effect_list>
+		<frame_bottom
+			this="01CECAE0-4679-4AB2-A0A252E65780D38D"
+			id="frame_bottom"
+			part_of_template="true"
+			uniqueguid_in_template="7C0BF9D5-3175-4CEA-AAA912149CDA2D7D"
+			uniqueguid="01CECAE0-4679-4AB2-A0A252E65780D38D"
+			dimensions="19.00,24.00"
+			dock_point="Bottom Center"
+			offset="0.00,24.00"
+			priority="45">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="NewState"
+					uniqueguid="2AEA8E20-6B51-49AF-928895441FC60F34"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_bottom.png"
+					uniqueguid="AABD400C-2DA3-45F2-8C709E2DBD088627"/>
+			</component_image_uniqueguids>
+			<user_properties>
+				<property
+					name="disable_override"
+					value="position"/>
+				<property
+					name="disable_override0"
+					value="resizable"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="NewState"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_bottom.png"/>
+			</override_images>
+		</frame_bottom>
+		<frame_top
+			this="2B4926F7-4F68-4C2A-BEAFD2DF54BA13A2"
+			id="frame_top"
+			part_of_template="true"
+			uniqueguid_in_template="7CE59DB6-48EA-4C97-9ED6752EE53823C3"
+			uniqueguid="2B4926F7-4F68-4C2A-BEAFD2DF54BA13A2"
+			dimensions="20.00,24.00"
+			dock_point="Top Center"
+			offset="1.00,-24.00"
+			priority="45">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="NewState"
+					uniqueguid="CFB87499-628A-40FC-96F82AAB0AFDC0F1"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_top.png"
+					uniqueguid="7DB1FB9F-18FC-4452-A7DD917F810158AC"/>
+			</component_image_uniqueguids>
+			<user_properties>
+				<property
+					name="disable_override"
+					value="position"/>
+				<property
+					name="disable_override0"
+					value="resizable"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="NewState"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_top.png"/>
+			</override_images>
+		</frame_top>
+		<handle
+			this="F74BF786-C964-4A3A-AB31960B3CB5CBE7"
+			id="handle"
+			part_of_template="true"
+			uniqueguid_in_template="6B2825FF-80AB-4E6D-9AAD032FDA71D153"
+			uniqueguid="F74BF786-C964-4A3A-AB31960B3CB5CBE7"
+			dimensions="18.00,39.00"
+			offset="2.00,0.00"
+			priority="45"
+			sound_category="UI_GBL_TMP_Slider_Handle">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="active"
+					uniqueguid="6B37AE58-54CA-41FE-9B80496EF42BC62E"/>
+				<state_uniqueguid
+					name="down_off"
+					uniqueguid="658350C2-1DAB-475F-A6E02886E47E74BE"/>
+				<state_uniqueguid
+					name="hover"
+					uniqueguid="1D812856-E300-4300-82ED0F365A05E78C"/>
+				<state_uniqueguid
+					name="inactive"
+					uniqueguid="6F68A18A-2DA3-4FC6-82AB8082C43F5C30"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_handle.png"
+					uniqueguid="58EB5F3E-2C7F-4896-873D80AF105F254E"/>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_handle_underlay.png"
+					uniqueguid="FD4F2EBD-88EB-403E-ABDCB3071E602B12"/>
+			</component_image_uniqueguids>
+			<callbacks_with_context>
+				<callback_with_context callback_id="VSliderHandle"/>
+			</callbacks_with_context>
+			<user_properties>
+				<property
+					name="min_size"
+					value="39"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="active"
+					is_text_localised="false"/>
+				<localised_text
+					state="down_off"
+					is_text_localised="false"/>
+				<localised_text
+					state="hover"
+					is_text_localised="false"/>
+				<localised_text
+					state="inactive"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_handle.png"/>
+				<element value="ui/skins/default/slider_vertical_handle_underlay.png"/>
+			</override_images>
+		</handle>
 		<icon
 			this="7614A572-9272-43C4-A9F72ADB868C8D05"
 			id="icon"
@@ -1329,6 +1551,64 @@
 				</newstate>
 			</states>
 		</line_break>
+		<list_box
+			this="87C8CB55-607B-4E5F-8A1028D471E1E0CF"
+			id="list_box"
+			clipchildren="true"
+			docking="Bottom Left"
+			priority="60"
+			tooltipslocalised="true"
+			uniqueguid="87C8CB55-607B-4E5F-8A1028D471E1E0CF"
+			currentstate="EF4E041E-A521-41B9-95B045675ECF18F1">
+			<callbackwithcontextlist>
+				<callback_with_context callback_id="List"/>
+			</callbackwithcontextlist>
+			<states>
+				<newstate
+					this="EF4E041E-A521-41B9-95B045675ECF18F1"
+					name="NewState"
+					width="392"
+					height="113"
+					interactive="true"
+					uniqueguid="EF4E041E-A521-41B9-95B045675ECF18F1">
+					<component_text
+						font_m_size="12"
+						font_m_colour="#FFF8D7FF"
+						font_m_leading="3"
+						fontcat_name="body_12"/>
+				</newstate>
+			</states>
+			<LayoutEngine
+				type="HorizontalList"
+				itemsperrow="4"
+				sizetocontent="true"/>
+		</list_box>
+		<list_clip
+			this="B4A2D844-B3A5-45B3-94B09180C3B44B51"
+			id="list_clip"
+			allowhorizontalresize="false"
+			clipchildren="true"
+			docking="Center Left"
+			priority="60"
+			tooltipslocalised="true"
+			uniqueguid="B4A2D844-B3A5-45B3-94B09180C3B44B51"
+			currentstate="0B3A67EC-5DEB-4193-842025E2A1CE94B3">
+			<states>
+				<newstate
+					this="0B3A67EC-5DEB-4193-842025E2A1CE94B3"
+					name="NewState"
+					width="402"
+					height="590"
+					interactive="true"
+					uniqueguid="0B3A67EC-5DEB-4193-842025E2A1CE94B3">
+					<component_text
+						font_m_size="12"
+						font_m_colour="#FFF8D7FF"
+						font_m_leading="3"
+						fontcat_name="body_12"/>
+				</newstate>
+			</states>
+		</list_clip>
 		<list_parent
 			this="328D957A-0E69-4D19-AB2F61166723C68C"
 			id="list_parent"
@@ -1910,6 +2190,115 @@
 				</columnwidths>
 			</LayoutEngine>
 		</tooltip_content_holder>
+		<tooltip_scroll
+			this="D62FA8C9-7273-487E-A58EBE5A4C95AB49"
+			id="tooltip_scroll"
+			priority="60"
+			docking="Bottom Left"
+			tooltipslocalised="true"
+			uniqueguid="D62FA8C9-7273-487E-A58EBE5A4C95AB49"
+			currentstate="092A1443-AEEB-4F69-A97906DBB4C0F204">
+			<callbackwithcontextlist>
+				<callback_with_context callback_id="Listview"/>
+			</callbackwithcontextlist>
+			<userproperties>
+				<property
+					name="draggable"
+					value="1"/>
+			</userproperties>
+			<states>
+				<newstate
+					this="092A1443-AEEB-4F69-A97906DBB4C0F204"
+					name="NewState"
+					width="402"
+					height="600"
+					interactive="true"
+					uniqueguid="092A1443-AEEB-4F69-A97906DBB4C0F204">
+					<component_text
+						font_m_size="12"
+						font_m_colour="#FFF8D7FF"
+						font_m_leading="3"
+						fontcat_name="body_12"/>
+				</newstate>
+			</states>
+		</tooltip_scroll>
+		<top
+			this="BBF5A0FE-0944-4F75-B3C69932FAD9318A"
+			id="top"
+			part_of_template="true"
+			uniqueguid_in_template="BEE2A27D-90CE-46BB-A4B29AD04E9B9ED0"
+			uniqueguid="BBF5A0FE-0944-4F75-B3C69932FAD9318A"
+			dimensions="15.00,22.00"
+			dock_point="Top Center"
+			offset="1.00,-23.00"
+			priority="45"
+			sound_category="UI_GBL_TMP_Slider_Arrows">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="active"
+					uniqueguid="D80AE108-49BF-4BFC-BF9C0934C1A915DB"/>
+				<state_uniqueguid
+					name="down"
+					uniqueguid="83B92308-D19C-4902-816E95C63CCB2DFF"/>
+				<state_uniqueguid
+					name="down_off"
+					uniqueguid="EE310EB3-F996-46EB-A06457CFDC2CF875"/>
+				<state_uniqueguid
+					name="hover"
+					uniqueguid="720F256B-8E56-4CE6-8AB59D542206DBBB"/>
+				<state_uniqueguid
+					name="inactive"
+					uniqueguid="86B2A99D-EC8C-4693-9A7B2F285E79F9B2"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_top_active.png"
+					uniqueguid="9B9382BC-63DA-47D1-B0993FFB59CC88BF"/>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_top_pressed.png"
+					uniqueguid="865916C4-B197-4E1F-9E2B741D9C4DA247"/>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_top_hover.png"
+					uniqueguid="BF97A0A6-FDB3-483C-B676141B98ECB1E6"/>
+			</component_image_uniqueguids>
+			<callbacks_with_context>
+				<callback_with_context callback_id="SliderDecrementButton"/>
+			</callbacks_with_context>
+			<user_properties>
+				<property
+					name="disable_override"
+					value="position"/>
+				<property
+					name="disable_override0"
+					value="resizable"/>
+				<property
+					name="stepSize"
+					value="10"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="active"
+					is_text_localised="false"/>
+				<localised_text
+					state="down"
+					is_text_localised="false"/>
+				<localised_text
+					state="down_off"
+					is_text_localised="false"/>
+				<localised_text
+					state="hover"
+					is_text_localised="false"/>
+				<localised_text
+					state="inactive"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_top_active.png"/>
+				<element value="ui/skins/default/slider_vertical_top_pressed.png"/>
+				<element value="ui/skins/default/slider_vertical_top_hover.png"/>
+			</override_images>
+		</top>
 		<unit_card_list
 			this="7E8961D8-F2F1-460C-8CB2B0A0B9253F32"
 			id="unit_card_list"
@@ -1955,9 +2344,6 @@
 		<unit_card_list
 			this="C64AF7DD-D6FC-448C-A1187301E438804B"
 			id="unit_card_list"
-			clipchildren="true"
-			allowhorizontalresize="false"
-			allowverticalresize="false"
 			offset="0.00,85.00"
 			priority="255"
 			tooltipslocalised="true"
@@ -1971,8 +2357,8 @@
 				<default
 					this="A632D43D-9DE0-486D-A090627A256E029A"
 					name="default"
-					width="372"
-					height="335"
+					width="16"
+					height="11"
 					uniqueguid="A632D43D-9DE0-486D-A090627A256E029A">
 					<component_text
 						texthbehaviour="Never split"
@@ -1985,7 +2371,7 @@
 			<LayoutEngine
 				type="List"
 				spacing="3.00,3.00"
-				itemsperrow="9"
+				itemsperrow="10"
 				sizetocontent="true"
 				secondary_margins="15.00,15.00"
 				margins="10.00,10.00">
@@ -2112,5 +2498,58 @@
 				</positive>
 			</states>
 		</value>
+		<vslider
+			this="36277C22-45FE-4A1D-A72559BA1B605612"
+			id="vslider"
+			template_id="parchment_slider_vertical"
+			part_of_template="true"
+			uniqueguid_in_template="6C253EE7-62DB-42FC-967ED9468F399339"
+			uniqueguid="36277C22-45FE-4A1D-A72559BA1B605612"
+			dimensions="20.00,540.00"
+			dock_point="Center Right"
+			priority="60">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="active"
+					uniqueguid="B40EF9AF-7B49-4711-8D4B20D857E3D541"/>
+				<state_uniqueguid
+					name="inactive"
+					uniqueguid="F5AD8C2A-088C-43DD-9FE40EBAD226B83F"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_mid.png"
+					uniqueguid="D839DF42-8AAF-44E1-956203AA226DF487"/>
+			</component_image_uniqueguids>
+			<callbacks_with_context>
+				<callback_with_context callback_id="VSlider"/>
+			</callbacks_with_context>
+			<user_properties>
+				<property
+					name="Notify"
+					value=""/>
+				<property
+					name="Value"
+					value="0"/>
+				<property
+					name="maxValue"
+					value="100"/>
+				<property
+					name="minValue"
+					value="0"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="active"
+					is_text_localised="false"/>
+				<localised_text
+					state="inactive"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_mid.png"/>
+			</override_images>
+		</vslider>
 	</components>
 </layout>
