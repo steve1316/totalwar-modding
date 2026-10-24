@@ -1598,7 +1598,7 @@
 					this="0B3A67EC-5DEB-4193-842025E2A1CE94B3"
 					name="NewState"
 					width="402"
-					height="590"
+					height="790"
 					interactive="true"
 					uniqueguid="0B3A67EC-5DEB-4193-842025E2A1CE94B3">
 					<component_text
@@ -2211,7 +2211,7 @@
 					this="092A1443-AEEB-4F69-A97906DBB4C0F204"
 					name="NewState"
 					width="402"
-					height="600"
+					height="800"
 					interactive="true"
 					uniqueguid="092A1443-AEEB-4F69-A97906DBB4C0F204">
 					<component_text
@@ -2505,7 +2505,7 @@
 			part_of_template="true"
 			uniqueguid_in_template="6C253EE7-62DB-42FC-967ED9468F399339"
 			uniqueguid="36277C22-45FE-4A1D-A72559BA1B605612"
-			dimensions="20.00,540.00"
+			dimensions="20.00,740.00"
 			dock_point="Center Right"
 			priority="60">
 			<state_uniqueguids>

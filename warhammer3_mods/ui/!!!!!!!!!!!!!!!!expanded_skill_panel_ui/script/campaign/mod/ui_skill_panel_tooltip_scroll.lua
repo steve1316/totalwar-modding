@@ -15,7 +15,7 @@ local LIST_CLIP = "list_clip"
 local LIST_BOX = "list_box"
 
 --- Height of the list in the layout, the most a tooltip shows before it scrolls. Keep it equal to the layout's `tooltip_scroll` height.
-local MAX_HEIGHT = 600
+local MAX_HEIGHT = 800
 
 --- Room the list keeps around its box, as the layout's clip is this much shorter than the list.
 local LIST_PAD = 10
