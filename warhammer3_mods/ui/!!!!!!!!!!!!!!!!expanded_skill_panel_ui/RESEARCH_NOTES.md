@@ -16,14 +16,14 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   Keep `%` out of loc text read through `common.get_localised_string`: one broke the Change Loadout UI (button picker notes).
 - **Two ways to ship it.** List the standalone mod as a required item, or copy `script/campaign/mod/ui_skill_panel.lua`,
   `script/campaign/mod/ui_skill_panel_vscroll.lua`, `script/campaign/mod/ui_skill_panel_tooltip_scroll.lua`,
-  `ui/campaign ui/character_details_panel_skills.twui.xml` and `ui/campaign ui/edict_tooltip.twui.xml` into your pack at the same paths. The
-  skill panel layout needs the vscroll script: without it the vertical bar moves but the rows do not. The tooltip layout needs the tooltip
-  scroll script: without it every short tooltip stays 600 px tall.
+  `ui/campaign ui/character_details_panel_skills.twui.xml`, `ui/campaign ui/edict_tooltip.twui.xml` and
+  `ui/campaign ui/tech_tooltip_context.twui.xml` into your pack at the same paths. The skill panel layout needs the vscroll script: without it
+  the vertical bar moves but the rows do not. The tooltip layouts need the tooltip scroll script: without it every short tooltip stays 800 px tall.
   Only one file per path runs: the pack that sorts first by name wins, and `!!!!!!!!!!!!!!!!expanded_skill_panel_ui` sorts ahead of most mod
   packs, so a subscribed standalone copy replaces older bundled ones.
-- **`edict_tooltip` is replaced for the whole campaign.** 36 campaign layouts use it (banners, the city bar, events, dilemmas, post-battle and
-  more) and no battle or frontend one does, so all their tooltips scroll past 600 px. Another mod that replaces `edict_tooltip.twui.xml` clashes
-  with this one, so this mod takes on such fixes itself (UI Slider's, 2026-10-23).
+- **`edict_tooltip` and `tech_tooltip_context` are replaced for the whole campaign.** 36 campaign layouts use `edict_tooltip` (banners, the city
+  bar, events, dilemmas, post-battle and more) and no battle or frontend one does, so all their tooltips scroll past 800 px. Another mod that
+  replaces either file clashes with this one, so this mod takes on such fixes itself (UI Slider's, 2026-10-23).
 - **Demo (MCT, off by default).** Checking "Demo box on Best of the Empire" on the Expanded Skill Panel UI > Demo page in MCT gives Karl Franz's Best of the
   Empire card (`wh_dlc08_skill_emp_lord_unique_karl_0`) a box with bold, italic, colours, icons, live rank, turn and treasury, the effects
   of `wh2_main_minister_emp_reikland` and a foot. `script/campaign/mod/ui_skill_panel_demo.lua` is the code to copy. The demo and the MCT
@@ -60,12 +60,16 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
 - **Ten rows is the engine limit (2026-10-22).** A 100-row layout with a test tree on indents 0-99 filled only `chain0` to `chain9`: nodes on
   indent 10+ were dropped with no error. The game sorts nodes into a fixed list of 10 rows and skips any indent of 10 or more before it looks up
   `chain%d` (`cmp [node+0x6c], 0xa` in `Warhammer3.exe`). Extra row containers do nothing. `[game]`
-- **Skill tooltips scroll past 600 px (2026-10-23).** A skill's units are listed in `edict_tooltip`'s `unit_card_list` (10 to a row), so a skill
+- **Skill tooltips scroll past 800 px (2026-10-23).** A skill's units are listed in `edict_tooltip`'s `unit_card_list` (10 to a row), so a skill
   with 92 units ran off the screen bottom. The mod's `edict_tooltip.twui.xml` moves the tooltip root's parts (`list_parent`, `stick_progress_bar`,
-  `tokens_list`) into `tooltip_scroll`, a Listview 402x600 px docked bottom left, whose `list_box` takes the root's `HorizontalList`. The root
+  `tokens_list`) into `tooltip_scroll`, a Listview 402x800 px docked bottom left, whose `list_box` takes the root's `HorizontalList`. The root
   loses its layout engine and is 392x100 px. `ui_skill_panel_tooltip_scroll.lua` shrinks the list to a short tooltip's parts and moves it down
   when its top is off the screen. The same build in the "UI Slider" mod (Workshop 3244295546), there only for skill cards through a
-  `layout_path`, showed no flash on short or long tooltips, and this build none on cards or pips. The bar and the wheel scroll it. `[game]`
+  `layout_path`, showed no flash on short or long tooltips, and this build none on cards or pips. The bar and the wheel scroll it. UI Slider's
+  600 px was raised to 800 px (2026-10-23), which still fits a 1440 px screen. `[game]`
+- **Tech tooltips scroll the same way (2026-10-23).** The tech panel's tooltip is its own layout, `ui/campaign ui/tech_tooltip_context`, not
+  `edict_tooltip`. The mod's copy moves all of the root's parts into a 350x800 px `tooltip_scroll` whose `list_box` takes the root's `List`. The
+  root drops its layout engine and `clipchildren` and is 340x100 px. The list has the same name, so the tooltip scroll script fits it too. `[game]`
 - **A level pip's tooltip is `CharacterSkillsTooltip`, also inside the card (2026-10-23).** It appears as `... > <skill key> > card >
   CharacterSkillsTooltip` with the same `list_parent > unit_card_list_copy_N`, so searches for `edict_tooltip` never saw it. The game builds it in
   code (`SkillLevelPip`, no layout path), but from `ui/campaign ui/edict_tooltip`, so replacing that file reaches it. A new tooltip is made for each
@@ -81,7 +85,7 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   tooltip takes no settings, and a script `MoveTo` on the tooltip is undone every frame. The vanilla placement was kept (2026-10-23). `[game]`
   The tooltip scroll script moves the scroll list's dock offset inside the tooltip to keep its top on the screen (not yet tested at the screen top).
 - **A tooltip has no height limit that grows to its content.** A layout is either sized to its content or fixed, so the scroll list starts at
-  its 600 px limit and a script shrinks short tooltips. `[game]`
+  its 800 px limit and a script shrinks short tooltips. `[game]`
 - **Rows stack by container height. Their offsets are ignored.** Vanilla rows 0-4 are 90 px and row 5 is 70 px. The `list_box` (`HorizontalList`)
   wraps after `itemsperrow` items. The top spacer counts as one, so 10 rows need at least 11, or the last row lands in a second column off screen.
   `[game]`
