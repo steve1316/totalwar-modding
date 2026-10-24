@@ -15,14 +15,15 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   `UI_SKILL_PANEL.remove_card_boxes(id)` takes a set out again.
   Keep `%` out of loc text read through `common.get_localised_string`: one broke the Change Loadout UI (button picker notes).
 - **Two ways to ship it.** List the standalone mod as a required item, or copy `script/campaign/mod/ui_skill_panel.lua`,
-  `script/campaign/mod/ui_skill_panel_vscroll.lua`, `script/campaign/mod/ui_skill_panel_unit_cards.lua`,
-  `ui/campaign ui/character_details_panel_skills.twui.xml`, `ui/campaign ui/edict_tooltip.twui.xml` and
-  `ui/common ui/ui_skill_panel_unit_cards.twui.xml` into your pack at the same paths. The layout needs the vscroll script: without it the
-  vertical bar moves but the rows do not. The unit cards script needs both tooltip layouts.
+  `script/campaign/mod/ui_skill_panel_vscroll.lua`, `script/campaign/mod/ui_skill_panel_tooltip_scroll.lua`,
+  `ui/campaign ui/character_details_panel_skills.twui.xml` and `ui/campaign ui/edict_tooltip.twui.xml` into your pack at the same paths. The
+  skill panel layout needs the vscroll script: without it the vertical bar moves but the rows do not. The tooltip layout needs the tooltip
+  scroll script: without it every short tooltip stays 600 px tall.
   Only one file per path runs: the pack that sorts first by name wins, and `!!!!!!!!!!!!!!!!expanded_skill_panel_ui` sorts ahead of most mod
   packs, so a subscribed standalone copy replaces older bundled ones.
-- **`edict_tooltip` is replaced for the whole game.** About 60 vanilla layouts use it (banners, events, dilemmas and more), so any of their
-  tooltips with unit cards gets the fixed card box too. Another mod that replaces `edict_tooltip.twui.xml` clashes with this one.
+- **`edict_tooltip` is replaced for the whole campaign.** 36 campaign layouts use it (banners, the city bar, events, dilemmas, post-battle and
+  more) and no battle or frontend one does, so all their tooltips scroll past 600 px. Another mod that replaces `edict_tooltip.twui.xml` clashes
+  with this one, so this mod takes on such fixes itself (UI Slider's, 2026-10-23).
 - **Demo (MCT, off by default).** Checking "Demo box on Best of the Empire" on the Expanded Skill Panel UI > Demo page in MCT gives Karl Franz's Best of the
   Empire card (`wh_dlc08_skill_emp_lord_unique_karl_0`) a box with bold, italic, colours, icons, live rank, turn and treasury, the effects
   of `wh2_main_minister_emp_reikland` and a foot. `script/campaign/mod/ui_skill_panel_demo.lua` is the code to copy. The demo and the MCT
@@ -59,28 +60,28 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
 - **Ten rows is the engine limit (2026-10-22).** A 100-row layout with a test tree on indents 0-99 filled only `chain0` to `chain9`: nodes on
   indent 10+ were dropped with no error. The game sorts nodes into a fixed list of 10 rows and skips any indent of 10 or more before it looks up
   `chain%d` (`cmp [node+0x6c], 0xa` in `Warhammer3.exe`). Extra row containers do nothing. `[game]`
-- **Unit card lists in skill tooltips sit in a fixed box that scrolls (2026-10-23).** A skill's units are listed in `edict_tooltip`'s
-  `unit_card_list` (10 to a row), so a skill with 92 units ran off the screen bottom. The mod's `edict_tooltip.twui.xml` locks that list to 372x335
-  px (`allowhorizontalresize` and `allowverticalresize` false, `clipchildren`): 4 rows of 9 and 30 px of blank space. `ui_skill_panel_unit_cards.lua`
-  moves the cards of a list with more than 36 into a List with a vertical bar (`ui/common ui/ui_skill_panel_unit_cards.twui.xml`) of the same
-  size, at the vanilla list's index in `list_parent`, and hides the vanilla list. The mouse can enter the tooltip, so the bar and the wheel
-  scroll it. `[game]`
+- **Skill tooltips scroll past 600 px (2026-10-23).** A skill's units are listed in `edict_tooltip`'s `unit_card_list` (10 to a row), so a skill
+  with 92 units ran off the screen bottom. The mod's `edict_tooltip.twui.xml` moves the tooltip root's parts (`list_parent`, `stick_progress_bar`,
+  `tokens_list`) into `tooltip_scroll`, a Listview 402x600 px docked bottom left, whose `list_box` takes the root's `HorizontalList`. The root
+  loses its layout engine and is 392x100 px. `ui_skill_panel_tooltip_scroll.lua` shrinks the list to a short tooltip's parts and moves it down
+  when its top is off the screen. The same build in the "UI Slider" mod (Workshop 3244295546), there only for skill cards through a
+  `layout_path`, showed no flash on short or long tooltips, and this build none on cards or pips. The bar and the wheel scroll it. `[game]`
 - **A level pip's tooltip is `CharacterSkillsTooltip`, also inside the card (2026-10-23).** It appears as `... > <skill key> > card >
   CharacterSkillsTooltip` with the same `list_parent > unit_card_list_copy_N`, so searches for `edict_tooltip` never saw it. The game builds it in
   code (`SkillLevelPip`, no layout path), but from `ui/campaign ui/edict_tooltip`, so replacing that file reaches it. A new tooltip is made for each
   hover and each pip. `[game]`
-- **Anything a script changes in a tooltip shows a frame late (2026-10-23).** The game draws each new tooltip before a script sees it, even when
-  the script looks every frame (`POLL_MS` 1). Widening its text, moving its cards or cutting its rows made it flash and jump on every pip. Sizes
-  that must hold from the first frame go in the layout. `sizetocontent="false"` alone did not hold the list's height: the game grew it to
-  1374-1586 px for 92 cards. The resize flags did. `[game]`
-- **`cm:real_callback` with a delay of 0 runs at once (2026-10-23).** A look that registers itself again at 0 recurses until "stack overflow".
-  1 ms goes through the real timer, which is checked once per frame. `[game]`
+- **A script change in a tooltip shows a frame late through `cm:real_callback` (2026-10-23).** Looking every frame at 1 ms, widening its text,
+  moving its cards or cutting its rows made it flash and jump on every pip. At 0 ms it calls back at once, so a look that registers itself again
+  recurses until "stack overflow". `real_timer.register_repeating(name, 0)` with a `RealTimeTrigger` listener lands before the frame is drawn,
+  so the tooltip scroll script shrinks tooltips with no flash. `sizetocontent="false"` alone did not hold a list's height: the game grew it to
+  1374-1586 px for 92 cards. `allowverticalresize="false"` did. `[game]`
 - **The game places a tooltip, not the script.** It goes under the mouse when it fits, else it is pushed up until its bottom is 28 px past the
-  screen bottom (y 1468 on a 1440 px screen), so the blank space under the card box is what goes off screen. Levels with more effects are taller,
+  screen bottom (y 1468 on a 1440 px screen), so the bottom of a tall tooltip is what goes off screen. Levels with more effects are taller,
   so they sit higher than shorter ones. The card's `ContextLayoutTooltip` takes `alternate_parent_dock_point` and `invert_y`, but the pip
   tooltip takes no settings, and a script `MoveTo` on the tooltip is undone every frame. The vanilla placement was kept (2026-10-23). `[game]`
-- **A tooltip has no height limit that grows to its content.** A layout is either sized to its content or fixed, so a short list of unit cards
-  sits in the same 4-row box as a long one. `[game]`
+  The tooltip scroll script moves the scroll list's dock offset inside the tooltip to keep its top on the screen (not yet tested at the screen top).
+- **A tooltip has no height limit that grows to its content.** A layout is either sized to its content or fixed, so the scroll list starts at
+  its 600 px limit and a script shrinks short tooltips. `[game]`
 - **Rows stack by container height. Their offsets are ignored.** Vanilla rows 0-4 are 90 px and row 5 is 70 px. The `list_box` (`HorizontalList`)
   wraps after `itemsperrow` items. The top spacer counts as one, so 10 rows need at least 11, or the last row lands in a second column off screen.
   `[game]`
