@@ -6,53 +6,71 @@
 	<hierarchy>
 		<root this="A610426C-6D90-4941-A249F85BF3417810">
 			<character_details_panel_skills this="183075FC-3C0E-4F2F-A6B91F175A6C223C">
-				<listview this="EBE7C79F-A07B-462C-AD190E6CDC535470">
-					<list_clip this="A77736FB-7FE9-4FEE-B5300DFD13D4C4EB">
-						<list_box this="39CA33CF-71FD-4145-BFF0EFBCA6DFD312">
-							<top_spacer this="E310EC25-07A0-4BBE-A8941A58DED95104"/>
-							<chain0 this="C427D1C3-4B0D-428C-939B3F1BE183DE55">
-								<template_chain this="F5B85026-5165-4D86-AEDADC8BA7708A17"/>
-								<template_skill_entry this="6C36875B-4FCD-45F1-86AEDADB8F9FAF44">
-									<arrow this="579FA432-DC98-465D-9FAD8C267A6672E6"/>
-									<card this="096CCDB5-EB1D-4469-B5F378AE1AD0862C">
-										<particle_emitter this="CCC7CE15-6AC5-4C9E-96B8840D1C80504E">
-											<template_particle this="D78CEF78-94FF-4DF7-B960644A00DA526D"/>
-										</particle_emitter>
-										<icon_check this="190F3EA6-8D08-4FD4-A6B05AA468810127"/>
-										<type_icon this="1BDA72D0-0B47-4F3D-A42786E3A35AAFC6"/>
-										<dy_skill this="271985C4-DC40-4670-9C85978D15B54F47"/>
-										<level_parent this="5A69C602-9122-43A5-9FAF26DB1CAF3321">
-											<level1 this="97647FD7-162A-46BB-9BA38C330A9E0F5A"/>
-											<level2 this="D1E3559D-1192-4E1B-8572045D6267F728"/>
-											<level3 this="46391966-2083-4C3E-A5CF7B0575CBCB75"/>
-										</level_parent>
-									</card>
-									<dev_button_cycle_skill_level this="3E611323-DD6A-4E39-BEE2712556908B01">
-										<button_txt this="70657973-CBC0-4669-95341DF3B0033DF6"/>
-										<dev_icon this="BF915A19-012F-4F7E-9FA75F5FF362ACF2"/>
-									</dev_button_cycle_skill_level>
-								</template_skill_entry>
-								<template_module this="319A352B-CF13-4135-8B23FEAF81BED8E4"/>
-							</chain0>
-							<chain1 this="18A3C815-99DD-4DF9-BDC9D5C512135AEE"/>
-							<chain2 this="AE1B9386-0699-4F74-889EB7ECCE9316CA"/>
-							<chain3 this="7DF7B17C-990D-45F7-8F5B7BDE70D94F27"/>
-							<chain4 this="23374F28-2703-4427-815698F0033B584F"/>
-							<chain5 this="CC9278FE-AAF3-489E-AC54A6974AE8975C"/>
-							<chain6 this="E16ED2D1-05A2-40B2-86119769936013C2"/>
-							<chain7 this="0AF8B7AD-7B0B-44D5-BF683F435173ADD3"/>
-							<chain8 this="618FDE8B-640A-46D2-8611F369F832E5DF"/>
-							<chain9 this="4F198939-72B9-4602-A1D339422E257CE6"/>
-						</list_box>
-					</list_clip>
-					<hslider this="EE7D5298-A38C-462B-8A7FF046BDB8780F">
-						<frame_left this="B8349BE6-5AD3-4404-8A67DC4A2B2A0D82"/>
-						<frame_right this="C3DD9B98-56D4-4C5D-95371EB939CFCBB2"/>
-						<handle this="6013DFA7-120A-4FEA-B89ADADB970F2ADF"/>
-						<left this="33B4864E-051C-4D34-8C4D843339DE4D04"/>
-						<right this="B0A6850B-C854-4A30-95D3894C647CF5CF"/>
-					</hslider>
-				</listview>
+				<skills_holder this="D387A709-6776-402C-A7CB1AFE341B2E52">
+					<listview this="EBE7C79F-A07B-462C-AD190E6CDC535470">
+						<rows_clip this="BC0FEBDC-BE2E-414D-AB00543CA34B9055">
+							<vscroll_box this="90B69D37-9B00-4DFE-89943B76CE6F4FCD">
+								<list_clip this="A77736FB-7FE9-4FEE-B5300DFD13D4C4EB">
+									<list_box this="39CA33CF-71FD-4145-BFF0EFBCA6DFD312">
+										<top_spacer this="E310EC25-07A0-4BBE-A8941A58DED95104"/>
+										<chain0 this="C427D1C3-4B0D-428C-939B3F1BE183DE55">
+											<template_chain this="F5B85026-5165-4D86-AEDADC8BA7708A17"/>
+											<template_skill_entry this="6C36875B-4FCD-45F1-86AEDADB8F9FAF44">
+												<arrow this="579FA432-DC98-465D-9FAD8C267A6672E6"/>
+												<card this="096CCDB5-EB1D-4469-B5F378AE1AD0862C">
+													<particle_emitter this="CCC7CE15-6AC5-4C9E-96B8840D1C80504E">
+														<template_particle this="D78CEF78-94FF-4DF7-B960644A00DA526D"/>
+													</particle_emitter>
+													<icon_check this="190F3EA6-8D08-4FD4-A6B05AA468810127"/>
+													<type_icon this="1BDA72D0-0B47-4F3D-A42786E3A35AAFC6"/>
+													<dy_skill this="271985C4-DC40-4670-9C85978D15B54F47"/>
+													<level_parent this="5A69C602-9122-43A5-9FAF26DB1CAF3321">
+														<level1 this="97647FD7-162A-46BB-9BA38C330A9E0F5A"/>
+														<level2 this="D1E3559D-1192-4E1B-8572045D6267F728"/>
+														<level3 this="46391966-2083-4C3E-A5CF7B0575CBCB75"/>
+													</level_parent>
+												</card>
+												<dev_button_cycle_skill_level this="3E611323-DD6A-4E39-BEE2712556908B01">
+													<button_txt this="70657973-CBC0-4669-95341DF3B0033DF6"/>
+													<dev_icon this="BF915A19-012F-4F7E-9FA75F5FF362ACF2"/>
+												</dev_button_cycle_skill_level>
+											</template_skill_entry>
+											<template_module this="319A352B-CF13-4135-8B23FEAF81BED8E4"/>
+										</chain0>
+										<chain1 this="18A3C815-99DD-4DF9-BDC9D5C512135AEE"/>
+										<chain2 this="AE1B9386-0699-4F74-889EB7ECCE9316CA"/>
+										<chain3 this="7DF7B17C-990D-45F7-8F5B7BDE70D94F27"/>
+										<chain4 this="23374F28-2703-4427-815698F0033B584F"/>
+										<chain5 this="CC9278FE-AAF3-489E-AC54A6974AE8975C"/>
+										<chain6 this="E16ED2D1-05A2-40B2-86119769936013C2"/>
+										<chain7 this="0AF8B7AD-7B0B-44D5-BF683F435173ADD3"/>
+										<chain8 this="618FDE8B-640A-46D2-8611F369F832E5DF"/>
+										<chain9 this="4F198939-72B9-4602-A1D339422E257CE6"/>
+									</list_box>
+								</list_clip>
+							</vscroll_box>
+						</rows_clip>
+						<hslider this="EE7D5298-A38C-462B-8A7FF046BDB8780F">
+							<frame_left this="B8349BE6-5AD3-4404-8A67DC4A2B2A0D82"/>
+							<frame_right this="C3DD9B98-56D4-4C5D-95371EB939CFCBB2"/>
+							<handle this="6013DFA7-120A-4FEA-B89ADADB970F2ADF"/>
+							<left this="33B4864E-051C-4D34-8C4D843339DE4D04"/>
+							<right this="B0A6850B-C854-4A30-95D3894C647CF5CF"/>
+						</hslider>
+					</listview>
+					<skills_vlistview this="0EE5BCA6-697C-4844-BACC7E92FA490B37">
+						<list_clip this="56280990-AAE1-4702-89DC4B48DA0F6BE8">
+							<vscroll_drive this="37706434-D946-46F7-9A8A2A4775C93195"/>
+						</list_clip>
+						<vslider this="CD070753-E980-4EC4-8DB7F456282DF23A">
+							<frame_top this="2D0A3568-A322-4C8D-89938F7E455BA205"/>
+							<frame_bottom this="ECA3827B-0251-4161-923E13F27EEF0BED"/>
+							<handle this="2EEED564-CF56-47EA-BD27D19707BAA014"/>
+							<top this="3EC86CF6-A46C-4003-808B43593E5A77A1"/>
+							<bottom this="6D1C5A99-02A2-4301-BC2CF6BCD8669AEC"/>
+						</vslider>
+					</skills_vlistview>
+				</skills_holder>
 				<dev_button_enable_all_skills this="A27EC04F-D6C0-41DC-90EF942B5A3225C4">
 					<button_txt this="72FC3CE4-3CFE-4946-87119337137F5A67"/>
 					<dev_icon this="EFD4A118-C24F-4DB4-9A4D24EC66793E01"/>
@@ -1372,7 +1390,7 @@
 					this="9139051F-BF04-40EC-A6BDC666EBC83FC1"
 					name="NewState"
 					width="1"
-					height="70"
+					height="90"
 					uniqueguid="9139051F-BF04-40EC-A6BDC666EBC83FC1"/>
 			</states>
 			<LayoutEngine
@@ -1403,7 +1421,7 @@
 					this="11A43ADF-0F8F-4C94-8F544D858D2ED26B"
 					name="NewState"
 					width="1"
-					height="70"
+					height="90"
 					uniqueguid="11A43ADF-0F8F-4C94-8F544D858D2ED26B"/>
 			</states>
 			<LayoutEngine
@@ -1434,7 +1452,7 @@
 					this="A8AD09B1-4CFF-4B4F-91CE6A3842363DBF"
 					name="NewState"
 					width="1"
-					height="70"
+					height="90"
 					uniqueguid="A8AD09B1-4CFF-4B4F-91CE6A3842363DBF"/>
 			</states>
 			<LayoutEngine
@@ -1465,7 +1483,7 @@
 					this="452795C1-56BD-4FAF-8C54F74762845EEC"
 					name="NewState"
 					width="1"
-					height="70"
+					height="90"
 					uniqueguid="452795C1-56BD-4FAF-8C54F74762845EEC"/>
 			</states>
 			<LayoutEngine
@@ -1496,7 +1514,7 @@
 					this="ECEE089C-352C-45A3-B9B2ED2DF6D62FB1"
 					name="NewState"
 					width="1"
-					height="70"
+					height="90"
 					uniqueguid="ECEE089C-352C-45A3-B9B2ED2DF6D62FB1"/>
 			</states>
 			<LayoutEngine
@@ -1527,7 +1545,7 @@
 					this="8DBCCF55-C97F-40FC-806973344D16E587"
 					name="NewState"
 					width="1"
-					height="70"
+					height="90"
 					uniqueguid="8DBCCF55-C97F-40FC-806973344D16E587"/>
 			</states>
 			<LayoutEngine
@@ -1558,7 +1576,7 @@
 					this="92FF984C-19A4-44D1-924FD7DB75B56F74"
 					name="NewState"
 					width="1"
-					height="70"
+					height="90"
 					uniqueguid="92FF984C-19A4-44D1-924FD7DB75B56F74"/>
 			</states>
 			<LayoutEngine
@@ -1589,7 +1607,7 @@
 					this="6C8206F2-9E1B-43D3-B7577B48498A6A43"
 					name="NewState"
 					width="1"
-					height="70"
+					height="90"
 					uniqueguid="6C8206F2-9E1B-43D3-B7577B48498A6A43"/>
 			</states>
 			<LayoutEngine
@@ -2987,10 +3005,6 @@
 		<listview
 			this="EBE7C79F-A07B-462C-AD190E6CDC535470"
 			id="listview"
-			offset="11.00,0.00"
-			docking="Bottom Left"
-			dock_offset="11.00,0.00"
-			component_anchor_point="0.00,1.00"
 			priority="20"
 			tooltipslocalised="true"
 			uniqueguid="EBE7C79F-A07B-462C-AD190E6CDC535470"
@@ -3012,7 +3026,7 @@
 				<frame
 					this="879465D4-7869-489F-828ED860BFCEC6E0"
 					name="frame"
-					width="1250"
+					width="1236"
 					height="700"
 					interactive="true"
 					uniqueguid="879465D4-7869-489F-828ED860BFCEC6E0"/>
@@ -3021,10 +3035,7 @@
 		<list_box
 			this="39CA33CF-71FD-4145-BFF0EFBCA6DFD312"
 			id="list_box"
-			offset="0.00,70.00"
-			docking="Center Left"
-			dock_offset="0.00,20.00"
-			component_anchor_point="0.00,0.50"
+			offset="0.00,15.00"
 			priority="20"
 			tooltipslocalised="true"
 			uniqueguid="39CA33CF-71FD-4145-BFF0EFBCA6DFD312"
@@ -3043,7 +3054,7 @@
 					this="1525F4B6-053B-4F1C-AB4259BF217D2506"
 					name="NewState"
 					width="581"
-					height="740"
+					height="900"
 					interactive="true"
 					uniqueguid="1525F4B6-053B-4F1C-AB4259BF217D2506"/>
 			</states>
@@ -3067,8 +3078,8 @@
 				<newstate
 					this="6841B58F-F4D2-4B34-8FA740F8C6BE0890"
 					name="NewState"
-					width="1250"
-					height="700"
+					width="1236"
+					height="960"
 					interactive="true"
 					uniqueguid="6841B58F-F4D2-4B34-8FA740F8C6BE0890"/>
 			</states>
@@ -3444,9 +3455,9 @@
 							this="6C08D525-B2DF-49A5-BA0FA1273ACFAA14"
 							uniqueguid="6C08D525-B2DF-49A5-BA0FA1273ACFAA14"
 							componentimage="7300BF33-B079-44A9-8761BD446187719C"
-							offset="0.00,-12.00"
+							offset="0.00,-22.00"
 							width="21"
-							height="79"
+							height="99"
 							tile="true"
 							margin="30.00,30.00,15.00,30.00"/>
 					</imagemetrics>
@@ -3462,9 +3473,9 @@
 							this="C223415A-C1A6-4AF8-886A3BA6BF7A7BC8"
 							uniqueguid="C223415A-C1A6-4AF8-886A3BA6BF7A7BC8"
 							componentimage="7300BF33-B079-44A9-8761BD446187719C"
-							offset="0.00,-12.00"
+							offset="0.00,-22.00"
 							width="21"
-							height="79"
+							height="99"
 							tile="true"
 							margin="30.00,30.00,15.00,30.00"/>
 						<image
@@ -3496,9 +3507,9 @@
 							this="74782674-CF5F-495E-A33B38FD40F899BF"
 							uniqueguid="74782674-CF5F-495E-A33B38FD40F899BF"
 							componentimage="7300BF33-B079-44A9-8761BD446187719C"
-							offset="0.00,-12.00"
+							offset="0.00,-22.00"
 							width="21"
-							height="79"
+							height="99"
 							colour="#FFFFFF96"
 							tile="true"
 							margin="30.00,30.00,15.00,30.00"/>
@@ -3517,9 +3528,9 @@
 							this="B825BD78-42B3-454A-874BA4530ECF8C52"
 							uniqueguid="B825BD78-42B3-454A-874BA4530ECF8C52"
 							componentimage="7300BF33-B079-44A9-8761BD446187719C"
-							offset="0.00,-12.00"
+							offset="0.00,-22.00"
 							width="21"
-							height="79"
+							height="99"
 							colour="#FFFFFF96"
 							tile="true"
 							margin="30.00,30.00,15.00,30.00"/>
@@ -3723,5 +3734,496 @@
 				</inactive>
 			</states>
 		</type_icon>
+		<skills_vlistview
+			this="0EE5BCA6-697C-4844-BACC7E92FA490B37"
+			id="skills_vlistview"
+			docking="Center Right"
+			component_anchor_point="1.00,0.50"
+			priority="20"
+			tooltipslocalised="true"
+			uniqueguid="0EE5BCA6-697C-4844-BACC7E92FA490B37"
+			isrelativeresize="true"
+			currentstate="FF43B056-60CA-4455-99BCD9A6F7C1AA17"
+			defaultstate="FF43B056-60CA-4455-99BCD9A6F7C1AA17">
+			<callbackwithcontextlist>
+				<callback_with_context callback_id="Listview"/>
+			</callbackwithcontextlist>
+			<states>
+				<frame
+					this="FF43B056-60CA-4455-99BCD9A6F7C1AA17"
+					name="frame"
+					width="20"
+					height="700"
+					interactive="false"
+					uniqueguid="FF43B056-60CA-4455-99BCD9A6F7C1AA17"/>
+			</states>
+		</skills_vlistview>
+		<rows_clip
+			this="BC0FEBDC-BE2E-414D-AB00543CA34B9055"
+			id="rows_clip"
+			clipchildren="true"
+			priority="20"
+			tooltipslocalised="true"
+			uniqueguid="BC0FEBDC-BE2E-414D-AB00543CA34B9055"
+			isrelativeresize="true"
+			currentstate="FA312F02-4AC6-4129-82A4CBE6478BCCCA">
+			<states>
+				<newstate
+					this="FA312F02-4AC6-4129-82A4CBE6478BCCCA"
+					name="NewState"
+					width="1236"
+					height="669"
+					interactive="true"
+					uniqueguid="FA312F02-4AC6-4129-82A4CBE6478BCCCA"/>
+			</states>
+		</rows_clip>
+		<vscroll_box
+			this="90B69D37-9B00-4DFE-89943B76CE6F4FCD"
+			id="vscroll_box"
+			priority="20"
+			tooltipslocalised="true"
+			uniqueguid="90B69D37-9B00-4DFE-89943B76CE6F4FCD"
+			isrelativeresize="true"
+			currentstate="44D2085F-1206-4B41-912FA8BFE1E607FB">
+			<callbackwithcontextlist>
+				<callback_with_context callback_id="List"/>
+			</callbackwithcontextlist>
+			<userproperties>
+				<property
+					name="disable_keys"
+					value="1"/>
+			</userproperties>
+			<states>
+				<newstate
+					this="44D2085F-1206-4B41-912FA8BFE1E607FB"
+					name="NewState"
+					width="1236"
+					height="960"
+					uniqueguid="44D2085F-1206-4B41-912FA8BFE1E607FB"/>
+			</states>
+			<LayoutEngine
+				type="List"
+				is_listview_lookup_enabled="false">
+				<columnwidths>
+					<column width="1236"/>
+				</columnwidths>
+			</LayoutEngine>
+		</vscroll_box>
+		<vslider
+			this="CD070753-E980-4EC4-8DB7F456282DF23A"
+			id="vslider"
+			template_id="parchment_slider_vertical"
+			part_of_template="true"
+			uniqueguid_in_template="6C253EE7-62DB-42FC-967ED9468F399339"
+			uniqueguid="CD070753-E980-4EC4-8DB7F456282DF23A"
+			dimensions="20.00,638.00"
+			dock_point="Top Right"
+			offset="0.00,24.00"
+			priority="46">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="active"
+					uniqueguid="A272BF96-9ECD-4F70-932AEE3BCB8E4C5A"/>
+				<state_uniqueguid
+					name="inactive"
+					uniqueguid="9E152185-1A0C-43E4-83064F7724F8D23D"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_mid.png"
+					uniqueguid="77EDD830-7D5A-4AA5-B00F354CB9AD67C7"/>
+			</component_image_uniqueguids>
+			<callbacks_with_context>
+				<callback_with_context callback_id="VSlider"/>
+			</callbacks_with_context>
+			<user_properties>
+				<property
+					name="Notify"
+					value=""/>
+				<property
+					name="Value"
+					value="0"/>
+				<property
+					name="maxValue"
+					value="100"/>
+				<property
+					name="minValue"
+					value="0"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="active"
+					is_text_localised="false"/>
+				<localised_text
+					state="inactive"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_mid.png"/>
+			</override_images>
+		</vslider>
+		<frame_top
+			this="2D0A3568-A322-4C8D-89938F7E455BA205"
+			id="frame_top"
+			part_of_template="true"
+			uniqueguid_in_template="7CE59DB6-48EA-4C97-9ED6752EE53823C3"
+			uniqueguid="2D0A3568-A322-4C8D-89938F7E455BA205"
+			dimensions="20.00,24.00"
+			dock_point="Top Center"
+			offset="1.00,-24.00"
+			priority="46">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="NewState"
+					uniqueguid="8F9083FA-3C50-4170-9D7E4799F7F0511A"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_top.png"
+					uniqueguid="107A86E2-FA42-4085-A7307BFB4FA68044"/>
+			</component_image_uniqueguids>
+			<user_properties>
+				<property
+					name="disable_override"
+					value="position"/>
+				<property
+					name="disable_override0"
+					value="resizable"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="NewState"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_top.png"/>
+			</override_images>
+		</frame_top>
+		<frame_bottom
+			this="ECA3827B-0251-4161-923E13F27EEF0BED"
+			id="frame_bottom"
+			part_of_template="true"
+			uniqueguid_in_template="7C0BF9D5-3175-4CEA-AAA912149CDA2D7D"
+			uniqueguid="ECA3827B-0251-4161-923E13F27EEF0BED"
+			dimensions="19.00,24.00"
+			dock_point="Bottom Center"
+			offset="0.00,24.00"
+			priority="46">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="NewState"
+					uniqueguid="4266815E-006E-450C-A3487F661927E847"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_bottom.png"
+					uniqueguid="871B0F90-7C0E-499F-A6C986E3B19DB789"/>
+			</component_image_uniqueguids>
+			<user_properties>
+				<property
+					name="disable_override"
+					value="position"/>
+				<property
+					name="disable_override0"
+					value="resizable"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="NewState"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_bottom.png"/>
+			</override_images>
+		</frame_bottom>
+		<handle
+			this="2EEED564-CF56-47EA-BD27D19707BAA014"
+			id="handle"
+			part_of_template="true"
+			uniqueguid_in_template="6B2825FF-80AB-4E6D-9AAD032FDA71D153"
+			uniqueguid="2EEED564-CF56-47EA-BD27D19707BAA014"
+			dimensions="18.00,39.00"
+			offset="2.00,0.00"
+			priority="46"
+			sound_category="UI_GBL_TMP_Slider_Handle">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="active"
+					uniqueguid="941266E4-40E4-4A7A-B401C764CA44A1C7"/>
+				<state_uniqueguid
+					name="down_off"
+					uniqueguid="B97981CC-3CAE-423D-AF7114A65DE57118"/>
+				<state_uniqueguid
+					name="hover"
+					uniqueguid="B80DE121-1A1B-45CD-A3FF894B54F8F31E"/>
+				<state_uniqueguid
+					name="inactive"
+					uniqueguid="3D38172B-8DF5-4B30-8DC0382CF1395E59"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_handle.png"
+					uniqueguid="39037F95-6098-41EB-B15A58B89FA6293D"/>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_handle_underlay.png"
+					uniqueguid="678E263D-7893-4E97-BC11F035D9C863AB"/>
+			</component_image_uniqueguids>
+			<callbacks_with_context>
+				<callback_with_context callback_id="VSliderHandle"/>
+			</callbacks_with_context>
+			<user_properties>
+				<property
+					name="min_size"
+					value="39"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="active"
+					is_text_localised="false"/>
+				<localised_text
+					state="down_off"
+					is_text_localised="false"/>
+				<localised_text
+					state="hover"
+					is_text_localised="false"/>
+				<localised_text
+					state="inactive"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_handle.png"/>
+				<element value="ui/skins/default/slider_vertical_handle_underlay.png"/>
+			</override_images>
+		</handle>
+		<top
+			this="3EC86CF6-A46C-4003-808B43593E5A77A1"
+			id="top"
+			part_of_template="true"
+			uniqueguid_in_template="BEE2A27D-90CE-46BB-A4B29AD04E9B9ED0"
+			uniqueguid="3EC86CF6-A46C-4003-808B43593E5A77A1"
+			dimensions="15.00,22.00"
+			dock_point="Top Center"
+			offset="1.00,-23.00"
+			priority="46"
+			sound_category="UI_GBL_TMP_Slider_Arrows">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="active"
+					uniqueguid="EE7BE8C0-D70F-4519-B55A876C448646C1"/>
+				<state_uniqueguid
+					name="down"
+					uniqueguid="F6C77162-C714-4298-ADB1560A91DF5B61"/>
+				<state_uniqueguid
+					name="down_off"
+					uniqueguid="08902008-A7B8-4D84-8F386FE53F4A64CC"/>
+				<state_uniqueguid
+					name="hover"
+					uniqueguid="002F5326-669A-42AB-AB45944C40A083DA"/>
+				<state_uniqueguid
+					name="inactive"
+					uniqueguid="B8C4D118-6DAA-423D-8B806123918C42A8"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_top_active.png"
+					uniqueguid="9F59FD5B-86F9-4D62-A0AAA4407D4AC79A"/>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_top_pressed.png"
+					uniqueguid="EF25D9E3-E5A4-4282-9F807EC0BF32D03E"/>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_top_hover.png"
+					uniqueguid="00579903-545C-41C2-BBE91BB2FC328D9A"/>
+			</component_image_uniqueguids>
+			<callbacks_with_context>
+				<callback_with_context callback_id="SliderDecrementButton"/>
+			</callbacks_with_context>
+			<user_properties>
+				<property
+					name="disable_override"
+					value="position"/>
+				<property
+					name="disable_override0"
+					value="resizable"/>
+				<property
+					name="stepSize"
+					value="10"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="active"
+					is_text_localised="false"/>
+				<localised_text
+					state="down"
+					is_text_localised="false"/>
+				<localised_text
+					state="down_off"
+					is_text_localised="false"/>
+				<localised_text
+					state="hover"
+					is_text_localised="false"/>
+				<localised_text
+					state="inactive"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_top_active.png"/>
+				<element value="ui/skins/default/slider_vertical_top_pressed.png"/>
+				<element value="ui/skins/default/slider_vertical_top_hover.png"/>
+			</override_images>
+		</top>
+		<bottom
+			this="6D1C5A99-02A2-4301-BC2CF6BCD8669AEC"
+			id="bottom"
+			part_of_template="true"
+			uniqueguid_in_template="14EE31B8-28AF-4A50-93B1E0AF78E85719"
+			uniqueguid="6D1C5A99-02A2-4301-BC2CF6BCD8669AEC"
+			dimensions="15.00,22.00"
+			dock_point="Bottom Center"
+			offset="1.00,21.00"
+			priority="46"
+			sound_category="UI_GBL_TMP_Slider_Arrows">
+			<state_uniqueguids>
+				<state_uniqueguid
+					name="active"
+					uniqueguid="D36E218D-C634-4FA0-9A3D1C531828530C"/>
+				<state_uniqueguid
+					name="down"
+					uniqueguid="9177E917-CAFA-4A82-917505E7417A9709"/>
+				<state_uniqueguid
+					name="down_off"
+					uniqueguid="65FFD3ED-1060-45C2-85AD31096AB2B58E"/>
+				<state_uniqueguid
+					name="hover"
+					uniqueguid="2D5C9FB0-3498-447E-A06B39F4B755156E"/>
+				<state_uniqueguid
+					name="inactive"
+					uniqueguid="05FF6054-D099-4AFF-895A79D8DBEF2C0E"/>
+			</state_uniqueguids>
+			<component_image_uniqueguids>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_bottom_active.png"
+					uniqueguid="D17666CF-D9F8-4625-B92D89413BEDDC8A"/>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_bottom_pressed.png"
+					uniqueguid="55081D7B-C29B-4DB2-9C06BD520F288528"/>
+				<component_image_uniqueguid
+					name="ui/skins/default/slider_vertical_bottom_hover.png"
+					uniqueguid="2EE3C5F5-D592-4BBD-A6CB4E22A4805990"/>
+			</component_image_uniqueguids>
+			<callbacks_with_context>
+				<callback_with_context callback_id="SliderIncrementButton"/>
+			</callbacks_with_context>
+			<user_properties>
+				<property
+					name="disable_override"
+					value="position"/>
+				<property
+					name="disable_override0"
+					value="resizable"/>
+				<property
+					name="stepSize"
+					value="10"/>
+			</user_properties>
+			<localised_texts>
+				<localised_text/>
+				<localised_text
+					state="active"
+					is_text_localised="false"/>
+				<localised_text
+					state="down"
+					is_text_localised="false"/>
+				<localised_text
+					state="down_off"
+					is_text_localised="false"/>
+				<localised_text
+					state="hover"
+					is_text_localised="false"/>
+				<localised_text
+					state="inactive"
+					is_text_localised="false"/>
+			</localised_texts>
+			<override_images>
+				<element value="ui/skins/default/slider_vertical_bottom_active.png"/>
+				<element value="ui/skins/default/slider_vertical_bottom_pressed.png"/>
+				<element value="ui/skins/default/slider_vertical_bottom_hover.png"/>
+			</override_images>
+		</bottom>
+		<skills_holder
+			this="D387A709-6776-402C-A7CB1AFE341B2E52"
+			id="skills_holder"
+			offset="11.00,0.00"
+			docking="Bottom Left"
+			dock_offset="11.00,0.00"
+			component_anchor_point="0.00,1.00"
+			priority="20"
+			tooltipslocalised="true"
+			uniqueguid="D387A709-6776-402C-A7CB1AFE341B2E52"
+			isrelativeresize="true"
+			currentstate="9E9685AF-ED7E-4F38-AC0618C654B785F8">
+			<states>
+				<newstate
+					this="9E9685AF-ED7E-4F38-AC0618C654B785F8"
+					name="NewState"
+					width="1260"
+					height="700"
+					uniqueguid="9E9685AF-ED7E-4F38-AC0618C654B785F8"/>
+			</states>
+		</skills_holder>
+		<list_clip
+			this="56280990-AAE1-4702-89DC4B48DA0F6BE8"
+			id="list_clip"
+			clipchildren="true"
+			priority="20"
+			tooltipslocalised="true"
+			uniqueguid="56280990-AAE1-4702-89DC4B48DA0F6BE8"
+			isrelativeresize="true"
+			currentstate="27E815BB-8B40-4E67-B540F7CE5FF3A8A0">
+			<states>
+				<newstate
+					this="27E815BB-8B40-4E67-B540F7CE5FF3A8A0"
+					name="NewState"
+					width="20"
+					height="700"
+					interactive="false"
+					uniqueguid="27E815BB-8B40-4E67-B540F7CE5FF3A8A0"/>
+			</states>
+		</list_clip>
+		<vscroll_drive
+			this="37706434-D946-46F7-9A8A2A4775C93195"
+			id="vscroll_drive"
+			priority="20"
+			tooltipslocalised="true"
+			uniqueguid="37706434-D946-46F7-9A8A2A4775C93195"
+			isrelativeresize="true"
+			currentstate="05A41D4F-7514-4652-BFF10089EE1495F4">
+			<callbackwithcontextlist>
+				<callback_with_context callback_id="List"/>
+			</callbackwithcontextlist>
+			<userproperties>
+				<property
+					name="disable_keys"
+					value="1"/>
+			</userproperties>
+			<states>
+				<newstate
+					this="05A41D4F-7514-4652-BFF10089EE1495F4"
+					name="NewState"
+					width="20"
+					height="960"
+					uniqueguid="05A41D4F-7514-4652-BFF10089EE1495F4"/>
+			</states>
+			<LayoutEngine
+				type="List"
+				is_listview_lookup_enabled="false">
+				<columnwidths>
+					<column width="20"/>
+				</columnwidths>
+			</LayoutEngine>
+		</vscroll_drive>
 	</components>
 </layout>
