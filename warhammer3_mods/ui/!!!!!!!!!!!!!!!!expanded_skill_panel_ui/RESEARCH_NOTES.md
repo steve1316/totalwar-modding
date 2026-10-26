@@ -152,3 +152,6 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
 - **The lock bar must sit outside the box's List layout (2026-10-18).** `ui/templates/stick_progress_bar` made inside the box was stacked
   under the text, too far up. Made under the UI root and moved to the box's bottom edge each look, it matches vanilla. Vanilla's lock times
   are `ui_tooltip_stick_delay` 0.35s and `ui_tooltip_removal_delay` 0.15s (`preferences.script.txt`). `[game]`
+- **No star burst when a skill is bought (2026-10-23).** The card's `particle_emitter` is cut from the hierarchy, the same change as "Particle
+  Clear" (Workshop 3401671154), which replaces this file too. Its definition and the `upgrade` triggers aimed at it stay, and that pack has run
+  that way since game version 6.1. The tech tree's matching burst on `technology_entry` was left alone, as we do not own that layout.
