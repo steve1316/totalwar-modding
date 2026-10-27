@@ -18,9 +18,6 @@
 											<template_skill_entry this="6C36875B-4FCD-45F1-86AEDADB8F9FAF44">
 												<arrow this="579FA432-DC98-465D-9FAD8C267A6672E6"/>
 												<card this="096CCDB5-EB1D-4469-B5F378AE1AD0862C">
-													<particle_emitter this="CCC7CE15-6AC5-4C9E-96B8840D1C80504E">
-														<template_particle this="D78CEF78-94FF-4DF7-B960644A00DA526D"/>
-													</particle_emitter>
 													<icon_check this="190F3EA6-8D08-4FD4-A6B05AA468810127"/>
 													<type_icon this="1BDA72D0-0B47-4F3D-A42786E3A35AAFC6"/>
 													<dy_skill this="271985C4-DC40-4670-9C85978D15B54F47"/>
