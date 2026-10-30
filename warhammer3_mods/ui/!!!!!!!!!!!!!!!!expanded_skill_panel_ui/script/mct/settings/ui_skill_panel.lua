@@ -13,7 +13,7 @@ local layout_section = mct_mod:add_new_section("layout", "Layout")
 --- The compact rows checkbox. Its key must match `MCT_OPTION` in the vscroll script.
 local compact_rows = mct_mod:add_new_option("compact_rows", "checkbox")
 compact_rows:set_text("Compact row gaps", true)
-compact_rows:set_tooltip_text("Packs the skill rows closer together, so more of a tall skill tree fits without scrolling.", true)
+compact_rows:set_tooltip_text("Packs the skill rows closer together, so more of a tall skill tree fits without scrolling. A mod developer can choose their own gaps for their own skill trees and theirs take priority over this toggle.", true)
 compact_rows:set_is_global(true)
 compact_rows:set_default_value(false)
 

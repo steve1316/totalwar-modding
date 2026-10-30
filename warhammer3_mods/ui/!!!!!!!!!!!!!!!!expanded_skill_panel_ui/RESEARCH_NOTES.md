@@ -100,6 +100,10 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   `Resize` is undone at once: a row with cards stays 90 px and an empty row drops to 1 px and never grows back. The MCT option `compact_rows`
   instead has the vertical bar's poll `MoveTo` rows 1-9 70 px apart from row 1, and turning it off calls `list_box:Layout()` once to restack them.
   It switches live in a campaign and both ways, with one move per panel open. `[game]`
+- **Mods pick row gaps per tree with `add_row_gaps` (2026-10-29).** `gaps_for(character)` returns "compact", "regular" or nil, and the first set
+  with an answer beats the player's MCT choice, so the mod has the final say. The sets are asked again only when the panel opens or shows
+  another character. Both script files fill `UI_SKILL_PANEL = UI_SKILL_PANEL or {}`, so their load order does not matter. Tested with a
+  debug pack: the Advisor stayed compact and Karl Franz regular under either MCT choice. `[game]`
 - **Group boxes are modules.** A vanilla boxed group (Karl Franz's army buffs) is a `module_<skill>` component inside one row: a run of
   cards in a line, framed by `template_module` (in `chain0`) with the `parchment_divider` image. The frame is drawn 99 px tall from 22 px above the
   module, so modules in neighbouring 90 px rows overlap about 9 px and read as one box. With 70 px rows they clipped into each other, so the 10-row
