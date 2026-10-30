@@ -96,6 +96,10 @@ sorts first, so it wins) or the Advisor's copy runs, never both.
   2026-10-15 for the skills plan. The file is the vanilla ui3.pack file plus only those changes, checked against the patched game that day. `[game]`
   Since the vertical bar (2026-10-22) rows 1-8 are back to the vanilla 90 px (row 9 stays 70), `list_box` is 900 px at offset 0,15 with no
   docking, and the `hslider` keeps the vanilla spot at the bottom. `[game]`
+- **Compact row gaps move the rows, they cannot resize them (2026-10-27).** Rows 1-9 are `HorizontalList` with `sizetocontent`, so a script
+  `Resize` is undone at once: a row with cards stays 90 px and an empty row drops to 1 px and never grows back. The MCT option `compact_rows`
+  instead has the vertical bar's poll `MoveTo` rows 1-9 70 px apart from row 1, and turning it off calls `list_box:Layout()` once to restack them.
+  It switches live in a campaign and both ways, with one move per panel open. `[game]`
 - **Group boxes are modules.** A vanilla boxed group (Karl Franz's army buffs) is a `module_<skill>` component inside one row: a run of
   cards in a line, framed by `template_module` (in `chain0`) with the `parchment_divider` image. The frame is drawn 99 px tall from 22 px above the
   module, so modules in neighbouring 90 px rows overlap about 9 px and read as one box. With 70 px rows they clipped into each other, so the 10-row

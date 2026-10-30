@@ -15,6 +15,19 @@ local HOLDER = "skills_holder"
 --- Delay in milliseconds between looks at the bar while the panel is open.
 local POLL_MS = 10
 
+--- The MCT mod and checkbox for compact row gaps, from script/mct/settings/ui_skill_panel.lua.
+local MCT_MOD_KEY = "ui_skill_panel"
+local MCT_OPTION = "compact_rows"
+
+--- The first skill row. Row 0 holds the card templates and is never touched.
+local FIRST_ROW = 1
+
+--- Distance in pixels from one row's top to the next with compact gaps. The rows size to their cards, so compact gaps move them instead of resizing.
+local COMPACT_ROW_STEP = 70
+
+--- Group box frame height and its offset above the box, keyed by whether compact gaps are on. Regular matches `template_module` in the layout.
+local FRAMES = { [false] = { h = 99, y = -22 }, [true] = { h = 79, y = -12 } }
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- State
@@ -27,6 +40,18 @@ local last_used = nil
 
 --- Whether a look has failed since the panel opened, so the log gets one line per open instead of one every `POLL_MS`.
 local failed = false
+
+--- Whether compact row gaps are on, from MCT. Off without MCT.
+local compact = false
+
+--- Whether fitting the rows has failed since the panel opened, kept apart from `failed` so the scroll still works when only this fails.
+local fit_failed = false
+
+--- Whether the rows were last placed with compact gaps, so turning them off restacks the rows once.
+local rows_compact = false
+
+--- Whether compact gaps have been on this session. Until then the rows and frames are as the layout made them, so fitting is skipped.
+local ever_compact = false
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,6 +96,79 @@ local function used_height(rows, list_box)
     return bottom - rows_y + ((top or rows_y) - rows_y)
 end
 
+--- Sets a group box frame to the regular or compact size in the module's current state. A module that changes state is fixed on the next look.
+--- @param module UIC The group box, a `module_<skill>` component in a row.
+--- @param from table The frame size to change, from `FRAMES`.
+--- @param to table The frame size to set, from `FRAMES`.
+--- @returns boolean Whether the frame changed.
+local function fit_frame(module, from, to)
+    for i = 0, module:NumCurrentStateImages() - 1 do
+        if module:GetCurrentStateImageHeight(i) == from.h then
+            local x = module:GetCurrentStateImageDockOffset(i)
+            module:SetCanResizeCurrentStateImageHeight(i, true)
+            module:ResizeCurrentStateImage(i, module:GetCurrentStateImageWidth(i), to.h)
+            module:SetCurrentStateImageDockOffset(i, x, to.y)
+            return true
+        end
+    end
+    return false
+end
+
+--- Sets the frame of every group box in a row.
+--- @param row UIC The row.
+--- @param from table The frame size to change, from `FRAMES`.
+--- @param to table The frame size to set, from `FRAMES`.
+--- @returns number How many frames changed.
+local function fit_row_frames(row, from, to)
+    local count = 0
+    for i = 0, row:ChildCount() - 1 do
+        local module = UIComponent(row:Find(i))
+        if string.find(module:Id(), "^module_") and fit_frame(module, from, to) then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+--- Places each row `COMPACT_ROW_STEP` below the one before with compact gaps, or lets the game stack them again once compact gaps are turned off. The
+--- group box frames are set to match in every row. Does nothing until compact gaps are first turned on.
+--- @param list_box UIC The box holding the row containers.
+local function fit_rows(list_box)
+    if not ever_compact then
+        return
+    end
+    if rows_compact and not compact then
+        list_box:Layout()
+        log("regular gaps: rows stacked again")
+    end
+    rows_compact = compact
+    local first = find_uicomponent(list_box, "chain" .. FIRST_ROW)
+    if not first then
+        return
+    end
+    local _, first_y = first:Position()
+    local from, to = FRAMES[not compact], FRAMES[compact]
+    local moved, frames = 0, 0
+    for i = 0, list_box:ChildCount() - 1 do
+        local row = UIComponent(list_box:Find(i))
+        local n = tonumber(string.match(row:Id(), "^chain(%d+)$"))
+        if n and n >= FIRST_ROW then
+            if compact then
+                local x, y = row:Position()
+                local target = first_y + (n - FIRST_ROW) * COMPACT_ROW_STEP
+                if y ~= target then
+                    row:MoveTo(x, target)
+                    moved = moved + 1
+                end
+            end
+            frames = frames + fit_row_frames(row, from, to)
+        end
+    end
+    if moved > 0 or frames > 0 then
+        log((compact and "compact" or "regular") .. " gaps: moved " .. moved .. " rows and set " .. frames .. " group box frames")
+    end
+end
+
 --- Moves the rows' box to match the vertical bar. The rows' clip sits inside the sideways list and ends above its bar, so the bar stays put.
 local function follow_bar()
     local holder = find_uicomponent(core:get_ui_root(), PANEL, HOLDER)
@@ -85,6 +183,11 @@ local function follow_bar()
     local drive = drive_clip and find_uicomponent(drive_clip, "vscroll_drive")
     if not list_box or not drive then
         return
+    end
+    local ok, err = pcall(fit_rows, list_box)
+    if not ok and not fit_failed then
+        fit_failed = true
+        log("fit_rows failed: " .. tostring(err))
     end
     local used = used_height(rows, list_box)
     local overflow = math.max(0, used - clip:Height())
@@ -137,6 +240,7 @@ core:add_listener(
     function()
         panel_open = true
         failed = false
+        fit_failed = false
         last_used = nil
         -- The panel opens twice in a row, so any running look is stopped first to keep a single one.
         cm:remove_real_callback(NAME)
@@ -156,3 +260,22 @@ core:add_listener(
     end,
     true
 )
+
+-- MCT sends its settings once it has loaded and again each time the player applies them. Without MCT the gaps stay regular.
+for _, event in ipairs({ "MctInitialized", "MctFinalized" }) do
+    core:add_listener(
+        NAME .. "_" .. event,
+        event,
+        true,
+        function(context)
+            local mct_mod = context:mct():get_mod_by_key(MCT_MOD_KEY)
+            local option = mct_mod and mct_mod:get_option_by_key(MCT_OPTION)
+            if option then
+                compact = option:get_finalized_setting() == true
+                ever_compact = ever_compact or compact
+                log("compact row gaps " .. (compact and "on" or "off"))
+            end
+        end,
+        true
+    )
+end
