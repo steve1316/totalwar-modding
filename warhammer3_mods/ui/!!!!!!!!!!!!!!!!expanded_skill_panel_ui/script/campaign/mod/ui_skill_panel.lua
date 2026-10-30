@@ -717,40 +717,41 @@ core:add_listener(
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- API
 
-UI_SKILL_PANEL = {
-    --- Adds a set of card boxes. Call it once, at first tick or later. Every set whose `show_for` is true for the panel's character is used, and
-    --- a skill two sets both fill keeps the box of the one added first. `spec` fields: `id` (string), `show_for(character)` (true when its boxes
-    --- show for the character, which may be nil), and `tips(character)` returning skill key -> `{ title, text, foot, bundle }`. Texts are
-    --- already localised and use the game's markup. `foot` and `bundle` may be nil. The box is only filled again when one of them changes.
-    --- @param spec table The set.
-    --- @returns boolean True when it was added.
-    add_card_boxes = function(spec)
-        if type(spec) ~= "table" or type(spec.id) ~= "string" or type(spec.show_for) ~= "function" or type(spec.tips) ~= "function" then
-            log("add_card_boxes refused: the spec needs an id, show_for and tips")
+-- ui_skill_panel_vscroll.lua fills the same table, and either file may load first.
+UI_SKILL_PANEL = UI_SKILL_PANEL or {}
+
+--- Adds a set of card boxes. Call it once, at first tick or later. Every set whose `show_for` is true for the panel's character is used, and
+--- a skill two sets both fill keeps the box of the one added first. `spec` fields: `id` (string), `show_for(character)` (true when its boxes
+--- show for the character, which may be nil), and `tips(character)` returning skill key -> `{ title, text, foot, bundle }`. Texts are
+--- already localised and use the game's markup. `foot` and `bundle` may be nil. The box is only filled again when one of them changes.
+--- @param spec table The set.
+--- @returns boolean True when it was added.
+UI_SKILL_PANEL.add_card_boxes = function(spec)
+    if type(spec) ~= "table" or type(spec.id) ~= "string" or type(spec.show_for) ~= "function" or type(spec.tips) ~= "function" then
+        log("add_card_boxes refused: the spec needs an id, show_for and tips")
+        return false
+    end
+    for _, known in ipairs(specs) do
+        if known.id == spec.id then
+            log("add_card_boxes " .. spec.id .. " refused: already added")
             return false
         end
-        for _, known in ipairs(specs) do
-            if known.id == spec.id then
-                log("add_card_boxes " .. spec.id .. " refused: already added")
-                return false
-            end
-        end
-        table.insert(specs, spec)
-        log("added card boxes " .. spec.id)
-        return true
-    end,
+    end
+    table.insert(specs, spec)
+    log("added card boxes " .. spec.id)
+    return true
+end
 
-    --- Removes a set of card boxes added with `add_card_boxes`. Its boxes go once the cards' tips are next rebuilt.
-    --- @param id string The set's id.
-    --- @returns boolean True when a set was removed.
-    remove_card_boxes = function(id)
-        for i, known in ipairs(specs) do
-            if known.id == id then
-                table.remove(specs, i)
-                log("removed card boxes " .. id)
-                return true
-            end
+--- Removes a set of card boxes added with `add_card_boxes`. Its boxes go once the cards' tips are next rebuilt.
+--- @param id string The set's id.
+--- @returns boolean True when a set was removed.
+UI_SKILL_PANEL.remove_card_boxes = function(id)
+    for i, known in ipairs(specs) do
+        if known.id == id then
+            table.remove(specs, i)
+            log("removed card boxes " .. id)
+            return true
         end
-        return false
-    end,
-}
+    end
+    return false
+end
