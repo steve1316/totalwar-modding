@@ -576,12 +576,23 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Reclamation
 
---- Applies the player's reclamation choice: fight for an enemy-owned smithy, or leave it.
+--- Applies the player's reclamation choice: fight for an enemy-owned smithy once the attacker has no dilemma open, or leave it.
 --- @param choice number The 0-based choice index.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 function SmithyState:resolve_reclamation_choice(choice, invasion_battle_manager)
     if choice ~= FIRST_OPTION then return end
     self.is_reclamation_triggered = true
+    local cqi = self.visiting_enemy_character and self.visiting_enemy_character:command_queue_index()
+    local label = "the reclamation battle for smithy " .. self.zone_name .. " " .. self.index_in_zone
+    invasion_battle_manager:start_when_clear(self.visiting_enemy_faction_name, label, function()
+        self.visiting_enemy_character = cqi and tower_army.character(cqi) or nil
+        self:start_reclamation_battle(invasion_battle_manager)
+    end)
+end
+
+--- Fights the owner's army for the smithy. With no spawn point for the defenders, the smithy is taken without a fight.
+--- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
+function SmithyState:start_reclamation_battle(invasion_battle_manager)
     local defender_army = self:get_defensive_army()
     if not self.visiting_enemy_character then
         self.visiting_enemy_character = cm:get_closest_character_to_position_from_faction(self.visiting_enemy_faction_name, self.coordinates[1], self.coordinates[2], true, false, false)

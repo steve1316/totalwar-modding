@@ -36,8 +36,8 @@ local M = {
     --- Faction key -> dilemma key -> true for each LEAPOI dilemma shown and not answered yet. Saved. A battle started under an open dilemma
     --- locks the campaign, so the tower waits on these.
     open_by_faction = {},
-    --- Called with a faction key a moment after it answers a dilemma and has no LEAPOI dilemma left open. The tower sets it.
-    when_clear = function() end,
+    --- Functions called with a faction key a moment after it answers a dilemma and has no dilemma left open, see `M.on_clear`.
+    clear_listeners = {},
 }
 
 --- The choice keys of a dilemma in order, as the DB names them.
@@ -105,6 +105,13 @@ function M.launch(key, choices, faction_name)
     set_entry(M.refunds_by_faction, faction_name, key, next(refunds) and refunds or nil)
     M.mark_open(faction_name, key)
     cm:launch_custom_dilemma_from_builder(builder, faction)
+end
+
+--- Adds a function called with a faction key a moment after it answers a dilemma and has no dilemma left open. The tower goes on with a
+--- delve that waited, and the battle manager starts a held battle.
+--- @param listener function Called with the faction key.
+function M.on_clear(listener)
+    M.clear_listeners[#M.clear_listeners + 1] = listener
 end
 
 --- Notes a dilemma as shown to a faction until it is answered. `M.launch` and `M.trigger` do it themselves.
@@ -181,7 +188,10 @@ function M.settle(faction_name, dilemma_key, choice_key)
     if (M.open_by_faction[faction_name] or {})[dilemma_key] then
         set_entry(M.open_by_faction, faction_name, dilemma_key, nil)
         --- After every other listener, since one may open the next dilemma.
-        cm:callback(function() if not M.any_open(faction_name) then M.when_clear(faction_name) end end, 0)
+        cm:callback(function()
+            if M.any_open(faction_name) then return end
+            for _, listener in ipairs(M.clear_listeners) do listener(faction_name) end
+        end, 0)
     end
     local charges = (M.charges_by_faction[faction_name] or {})[dilemma_key]
     if charges == nil then return end

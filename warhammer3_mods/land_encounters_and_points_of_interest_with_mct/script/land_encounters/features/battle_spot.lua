@@ -17,6 +17,7 @@ local battle_modifiers = require("script/land_encounters/features/battle_modifie
 local victory_gold = require("script/land_encounters/configs/victory_gold")
 local round_gold = require("script/land_encounters/configs/tower_data").round_gold
 local spoils_site = require("script/land_encounters/configs/spot_offers").spoils
+local tower_army = require("script/land_encounters/features/tower_army")
 
 local Army = require("script/land_encounters/core/army")
 
@@ -111,10 +112,28 @@ function BattleEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_a
 end
 
 
---- Starts the battle the cached event describes at a spot: generates the army, readies ours with any pre-battle offers, fires the battle and
---- routes its result. With no valid spawn location the default removal incident fires instead.
+--- Starts the battle the cached event describes at a spot once the lord's faction has no dilemma open, see
+--- `InvasionBattleManager:start_when_clear`. The event and the lord are kept for the wait, since another spot may be entered meanwhile.
 --- @param spot_info table A spot_info record with the battle's coordinates.
 function BattleEventDelegate:start_battle(spot_info)
+    local event, cqi = self.cached_event, self.cached_player_character:command_queue_index()
+    local faction_name = self.cached_player_character:faction():name()
+    local label = "the " .. tostring(event.category) .. " spot battle of lord " .. cqi .. " at (" .. spot_info.coordinates[1] .. ", " .. spot_info.coordinates[2] .. ")"
+    self.invasion_battle_manager:start_when_clear(faction_name, label, function()
+        local character = tower_army.living_general(cqi)
+        if not character then
+            log("spot: lord " .. cqi .. " is gone, so " .. label .. " does not start")
+            return
+        end
+        self.cached_event, self.cached_player_character = event, character
+        self:launch_battle(spot_info)
+    end)
+end
+
+--- Generates the cached event's army, readies ours with any pre-battle offers, fires the battle and routes its result. With no valid spawn
+--- location the default removal incident fires instead.
+--- @param spot_info table A spot_info record with the battle's coordinates.
+function BattleEventDelegate:launch_battle(spot_info)
     local offensive_army = self:get_offensive_army()
     out("DEBUG - offensive_army generated")
     if not self.invasion_battle_manager:can_generate_battle(offensive_army, spot_info.coordinates) then

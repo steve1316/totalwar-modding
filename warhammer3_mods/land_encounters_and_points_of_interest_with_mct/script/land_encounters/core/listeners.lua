@@ -80,6 +80,7 @@ function M.register()
             end
             --- Before the tower, so a delve held by a stale open dilemma is closed like any other left from last turn.
             dilemmas.on_faction_turn_start(context:faction():name())
+            M.invasion_battle_manager:drop_held_battles(context:faction():name())
             M.point_of_interest_event_manager:on_faction_turn_start(context:faction():name())
             spot_offers.on_faction_turn_start(context:faction():name())
             effect_library.apply_test_bundles(context:faction())

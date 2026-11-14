@@ -1027,8 +1027,8 @@ function TowerEventDelegate:new(invasion_battle_manager)
         invasion_battle_manager = invasion_battle_manager }
     setmetatable(t, self)
     self.__index = self
-    boons.when_answered = function(faction_name) t:resume_after_dilemmas(faction_name) end
-    dilemmas.when_clear = function(faction_name) t:resume_after_dilemmas(faction_name) end
+    boons.on_answered(function(faction_name) t:resume_after_dilemmas(faction_name) end)
+    dilemmas.on_clear(function(faction_name) t:resume_after_dilemmas(faction_name) end)
     return t
 end
 

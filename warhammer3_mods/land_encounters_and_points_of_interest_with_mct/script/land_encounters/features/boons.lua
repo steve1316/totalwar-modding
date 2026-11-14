@@ -45,8 +45,8 @@ local M = {
     queued = {},
     --- Faction key -> faction-wide key -> the turn its bundle runs out. The game counts the bundle down and takes it off.
     realms = {},
-    --- Called with a faction key once it has answered its last open boon dilemma. The tower sets it to go on with a delve that waited.
-    when_answered = function() end,
+    --- Functions called with a faction key once it has answered its last open boon dilemma, see `M.on_answered`.
+    answered_listeners = {},
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -398,11 +398,20 @@ local function ask(character, question)
     open_next(faction_name)
 end
 
---- After a boon dilemma is answered: opens the next waiting one, or tells `M.when_answered` once none is left. A gained boon can ask again.
+--- Adds a function called with a faction key once it has answered its last open boon dilemma. The tower goes on with a delve that waited,
+--- and the battle manager starts a held battle.
+--- @param listener function Called with the faction key.
+function M.on_answered(listener)
+    M.answered_listeners[#M.answered_listeners + 1] = listener
+end
+
+--- After a boon dilemma is answered: opens the next waiting one, or tells each `M.on_answered` listener once none is left. A gained boon can
+--- ask again.
 --- @param faction_name string The faction that answered.
 local function settle(faction_name)
     open_next(faction_name)
-    if not M.asking(faction_name) then M.when_answered(faction_name) end
+    if M.asking(faction_name) then return end
+    for _, listener in ipairs(M.answered_listeners) do listener(faction_name) end
 end
 
 --- Gives a lord a boon or curse. One they already carry rises a level instead (a charged boon gets its battles back). A new boon with full
