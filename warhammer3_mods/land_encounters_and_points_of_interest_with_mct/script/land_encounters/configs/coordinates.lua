@@ -631,7 +631,7 @@ M.immortal_empires = {
               {292, 551},
               {294, 573},
               --- Averlorn
-              {275, 591},
+              {275, 591, disabled = true},
               {258, 599, manual = true},
               --- Ellyrion
               {203, 567},
