@@ -37,6 +37,10 @@ M.spawn_hero_beside_lord = {}
 --- be (the Nemesis Crown levelling up), e.g. { "wh3_dlc25_nemesis_crown_level_up" }.
 M.foreign_dilemma_after_floor = {}
 
+--- Zone key and coordinates of one extra encounter spot added at the end of that zone and switched on whenever it is free, past the zone's
+--- cap, e.g. { "empire", 537, 661 } for a spot on the Tavern beside Middenheim.
+M.spot_at = {}
+
 --- Spot kind every encounter spot becomes instead of rolling the MCT battle chance, either { "battle" } or { "treasure" }.
 M.spot_kind = {}
 
