@@ -10,6 +10,7 @@ local tower_army = require("script/land_encounters/features/tower_army")
 local debug_config = require("script/land_encounters/configs/debug")
 local guild_patron = require("script/land_encounters/features/guild_patron")
 local boons = require("script/land_encounters/features/boons")
+local dilemmas = require("script/land_encounters/core/dilemmas")
 
 --- Feature delegates are lazy-loaded inside the manager constructors below to avoid a circular
 --- require (the delegates pull core/managers back in for the incident globals).
@@ -18,6 +19,10 @@ local TreasureEventDelegate
 local SmithyEventDelegate
 local TowerEventDelegate
 local TavernEventDelegate
+
+--- Seconds a battle waits before it checks for open dilemmas. The game shows one dilemma at a time, so one that queued behind the dilemma just
+--- answered only shows then, and the battle must not start under it. The tower's floors wait the same.
+local BATTLE_START_DELAY = 1
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -443,6 +448,8 @@ local InvasionBattleManager = {
     ally_timer_bundle = nil,
     --- Unit keys of the allied army's surviving regular units, read as the last battle completed.
     ally_survivors = nil,
+    --- Faction key -> the battles waiting for its dilemmas to be answered, oldest first, each { label, start }. Not saved.
+    held_battles = nil,
 }
 
 --- Starts every unit of a force but the characters at a share of its full strength.
@@ -1158,6 +1165,56 @@ end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Held battles
+
+--- Starts a battle a moment from now, once the faction has no dilemma open and no boon dilemma waiting. A battle started under an open
+--- dilemma locks the campaign: the dilemma's buttons click but do nothing, and the post-battle dilemmas queue behind it. Used by spot
+--- battles, Tavern and Smithy captures, Tavern contracts and Smith's Commissions. The tower holds its floors itself.
+--- @param faction_name string The faction whose lord fights.
+--- @param label string What the battle is, for the log.
+--- @param start function Starts the battle, called with no arguments.
+function InvasionBattleManager:start_when_clear(faction_name, label, start)
+    log("battles: " .. label .. " for " .. faction_name .. " starts in " .. BATTLE_START_DELAY .. "s, after any queued dilemma is shown")
+    cm:callback(function()
+        self.held_battles[faction_name] = self.held_battles[faction_name] or {}
+        table.insert(self.held_battles[faction_name], { label = label, start = start })
+        self:release_held_battles(faction_name)
+    end, BATTLE_START_DELAY)
+end
+
+--- Starts a faction's oldest held battle once it has no dilemma open and no boon dilemma waiting. Any others wait for the next answer, so two
+--- battles never start at once.
+--- @param faction_name string The faction key.
+function InvasionBattleManager:release_held_battles(faction_name)
+    local held = self.held_battles[faction_name]
+    if not held or #held == 0 then return end
+    local open = dilemmas.open_keys(faction_name)
+    if #open > 0 or boons.asking(faction_name) then
+        log("battles: " .. faction_name .. " has a dilemma open (" .. (#open > 0 and table.concat(open, ", ") or "a boon dilemma waiting its turn")
+            .. "), " .. held[1].label .. " waits for its answer")
+        return
+    end
+    local battle = table.remove(held, 1)
+    if #held == 0 then self.held_battles[faction_name] = nil end
+    log("battles: " .. faction_name .. " has no dilemma open, starting " .. battle.label .. (#held > 0 and (", " .. #held .. " more still held") or ""))
+    battle.start()
+end
+
+--- At a human faction's turn start: forgets the battles it still holds. Open dilemmas are forgotten then too, so only a dilemma that was never
+--- answered can have held them this long.
+--- @param faction_name string The faction whose turn starts.
+function InvasionBattleManager:drop_held_battles(faction_name)
+    local held = self.held_battles[faction_name]
+    if not held then return end
+    local labels = {}
+    for _, battle in ipairs(held) do labels[#labels + 1] = battle.label end
+    log("battles: " .. faction_name .. " starts its turn with " .. table.concat(labels, ", ") .. " still held, dropping them")
+    self.held_battles[faction_name] = nil
+end
+
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constructors
 
 --- Constructs a new InvasionBattleManager wired to the given engine managers.
@@ -1169,10 +1226,13 @@ function InvasionBattleManager:newFrom(core, random_army_manager, invasion_manag
     local t = {
         core = core,
         random_army_manager = random_army_manager,
-        invasion_manager = invasion_manager
+        invasion_manager = invasion_manager,
+        held_battles = {},
     }
     setmetatable(t, self)
     self.__index = self
+    dilemmas.on_clear(function(faction_name) t:release_held_battles(faction_name) end)
+    boons.on_answered(function(faction_name) t:release_held_battles(faction_name) end)
     return t
 end
 
