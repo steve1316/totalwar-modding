@@ -251,7 +251,15 @@ function OwnedPoint:resolve_defense_choice(choice, invasion_battle_manager)
     end
     self:log_siege(self.controlling_faction_name .. " chose to " .. (choice == FIRST_OPTION and "fight for" or "surrender") .. " the " .. self:describe())
     if choice == FIRST_OPTION then
-        self:fight_with_garrison(invasion_battle_manager)
+        --- Turn start often opens other dilemmas, and a battle started under one locks the campaign.
+        invasion_battle_manager:start_when_clear(self.controlling_faction_name, "the garrison battle for the " .. self:describe(), function()
+            if not force_exists(self.besieging_force_cqi) then
+                self:log_siege("the army besieging the " .. self:describe() .. " left while the garrison waited, so the siege is lifted")
+                self:end_siege()
+                return
+            end
+            self:fight_with_garrison(invasion_battle_manager)
+        end)
     else
         self:release_besieger()
         self:lose_to_besieger(self.SIEGE.messages.surrendered)

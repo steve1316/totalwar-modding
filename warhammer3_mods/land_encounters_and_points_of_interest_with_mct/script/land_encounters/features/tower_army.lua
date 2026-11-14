@@ -16,6 +16,15 @@ function M.character(cqi)
     return found
 end
 
+--- Finds a living lord who still leads an army, e.g. one whose battle was held until open dilemmas were answered.
+--- @param cqi number|nil The lord's command queue index.
+--- @returns userdata|nil The lord, or nil when gone or no longer leading an army.
+function M.living_general(cqi)
+    local found = cqi and M.character(cqi)
+    if not found or not cm:char_is_general_with_army(found) then return nil end
+    return found
+end
+
 --- Finds the delving lord's army.
 --- @param general_cqi number The delving lord's command queue index.
 --- @returns military_force|nil The army, or nil when the lord is gone or no longer leads one.

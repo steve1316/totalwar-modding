@@ -14,6 +14,7 @@ local item_pool = require("script/land_encounters/core/item_pool")
 local realm_effects = require("script/land_encounters/core/realm_effects")
 local marked_spots = require("script/land_encounters/core/marked_spots")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
+local tower_army = require("script/land_encounters/features/tower_army")
 local Army = require("script/land_encounters/core/army")
 
 local M = {
@@ -238,8 +239,17 @@ function M.on_mark_entered(delegate, character, marker_ref, instance_ref)
     end
     held.battle_event = event
     log("smithy: " .. faction_name .. " fights for the star-metal against a " .. event.difficulty .. " army of " .. event.faction)
-    ibm:generate_battle(army, character, { x, y })
-    await_battle(delegate, faction_name, held.key, army)
+    local cqi = character:command_queue_index()
+    ibm:start_when_clear(faction_name, "the Fetch Star-Metal battle of " .. held.key, function()
+        local lord = tower_army.living_general(cqi)
+        if not lord then
+            log("smithy: lord " .. cqi .. " is gone, so the Fetch Star-Metal battle of " .. held.key .. " does not start")
+            held.battle_event = nil
+            return
+        end
+        ibm:generate_battle(army, lord, { x, y })
+        await_battle(delegate, faction_name, held.key, army)
+    end)
 end
 
 --- Settles a Fetch Star-Metal battle: a win completes the mission's objective (whose success event then pays it out) and clears the mark. A

@@ -427,7 +427,7 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Capture
 
---- Applies the player's capture choice: fight the owner's army for the Tavern, or leave it.
+--- Applies the player's capture choice: fight the owner's army for the Tavern once the attacker has no dilemma open, or leave it.
 --- @param choice number The 0-based choice index.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 function TavernState:resolve_capture_choice(choice, invasion_battle_manager)
@@ -439,6 +439,16 @@ function TavernState:resolve_capture_choice(choice, invasion_battle_manager)
         return
     end
     self.is_capture_triggered = true
+    local cqi = self.visiting_enemy_character and self.visiting_enemy_character:command_queue_index()
+    invasion_battle_manager:start_when_clear(self.visiting_enemy_faction_name, "the capture battle for the " .. self:describe(), function()
+        self.visiting_enemy_character = cqi and tower_army.character(cqi) or nil
+        self:start_capture_battle(invasion_battle_manager)
+    end)
+end
+
+--- Fights the owner's army for the Tavern. With no spawn point for the defenders, the Tavern is taken without a fight.
+--- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
+function TavernState:start_capture_battle(invasion_battle_manager)
     local defender_army = self:get_defensive_army()
     if not self.visiting_enemy_character then
         self.visiting_enemy_character = cm:get_closest_character_to_position_from_faction(self.visiting_enemy_faction_name, self.coordinates[1], self.coordinates[2], true, false, false)

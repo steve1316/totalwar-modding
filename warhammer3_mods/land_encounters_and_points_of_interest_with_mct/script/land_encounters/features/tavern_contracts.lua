@@ -647,9 +647,18 @@ function M.on_mark_entered(delegate, character, marker_ref, instance_ref)
     contract.battle_event = event
     log("tavern: " .. faction_name .. " fights at the marked spot of " .. contract.key .. " against a " .. event.difficulty .. " army"
         .. modifiers_note(event.modifiers))
-    arm_contract_battle(contract, character:command_queue_index())
-    ibm:generate_battle(army, character, { x, y })
-    await_mark_battle(delegate, faction_name, contract, army)
+    local cqi = character:command_queue_index()
+    ibm:start_when_clear(faction_name, "the marked spot battle of " .. contract.key, function()
+        local lord = tower_army.living_general(cqi)
+        if not lord then
+            log("tavern: lord " .. cqi .. " is gone, so the marked spot battle of " .. contract.key .. " does not start")
+            contract.battle_event = nil
+            return
+        end
+        arm_contract_battle(contract, cqi)
+        ibm:generate_battle(army, lord, { x, y })
+        await_mark_battle(delegate, faction_name, contract, army)
+    end)
 end
 
 --- Settles a marked spot's battle: a win completes the mission's objective (whose success event then pays it out) and clears the markers. A
