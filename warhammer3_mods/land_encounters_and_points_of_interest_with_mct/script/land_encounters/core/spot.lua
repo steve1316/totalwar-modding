@@ -4,6 +4,7 @@
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 require("script/land_encounters/core/mct")
+local debug_config = require("script/land_encounters/configs/debug")
 
 --- Smithy marker skin per forge level (1-3). Level 1 keeps the original key so markers from older saves stay valid.
 local SMITHY_MARKER_KEY_BY_LEVEL = { "encounter_marker_smithy", "encounter_marker_smithy_level_2", "encounter_marker_smithy_level_3" }
@@ -383,6 +384,9 @@ local SpotDelegate = {
     --- The enabled spots marked `tower = true`, in order. A new tower picks among these when there are any.
     tower_sites = {},
 
+    --- Index of the debug `spot_at` spot (configs/debug.lua), switched on whenever it is free, or nil.
+    forced_index = nil,
+
     max_active_spots_count = 0
 }
 
@@ -397,6 +401,14 @@ end
 --- Walks the zone's enabled spots in random order and activates inactive ones until the active cap is hit.
 --- @param zone_name string The region key used to build marker ids.
 function SpotDelegate:try_add_land_encounters(zone_name)
+    local forced = self.forced_index
+    if forced and not self.active_spots[forced] and not self.prohibited_spots[forced] then
+        log("spot: debug spot_at switches on " .. zone_name .. "[" .. forced .. "] at (" .. self.spots[forced].coordinates[1] .. ", "
+            .. self.spots[forced].coordinates[2] .. ")")
+        self.active_spots[forced] = true
+        self.spots[forced] = EventSpot:newFrom(self.spots[forced])
+        self.spots[forced]:activate(zone_name)
+    end
     --- The shuffle works in place, so it gets a copy.
     local disordered_indexes = {}
     for i, index in ipairs(self.enabled_indexes) do disordered_indexes[i] = index end
@@ -511,12 +523,15 @@ end
 --- @param active_spot_percentage number Fraction (0..1) of the zone's enabled spots that may be active at once.
 --- @returns SpotDelegate A new delegate with one Spot per coordinate.
 function SpotDelegate:new(zone_coordinates, active_spot_percentage)
-    local zone_spots, enabled_indexes, tower_sites = {}, {}, {}
+    local zone_spots, enabled_indexes, tower_sites, forced_index = {}, {}, {}, nil
     for i = 1, #zone_coordinates do
         local spot = Spot:new()
         spot:initialize_from_coordinates(i, zone_coordinates[i])
         table.insert(zone_spots, spot)
-        if not spot.disabled then
+        --- The debug `spot_at` spot stays out of the cap and the tower sites.
+        if zone_coordinates[i].debug_spot then
+            forced_index = i
+        elseif not spot.disabled then
             enabled_indexes[#enabled_indexes + 1] = i
             if spot.tower_site then tower_sites[#tower_sites + 1] = i end
         end
@@ -529,6 +544,7 @@ function SpotDelegate:new(zone_coordinates, active_spot_percentage)
         reserved_spots = {},
         enabled_indexes = enabled_indexes,
         tower_sites = tower_sites,
+        forced_index = forced_index,
         max_active_spots_count = active_spot_percentage * #enabled_indexes
     }
     setmetatable(t, self)
@@ -660,6 +676,14 @@ end
 --- @param active_spot_percentage number Fraction (0..1) of spots that may be active at once.
 --- @returns Zone A new Zone instance with both delegates initialized.
 function Zone:new(zone_name, zone_coordinates, active_spot_percentage)
+    local spot_at = debug_config.spot_at
+    if spot_at[1] == zone_name then
+        --- The config table is shared, so the extra spot goes on a copy.
+        local copy = {}
+        for i, entry in ipairs(zone_coordinates) do copy[i] = entry end
+        copy[#copy + 1] = { spot_at[2], spot_at[3], debug_spot = true }
+        zone_coordinates = copy
+    end
     local t = {
         name = zone_name,
         spot_delegate = SpotDelegate:new(zone_coordinates, active_spot_percentage),
